@@ -1,3 +1,10 @@
+<%-- 
+    Document   : index
+    Created on : Oct 13, 2025, 9:00:09 PM
+    Author     : Admin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,7 +78,7 @@
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
-                <a href="login.html" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+                <a href="login" class="nav-item nav-link"><i class="fa fa-user"></i></a>
                 <a href="#" class="nav-item nav-link">
 
                 <div id="google_translate_element">
