@@ -3,13 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
-import controller.GoogleLogin; 
+
+import controller.GoogleLogin;
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 import model.GoogleAccount;
 
 /**
@@ -29,13 +33,17 @@ public class LoginGoogleController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String code= request.getParameter("code");
+        String code = request.getParameter("code");
         GoogleLogin gg = new GoogleLogin();
         String token = gg.getToken(code);
         GoogleAccount access = gg.getUserInfo(token);
-        System.out.println(access);
+        AccountDAO adao = new AccountDAO(); 
+        Account account = adao.insertOrUpdateFromGoogle(access); 
+        HttpSession session = request.getSession();
+        session.setAttribute("account", account);
         request.getRequestDispatcher("loginSuccess.jsp").forward(request, response);
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,11 +56,6 @@ public class LoginGoogleController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
