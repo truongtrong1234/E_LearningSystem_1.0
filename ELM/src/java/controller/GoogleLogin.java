@@ -41,9 +41,7 @@ public class GoogleLogin {
                         .add("grant_type", Iconstant.GOOGLE_GRANT_TYPE)
 
                         .build()
-
                 )
-
                 .execute().returnContent().asString();
 
 
@@ -54,7 +52,6 @@ public class GoogleLogin {
     }
 public static GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = Iconstant.GOOGLE_LINK_GET_USER_INFO +accessToken;
-             
         String response = Request.Get(link).execute().returnContent().asString();
         GoogleAccount googlePojo = new Gson().fromJson(response, GoogleAccount.class);
         return googlePojo;

@@ -5,12 +5,15 @@
 package controller;
 
 import controller.GoogleLogin;
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -20,13 +23,20 @@ public class LoginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        String email = request.getParameter("name");
+        String password = request.getParameter("password");
+        AccountDAO adao = new AccountDAO();
+        Account account = adao.login(email, password);
+        HttpSession session = request.getSession();
+        session.setAttribute("account", account);
+        response.sendRedirect("loginSuccess.jsp");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
 
     }
 

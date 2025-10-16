@@ -1,32 +1,116 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
-import java.util.ArrayList;
-import model.Account;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import model.Account;
+import dao.DBContext;
 import model.GoogleAccount;
 
-public class AccountDAO extends DBContext{
+public class AccountDAO extends DBContext {
+
+    // ✅ Lấy tài khoản theo email
+    public Account findByEmail(String email) {
+        String sql = "SELECT * FROM Accounts WHERE email = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                return a;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // ✅ Thêm tài khoản mới
+    public boolean insert(Account a) {
+        String sql = "INSERT INTO Accounts (email, password, name, picture, role) VALUES (?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, a.getEmail());
+            ps.setString(2, a.getPassword());
+            ps.setString(3, a.getName());
+            ps.setString(4, a.getPicture());
+            ps.setString(5, a.getRole());
+
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    a.setAccountId(rs.getInt(1));
+                }
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ Cập nhật thông tin
+    public boolean update(Account a) {
+        String sql = "UPDATE Accounts SET password=?, name=?, picture=?, role=? WHERE email=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, a.getPassword());
+            ps.setString(2, a.getName());
+            ps.setString(3, a.getPicture());
+            ps.setString(4, a.getRole());
+            ps.setString(5, a.getEmail());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ Đăng nhập
+    public Account login(String email, String password) {
+        String sql = "SELECT * FROM Accounts WHERE email=? AND password=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                return a;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public Account insertOrUpdateFromGoogle(GoogleAccount googleUser) {
     if (googleUser == null || googleUser.getEmail() == null) {
         return null;
     }
 
     try {
-        // 1. Kiểm tra email đã tồn tại chưa
         Account account = findByEmail(googleUser.getEmail());
+
         if (account == null) {
-            // 2. Nếu chưa có, tạo mới
+            // 🟢 Nếu email chưa có → tự động insert vào DB
             account = new Account();
             account.setEmail(googleUser.getEmail());
             account.setName(googleUser.getName());
             account.setPicture(googleUser.getPicture());
-            account.setRole("learner"); // default role
+            account.setRole("learner"); // mặc định là learner
 
             String sql = "INSERT INTO Accounts(email, name, picture, role) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -34,17 +118,18 @@ public class AccountDAO extends DBContext{
             ps.setString(2, account.getName());
             ps.setString(3, account.getPicture());
             ps.setString(4, account.getRole());
-
             int rows = ps.executeUpdate();
+
             if (rows > 0) {
-                // Lấy id auto-generated
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
                     account.setAccountId(rs.getInt(1));
                 }
             }
+
+            System.out.println("✅ Đã tạo tài khoản mới từ Google: " + account.getEmail());
         } else {
-            // 3. Nếu đã có → cập nhật thông tin mới
+            // 🟡 Nếu đã có → cập nhật lại thông tin Google
             account.setName(googleUser.getName());
             account.setPicture(googleUser.getPicture());
 
@@ -54,9 +139,10 @@ public class AccountDAO extends DBContext{
             ps.setString(2, account.getPicture());
             ps.setString(3, account.getEmail());
             ps.executeUpdate();
+
+            System.out.println("🔁 Cập nhật thông tin tài khoản Google: " + account.getEmail());
         }
 
-        // 4. Trả về account sau khi insert/update
         return account;
 
     } catch (Exception e) {
@@ -66,122 +152,51 @@ public class AccountDAO extends DBContext{
     return null;
 }
 
-    // ===== 1. Find account by email =====
-    public Account findByEmail(String email) {
-        String sql = "SELECT * FROM Accounts WHERE email = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return mapResultSetToAccount(rs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    // ===== 2. Insert local account =====
-    public boolean insertAccount(Account acc) {
-        String sql = "INSERT INTO Accounts(email, password, name, first_name, family_name, role, provider) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, 'local')";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, acc.getEmail());
-            ps.setString(2, acc.getPassword());
-            ps.setString(3, acc.getName());
-            ps.setString(4, acc.getRole());
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // ===== 3. Insert Google account =====
-    public boolean insertGoogleAccount(Account acc) {
-        String sql = "INSERT INTO Account(email, name, first_name, family_name, picture, verified_email, provider, provider_id, role) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, 'google', ?, ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, acc.getEmail());
-            ps.setString(2, acc.getPassword());
-            ps.setString(3, acc.getName());
-            ps.setString(4, acc.getRole());
-            ps.setString(8, acc.getRole() != null ? acc.getRole() : "learner");
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // ===== 4. Update account info =====
-    public boolean updateAccount(Account acc) {
-        String sql = "UPDATE Account SET name=?, first_name=?, family_name=?, picture=?, verified_email=?, role=? WHERE email=?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            
-            ps.setString(6, acc.getRole());
-            ps.setString(7, acc.getEmail());
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // ===== 5. Check login local =====
-    public Account checkLogin(String email, String password) {
-        String sql = "SELECT * FROM Account WHERE email=? AND password=? AND provider='local'";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, email);
-            ps.setString(2, password); // nhớ hash password trước khi so sánh
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return mapResultSetToAccount(rs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    // ===== Helper: map ResultSet to Account =====
-    private Account mapResultSetToAccount(ResultSet rs) throws SQLException {
-        Account acc = new Account();
-        acc.setAccountId(rs.getInt("account_id"));
-        acc.setEmail(rs.getString("email"));
-        acc.setPassword(rs.getString("password"));
-        acc.setName(rs.getString("name"));
-        acc.setPicture(rs.getString("picture"));
-        acc.setRole(rs.getString("role"));
-        return acc;
-    }
     public static void main(String[] args) {
-        try {
-        AccountDAO dao = new AccountDAO(); // nhớ DBContext phải kết nối thành công
+           AccountDAO dao = new AccountDAO();
 
-        // Giả lập token trả về GoogleAccount
-        GoogleAccount googleUser = new GoogleAccount( "123456789",
-            "testuser@gmail.com",
-            "Test User",
-            "https://example.com/pic.jpg");
+        // 🟢 1️⃣ Test thêm tài khoản mới
+        Account newAcc = new Account();
+        newAcc.setEmail("testuser@example.com");
+        newAcc.setPassword("123456");
+        newAcc.setName("Test User");
+        newAcc.setPicture("https://example.com/avatar.jpg");
+        newAcc.setRole("learner");
 
-        // Gọi hàm insertOrUpdateFromGoogle
-        Account account = dao.insertOrUpdateFromGoogle(googleUser);
-
-        if (account != null) {
-            System.out.println("Insert/Update thành công:");
-            System.out.println(account);
+        boolean inserted = dao.insert(newAcc);
+        if (inserted) {
+            System.out.println("✅ Insert thành công! ID mới: " + newAcc.getAccountId());
         } else {
-            System.out.println("Thất bại khi insert/update GoogleAccount.");
+            System.out.println("❌ Insert thất bại!");
         }
 
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+        // 🟡 2️⃣ Test đăng nhập
+        Account loginAcc = dao.login("testuser@example.com", "123456");
+        if (loginAcc != null) {
+            System.out.println("✅ Login thành công!");
+            System.out.println("Tên người dùng: " + loginAcc.getName());
+            System.out.println("Vai trò: " + loginAcc.getRole());
+        } else {
+            System.out.println("❌ Login thất bại (sai email hoặc password).");
+        }
+
+        // 🔵 3️⃣ Test cập nhật thông tin
+        if (loginAcc != null) {
+            loginAcc.setName("User Updated");
+            loginAcc.setPicture("https://example.com/new-avatar.jpg");
+            boolean updated = dao.update(loginAcc);
+            if (updated) {
+                System.out.println("✅ Cập nhật thành công!");
+            } else {
+                System.out.println("❌ Cập nhật thất bại!");
+            }
+        }
+
+        // 🔴 4️⃣ Test Google login update (chỉ update nếu email tồn tại)
+        Account googleAcc = new Account();
+        googleAcc.setEmail("testuser@example.com"); // email đã tồn tại
+        googleAcc.setName("Google Updated User");
+        googleAcc.setPicture("https://example.com/google-avatar.jpg");
+
     }
 }
