@@ -4,12 +4,15 @@
  */
 package controller;
 
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -28,7 +31,7 @@ public class RegisterController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("register.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -43,7 +46,6 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
@@ -57,13 +59,30 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String fullName = request.getParameter("fullname");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        AccountDAO adao = new AccountDAO();
+        Account account = new Account(email, password, fullName);
+        boolean isInserted = adao.insert(account);
+        if (isInserted) {
+            response.sendRedirect("home");
+        } else {
+            request.setAttribute("errorMessage", "Đăng ký không thành công! Vui lòng thử lại.");
+             request.getRequestDispatcher("register.jsp").forward(request, response);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
+    /*    // Lưu thông tin người dùng vào session
+            HttpSession session = request.getSession();
+            session.setAttribute("account", acc);
+            // Đăng nhập thành công → về home
+            response.sendRedirect("home.jsp");
+        } else {
+            // Sai thông tin → gửi lỗi lại login.jsp
+            request.setAttribute("error", "Email hoặc mật khẩu sai!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
      */
     @Override
     public String getServletInfo() {

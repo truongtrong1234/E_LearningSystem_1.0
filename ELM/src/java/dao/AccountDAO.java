@@ -31,29 +31,29 @@ public class AccountDAO extends DBContext {
     }
 
     // ✅ Thêm tài khoản mới
-    public boolean insert(Account a) {
-        String sql = "INSERT INTO Accounts (email, password, name, picture, role) VALUES (?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, a.getEmail());
-            ps.setString(2, a.getPassword());
-            ps.setString(3, a.getName());
-            ps.setString(4, a.getPicture());
-            ps.setString(5, a.getRole());
+   public boolean insert(Account a) {
+    String sql = "INSERT INTO Accounts (email, password, name, picture, role) VALUES (?, ?, ?, ?, ?)";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, a.getEmail());
+        ps.setString(2, a.getPassword());
+        ps.setString(3, a.getName()); // fullname
+        ps.setString(4, null); // hoặc "default.png" nếu muốn ảnh mặc định
+        ps.setString(5, "learner"); // mặc định role là learner
 
-            int rows = ps.executeUpdate();
-            if (rows > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    a.setAccountId(rs.getInt(1));
-                }
-                return true;
+        int rows = ps.executeUpdate();
+        if (rows > 0) {
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                a.setAccountId(rs.getInt(1));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            return true;
         }
-        return false;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return false;
+}
 
     // ✅ Cập nhật thông tin
     public boolean update(Account a) {
@@ -170,33 +170,6 @@ public class AccountDAO extends DBContext {
             System.out.println("❌ Insert thất bại!");
         }
 
-        // 🟡 2️⃣ Test đăng nhập
-        Account loginAcc = dao.login("testuser@example.com", "123456");
-        if (loginAcc != null) {
-            System.out.println("✅ Login thành công!");
-            System.out.println("Tên người dùng: " + loginAcc.getName());
-            System.out.println("Vai trò: " + loginAcc.getRole());
-        } else {
-            System.out.println("❌ Login thất bại (sai email hoặc password).");
-        }
-
-        // 🔵 3️⃣ Test cập nhật thông tin
-        if (loginAcc != null) {
-            loginAcc.setName("User Updated");
-            loginAcc.setPicture("https://example.com/new-avatar.jpg");
-            boolean updated = dao.update(loginAcc);
-            if (updated) {
-                System.out.println("✅ Cập nhật thành công!");
-            } else {
-                System.out.println("❌ Cập nhật thất bại!");
-            }
-        }
-
-        // 🔴 4️⃣ Test Google login update (chỉ update nếu email tồn tại)
-        Account googleAcc = new Account();
-        googleAcc.setEmail("testuser@example.com"); // email đã tồn tại
-        googleAcc.setName("Google Updated User");
-        googleAcc.setPicture("https://example.com/google-avatar.jpg");
-
+       
     }
 }

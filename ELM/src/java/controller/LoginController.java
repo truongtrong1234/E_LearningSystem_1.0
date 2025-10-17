@@ -23,32 +23,34 @@ public class LoginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("name");
-        String password = request.getParameter("password");
-        AccountDAO adao = new AccountDAO();
-        Account account = adao.login(email, password);
-        HttpSession session = request.getSession();
-        session.setAttribute("account", account);
-        response.sendRedirect("loginSuccess.jsp");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        request.getRequestDispatcher("login.jsp").forward(request, response);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        AccountDAO dao = new AccountDAO();
+        Account acc = dao.login(email, password);
+
+        if (acc != null) {
+            // Lưu thông tin người dùng vào session
+            HttpSession session = request.getSession();
+            session.setAttribute("account", acc);
+            // Đăng nhập thành công → về home
+            response.sendRedirect("home.jsp");
+        } else {
+            // Sai thông tin → gửi lỗi lại login.jsp
+            request.setAttribute("error", "Email hoặc mật khẩu sai!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+    }
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-}

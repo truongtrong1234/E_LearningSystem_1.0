@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,7 +21,7 @@
       <div class="col-12">
         <div class="mb-5">
           <h2 class="display-5 fw-bold text-center">Sign in</h2>
-          <p class="text-center m-0">Don't have an account? <a href="register">Sign up</a></p>
+          <p class="text-center m-0">Don't have an account? <a href="register.jsp">Sign up</a></p>
         </div>
       </div>
     </div>
@@ -28,12 +29,12 @@
       <div class="col-12 col-lg-10 col-xl-8">
         <div class="row gy-5 justify-content-center">
           <div class="col-12 col-lg-5">
-            <form action="#!">
+            <form action="login" method="post">
               <div class="row gy-3 overflow-hidden">
                 <div class="col-12">
                   <div class="form-floating mb-3">
                     <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
-                    <label for="email" class="form-label">Email or Username</label>
+                    <label for="email" class="form-label">Email</label>
                   </div>
                 </div>
                 <div class="col-12">
@@ -58,6 +59,12 @@
                       </div>
                     </div>
                   </div>
+                <!-- ALERTS -->
+                        <c:if test="${not empty error}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                ${error}
+                                </div>
+                        </c:if>    
                 </div>
                 <div class="col-12">
                   <div class="d-grid">
