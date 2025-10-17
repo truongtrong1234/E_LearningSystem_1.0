@@ -52,7 +52,7 @@
 <body>
     <div class="container">
         <h1>🎉 Login Successful!</h1>
-        <p>Welcome, <strong><%= session.getAttribute("username") %></strong>!</p>
+        <p>Welcome, <strong>${sessionScope.account.getName()}</strong>!</p>
         <p>You will be redirected to the home page in 
            <span class="countdown" id="timer">5</span> seconds...</p>
     </div>
