@@ -45,7 +45,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", acc);
             // Đăng nhập thành công → về home
-            response.sendRedirect("instructor/dashboard.jsp");
+            response.sendRedirect("course");
         } else {
             // Sai thông tin → gửi lỗi lại login.jsp
             request.setAttribute("error", "Email hoặc mật khẩu sai!");
