@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================
-  // QUIZ BUILDER — Tạo nhiều loại câu hỏi (MCQ / Essay)
+  // QUIZ BUILDER — chỉ Multiple Choice
   // =========================================================
   function initQuizBuilder() {
-    console.log("Quiz builder initialized");
+    console.log("Quiz builder initialized (MCQ only)");
 
     const questionsContainer = document.getElementById("questionsContainer");
     const addQuestionBtn = document.getElementById("addQuestionBtn");
@@ -86,27 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
         <hr>
         <label class="question-title">Question ${questionCount}</label>
         <input type="text" name="question_${questionCount}" class="cqm-input" placeholder="Enter question text..." required>
-        
-        <label class="cqm-label">Question Type</label>
-        <select name="type_${questionCount}" class="cqm-select question-type">
-          <option value="mcq">Multiple Choice</option>
-          <option value="essay">Essay (Short Answer)</option>
-        </select>
 
         <div class="options-container" id="options_${questionCount}">
           ${[1, 2, 3, 4]
             .map(
               (i) => `
-            <div class="option-input">
-              <input type="radio" name="correct_${questionCount}" value="${i}" required>
-              <input type="text" name="option_${questionCount}_${i}" placeholder="Option ${i}" class="cqm-input small" required>
-            </div>`
+              <div class="option-input">
+                <input type="radio" name="correct_${questionCount}" value="${i}" required>
+                <input type="text" name="option_${questionCount}_${i}" placeholder="Option ${i}" class="cqm-input small" required>
+              </div>`
             )
             .join("")}
-        </div>
-
-        <div class="essay-container hidden" id="essay_${questionCount}">
-          <textarea name="essay_${questionCount}" class="cqm-textarea" placeholder="Student will write answer here..."></textarea>
         </div>
 
         <button type="button" class="remove-question-btn small-btn">Remove Question</button>
@@ -114,22 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       questionsContainer.appendChild(qDiv);
 
-      // Sự kiện đổi loại câu hỏi
-      const selectType = qDiv.querySelector(".question-type");
-      const optionsDiv = qDiv.querySelector(`#options_${questionCount}`);
-      const essayDiv = qDiv.querySelector(`#essay_${questionCount}`);
-
-      selectType.addEventListener("change", () => {
-        if (selectType.value === "mcq") {
-          optionsDiv.classList.remove("hidden");
-          essayDiv.classList.add("hidden");
-        } else {
-          optionsDiv.classList.add("hidden");
-          essayDiv.classList.remove("hidden");
-        }
-      });
-
-      // Xóa câu hỏi
+      // Nút xóa câu hỏi
       qDiv.querySelector(".remove-question-btn").addEventListener("click", () => {
         qDiv.remove();
       });
@@ -137,14 +112,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================
-  // COURSE BUILDER
+  // COURSE BUILDER (giữ nguyên)
   // =========================================================
   function initCoursePage() {
     console.log("Course page initialized");
   }
 
   // =========================================================
-  // MATERIAL BUILDER
+  // MATERIAL BUILDER (giữ nguyên)
   // =========================================================
   function initMaterialPage() {
     console.log("Material page initialized");

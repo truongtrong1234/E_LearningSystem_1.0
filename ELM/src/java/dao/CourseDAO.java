@@ -79,7 +79,7 @@ public class CourseDAO extends DBContext {
     }
     
     // 🟢 Cập nhật khóa học
-    public boolean updateCourse(Course course) {
+public boolean updateCourse(Course course) {
         String sql = "UPDATE Courses SET Title=?, Description=?, InstructorID=?, Price=?, CreatedAt=?, CategoryID=?, Thumbnail=? " +
                      "WHERE CourseID=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

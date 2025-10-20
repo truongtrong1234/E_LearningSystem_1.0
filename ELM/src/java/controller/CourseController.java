@@ -32,7 +32,7 @@ public class CourseController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CourseDAO cdao = new  CourseDAO(); 
-         List<Course> courseList = cdao.getAllCourses(); 
+        List<Course> courseList = cdao.getAllCourses(); 
         request.setAttribute("courseList", courseList);
         request.getRequestDispatcher("instructor/dashboard.jsp").forward(request, response);
     }

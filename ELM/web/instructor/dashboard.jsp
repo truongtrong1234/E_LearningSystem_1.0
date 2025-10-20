@@ -55,7 +55,7 @@
                                 <i class="fas fa-bell"></i>
                             </button>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
-                                <i class="fa-solid fa-user-circle fa-2x"><a href="myProfile"></a></i>
+                                <a href="${pageContext.request.contextPath}/myProfile.jsp" style="color: #495057"><i class="fa-solid fa-user-circle fa-2x"></i></a>
                             </button>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <div class="create-cqm-box p-4 rounded shadow-sm border">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Jump Into Course Creation</span>
-                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'createCourse.jsp'">Create Your Course</button>
+                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = '${pageContext.request.contextPath}/instructor/createCourse.jsp'">Create Your Course</button>
                             </div>
                         </div>
                         <!-- List Courses -->
