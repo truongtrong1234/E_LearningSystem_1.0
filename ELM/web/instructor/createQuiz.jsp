@@ -41,7 +41,7 @@
                 <p class="helper-text">You can add multiple question types and edit them dynamically.</p>
                 <div class="action-buttons">
                   <button type="submit" class="btn-primary cqm-btn">Save Quiz</button>
-                  <button type="submit" class="btn-secondary cqm-btn" onclick="window.location.href='dashboard.jsp'">Cancel</button>
+                  <button type="submit" class="btn-secondary cqm-btn" onclick="window.location.href='course'">Cancel</button>
                 </div>
               </div>
             </div>

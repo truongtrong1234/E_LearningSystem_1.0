@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.*;
 import model.Account;
-import dao.DBContext;
+import context.DBContext;
 import model.GoogleAccount;
 
 public class AccountDAO extends DBContext {

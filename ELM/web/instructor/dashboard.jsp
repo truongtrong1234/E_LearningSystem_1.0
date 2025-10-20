@@ -133,7 +133,7 @@
                     <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
-                            <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'createQuiz.jsp'">Create New Quiz</button>
+                            <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'instructor/createQuiz.jsp'">Create New Quiz</button>
                         </div>
                     </div>
                     <!-- List Quiz -->

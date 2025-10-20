@@ -92,7 +92,7 @@
           <div class="helper-text">Các trường có <span class="required">*</span> là bắt buộc.</div>
           <div class="action-buttons">
             <button type="submit" class="btn btn-primary cqm-btn">Create Course</button>
-            <a href="<%=request.getContextPath()%>/instructor/dashboard.jsp" class="btn btn-secondary cqm-btn">Cancel</a>
+            <a href="course" class="btn btn-secondary cqm-btn">Cancel</a>
           </div>
         </div>
 

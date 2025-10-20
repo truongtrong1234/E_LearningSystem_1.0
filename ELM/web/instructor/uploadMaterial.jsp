@@ -51,7 +51,7 @@
                             <p class="helper-text">Make sure your file is under 50MB and clearly named.</p>
                             <div class="action-buttons">
                                 <button type="submit" class="btn-primary cqm-btn">Upload Material</button>
-                                <a href="dashboard.jsp" class="btn-secondary cqm-btn">Cancel</a>
+                                <a href="course" class="btn-secondary cqm-btn">Cancel</a>
                             </div>
                         </div>
                     </div>
