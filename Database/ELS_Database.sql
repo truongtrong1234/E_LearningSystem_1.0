@@ -2,30 +2,21 @@
 -- 10.10.2025 (ver4)
 -- E-LEARNING DATABASE (Udemy-style, FIXED)
 -- ====================================
-
-CREATE DATABASE ElearningDB9;
-GO
-USE ElearningDB9;
+Create database ElearningDB10
+USE ElearningDB10;
 GO
 
 -- =========================
 -- ACCOUNTS
 -- =========================
 CREATE TABLE Accounts (
-    AccountID INT IDENTITY PRIMARY KEY,
-    FullName NVARCHAR(100) NULL,            -- tên người dùng (Local có thể nhập, External tự lấy)
-    Email NVARCHAR(200) NOT NULL UNIQUE,    -- luôn có email
-    Provider NVARCHAR(50) 
-        CHECK (Provider IN ('Local', 'Google', 'Facebook', 'Microsoft')) 
-        NOT NULL DEFAULT 'Local',           -- nguồn đăng nhập
-    ProviderUserID NVARCHAR(200) NULL,      -- id tài khoản bên thứ 3
-    IsVerified BIT DEFAULT 0,               -- true nếu user đã xác thực mail
-    Role NVARCHAR(20) 
-        CHECK (Role IN ('Student', 'Instructor', 'Admin')) 
-        NOT NULL DEFAULT 'Student',
-    IsActive BIT DEFAULT 1,
-    LastLogin DATETIME NULL,
-    CreatedAt DATETIME DEFAULT GETDATE()
+    AccountID INT IDENTITY(1,1) PRIMARY KEY,
+    email NVARCHAR(255) UNIQUE NOT NULL,
+    password NVARCHAR(255) NULL,               -- null nếu đăng nhập bằng Google
+    name NVARCHAR(255) NULL,
+    picture NVARCHAR(500) NULL,
+	role NVARCHAR(20) CHECK (role IN ('learner','instructor','admin')),  
+
 );
 
 -- =========================
@@ -38,9 +29,14 @@ CREATE TABLE Courses (
     InstructorID INT NOT NULL,
     Price DECIMAL(10,2) CHECK (Price >= 0) DEFAULT 0,
     CreatedAt DATETIME DEFAULT GETDATE(),
+	Thumbnail VARBINARY(MAX) NULL
     FOREIGN KEY (InstructorID) REFERENCES Accounts(AccountID)
 );
-
+CREATE TABLE [dbo].[Category](
+    [CategoryID] INT IDENTITY(1,1) NOT NULL	PRIMARY KEY,
+    [Name] NVARCHAR(100) NOT NULL,
+	FOREIGN KEY (CategoryID) REFERENCES [dbo].[Category](CategoryID)
+);
 -- =========================
 -- CHAPTERS
 -- =========================
@@ -48,7 +44,6 @@ CREATE TABLE Chapters (
     ChapterID INT IDENTITY PRIMARY KEY,
     CourseID INT NOT NULL,
     Title NVARCHAR(200) NOT NULL,
-    OrderIndex INT DEFAULT 1,
     FOREIGN KEY (CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE
 );
 
@@ -97,7 +92,6 @@ CREATE TABLE Payments (
     PaymentID INT IDENTITY PRIMARY KEY,
     EnrollmentID INT NOT NULL,
     Amount DECIMAL(10,2) CHECK (Amount >= 0) NOT NULL,
-    Method NVARCHAR(50) CHECK (Method IN ('Momo','CreditCard','BankTransfer')) NOT NULL DEFAULT 'Momo',
     Status NVARCHAR(20) CHECK (Status IN ('Pending','Success','Failed','Refunded')) DEFAULT 'Pending',
     TransactionID NVARCHAR(100) UNIQUE NULL,
     PaidAt DATETIME DEFAULT GETDATE(),
@@ -179,58 +173,3 @@ CREATE TABLE Notifications (
 -- =========================
 -- SAMPLE DATA
 -- =========================
-
-INSERT INTO Accounts (FullName, Email, Provider, ProviderUserID, Role, IsVerified)
-VALUES
-(N'John Doe', 'john@student.com', 'Local', NULL, 'Student', 1),
-(N'Jane Smith', 'jane@student.com', 'Local', NULL, 'Student', 1),
-(N'Mr. Brown', 'brown@instructor.com', 'Google', 'G123', 'Instructor', 1),
-(N'Admin', 'admin@elearning.com', 'Facebook', 'F321', 'Admin', 1);
-
-INSERT INTO Courses (Title, Description, InstructorID, Price)
-VALUES (N'Java Programming', N'Learn Java step-by-step', 3, 120.00);
-
-INSERT INTO Chapters (CourseID, Title, OrderIndex)
-VALUES (1, N'Introduction to Java', 1),
-       (1, N'OOP Basics', 2);
-
-INSERT INTO Lessons (ChapterID, Title, OrderIndex)
-VALUES (1, N'What is Java?', 1),
-       (1, N'Setup JDK', 2),
-       (2, N'Understanding Classes', 1),
-       (2, N'Inheritance in Java', 2);
-
-INSERT INTO Materials (LessonID, Title, ContentURL, MaterialType)
-VALUES
-(1, N'Java Overview Video', 'http://example.com/java-overview.mp4', 'Video'),
-(3, N'OOP Concepts PDF', 'http://example.com/oop.pdf', 'PDF');
-
-INSERT INTO Enrollments (AccountID, CourseID)
-VALUES (1, 1);
-
-INSERT INTO Payments (EnrollmentID, Amount, Method, Status, TransactionID)
-VALUES (1, 120.00, 'Momo', 'Success', 'TXN1001');
-
-INSERT INTO CourseProgress (EnrollmentID, CompletedPercent)
-VALUES (1, 25.0);
-
-INSERT INTO LessonProgress (EnrollmentID, LessonID, IsCompleted)
-VALUES (1, 1, 1);
-
-INSERT INTO Notifications (AccountID, Type, Title, Message)
-VALUES 
-(1, 'System', N'Welcome', N'Welcome to Java Programming!'),
-(1, 'CourseUpdate', N'New Lesson Added', N'A new lesson has been added to your Java course.');
-
-INSERT INTO Quizzes (LessonID, Title)
-VALUES (1, N'Java Basics Quiz');
-
-INSERT INTO Questions (QuizID, QuestionText, OptionA, OptionB, OptionC, OptionD, CorrectAnswer)
-VALUES
-(1, N'What does JVM stand for?', N'Java Virtual Machine', N'Java Version Manager', N'Java Verified Mode', N'Just Virtual Memory', 'A'),
-(1, N'Which keyword is used for inheritance?', N'implements', N'import', N'extends', N'include', 'C');
-
-INSERT INTO StudentAnswers (AccountID, QuestionID, SelectedAnswer, IsCorrect)
-VALUES
-(1, 1, 'A', 1),
-(1, 2, 'C', 1);
