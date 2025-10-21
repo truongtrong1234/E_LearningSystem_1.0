@@ -24,7 +24,8 @@
     <div class="header-icons">
         <span class="icon">🔔</span>
         <span class="icon">🛒</span>
-        <div class="avatar">U</div>
+        <a href="${pageContext.request.contextPath}/myProfile.jsp" style="color: #495057"><div class="avatar">U</div></a>
+        
     </div>
 </header>
 
