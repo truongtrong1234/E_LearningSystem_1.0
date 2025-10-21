@@ -51,10 +51,9 @@
                             <h4 class="fw-semibold mb-0">Xin chào ${sessionScope.account.getName()}</h4>
                         </div>
                         <div class="d-flex align-items-center ms-auto">
-                            <a href="../Learner/home_learner.jsp" class="me-3 text-muted nav-profile-text" style="text-decoration:none; cursor:pointer;">
+                            <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" class="me-3 text-muted nav-profile-text" style="text-decoration:none; cursor:pointer;">
     Learner
 </a>
-
                             <button class="btn btn-sm me-3 notification-btn" type="button">
                                 <i class="fas fa-bell"></i>
                             </button>
@@ -124,7 +123,7 @@
                                 <div class="col-12">
                                     
                                     
-                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="/ELM/createCourse">"Create Your Course"</a> để bắt đầu</div>
+                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="/ELM/createC    ourse">"Create Your Course"</a> để bắt đầu</div>
                                 </div>
                             </c:otherwise>
                          </c:choose>

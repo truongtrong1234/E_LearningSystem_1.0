@@ -29,7 +29,6 @@ public class CreateCourseController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String service = request.getParameter("service");
-
         switch (service) {
             case "createchapter":
                 // xử lý tạo course

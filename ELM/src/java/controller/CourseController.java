@@ -35,7 +35,7 @@ public class CourseController extends HttpServlet {
         List<Course> courseList = cdao.getAllCourses(); 
         request.setAttribute("courseList", courseList);
         request.getRequestDispatcher("instructor/dashboard.jsp").forward(request, response);
-      
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

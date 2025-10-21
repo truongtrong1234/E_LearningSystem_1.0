@@ -19,7 +19,7 @@
     </div>
     <nav class="nav-links">
      
-        <a href="../instructor/dashboard.jsp">Instructor</a>
+        <a href="/ELM/course">Instructor</a>
     </nav>
     <div class="header-icons">
         <span class="icon">🔔</span>
