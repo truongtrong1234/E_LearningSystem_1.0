@@ -50,7 +50,7 @@
                             <h4 class="fw-semibold mb-0">Xin chào ${sessionScope.account.getName()}</h4>
                         </div>
                         <div class="d-flex align-items-center ms-auto">
-                            <span class="me-3 text-muted nav-profile-text">Student</span>
+                            <span class="me-3 text-muted nav-profile-text"><a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Student</a></span>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
                                 <i class="fas fa-bell"></i>
                             </button>
