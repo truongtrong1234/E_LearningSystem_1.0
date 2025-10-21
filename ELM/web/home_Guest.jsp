@@ -237,6 +237,7 @@
                 background:#fff;
                 transition:transform .1s ease, box-shadow .15s ease;
                 cursor:pointer;
+                text-decoration: none;
             }
             .card:hover{
                 transform:translateY(-2px);
@@ -335,10 +336,10 @@
             <!-- Card 1 -->
             <a href="<%=ctx%>/Course/detail?courseId=PY-101" class="card">
                 <div class="thumb">
-                    <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1000&auto=format&fit=crop" alt="">
+                    <img src="https://vted.vn/upload/tintuc/637206406197278769ckKaEGpLaBp.png" alt="">
                 </div>
                 <div class="body">
-                    <div class="title">Python for Beginners</div>
+                    <div class="title">10th grade Math course</div>
                     <div class="meta">Eric Nguyen • 4.6 ⭐ • 20h</div>
                     <div class="price">Free</div>
                 </div>
@@ -347,10 +348,10 @@
             <!-- Card 2 -->
             <a href="<%=ctx%>/Course/detail?courseId=AWS-201" class="card">
                 <div class="thumb">
-                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop" alt="">
+                    <img src="https://images.tuyensinh247.com/picture/picture/learning/live_event/0628-1656411707.png" alt="">
                 </div>
                 <div class="body">
-                    <div class="title">Deploy on AWS</div>
+                    <div class="title">12th grade Literature course</div>
                     <div class="meta">Le Minh • 5.0 ⭐ • 12h</div>
                     <div class="price">299.000đ</div>
                 </div>
@@ -359,10 +360,10 @@
             <!-- Card 3 -->
             <a href="<%=ctx%>/Course/detail?courseId=EX-101" class="card">
                 <div class="thumb">
-                    <img src="https://images.unsplash.com/photo-1551281044-8d8d0d8c9df8?q=80&w=1000&auto=format&fit=crop" alt="">
+                    <img src="https://media.zim.vn/650411eadda8dd49f1d2da99/tieng-anh-12-moi.jpg?w=1200&q=75" alt="">
                 </div>
                 <div class="body">
-                    <div class="title">Excel from Zero to Hero</div>
+                    <div class="title">10th grade English course</div>
                     <div class="meta">Tran Thi C • 4.0 ⭐ • 9h</div>
                     <div class="price">Free</div>
                 </div>
@@ -371,10 +372,10 @@
             <!-- Card 4 -->
             <a href="<%=ctx%>/Course/detail?courseId=UI-UX" class="card">
                 <div class="thumb">
-                    <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?q=80&w=1000&auto=format&fit=crop" alt="">
+                    <img src="https://hanoigrapevine.com/wp-content/uploads/2018/05/lich-su-van-hoa-viet-nam-lespace-683x357.jpg" alt="">
                 </div>
                 <div class="body">
-                    <div class="title">UI/UX Design with Figma</div>
+                    <div class="title">12th grade History course</div>
                     <div class="meta">Pham D • 4.8 ⭐ • 18h</div>
                     <div class="price">399.000đ</div>
                 </div>
