@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
 </head>
 <body>
-    <div class="container my-5">
+    <div class="container my-5">>
         <div class="card shadow-sm p-4">
             <!-- STEP HEADER -->
             <div class="step-header mb-4">
