@@ -66,7 +66,7 @@ public class RegisterController extends HttpServlet {
         Account account = new Account(email, password, fullName);
         boolean isInserted = adao.insert(account);
         if (isInserted) {
-            response.sendRedirect("home");
+            response.sendRedirect("course");
         } else {
             request.setAttribute("errorMessage", "Đăng ký không thành công! Vui lòng thử lại.");
              request.getRequestDispatcher("register.jsp").forward(request, response);

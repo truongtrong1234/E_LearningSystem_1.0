@@ -7,7 +7,7 @@ import model.GoogleAccount;
 
 public class AccountDAO extends DBContext {
 
-    // ✅ Lấy tài khoản theo email
+    // Lấy tài khoản theo email
     public Account findByEmail(String email) {
         String sql = "SELECT * FROM Accounts WHERE email = ?";
         try {
@@ -30,7 +30,7 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    // ✅ Thêm tài khoản mới
+    // Thêm tài khoản mới
    public boolean insert(Account a) {
     String sql = "INSERT INTO Accounts (email, password, name, picture, role) VALUES (?, ?, ?, ?, ?)";
     try {
@@ -55,7 +55,7 @@ public class AccountDAO extends DBContext {
     return false;
 }
 
-    // ✅ Cập nhật thông tin
+    // Cập nhật thông tin
     public boolean update(Account a) {
         String sql = "UPDATE Accounts SET password=?, name=?, picture=?, role=? WHERE email=?";
         try {
@@ -72,7 +72,7 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
-    // ✅ Đăng nhập
+    // Đăng nhập
     public Account login(String email, String password) {
         String sql = "SELECT * FROM Accounts WHERE email=? AND password=?";
         try {
