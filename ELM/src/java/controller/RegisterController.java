@@ -66,24 +66,12 @@ public class RegisterController extends HttpServlet {
         Account account = new Account(email, password, fullName);
         boolean isInserted = adao.insert(account);
         if (isInserted) {
-            response.sendRedirect("home");
+            response.sendRedirect("course");
         } else {
             request.setAttribute("errorMessage", "Đăng ký không thành công! Vui lòng thử lại.");
              request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
-
-    /*    // Lưu thông tin người dùng vào session
-            HttpSession session = request.getSession();
-            session.setAttribute("account", acc);
-            // Đăng nhập thành công → về home
-            response.sendRedirect("home.jsp");
-        } else {
-            // Sai thông tin → gửi lỗi lại login.jsp
-            request.setAttribute("error", "Email hoặc mật khẩu sai!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

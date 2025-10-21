@@ -4,7 +4,6 @@
  */
 package context;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -13,10 +12,10 @@ import java.util.logging.Logger;
 public class DBContext {
 
     protected Connection connection;
-
+    
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=ElearningDB9;encrypt=true;trustServerCertificate=true;";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=ElearningDB10;encrypt=true;trustServerCertificate=true;";
             String user = "sa";
             String pass = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

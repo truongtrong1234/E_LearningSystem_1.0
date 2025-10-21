@@ -1,102 +1,157 @@
-<%-- 
-    Document   : login
-    Created on : Oct 16, 2025, 8:16:39 AM
-    Author     : Admin
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+  String ctx = request.getContextPath();  // /ELM
+%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    </head>
-    <body>
-      <!-- Login 11 - Bootstrap Brain Component -->
-<section class="py-3 py-md-5 py-xl-8">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="mb-5">
-          <h2 class="display-5 fw-bold text-center">Sign in</h2>
-          <p class="text-center m-0">Don't have an account? <a href="register.jsp">Sign up</a></p>
-        </div>
-      </div>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Đăng nhập | SecretCoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --brand: #ff6600;
+      --brand-hover: #e55b00;
+      --ink:#1c1d1f;
+      --muted:#6a6f73;
+      --line:#d1d7dc;
+      --bg:#fff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:#fff;
+    }
+
+    /* Header */
+    .topbar{
+      height:64px; display:flex; align-items:center;
+      justify-content:space-between;
+      padding:0 32px; border-bottom:1px solid var(--line);
+    }
+    .logo{font-weight:800; font-size:24px;}
+    .logo .s{color:var(--brand)} .logo .c{color:#000}
+    .topbar a{
+      color:#2d2f31; text-decoration:none; font-weight:600;
+      margin-left:20px;
+    }
+    .topbar a:hover{color:var(--brand)}
+
+    /* Layout */
+    .wrap{
+      max-width: 1120px; margin: 0 auto; padding: 32px 24px 56px;
+      display: grid; grid-template-columns: 1fr 460px; gap: 60px;
+    }
+    @media (max-width: 992px){ .wrap{grid-template-columns: 1fr;} }
+
+    /* Left illustration */
+    .illu{display:flex; align-items:center; justify-content:center;}
+    .illu img{max-width:100%; width:500px;}
+
+    /* Form */
+    .panel{max-width:460px; margin:auto;}
+    .panel h1{
+      font-size:26px; font-weight:700; margin-bottom:16px;
+    }
+
+    label{font-size:14px; font-weight:600;}
+    .ud-input{
+      width:100%; height:48px; border:1px solid #d1d7dc; border-radius:4px;
+      padding:0 12px; font-size:16px; outline:none;
+    }
+    .ud-input:focus{border-color:var(--brand); box-shadow:0 0 0 2px rgba(255,102,0,.2);}
+
+    .btn-primary{
+      width:100%; height:48px; border:0; border-radius:4px;
+      background:var(--brand); color:#fff; font-weight:700; cursor:pointer;
+    }
+    .btn-primary:hover{background:var(--brand-hover)}
+
+    .hr{display:flex; align-items:center; gap:12px; margin:24px 0; color:var(--muted);}
+    .hr::before,.hr::after{content:""; flex:1; height:1px; background:var(--line);}
+
+    .socials{display:flex; gap:12px;}
+    .social-btn{
+      flex:1; height:44px; border:1px solid var(--line); border-radius:4px;
+      background:#fff; display:flex; align-items:center; justify-content:center;
+      gap:10px; text-decoration:none; color:#2d2f31; font-weight:600;
+    }
+    .social-btn:hover{background:#f7f9fa}
+    .social-btn img{width:18px; height:18px;}
+
+    .error{
+      background:#faebea; border:1px solid #f3c5c3; color:#7a1f10;
+      padding:10px 12px; border-radius:4px; font-size:14px; margin:10px 0;
+    }
+
+    .foot{margin-top:20px; font-size:14px; color:var(--muted);}
+    .foot a{
+      color:var(--brand); text-decoration:none; font-weight:700;
+    }
+    .foot a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="topbar">
+    <div class="logo"><span class="s">Secret</span><span class="c">Coder</span></div>
+    <div>
+      <a href="<%=ctx%>/login.jsp">Log in</a>
+      <a href="<%=ctx%>/register.jsp">Sign up</a>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-10 col-xl-8">
-        <div class="row gy-5 justify-content-center">
-          <div class="col-12 col-lg-5">
-            <form action="login" method="post">
-              <div class="row gy-3 overflow-hidden">
-                <div class="col-12">
-                  <div class="form-floating mb-3">
-                    <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
-                    <label for="email" class="form-label">Email</label>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-floating mb-3">
-                    <input type="password" class="form-control border-0 border-bottom rounded-0" name="password" id="password" value="" placeholder="Password" required>
-                    <label for="password" class="form-label">Password</label>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="row justify-content-between">
-                    <div class="col-6">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me">
-                        <label class="form-check-label text-secondary" for="remember_me">
-                          Remember me
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="text-end">
-                        <a href="#!" class="link-secondary text-decoration-none">Forgot password?</a>
-                      </div>
-                    </div>
-                  </div>
-                <!-- ALERTS -->
-                        <c:if test="${not empty error}">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                ${error}
-                                </div>
-                        </c:if>    
-                </div>
-                <div class="col-12">
-                  <div class="d-grid">
-                    <button class="btn btn-primary btn-lg" type="submit">Log in</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="col-12 col-lg-2 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
-            <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
-            <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
-            <div>or</div>
-            <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
-            <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
-          </div>
-          <div class="col-12 col-lg-5 d-flex align-items-center">
-            <div class="d-flex gap-3 flex-column w-100 ">
-              <a href="
-                 https://accounts.google.com/o/oauth2/auth?scope=email profile openid &redirect_uri=http://localhost:8080/ELM/loginGoogle&response_type=code&client_id=952221177325-4o9tk9nid7sgplqeejtrv9opbv57ugu3.apps.googleusercontent.com&approval_prompt=force
-                 " class="btn btn-lg btn-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-                  <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
-                </svg>
-                <span class="ms-2 fs-6">Sign in with Google</span>
-              </a>
-            </div>
-          </div>
+  </div>
+
+  <!-- Main -->
+  <div class="wrap">
+
+    <!-- Illustration -->
+    <div class="illu">
+      <img src="https://frontends.udemycdn.com/components/auth/desktop-illustration-x1.webp" alt="Learning illustration">
+    </div>
+
+    <!-- Form -->
+    <div class="panel">
+      <h1>Log in to continue your learning journey</h1>
+
+      <form action="<%=ctx%>/login" method="post">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" class="ud-input" required />
+
+        <div style="height:12px"></div>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" class="ud-input" required />
+
+        <div style="margin:10px 0 5px; text-align:right;">
+          <a href="#" style="color:#5624d0; text-decoration:none; font-size:14px;">Forgot password?</a>
         </div>
+
+        <!-- Thông báo lỗi -->
+        <c:if test="${not empty error}">
+          <div class="error">${error}</div>
+        </c:if>
+
+        <button type="submit" class="btn-primary">Continue</button>
+      </form>
+
+      <div class="hr"><span>Other login options</span></div>
+
+      <div class="socials">
+        <a class="social-btn"
+           href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ELM/loginGoogle&response_type=code&client_id=952221177325-4o9tk9nid7sgplqeejtrv9opbv57ugu3.apps.googleusercontent.com&approval_prompt=force">
+          <img src="https://www.gstatic.com/images/branding/product/1x/gsa_64dp.png" alt="G"> Google
+        </a>
+      </div>
+
+      <div class="foot">
+        Don't have an account? <a href="<%=ctx%>/register.jsp">Sign up</a>
       </div>
     </div>
   </div>
-</section>
-    </body>
+</body>
 </html>

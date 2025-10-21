@@ -1,18 +1,17 @@
-/* Màu chính được lấy cảm hứng từ màu cam */
 :root {
-    --primary-dark: #cc5500; /* Màu nền Sidebar (cam đậm) */
-    --primary-light: #ff7f00; /* Màu nút Tạo khóa học (cam sáng) */
+    --primary-dark: #cc5500; 
+    --primary-light: #ff7f00; 
     --text-light: #f3f3f3;
-    --hover-bg: rgba(255, 127, 0, 0.25); /* Màu nền cam nhạt hơn khi hover */
-    --hover-text: var(--primary-dark); /* Màu chữ khi hover */
+    --hover-bg: rgba(255, 127, 0, 0.25); 
+    --hover-text: var(--primary-dark); 
     --primary-dark: #cc5500;
     --primary-light: #ff7f00;
 }
 
 /* -------------------- Sidebar -------------------- */
 .sidebar {
-    width: 250px; /* Độ rộng cố định cho Sidebar */
-    min-height: 100vh; /* Chiều cao tối thiểu bằng màn hình */
+    width: 250px;
+    min-height: 100vh; 
     background-color: var(--primary-dark);
     padding-top: 0;
 }
@@ -38,7 +37,7 @@
 .sidebar-link {
     color: var(--text-light) !important;
     padding: 1rem 1.5rem;
-    border-left: 3px solid transparent; /* Tạo viền cho active */
+    border-left: 3px solid transparent; 
     opacity: 0.7;
     transition: all 0.2s;
 }
