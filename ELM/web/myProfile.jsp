@@ -245,7 +245,6 @@
             <div class="logo"><span class="s">Secret</span><span class="c">Coder</span></div>
             <div>
                 <a href="<%= ctx %>/Learner/home_learner.jsp">Home</a>
-                <a href="<%= ctx %>/Learner/myprofile.jsp" style="color:var(--brand);font-weight:700">My Profile</a>
             </div>
         </div>
 

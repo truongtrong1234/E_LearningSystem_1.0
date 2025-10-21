@@ -18,26 +18,26 @@
         <button>🔍</button>
     </div>
     <nav class="nav-links">
-     
+        <a href="/ELM/my_cours">My Course</a>
         <a href="/ELM/course">Instructor</a>
     </nav>
     <div class="header-icons">
         <span class="icon">🔔</span>
-        <span class="icon">🛒</span>
         <a href="${pageContext.request.contextPath}/myProfile.jsp" style="color: #495057"><div class="avatar">U</div></a>
-        
     </div>
 </header>
 
 <!-- CATEGORY BAR -->
 <section class="category-bar">
-    <a href="#">Microsoft Excel</a>
-    <a href="#">AWS</a>
-    <a href="#">Python</a>
-    <a href="#">UI/UX Design</a>
-    <a href="#">Web Development</a>
-    <a href="#">Marketing</a>
-    <a href="#">Finance</a>
+    <a href="#">Toán</a>
+    <a href="#">Ngữ Văn</a>
+    <a href="#">Tiếng Anh</a>
+    <a href="#">Vật Lí</a>
+    <a href="#">Hóa học</a>
+    <a href="#">Sinh học</a>
+    <a href="#">Lịch sử</a>
+    <a href="#">Địa lý</a>
+    <a href="#">GDCD</a>
 </section>
 
 <!-- BANNER -->
@@ -45,7 +45,6 @@
     <div class="banner-content">
         <h2>Học bất cứ nơi đâu</h2>
         <p>Khám phá hàng trăm khóa học miễn phí & có chứng chỉ cùng SecretCoder</p>
-        <button>Bắt đầu học ngay</button>
     </div>
 </section>
 
@@ -78,25 +77,6 @@
         </div>
     </section>
 
-    <section class="course-group">
-        <h3>Khóa học đề xuất cho bạn</h3>
-        <div class="course-list">
-            <div class="course-card">
-                <img src="assets/img/uiux.jpg" alt="UIUX">
-                <h4>Thiết kế giao diện với Figma</h4>
-                <p>Giảng viên: Nguyễn Hoàng</p>
-                <p>⭐⭐⭐⭐☆ (4.3)</p>
-                <span class="price">199.000đ</span>
-            </div>
-            <div class="course-card">
-                <img src="assets/img/java.jpg" alt="Java">
-                <h4>Học Java Web cơ bản</h4>
-                <p>Giảng viên: Phạm Quang</p>
-                <p>⭐⭐⭐⭐⭐ (5.0)</p>
-                <span class="price">Miễn phí</span>
-            </div>
-        </div>
-    </section>
 </main>
 
 <!-- FOOTER -->

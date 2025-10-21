@@ -40,7 +40,7 @@
             document.getElementById("timer").innerText = seconds;
             if (seconds === 0) {
                 // Redirect sau 5s
-                window.location.href = "course"; // đổi thành trang bạn muốn
+                window.location.href = "Learner/home_learner.jsp"; // đổi thành trang bạn muốn
             } else {
                 seconds--;
                 setTimeout(countdown, 1000);

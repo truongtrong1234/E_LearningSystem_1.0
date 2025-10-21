@@ -45,7 +45,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", acc);
             // Đăng nhập thành công → về home
-            response.sendRedirect("course");
+            response.sendRedirect("Learner/home_learner.jsp");
         } else {
             // Sai thông tin → gửi lỗi lại login.jsp
             request.setAttribute("error", "Email hoặc mật khẩu sai!");
