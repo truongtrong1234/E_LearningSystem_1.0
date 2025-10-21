@@ -21,7 +21,7 @@
                 </div>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="dashboard.jsp" class="nav-link text-white sidebar-link active">
+                        <a href="/ELM/course" class="nav-link text-white sidebar-link active">
                             <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
                         </a>
                     </li>
@@ -69,12 +69,12 @@
                         <li class="nav-item">
                             <a class="nav-link active custom-tab-link" aria-current="page" data-tab="courses-content" href="#course-content">Courses</a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link custom-tab-link" data-tab="quiz-content" href="#quiz-content">Quiz</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link custom-tab-link" data-tab="materials-content" href="#materials-content">Materials</a>
-                        </li>
+                        </li>-->
                     </ul>
                     <!-- Manage Course -->
                     <div id="courses-content" class="tab-content-block">
@@ -82,7 +82,8 @@
                         <div class="create-cqm-box p-4 rounded shadow-sm border">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Jump Into Course Creation</span>
-                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'instructor/createCourse.jsp'">Create Your Course</button>
+                                
+                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = '/ELM/createCourse'">Create Your Course</button>
                             </div>
                         </div>
                         <!-- List Courses -->
@@ -121,22 +122,22 @@
                                 </c:when>
                             <c:otherwise>
                                 <div class="col-12">
-                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="instructor/createCourse.jsp">"Create Your Course"</a> để bắt đầu</div>
+                                    
+                                    
+                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="/ELM/createCourse">"Create Your Course"</a> để bắt đầu</div>
                                 </div>
                             </c:otherwise>
                          </c:choose>
                     </div>
                 </div>  
-                <!-- Manage Quiz -->    
-                <div id="quiz-content" class="tab-content-block" style="display: none;">
-                    <!-- Create Quiz -->
+                <!-- Manage Quiz
+                 <div id="quiz-content" class="tab-content-block" style="display: none;">
                     <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
                             <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'instructor/createQuiz.jsp'">Create New Quiz</button>
                         </div>
                     </div>
-                    <!-- List Quiz -->
                     <div class="row mt-4 quiz-list">
                         <c:choose>
                             <c:when test="${not empty quizList}">
@@ -177,7 +178,10 @@
                         </c:choose>
                     </div>
                 </div>
-                <!-- Manage Material -->
+                
+                -->    
+               
+                <!-- Manage Material
                 <div id="materials-content" class="tab-content-block" style="display: none;">
                     <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
                         <div class="d-flex justify-content-between align-items-center">
@@ -185,7 +189,11 @@
                             <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'uploadMaterial.jsp'">Upload New Material</button>
                         </div>
                     </div>
-                    <!-- List Material -->
+                
+                -->
+                
+                    <!-- 
+                    
                     <div class="row mt-4 material-list">
                         <c:choose>
                             <c:when test="${not empty materialList}">
@@ -225,6 +233,10 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
+                    
+                    
+                    List Material -->
+                    
                 </div>
             </div>       
         </div>

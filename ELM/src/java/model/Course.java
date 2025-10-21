@@ -11,18 +11,12 @@ public class Course {
     private BigDecimal price;
     private Date createdAt;
     private int categoryID; // thêm mới
-    private byte[] thumbnail; // lưu ảnh trực tiếp dưới dạng binary
+    private String thumbnail; // lưu ảnh trực tiếp dưới dạng binary
 
-    public byte[] getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(byte[] thumbnail) {
-        this.thumbnail = thumbnail;
-    }
+    
     public Course() {}
 
-    public Course(int courseID, String title, String description, int instructorID, BigDecimal price, Date createdAt, int categoryID, byte[] thumbnail) {
+    public Course(int courseID, String title, String description, int instructorID, BigDecimal price, Date createdAt, int categoryID, String thumbnail) {
         this.courseID = courseID;
         this.title = title;
         this.description = description;
@@ -33,7 +27,7 @@ public class Course {
         this.thumbnail = thumbnail;
     }
 
-    public Course(String title, String description, int instructorID, BigDecimal price, Date createdAt, int categoryID, byte[] thumbnail) {
+    public Course(String title, String description, int instructorID, BigDecimal price, Date createdAt, int categoryID, String thumbnail) {
         this.title = title;
         this.description = description;
         this.instructorID = instructorID;
@@ -90,4 +84,13 @@ public class Course {
 
     public int getCategoryID() { return categoryID; }
     public void setCategoryID(int categoryID) { this.categoryID = categoryID; }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+    
 }

@@ -1,8 +1,7 @@
 ﻿-- ====================================
 -- 10.10.2025 (ver4)
 -- E-LEARNING DATABASE (Udemy-style, FIXED)
--- ====================================
-Create database ElearningDB10
+
 USE ElearningDB10;
 GO
 
@@ -22,21 +21,24 @@ CREATE TABLE Accounts (
 -- =========================
 -- COURSES
 -- =========================
-CREATE TABLE Courses (
-    CourseID INT IDENTITY PRIMARY KEY,
-    Title NVARCHAR(200) NOT NULL,
-    Description NVARCHAR(MAX),
-    InstructorID INT NOT NULL,
-    Price DECIMAL(10,2) CHECK (Price >= 0) DEFAULT 0,
-    CreatedAt DATETIME DEFAULT GETDATE(),
-	Thumbnail VARBINARY(MAX) NULL
-    FOREIGN KEY (InstructorID) REFERENCES Accounts(AccountID)
-);
+
 CREATE TABLE [dbo].[Category](
-    [CategoryID] INT IDENTITY(1,1) NOT NULL	PRIMARY KEY,
-    [Name] NVARCHAR(100) NOT NULL,
-	FOREIGN KEY (CategoryID) REFERENCES [dbo].[Category](CategoryID)
+    [CategoryID] INT IDENTITY(1,1) PRIMARY KEY,
+    [Name] NVARCHAR(100) NOT NULL
 );
+CREATE TABLE [dbo].[Courses](
+    [CourseID] INT IDENTITY(1,1) PRIMARY KEY,
+    [Title] NVARCHAR(200) NOT NULL,
+    [Description] NVARCHAR(MAX),
+    [InstructorID] INT NOT NULL,
+    [CategoryID] INT NOT NULL,
+    [Price] DECIMAL(10,2) CHECK (Price >= 0) DEFAULT 0,
+    [Thumbnail] VARBINARY(MAX) NULL,
+
+    FOREIGN KEY (InstructorID) REFERENCES Accounts(AccountID),
+    FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
+);
+
 -- =========================
 -- CHAPTERS
 -- =========================
@@ -51,13 +53,11 @@ CREATE TABLE Chapters (
 -- LESSONS
 -- =========================
 CREATE TABLE Lessons (
-    LessonID INT IDENTITY PRIMARY KEY,
+    LessonID INT IDENTITY (1,1) PRIMARY KEY,
     ChapterID INT NOT NULL,
     Title NVARCHAR(200) NOT NULL,
-    OrderIndex INT DEFAULT 1,
     FOREIGN KEY (ChapterID) REFERENCES Chapters(ChapterID) ON DELETE CASCADE
 );
-
 -- =========================
 -- MATERIALS
 -- =========================
@@ -67,7 +67,6 @@ CREATE TABLE Materials (
     Title NVARCHAR(200) NOT NULL,
     ContentURL NVARCHAR(500),
     MaterialType NVARCHAR(50) CHECK (MaterialType IN ('Video','PDF','Slide','Other')),
-    CreatedAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (LessonID) REFERENCES Lessons(LessonID) ON DELETE CASCADE
 );
 
@@ -107,11 +106,10 @@ CREATE TABLE Quizzes (
     Title NVARCHAR(200) NOT NULL,
     FOREIGN KEY (LessonID) REFERENCES Lessons(LessonID)
 );
-
 CREATE TABLE Questions (
-    QuestionID INT IDENTITY PRIMARY KEY,
+    QuestionID INT IDENTITY (1,1) PRIMARY KEY,
     QuizID INT NOT NULL,
-    QuestionText NVARCHAR(MAX) NOT NULL,
+    QuestionContent NVARCHAR(MAX) NOT NULL,
     OptionA NVARCHAR(255) NOT NULL,
     OptionB NVARCHAR(255) NOT NULL,
     OptionC NVARCHAR(255) NOT NULL,
@@ -119,16 +117,15 @@ CREATE TABLE Questions (
     CorrectAnswer CHAR(1) CHECK (CorrectAnswer IN ('A','B','C','D')) NOT NULL,
     FOREIGN KEY (QuizID) REFERENCES Quizzes(QuizID)
 );
-
 CREATE TABLE StudentAnswers (
     AnswerID INT IDENTITY PRIMARY KEY,
     AccountID INT NOT NULL,
     QuestionID INT NOT NULL,
     SelectedAnswer CHAR(1) CHECK (SelectedAnswer IN ('A','B','C','D')),
-    IsCorrect BIT,
-    AnsweredAt DATETIME DEFAULT GETDATE(),
+    IsCorrect BIT default 1 ,
     FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID),
     FOREIGN KEY (QuestionID) REFERENCES Questions(QuestionID)
+
 );
 
 -- =========================
@@ -153,7 +150,15 @@ CREATE TABLE CourseProgress (
     FOREIGN KEY (EnrollmentID) REFERENCES Enrollments(EnrollmentID) ON DELETE CASCADE,
     UNIQUE(EnrollmentID)
 );
-
+CREATE TABLE QuizProgress (
+    ProgressID INT IDENTITY PRIMARY KEY,
+    AccountID INT NOT NULL,
+    QuizID INT NOT NULL,
+    CorrectCount INT DEFAULT 0,       -- số câu đúng
+    TotalScore DECIMAL(5,2) DEFAULT 0, -- điểm hiện tại
+    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID),
+    FOREIGN KEY (QuizID) REFERENCES Quizzes(QuizID)
+);
 -- =========================
 -- NOTIFICATIONS
 -- =========================

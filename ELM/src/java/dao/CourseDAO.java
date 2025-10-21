@@ -25,7 +25,7 @@ public class CourseDAO extends DBContext {
                         rs.getBigDecimal("Price"),
                         rs.getDate("CreatedAt"),
                         rs.getInt("CategoryID"),
-                        rs.getBytes("Thumbnail")
+                        rs.getString("Thumbnail")
                 );
                 list.add(course);
             }
@@ -49,7 +49,7 @@ public class CourseDAO extends DBContext {
                         rs.getBigDecimal("Price"),
                         rs.getDate("CreatedAt"),
                         rs.getInt("CategoryID"),
-                        rs.getBytes("Thumbnail")
+                        rs.getString("Thumbnail")
                 );
             }
         } catch (SQLException e) {
@@ -69,7 +69,7 @@ public class CourseDAO extends DBContext {
             ps.setBigDecimal(4, course.getPrice());
             ps.setTimestamp(5, new Timestamp(course.getCreatedAt().getTime()));
             ps.setInt(6, course.getCategoryID());
-            ps.setBytes(7, course.getThumbnail());
+            ps.setString(7, course.getThumbnail());
             int rows = ps.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
@@ -89,7 +89,7 @@ public class CourseDAO extends DBContext {
             ps.setBigDecimal(4, course.getPrice());
             ps.setTimestamp(5, new Timestamp(course.getCreatedAt().getTime()));
             ps.setInt(6, course.getCategoryID());
-            ps.setBytes(7, course.getThumbnail());
+            ps.setString(7, course.getThumbnail());
             ps.setInt(8, course.getCourseID());
             int rows = ps.executeUpdate();
             return rows > 0;

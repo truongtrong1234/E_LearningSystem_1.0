@@ -4,21 +4,18 @@
  */
 package controller;
 
-import dao.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Course;
 
 /**
  *
  * @author Admin
  */
-public class CourseController extends HttpServlet {
+public class CreateCourseController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,11 +28,19 @@ public class CourseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CourseDAO cdao = new  CourseDAO(); 
-        List<Course> courseList = cdao.getAllCourses(); 
-        request.setAttribute("courseList", courseList);
-        request.getRequestDispatcher("instructor/dashboard.jsp").forward(request, response);
-      
+        String service = request.getParameter("service");
+
+        switch (service) {
+            case "createchapter":
+                // xử lý tạo course
+                break;
+            case "createlesson":
+                // xử lý tạo chapter
+                break;
+            case "uploadmaterial":
+                // xử lý tạo lesson
+                break;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
