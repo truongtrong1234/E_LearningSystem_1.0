@@ -208,7 +208,9 @@
 
         <!-- Top nav -->
         <div class="topbar">
-            <div class="logo"><span class="s">Secret</span><span class="c">Coder</span></div>
+            <a class="logo" href="<%= ctx %>/home_Guest.jsp">
+                <span class="s">Secret</span><span class="c">Coder</span>
+            </a>
             <div>
                 <a href="<%=ctx%>/login.jsp">Log in</a>
             </div>

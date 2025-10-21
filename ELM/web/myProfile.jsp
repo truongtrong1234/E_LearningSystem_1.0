@@ -242,7 +242,9 @@
     <body>
 
         <div class="navbar">
-            <div class="logo"><span class="s">Secret</span><span class="c">Coder</span></div>
+            <a class="logo" href="<%= ctx %>/Learner/home_learner.jsp">
+                <span class="s">Secret</span><span class="c">Coder</span>
+            </a>
             <div>
                 <a href="<%= ctx %>/Learner/home_learner.jsp">Home</a>
             </div>
