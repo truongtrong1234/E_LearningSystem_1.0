@@ -33,6 +33,7 @@ body {
 }
 
 
+/* ================= Create Course Page ================= */
 /* ==== STEP HEADER ==== */
 .step {
     display: none;
@@ -222,4 +223,75 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+
+/* ================= Create Quiz Page ================= */
+h3 {
+  color: var(--main-orange);
+  font-weight: 600;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.create-quiz-container {
+  max-width: 900px;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 40px;
+}
+
+/* ---------- Buttons ---------- */
+.btn-add {
+  background-color: var(--main-orange);
+  color: #fff;
+}
+
+.btn-add:hover {
+  background-color: var(--dark-orange);
+}
+
+.btn-save {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-save:hover {
+  background-color: #1e7e34;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background-color: #b52b38;
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-cancel:hover {
+  background-color: #5a6268;
+}
+
+/* ---------- Quiz Layout ---------- */
+.question-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fafafa;
+}
+
+.option-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
 }
