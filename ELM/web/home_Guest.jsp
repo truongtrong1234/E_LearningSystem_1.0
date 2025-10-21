@@ -30,7 +30,6 @@
                 background:#fff
             }
 
-            /* ======= TOPBAR (giống Udemy) ======= */
             /* ======= TOPBAR (no Explore) ======= */
             .topbar {
                 display: flex;
