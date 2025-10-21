@@ -1,129 +1,225 @@
-/* createCQM.css - shared styles for Create Course / Quiz / Material */
-:root{
-  --card-bg: #ffffff;
-  --muted: #6b6b6b;
-  --accent: #ff6b00; /* màu cam chủ đạo */
-  --radius: 14px;
-  --max-width: 1100px;
+:root {
+    --main-orange: #ff6600;
+    --dark-orange: #e85500;
+    --light-bg: #fff8f3;
+    --text-color: #333;
 }
 
-*{box-sizing:border-box}
-body{
-  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-  background:#f5f7fb;
-  margin:0;
-  color:#222;
-  -webkit-font-smoothing:antialiased;
+/* Tổng thể */
+body {
+    background-color: var(--light-bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.page-wrap{
-  padding:32px;
+
+/* Card chính */
+.card {
+    border: none;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.15);
+}
+/* Báo lỗi */
+.error-message {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+  font-style: italic;
 }
 
-/* Card */
-.create-cqm-container{
-  max-width:var(--max-width);
-  margin: 24px auto;
-  background:var(--card-bg);
-  border-radius:var(--radius);
-  padding:28px;
-  box-shadow:0 8px 30px rgba(22,27,34,0.06);
+
+/* ==== STEP HEADER ==== */
+.step {
+    display: none;
+}
+.step.active {
+    display: block;
+}
+.step-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.step-indicator {
+    width: 100%;
+    position: relative;
+}
+.step-indicator::before {
+    content: "";
+    position: absolute;
+    align-items: center;
+    width: 100%;
+    height: 3px;
+    background: #f0f0f0;
+    z-index: 0;
+}
+.circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e9ecef;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin: auto;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+.circle.active {
+    background: var(--main-orange);
+    color: #fff;
+    box-shadow: 0 0 8px rgba(255, 102, 0, 0.6);
+}
+.circle.completed {
+    background: #ffd5b5;
+    color: var(--dark-orange);
+    border: 2px solid var(--main-orange);
+}
+.label {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 6px;
+    color: var(--text-color);
 }
 
-/* Title */
-.cqm-title{
-  font-size:28px;
-  font-weight:700;
-  text-align:center;
-  margin-bottom:18px;
-  color:#1f2937;
+/* ==== FORM ELEMENTS ==== */
+.form-label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: none;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--main-orange);
+    box-shadow: 0 0 4px rgba(255, 102, 0, 0.3);
+}
+.form-control.error,
+.form-select.error {
+    border-color: #ff3b30 !important;
+    box-shadow: 0 0 4px rgba(255, 59, 48, 0.4);
 }
 
-/* Grid: main + aside */
-.cqm-grid{
-  display:grid;
-  grid-template-columns: 1fr 320px;
-  gap:20px;
-  align-items:start;
+
+/* ==== BUTTONS ==== */
+.btn-primary {
+    background-color: var(--main-orange);
+    border-color: var(--main-orange);
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: var(--dark-orange);
+    border-color: var(--dark-orange);
+    transform: translateY(-1px);
+}
+.btn-primary:active {
+    transform: translateY(0);
+}
+.btn-outline-primary {
+    border-color: var(--main-orange);
+    color: var(--main-orange);
+    font-weight: 600;
+    border-radius: 8px;
+}
+.btn-outline-primary:hover {
+    background-color: var(--main-orange);
+    color: white;
+}
+.btn-outline-secondary {
+    border-color: #aaa;
+    color: #666;
+    font-weight: 600;
+    border-radius: 8px;
+}
+.btn-outline-secondary:hover {
+    background-color: #f2f2f2;
+}
+.btn-danger {
+    background-color: #ff3b30;
+    border-color: #ff3b30;
+}
+.btn-danger:hover {
+    background-color: #e02b20;
 }
 
-/* Card sections */
-.cqm-card{
-  padding:10px 4px;
+/* ==== CHAPTER ==== */
+.chapter-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff7f2;
+    border: 1px solid #ffd5b5;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+.chapter-item:hover {
+    background: #fff1e6;
+}
+.chapter-item input {
+    border: none;
+    background: transparent;
+    flex: 1;
+    font-weight: 500;
+    color: #444;
+}
+.chapter-item input:focus {
+    outline: none;
 }
 
-/* Aside style */
-.cqm-aside{
-  background:linear-gradient(180deg,#fff,#fff);
-  border-radius:10px;
-  padding:18px;
-  border:1px solid rgba(0,0,0,0.03);
+/* ==== LESSON ==== */
+.card {
+    box-shadow: 0 4px 8px rgba(255, 102, 0, 0.12);
+}
+#lessonContainer .card {
+    border: 1px solid #ffd5b5;
+    background-color: #fffdfb;
+    border-radius: 10px;
+}
+.remove-lesson {
+    color: #ff3b30;
+    font-size: 0.9rem;
+    border: 1px solid #ff3b30;
+    border-radius: 6px;
+    padding: 3px 8px;
+}
+.remove-lesson:hover {
+    background-color: #ff3b30;
+    color: white;
 }
 
-/* Form controls */
-.cqm-label{
-  display:block;
-  font-weight:600;
-  color:var(--muted);
-  margin:10px 0 6px;
-  font-size:14px;
+/* ==== NAVIGATION ==== */
+#prevBtn,
+#nextBtn {
+    min-width: 120px;
 }
 
-.required{ color:#d9534f; margin-left:6px; font-weight:700; font-size:12px}
-
-/* Inputs */
-.cqm-input, .cqm-select, .cqm-textarea{
-  width:100%;
-  padding:10px 14px;
-  border-radius:8px;
-  border:1px solid #e2e8f0;
-  font-size:14px;
-  color:#1b1b1b;
-  background:#fff;
-  outline:none;
-  transition:box-shadow .12s, border-color .12s;
+/* ==== TRANSITIONS ==== */
+.step {
+    animation: fadeIn 0.4s ease;
 }
-
-.cqm-input.small{ padding:8px 10px; font-size:13px; display:inline-block; width:auto; }
-
-.cqm-input:focus, .cqm-select:focus, .cqm-textarea:focus{
-  border-color:var(--accent);
-  box-shadow:0 4px 18px rgba(255,107,0,0.08);
-}
-
-/* textarea */
-.cqm-textarea{ min-height:120px; resize:vertical; }
-
-/* outcomes list */
-.outcomes-wrap{ display:flex; gap:8px; align-items:center; margin-bottom:8px }
-.outcomes-list{ list-style:none; padding-left:0; margin:6px 0 0; }
-.outcomes-list li{ background:#f3f6f9; padding:8px 10px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; font-size:14px; color:#333; }
-
-/* Tags */
-.tag-input{ display:flex; gap:8px; align-items:center; margin-bottom:10px; }
-.tags-container{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
-.tag{ background:#eef6ff; padding:6px 10px; border-radius:999px; color:#064e9c; font-weight:600; font-size:13px; display:inline-flex; gap:8px; align-items:center; }
-
-/* thumbnail preview */
-.thumbnail-wrap{ display:flex; gap:12px; align-items:center; margin-top:8px; }
-.file-input{ font-size:14px; }
-.thumb-preview{ width:86px; height:68px; border-radius:8px; background:#f7f8fa; border:1px dashed #e2e8f0; display:flex; align-items:center; justify-content:center; color:#9aa3ad; font-size:13px; overflow:hidden; object-fit:cover; }
-
-/* Buttons row */
-.cqm-actions{ margin-top:18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
-.helper-text{ color:#6b7280; font-size:13px; }
-.action-buttons{ display:flex; gap:12px; }
-
-/* Buttons */
-.cqm-btn{ padding:10px 18px; border-radius:10px; font-weight:600; border:0; cursor:pointer; }
-.btn-primary.cqm-btn, .btn-primary{ background:var(--accent); color:#fff; }
-.btn-secondary.cqm-btn, .btn-secondary{ background:#6b7280; color:#fff; }
-
-.small-btn{ padding:6px 10px; border-radius:8px; background:#eef2ff; border:1px solid #ddd; cursor:pointer }
-
-/* Responsive */
-@media (max-width:980px){
-  .cqm-grid{ grid-template-columns: 1fr; }
-  .cqm-aside{ order:2; }
-  .create-cqm-container{ padding:20px; margin:12px; }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
