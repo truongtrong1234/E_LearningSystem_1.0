@@ -82,7 +82,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Jump Into Course Creation</span>
                                 
-                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = '/ELM/createCourse'">Create Your Course</button>
+                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = '${pageContext.request.contextPath}/createCourse'">Create Your Course</button>
                             </div>
                         </div>
                         <!-- List Courses -->
@@ -121,9 +121,7 @@
                                 </c:when>
                             <c:otherwise>
                                 <div class="col-12">
-                                    
-                                    
-                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="/ELM/createC    ourse">"Create Your Course"</a> để bắt đầu</div>
+                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="/ELM/createCourse">"Create Your Course"</a> để bắt đầu</div>
                                 </div>
                             </c:otherwise>
                          </c:choose>

@@ -40,7 +40,6 @@ public class AccountDAO extends DBContext {
         ps.setString(3, a.getName()); // fullname
         ps.setString(4, null); // hoặc "default.png" nếu muốn ảnh mặc định
         ps.setString(5, "learner"); // mặc định role là learner
-
         int rows = ps.executeUpdate();
         if (rows > 0) {
             ResultSet rs = ps.getGeneratedKeys();
