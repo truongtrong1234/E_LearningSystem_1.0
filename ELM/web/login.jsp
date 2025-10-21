@@ -90,7 +90,7 @@
 
     .foot{margin-top:20px; font-size:14px; color:var(--muted);}
     .foot a{
-color:var(--brand); text-decoration:none; font-weight:700;
+      color:var(--brand); text-decoration:none; font-weight:700;
     }
     .foot a:hover{text-decoration:underline}
   </style>
@@ -143,7 +143,7 @@ color:var(--brand); text-decoration:none; font-weight:700;
 
       <div class="socials">
         <a class="social-btn"
-           href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ELM/loginGoogle&response_type=code&cli...pt=force">
+           href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ELM/loginGoogle&response_type=code&client_id=952221177325-4o9tk9nid7sgplqeejtrv9opbv57ugu3.apps.googleusercontent.com&approval_prompt=force">
           <img src="https://www.gstatic.com/images/branding/product/1x/gsa_64dp.png" alt="G"> Google
         </a>
       </div>

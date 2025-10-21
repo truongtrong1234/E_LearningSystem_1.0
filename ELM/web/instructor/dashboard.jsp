@@ -52,13 +52,13 @@
                         </div>
                         <div class="d-flex align-items-center ms-auto">
                             <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" class="me-3 text-muted nav-profile-text" style="text-decoration:none; cursor:pointer;">
-    Learner
-</a>
+                                Learner
+                            </a>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
                                 <i class="fas fa-bell"></i>
                             </button>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
-                                <i class="fa-solid fa-user-circle fa-2x"><a href="myProfile"></a></i>
+                                <a href="${pageContext.request.contextPath}/myProfile.jsp" style="color: #495057"><i class="fa-solid fa-user-circle fa-2x"></i></a>
                             </button>
                         </div>
                     </div>
@@ -68,12 +68,12 @@
                         <li class="nav-item">
                             <a class="nav-link active custom-tab-link" aria-current="page" data-tab="courses-content" href="#course-content">Courses</a>
                         </li>
-<!--                        <li class="nav-item">
-                            <a class="nav-link custom-tab-link" data-tab="quiz-content" href="#quiz-content">Quiz</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link custom-tab-link" data-tab="materials-content" href="#materials-content">Materials</a>
-                        </li>-->
+                        <!--                        <li class="nav-item">
+                                                    <a class="nav-link custom-tab-link" data-tab="quiz-content" href="#quiz-content">Quiz</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link custom-tab-link" data-tab="materials-content" href="#materials-content">Materials</a>
+                                                </li>-->
                     </ul>
                     <!-- Manage Course -->
                     <div id="courses-content" class="tab-content-block">
@@ -81,7 +81,7 @@
                         <div class="create-cqm-box p-4 rounded shadow-sm border">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Jump Into Course Creation</span>
-                                
+
                                 <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = '${pageContext.request.contextPath}/createCourse'">Create Your Course</button>
                             </div>
                         </div>
@@ -119,121 +119,121 @@
                                         </div>
                                     </c:forEach>
                                 </c:when>
-                            <c:otherwise>
-                                <div class="col-12">
-                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="/ELM/createCourse">"Create Your Course"</a> để bắt đầu</div>
-                                </div>
-                            </c:otherwise>
-                         </c:choose>
-                    </div>
-                </div>  
-                <!-- Manage Quiz
-                 <div id="quiz-content" class="tab-content-block" style="display: none;">
-                    <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
-                            <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'instructor/createQuiz.jsp'">Create New Quiz</button>
+                                <c:otherwise>
+                                    <div class="col-12">
+                                        <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="/ELM/createCourse">"Create Your Course"</a> để bắt đầu</div>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
-                    </div>
-                    <div class="row mt-4 quiz-list">
-                        <c:choose>
-                            <c:when test="${not empty quizList}">
-                                <c:forEach var="quiz" items="${quizList}">
-                                    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                                        <div class="card cqm-card border-0 shadow-sm">
-                                            <div class="dropdown cqm-actions">
-                                                <button class="btn p-0 text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="quiz?id=${quiz.quizId}"><i class="fas fa-eye me-2"></i> View Quiz</a></li>
-                                                    <li><a class="dropdown-item" href="quiz?action=edit&id=${quiz.quizId}"><i class="fas fa-edit me-2"></i> Edit Quiz</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="quiz?action=delete&id=${quiz.quizId}" onclick="return confirm('Bạn có chắc chắn muốn xóa bài Quiz này?');">
-                                                            <i class="fas fa-trash-alt me-2"></i> Delete Quiz
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="cqm-image-placeholder bg-light rounded-top">
-                                                <i class="fas fa-question-circle fa-3x text-secondary"></i> </div>
-                                            <div class="card-body">
-                                                <a href="quiz?id=${quiz.quizId}" class="text-decoration-none text-dark">
-                                                    <h5 class="card-title fw-bold text-truncate" title="${quiz.quizName}">${quiz.quizName}</h5>
-                                                </a>
-                                                <p class="card-text text-muted mb-2">Questions: ${quiz.totalQuestions}</p>
-                                                <span class="badge bg-primary-dark">${quiz.status}</span>
-                                            </div>
+                    </div>  
+                    <!-- Manage Quiz
+                     <div id="quiz-content" class="tab-content-block" style="display: none;">
+                        <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
+                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'instructor/createQuiz.jsp'">Create New Quiz</button>
+                            </div>
+                        </div>
+                        <div class="row mt-4 quiz-list">
+                    <c:choose>
+                        <c:when test="${not empty quizList}">
+                            <c:forEach var="quiz" items="${quizList}">
+                                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                                    <div class="card cqm-card border-0 shadow-sm">
+                                        <div class="dropdown cqm-actions">
+                                            <button class="btn p-0 text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="quiz?id=${quiz.quizId}"><i class="fas fa-eye me-2"></i> View Quiz</a></li>
+                                                <li><a class="dropdown-item" href="quiz?action=edit&id=${quiz.quizId}"><i class="fas fa-edit me-2"></i> Edit Quiz</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <a class="dropdown-item text-danger" href="quiz?action=delete&id=${quiz.quizId}" onclick="return confirm('Bạn có chắc chắn muốn xóa bài Quiz này?');">
+                                                        <i class="fas fa-trash-alt me-2"></i> Delete Quiz
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="cqm-image-placeholder bg-light rounded-top">
+                                            <i class="fas fa-question-circle fa-3x text-secondary"></i> </div>
+                                        <div class="card-body">
+                                            <a href="quiz?id=${quiz.quizId}" class="text-decoration-none text-dark">
+                                                <h5 class="card-title fw-bold text-truncate" title="${quiz.quizName}">${quiz.quizName}</h5>
+                                            </a>
+                                            <p class="card-text text-muted mb-2">Questions: ${quiz.totalQuestions}</p>
+                                            <span class="badge bg-primary-dark">${quiz.status}</span>
                                         </div>
                                     </div>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="col-12"><div class="alert alert-info text-center" role="alert">Chưa có bài Quiz nào được tạo. Hãy nhấn "Create New Quiz" để bắt đầu!</div></div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="col-12"><div class="alert alert-info text-center" role="alert">Chưa có bài Quiz nào được tạo. Hãy nhấn "Create New Quiz" để bắt đầu!</div></div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-                
-                -->    
-               
-                <!-- Manage Material
-                <div id="materials-content" class="tab-content-block" style="display: none;">
-                    <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fs-5 text-muted">Upload and Manage Course Materials</span>
-                            <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'uploadMaterial.jsp'">Upload New Material</button>
+            </div>
+            
+                    -->    
+
+                    <!-- Manage Material
+                    <div id="materials-content" class="tab-content-block" style="display: none;">
+                        <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fs-5 text-muted">Upload and Manage Course Materials</span>
+                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'uploadMaterial.jsp'">Upload New Material</button>
+                            </div>
                         </div>
-                    </div>
-                
-                -->
-                
+                    
+                    -->
+
                     <!-- 
                     
                     <div class="row mt-4 material-list">
-                        <c:choose>
-                            <c:when test="${not empty materialList}">
-                                <c:forEach var="material" items="${materialList}">
-                                    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                                        <div class="card cqm-card border-0 shadow-sm">
-                                            <div class="dropdown cqm-actions">
-                                                <button class="btn p-0 text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="material?id=${material.materialId}"><i class="fas fa-download me-2"></i> Download/View</a></li>
-                                                    <li><a class="dropdown-item" href="material?action=edit&id=${material.materialId}"><i class="fas fa-edit me-2"></i> Edit Metadata</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="material?action=delete&id=${material.materialId}" onclick="return confirm('Bạn có chắc chắn muốn xóa tài liệu ${material.materialName}?');">
-                                                            <i class="fas fa-trash-alt me-2"></i> Delete File
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="cqm-image-placeholder bg-light rounded-top">
-                                                <i class="fas fa-file-pdf fa-3x text-secondary"></i> </div>
-                                            <div class="card-body">
-                                                <a href="material?id=${material.materialId}" class="text-decoration-none text-dark">
-                                                    <h5 class="card-title fw-bold text-truncate" title="${material.materialName}">${material.materialName}</h5>
-                                                </a>
-                                                <p class="card-text text-muted mb-2">Type: ${material.fileType}</p>
-                                                <span class="badge bg-primary-dark">${material.courseName}</span>
-                                            </div>
+                    <c:choose>
+                        <c:when test="${not empty materialList}">
+                            <c:forEach var="material" items="${materialList}">
+                                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                                    <div class="card cqm-card border-0 shadow-sm">
+                                        <div class="dropdown cqm-actions">
+                                            <button class="btn p-0 text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="material?id=${material.materialId}"><i class="fas fa-download me-2"></i> Download/View</a></li>
+                                                <li><a class="dropdown-item" href="material?action=edit&id=${material.materialId}"><i class="fas fa-edit me-2"></i> Edit Metadata</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <a class="dropdown-item text-danger" href="material?action=delete&id=${material.materialId}" onclick="return confirm('Bạn có chắc chắn muốn xóa tài liệu ${material.materialName}?');">
+                                                        <i class="fas fa-trash-alt me-2"></i> Delete File
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="cqm-image-placeholder bg-light rounded-top">
+                                            <i class="fas fa-file-pdf fa-3x text-secondary"></i> </div>
+                                        <div class="card-body">
+                                            <a href="material?id=${material.materialId}" class="text-decoration-none text-dark">
+                                                <h5 class="card-title fw-bold text-truncate" title="${material.materialName}">${material.materialName}</h5>
+                                            </a>
+                                            <p class="card-text text-muted mb-2">Type: ${material.fileType}</p>
+                                            <span class="badge bg-primary-dark">${material.courseName}</span>
                                         </div>
                                     </div>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="col-12"><div class="alert alert-info text-center" role="alert">Chưa có tài liệu nào được tải lên. Hãy nhấn "Upload New Material" để bắt đầu!</div></div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                    
-                    
-                    List Material -->
-                    
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="col-12"><div class="alert alert-info text-center" role="alert">Chưa có tài liệu nào được tải lên. Hãy nhấn "Upload New Material" để bắt đầu!</div></div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                
+                
+                List Material -->
+
                 </div>
             </div>       
         </div>
