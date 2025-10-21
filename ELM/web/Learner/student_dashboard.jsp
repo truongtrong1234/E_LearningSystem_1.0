@@ -128,7 +128,8 @@
                             <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href='createQuiz.jsp'">Create New Quiz</button>
                         </div>
                     </div>
-                    <!-- List Quiz -->
+                    
+                    
                     <div class="row mt-4 quiz-list">
                         <c:choose>
                             <c:when test="${not empty quizList}">
