@@ -316,8 +316,9 @@
             </div>
 
             <nav class="nav-links">
-                <a href="<%=ctx%>/my_courses">My learning</a>
-                <a href="<%=ctx%>/instructor">Instructor</a>
+                <a href="/ELM/my_cours">My Course</a>
+                <a href="/ELM/course">Instructor</a>
+
             </nav>
 
             <div class="header-icons">
