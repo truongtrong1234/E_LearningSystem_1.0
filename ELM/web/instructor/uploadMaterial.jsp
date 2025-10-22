@@ -38,6 +38,6 @@
         </div>
     </div>
     
-    <script src="${pageContext.request.contextPath}/assets/js/uploadMaterial.js" defer></script>
+    <script src="${pageContext.request.contextPath}/assets/js/uploadMaterial.js"></script>
 </body>
 </html>
