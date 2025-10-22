@@ -218,27 +218,30 @@
             <!-- Form -->
             <div class="panel">
                 <h1>Log in to continue your learning journey</h1>
-
-                <form action="<%=ctx%>/login" method="post">
+                <form action="${pageContext.request.contextPath}/login" method="post" autocomplete="off">
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" class="ud-input" required />
+                    <input id="email" name="email" type="email" class="ud-input"
+                           placeholder="Enter your email" required
+                           autocomplete="new-email"
+                           value="${emailValue != null ? emailValue : ''}">
 
                     <div style="height:12px"></div>
 
                     <label for="password">Password</label>
-                    <input id="password" name="password" type="password" class="ud-input" required />
+                    <input id="password" name="password" type="password" class="ud-input"
+                           placeholder="Enter your password" required autocomplete="new-password">
 
                     <div style="margin:10px 0 5px; text-align:right;">
                         <a href="#" style="color:#5624d0; text-decoration:none; font-size:14px;">Forgot password?</a>
                     </div>
 
-                    <!-- Thông báo lỗi -->
                     <c:if test="${not empty error}">
                         <div class="error">${error}</div>
                     </c:if>
 
                     <button type="submit" class="btn-primary">Continue</button>
                 </form>
+
 
                 <div class="hr"><span>Other login options</span></div>
 
@@ -254,5 +257,6 @@
                 </div>
             </div>
         </div>
+                
     </body>
 </html>
