@@ -1,75 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Material</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/createCQM.css">
+    <title>Upload Material</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css"> 
 </head>
 <body>
-    <div class="page-wrap">
-        <div class="create-cqm-container">
-            <h2 class="cqm-title">Upload New Material</h2>
+    <div class="create-cqm-container" data-page="material">
+        <div class="form-wrapper shadow-lg p-5 rounded-4 bg-white">
+            <h2 class="mb-4 fw-bold text-center text-primary">Upload Material</h2>
+            <form id="uploadMaterialForm">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Title <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="materialTitle" placeholder="Enter material title" required>
+                </div>
 
-            <form action="CreateMaterialServlet" method="post" enctype="multipart/form-data">
-                <div class="cqm-grid">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Description</label>
+                    <textarea class="form-control" id="materialDescription" rows="3"
+                              placeholder="Optional description..."></textarea>
+                </div>
 
-                    <!-- Main form -->
-                    <div class="cqm-card">
-                        <!-- Material Title -->
-                        <label class="cqm-label">Material Title <span class="required">*</span></label>
-                        <input type="text" name="materialTitle" class="cqm-input" placeholder="e.g. Introduction to JSP" required>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Upload File</label>
+                    <input type="file" class="form-control" id="materialFile"
+                           accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4,.avi,.mov">
+                    <div class="form-text">Supported: PDF, DOC, PPT, IMG, Video...</div>
+                </div>
 
-                        <!-- Description -->
-                        <label class="cqm-label">Description</label>
-                        <textarea name="description" class="cqm-textarea" placeholder="Short description about this material..."></textarea>
-
-                        <!-- Related Course -->
-                        <label class="cqm-label">Related Course</label>
-                        <select name="courseId" class="cqm-select">
-                            <option value="">Select Course</option>
-                            <!-- Load from DB -->
-                        </select>
-
-                        <!-- File upload -->
-                        <label class="cqm-label">Upload File <span class="required">*</span></label>
-                        <div class="thumbnail-wrap">
-                            <input type="file" name="materialFile" class="file-input" accept=".pdf,.ppt,.pptx,.doc,.docx,.zip,.mp4" required>
-                            <div class="thumb-preview" id="material-preview">No file</div>
-                        </div>
-
-                        <!-- Tags -->
-                        <label class="cqm-label">Tags</label>
-                        <div class="tag-input">
-                            <input type="text" id="tagInput" class="cqm-input small" placeholder="Add tag (press Enter)">
-                        </div>
-                        <div class="tags-container" id="tagsContainer"></div>
-
-                        <!-- Actions -->
-                        <div class="cqm-actions">
-                            <p class="helper-text">Make sure your file is under 50MB and clearly named.</p>
-                            <div class="action-buttons">
-                                <button type="submit" class="btn-primary cqm-btn">Upload Material</button>
-                                <a href="course" class="btn-secondary cqm-btn">Cancel</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Aside -->
-                    <aside class="cqm-aside">
-                        <h4 style="margin-bottom:10px;">Upload Tips</h4>
-                        <ul style="font-size:14px; color:#555; line-height:1.6;">
-                            <li>Ensure the file format is supported (PDF, DOCX, MP4...)</li>
-                            <li>Include clear titles and tags to make it searchable.</li>
-                            <li>For videos, consider providing a thumbnail or short intro.</li>
-                        </ul>
-                    </aside>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary px-4" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4">Upload Material</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <script src="../assets/js/createCQM.js"></script>
+    
+    <script src="${pageContext.request.contextPath}/assets/js/uploadMaterial.js"></script>
 </body>
 </html>
