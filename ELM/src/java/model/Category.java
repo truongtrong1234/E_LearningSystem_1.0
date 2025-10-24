@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author Admin
- */
 public class Category {
-    private int cate_id ; 
+    private int cate_id; 
     private String cate_name; 
 
     public Category(int cate_id, String cate_name) {
@@ -17,8 +9,7 @@ public class Category {
         this.cate_name = cate_name;
     }
 
-    public Category() {
-    }
+    public Category() {}
 
     public int getCate_id() {
         return cate_id;
@@ -35,10 +26,18 @@ public class Category {
     public void setCate_name(String cate_name) {
         this.cate_name = cate_name;
     }
+//
+//    // 👉 Thêm hai getter alias để JSP hiểu
+//    public int getCategoryID() {
+//        return cate_id;
+//    }
+//
+//    public String getCategoryName() {
+//        return cate_name;
+//    }
 
     @Override
     public String toString() {
         return "Category{" + "cate_id=" + cate_id + ", cate_name=" + cate_name + '}';
     }
-    
 }

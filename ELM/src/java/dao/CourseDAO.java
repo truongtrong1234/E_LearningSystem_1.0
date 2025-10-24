@@ -7,11 +7,10 @@ import model.Course;
 import context.DBContext;
 import java.util.Date;
 
-
 public class CourseDAO extends DBContext {
 
     // 🟢 Lấy tất cả khóa học
-      public List<Course> getAllCourses() {
+    public List<Course> getAllCourses() {
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM Courses";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -23,7 +22,7 @@ public class CourseDAO extends DBContext {
                         rs.getString("Description"),
                         rs.getInt("InstructorID"),
                         rs.getBigDecimal("Price"),
-                        rs.getDate("CreatedAt"),
+                        rs.getInt("Class"),   // ✅ Đổi ở đây
                         rs.getInt("CategoryID"),
                         rs.getString("Thumbnail")
                 );
@@ -35,7 +34,8 @@ public class CourseDAO extends DBContext {
         return list;
     }
 
-     public Course getCourseById(int courseID) {
+    // 🟢 Lấy khóa học theo ID
+    public Course getCourseById(int courseID) {
         String sql = "SELECT * FROM Courses WHERE CourseID=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, courseID);
@@ -47,7 +47,7 @@ public class CourseDAO extends DBContext {
                         rs.getString("Description"),
                         rs.getInt("InstructorID"),
                         rs.getBigDecimal("Price"),
-                        rs.getDate("CreatedAt"),
+                        rs.getInt("Class"),   // ✅ Đổi ở đây
                         rs.getInt("CategoryID"),
                         rs.getString("Thumbnail")
                 );
@@ -60,39 +60,37 @@ public class CourseDAO extends DBContext {
 
     // 🟢 Thêm khóa học mới
     public boolean insertCourse(Course course) {
-        String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, CreatedAt, CategoryID, Thumbnail) " +
+        String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, course.getTitle());
             ps.setString(2, course.getDescription());
             ps.setInt(3, course.getInstructorID());
             ps.setBigDecimal(4, course.getPrice());
-            ps.setTimestamp(5, new Timestamp(course.getCreatedAt().getTime()));
+            ps.setInt(5, course.getCourseclass());  // ✅ Đổi ở đây
             ps.setInt(6, course.getCategoryID());
             ps.setString(7, course.getThumbnail());
-            int rows = ps.executeUpdate();
-            return rows > 0;
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
-    
+
     // 🟢 Cập nhật khóa học
-public boolean updateCourse(Course course) {
-        String sql = "UPDATE Courses SET Title=?, Description=?, InstructorID=?, Price=?, CreatedAt=?, CategoryID=?, Thumbnail=? " +
+    public boolean updateCourse(Course course) {
+        String sql = "UPDATE Courses SET Title=?, Description=?, InstructorID=?, Price=?, Class=?, CategoryID=?, Thumbnail=? " +
                      "WHERE CourseID=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, course.getTitle());
             ps.setString(2, course.getDescription());
             ps.setInt(3, course.getInstructorID());
             ps.setBigDecimal(4, course.getPrice());
-            ps.setTimestamp(5, new Timestamp(course.getCreatedAt().getTime()));
+            ps.setInt(5, course.getCourseclass());  // ✅ Đổi ở đây
             ps.setInt(6, course.getCategoryID());
             ps.setString(7, course.getThumbnail());
             ps.setInt(8, course.getCourseID());
-            int rows = ps.executeUpdate();
-            return rows > 0;
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -102,8 +100,7 @@ public boolean updateCourse(Course course) {
     // 🟢 Xóa khóa học
     public boolean deleteCourse(int id) {
         String sql = "DELETE FROM Courses WHERE CourseID = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
@@ -113,6 +110,19 @@ public boolean updateCourse(Course course) {
     }
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
+        List<Course> list = dao.getAllCourses();
+
+        if (list != null && !list.isEmpty()) {
+            for (Course c : list) {
+                System.out.println("ID: " + c.getCourseID() + 
+                                   " | Title: " + c.getTitle() + 
+                                   " | Price: " + c.getPrice());
+            }
+        } else {
+            System.out.println("⚠️ Không có khóa học nào!");
+        }
+    }
+}
 
 //        // 🟢 1. Thêm khóa học mới
 //        Course newCourse = new Course(
@@ -128,11 +138,7 @@ public boolean updateCourse(Course course) {
 //        System.out.println("Insert result: " + insertResult);
 
         // 🟢 2. Lấy tất cả khóa học
-        List<Course> list = dao.getAllCourses();
-        System.out.println("===== Danh sách khóa học =====");
-        for (Course c : list) {
-            System.out.println(c);
-        }
+
 //
 //        // 🟢 3. Lấy 1 khóa học theo ID (ví dụ ID = 1)
 //        Course c1 = dao.getCourseById(2);
@@ -153,5 +159,3 @@ public boolean updateCourse(Course course) {
         // 🟢 5. Xóa khóa học theo ID (ví dụ xóa ID = 3)
 //        boolean deleteResult = dao.deleteCourse(4);
 //        System.out.println("Delete result (ID=3): " + deleteResult);
-    }
-}
