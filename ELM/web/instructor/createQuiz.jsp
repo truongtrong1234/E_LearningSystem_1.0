@@ -21,6 +21,8 @@
             <button class="btn btn-save" id="saveQuizBtn">Create Quiz</button>
         </div>
       </div>
+    
     <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
 </body>
 </html>

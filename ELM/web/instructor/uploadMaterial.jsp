@@ -38,6 +38,7 @@
         </div>
     </div>
     
-    <script src="${pageContext.request.contextPath}/assets/js/uploadMaterial.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
 </body>
 </html>

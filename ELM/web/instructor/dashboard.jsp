@@ -6,10 +6,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Courses - Nền tảng E-learning</title>
+        <title>Dashboard</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/instructorDashboard.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/instructor.css">
     </head>
     <body>
         <div class="d-flex">
@@ -50,12 +50,18 @@
                             <h4 class="fw-semibold mb-0">Xin chào ${sessionScope.account.getName()}</h4>
                         </div>
                         <div class="d-flex align-items-center ms-auto">
-                            <span class="me-3 text-muted nav-profile-text"><a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Learner</a></span>
+                            <span class="me-3 text-muted nav-profile-text">
+                                <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Learner</a>
+                            </span>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
-                                <i class="fas fa-bell"></i>
+                                <a href="${pageContext.request.contextPath}/notification.jsp" style="color: #495057">
+                                    <i class="fas fa-bell"></i>
+                                </a>
                             </button>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
-                                <a href="${pageContext.request.contextPath}/myProfile.jsp" style="color: #495057"><i class="fa-solid fa-user-circle fa-2x"></i></a>
+                                <a href="${pageContext.request.contextPath}/myProfile.jsp" style="color: #495057">
+                                    <i class="fa-solid fa-user-circle fa-2x"></i>
+                                </a>
                             </button>
                         </div>
                     </div>
@@ -78,7 +84,10 @@
                         <div class="create-cqm-box p-4 rounded shadow-sm border">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Jump Into Course Creation</span>
-                                <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = '${pageContext.request.contextPath}/instructor/createCourse.jsp'">Create Your Course</button>
+                                <button class="btn create-cqm-btn py-2 px-4" 
+                                        onclick="window.location.href = '${pageContext.request.contextPath}/instructor/createCourse.jsp'">
+                                    Create New Course
+                                </button>
                             </div>
                         </div>
                         <!-- List Courses -->
@@ -117,7 +126,11 @@
                                 </c:when>
                             <c:otherwise>
                                 <div class="col-12">
-                                    <div class="alert alert-info text-center" role="alert">Chưa có khóa học nào được tạo. Hãy nhấn <a href="createCourse.jsp">"Create Your Course"</a> để bắt đầu</div>
+                                    <div class="alert alert-info text-center" role="alert">
+                                        Chưa có khóa học nào được tạo. Hãy nhấn 
+                                        <a href="${pageContext.request.contextPath}/instructor/createCourse.jsp" style="text-decoration: none">"Create New Course"</a> 
+                                        để bắt đầu!
+                                    </div>
                                 </div>
                             </c:otherwise>
                          </c:choose>
@@ -129,7 +142,10 @@
                     <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
-                            <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'createQuiz.jsp'">Create New Quiz</button>
+                            <button class="btn create-cqm-btn py-2 px-4" 
+                                    onclick="window.location.href = '${pageContext.request.contextPath}/instructor/createQuiz.jsp'">
+                                Create New Quiz
+                            </button>
                         </div>
                     </div>
                     <!-- List Quiz -->
@@ -168,7 +184,13 @@
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
-                                <div class="col-12"><div class="alert alert-info text-center" role="alert">Chưa có bài Quiz nào được tạo. Hãy nhấn "Create New Quiz" để bắt đầu!</div></div>
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center" role="alert">
+                                        Chưa có bài Quiz nào được tạo. Hãy nhấn 
+                                        <a href="${pageContext.request.contextPath}/instructor/createQuiz.jsp" style="text-decoration: none">"Create New Quiz"</a> 
+                                        để bắt đầu!
+                                    </div>
+                                </div>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -178,7 +200,10 @@
                     <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fs-5 text-muted">Upload and Manage Course Materials</span>
-                            <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href = 'uploadMaterial.jsp'">Upload New Material</button>
+                            <button class="btn create-cqm-btn py-2 px-4" 
+                                    onclick="window.location.href = '${pageContext.request.contextPath}/instructor/uploadMaterial.jsp'">
+                                Upload New Material
+                            </button>
                         </div>
                     </div>
                     <!-- List Material -->
@@ -217,7 +242,13 @@
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
-                                <div class="col-12"><div class="alert alert-info text-center" role="alert">Chưa có tài liệu nào được tải lên. Hãy nhấn "Upload New Material" để bắt đầu!</div></div>
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center" role="alert">
+                                        Chưa có tài liệu nào được tải lên. Hãy nhấn 
+                                        <a href="${pageContext.request.contextPath}/instructor/uploadMaterial.jsp" style="text-decoration: none">"Upload New Material"</a>
+                                        để bắt đầu!
+                                    </div>
+                                </div>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -227,6 +258,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/instructorDashboard.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
 </body>
 </html>
