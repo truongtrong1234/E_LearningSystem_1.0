@@ -4,70 +4,72 @@
  */
 package controller;
 
+import dao.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.Date;
+import model.Account;
+import model.Course;
 
-/**
- *
- * @author Admin
- */
 public class CreateCourseController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("instructor/createCourse.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         request.setCharacterEncoding("UTF-8");
+            CourseDAO cdao = new CourseDAO(); 
+
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("account");
+
+            if (account == null) {
+                // Nếu chưa đăng nhập thì chuyển hướng đến trang login
+                response.sendRedirect("login.jsp");
+                return;
+            }
+            
+            String title = request.getParameter("title");
+            String description = request.getParameter("description");
+            int instructorID = account.getAccountId();
+            BigDecimal price = new BigDecimal(request.getParameter("price"));
+            int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+            String thumbnail = request.getParameter("thumbnail");
+
+            Course course = new Course();
+            course.setTitle(title);
+            course.setDescription(description);
+            course.setInstructorID(instructorID);
+            course.setPrice(price);
+            course.setCreatedAt(new Date());
+            course.setCategoryID(categoryID);
+            course.setThumbnail(thumbnail);
+
+            boolean success = cdao.insertCourse(course);
+
+            if (success) {
+                request.setAttribute("message", "✅ Tạo khóa học thành công!");
+            } else {
+                request.setAttribute("message", "❌ Tạo khóa học thất bại!");
+            }
+
+            request.getRequestDispatcher("create_course.jsp").forward(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -21,36 +21,59 @@ import model.Account;
  */
 public class LoginController extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        String email = safe(request.getParameter("email"));
+        String password = safe(request.getParameter("password"));
+
+        AccountDAO dao = new AccountDAO();
+
+        // 🔍 Tìm tài khoản theo email
+        Account account = dao.findByEmail(email);
+
+        if (account == null) {
+            // ❌ Email không tồn tại
+            request.setAttribute("error", "Email không tồn tại!");
+            // Không giữ lại email để tránh lỗi người dùng
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        if (account.getPassword() == null) {
+            // ⚠️ Tài khoản Google (password NULL)
+            request.setAttribute("error", "Tài khoản này đăng ký bằng Google. Vui lòng đăng nhập bằng Google.");
+            request.setAttribute("emailValue", email);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        // ✅ Kiểm tra đăng nhập
+        Account validAccount = dao.login(email, password);
+        if (validAccount != null) {
+            // 🟢 Thành công
+            HttpSession session = request.getSession();
+            session.setAttribute("account", validAccount);
+            session.setMaxInactiveInterval(60 * 60 * 2); // 2 giờ
+
+            response.sendRedirect(request.getContextPath() + "/Learner/home_learner.jsp");
+        } else {
+            // 🔴 Sai mật khẩu → giữ lại email
+            request.setAttribute("error", "Sai mật khẩu!");
+            request.setAttribute("emailValue", email);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        AccountDAO dao = new AccountDAO();
-        Account acc = dao.login(email, password);
-
-        if (acc != null) {
-            // Lưu thông tin người dùng vào session
-            HttpSession session = request.getSession();
-            session.setAttribute("account", acc);
-            // Đăng nhập thành công → về home
-            response.sendRedirect("Learner/home_learner.jsp");
-        } else {
-            // Sai thông tin → gửi lỗi lại login.jsp
-            request.setAttribute("error", "Email hoặc mật khẩu sai!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+    private String safe(String s) {
+        return s == null ? "" : s.trim();
     }
-    }
-
+}

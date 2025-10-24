@@ -35,12 +35,12 @@
         }
     </style>
     <script>
-        let seconds = 5;
+        let seconds = 0;
         function countdown() {
             document.getElementById("timer").innerText = seconds;
             if (seconds === 0) {
                 // Redirect sau 5s
-                window.location.href = "Learner/home_learner.jsp"; // đổi thành trang bạn muốn
+                window.location.href = "Learner/homeLearnerCourse"; // đổi thành trang bạn muốn
             } else {
                 seconds--;
                 setTimeout(countdown, 1000);
@@ -54,7 +54,7 @@
         <h1>🎉 Login Successful!</h1>
         <p>Welcome, <strong>${sessionScope.account.getName()}</strong>!</p>
         <p>You will be redirected to the home page in 
-           <span class="countdown" id="timer">5</span> seconds...</p>
+           <span class="countdown" id="timer">0</span> seconds...</p>
     </div>
 </body>
 </html>

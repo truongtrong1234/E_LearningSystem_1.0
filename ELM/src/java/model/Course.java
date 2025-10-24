@@ -1,7 +1,6 @@
 package model;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class Course {
     private int courseID;
@@ -9,58 +8,49 @@ public class Course {
     private String description;
     private int instructorID;
     private BigDecimal price;
-    private Date createdAt;
-    private int categoryID; // thêm mới
-    private String thumbnail; // lưu ảnh trực tiếp dưới dạng binary
+    private int courseclass;     // thay createAt bằng courseclass (int)
+    private int categoryID;
+    private String thumbnail;
 
-    
     public Course() {}
 
-    public Course(int courseID, String title, String description, int instructorID, BigDecimal price, Date createdAt, int categoryID, String thumbnail) {
-        this.courseID = courseID;
-        this.title = title;
-        this.description = description;
-        this.instructorID = instructorID;
-        this.price = price;
-        this.createdAt = createdAt;
-        this.categoryID = categoryID;
-        this.thumbnail = thumbnail;
-    }
-
-    public Course(String title, String description, int instructorID, BigDecimal price, Date createdAt, int categoryID, String thumbnail) {
-        this.title = title;
-        this.description = description;
-        this.instructorID = instructorID;
-        this.price = price;
-        this.createdAt = createdAt;
-        this.categoryID = categoryID;
-        this.thumbnail = thumbnail;
-    }
-    
+    // FULL constructor có ID
     public Course(int courseID, String title, String description, int instructorID,
-                  BigDecimal price, Date createdAt, int categoryID) {
+                  BigDecimal price, int courseclass, int categoryID, String thumbnail) {
         this.courseID = courseID;
         this.title = title;
         this.description = description;
         this.instructorID = instructorID;
         this.price = price;
-        this.createdAt = createdAt;
+        this.courseclass = courseclass;
         this.categoryID = categoryID;
+        this.thumbnail = thumbnail;
     }
 
+    // Constructor không ID
     public Course(String title, String description, int instructorID,
-                  BigDecimal price, Date createdAt, int categoryID) {
+                  BigDecimal price, int courseclass, int categoryID, String thumbnail) {
         this.title = title;
         this.description = description;
         this.instructorID = instructorID;
         this.price = price;
-        this.createdAt = createdAt;
+        this.courseclass = courseclass;
         this.categoryID = categoryID;
+        this.thumbnail = thumbnail;
     }
 
     @Override
     public String toString() {
-        return "Course{" + "courseID=" + courseID + ", title=" + title + ", description=" + description + ", instructorID=" + instructorID + ", price=" + price + ", createdAt=" + createdAt + ", categoryID=" + categoryID + '}';
+        return "Course{" +
+                "courseID=" + courseID +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", instructorID=" + instructorID +
+                ", price=" + price +
+                ", class=" + courseclass +
+                ", categoryID=" + categoryID +
+                ", thumbnail='" + thumbnail + '\'' +
+                '}';
     }
 
     // Getters & setters
@@ -79,18 +69,12 @@ public class Course {
     public BigDecimal getPrice() { return price; }
     public void setPrice(BigDecimal price) { this.price = price; }
 
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public int getCourseclass() { return courseclass; }
+    public void setCourseclass(int courseclass) { this.courseclass = courseclass; }
 
     public int getCategoryID() { return categoryID; }
     public void setCategoryID(int categoryID) { this.categoryID = categoryID; }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-    
+    public String getThumbnail() { return thumbnail; }
+    public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
 }

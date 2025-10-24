@@ -59,19 +59,33 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+
         String fullName = request.getParameter("fullname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
         AccountDAO adao = new AccountDAO();
         Account account = new Account(email, password, fullName);
+
         boolean isInserted = adao.insert(account);
+
         if (isInserted) {
-            response.sendRedirect("course");
+            // Đăng ký thành công → Lưu session trước khi chuyển trang
+            HttpSession session = request.getSession();
+            session.setAttribute("account", account);
+
+            // ❗Không được forward ở đây, chỉ redirect thôi
+            response.sendRedirect(request.getContextPath() + "/Learner/home_learner.jsp");
+            return; // thêm return để dừng luôn, tránh ghi thêm ra response
         } else {
+            // Nếu thất bại thì forward về lại trang register.jsp
             request.setAttribute("errorMessage", "Đăng ký không thành công! Vui lòng thử lại.");
-             request.getRequestDispatcher("register.jsp").forward(request, response);
+            request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
+
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -198,6 +198,7 @@
                 <!-- Manage Material -->
                 <div id="materials-content" class="tab-content-block" style="display: none;">
                     <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
+          
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fs-5 text-muted">Upload and Manage Course Materials</span>
                             <button class="btn create-cqm-btn py-2 px-4" 

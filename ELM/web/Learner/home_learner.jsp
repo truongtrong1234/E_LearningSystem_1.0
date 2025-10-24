@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String username = (String) session.getAttribute("username");
     if (username == null) username = "Learner";
@@ -127,6 +128,44 @@
                 color:#fff;
                 font-weight:700
             }
+            .category-wrap{
+                position:sticky;
+                top:64px;
+                z-index:900;
+                background:#fff;
+                border-bottom:1px solid var(--line);
+            }
+
+            /* Thanh category hiển thị giống như Udemy */
+            .category-bar{
+                max-width:1240px;
+                margin:0 auto;
+                padding:12px 16px;
+                display:flex;
+                gap:32px;                    /* Tăng khoảng cách giữa các môn */
+                justify-content:center;     /* Căn giữa */
+                align-items:center;
+                overflow-x:auto;
+                scrollbar-width:none;
+            }
+            .category-bar::-webkit-scrollbar{
+                display:none
+            }
+            .category-bar a{
+                color:#2d2f31;
+                text-decoration:none;
+                font-weight:600;
+                white-space:nowrap;
+                padding:6px 0;
+                border-bottom:2px solid transparent;
+                transition:color .2s, border-color .2s, transform .2s;
+            }
+            .category-bar a:hover{
+                color:var(--orange);
+                border-color:var(--orange);
+                transform:translateY(-1px);
+            }
+
 
             /* ===== CATEGORY BAR (giống Udemy) ===== */
             .category-wrap{
@@ -305,7 +344,7 @@
 
         <!-- HEADER -->
         <header class="header">
-            <a class="logo" href="<%=ctx%>/home_Guest.jsp">
+            <a class="logo">
                 <span class="s">Secret</span><span class="c">Coder</span>
             </a>
 
@@ -316,10 +355,10 @@
             </div>
 
             <nav class="nav-links">
-                <a href="/ELM/my_cours">My Course</a>
-                <a href="/ELM/course">Instructor</a>
-
+                <a href="<%=ctx%>/Learner/mylearning.jsp">My Learning</a>
+                <a href="<%=ctx%>/course">Instructor</a>
             </nav>
+
 
             <div class="header-icons">
                 <button class="icon-btn" title="Wishlist"><i class="bi bi-heart"></i></button>
@@ -329,20 +368,18 @@
             </div>
         </header>
 
-        <!-- CATEGORY BAR (không Explore/Teach/Business) -->
+        <!-- CATEGORY BAR -->
         <div class="category-wrap">
-            <nav class="category-bar">
-                <a href="#">Toán</a>
-                <a href="#">Ngữ Văn</a>
-                <a href="#">Tiếng Anh</a>
-                <a href="#">Vật Lí</a>
-                <a href="#">Hóa học</a>
-                <a href="#">Sinh học</a>
-                <a href="#">Lịch sử</a>
-                <a href="#">Địa lý</a>
-                <a href="#">GDCD</a>
-            </nav>
+            <div class="category-bar">
+                <c:forEach var="cat" items="${listOfCategories}">
+                    <a href="${pageContext.request.contextPath}/load?cats=${cat.cate_id}">
+                        ${cat.cate_name}
+                    </a>
+                </c:forEach>
+            </div>
         </div>
+
+
         <!-- BANNER -->
         <section class="hero">
             <div class="hero-left">
@@ -365,41 +402,27 @@
         <section class="section">
             <h3>Let’s start learning</h3>
             <div class="grid">
-                <a class="course-card" href="#">
-                    <div class="thumb"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop" alt=""></div>
-                    <div class="body">
-                        <div class="title">Lập trình Python cơ bản</div>
-                        <div class="meta">Nguyễn Văn A • 4.5 ⭐ • 20h</div>
-                        <div class="price">Miễn phí</div>
-                    </div>
-                </a>
-
-                <a class="course-card" href="#">
-                    <div class="thumb"><img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1000&auto=format&fit=crop" alt=""></div>
-                    <div class="body">
-                        <div class="title">Triển khai hệ thống với AWS</div>
-                        <div class="meta">Lê Minh B • 5.0 ⭐ • 12h</div>
-                        <div class="price">299.000đ</div>
-                    </div>
-                </a>
-
-                <a class="course-card" href="#">
-                    <div class="thumb"><img src="https://images.unsplash.com/photo-1551281044-8d8d0d8c9df8?q=80&w=1000&auto=format&fit=crop" alt=""></div>
-                    <div class="body">
-                        <div class="title">Excel từ cơ bản đến nâng cao</div>
-                        <div class="meta">Trần Thị C • 4.0 ⭐ • 9h</div>
-                        <div class="price">Miễn phí</div>
-                    </div>
-                </a>
-
-                <a class="course-card" href="#">
-                    <div class="thumb"><img src="https://images.unsplash.com/photo-1553484771-371a605b060b?q=80&w=1000&auto=format&fit=crop" alt=""></div>
-                    <div class="body">
-                        <div class="title">UI/UX Design với Figma</div>
-                        <div class="meta">Phạm D • 4.8 ⭐ • 18h</div>
-                        <div class="price">399.000đ</div>
-                    </div>
-                </a>
+                <c:forEach var="c" items="${listCourse}">
+                    <a class="course-card" href="courseDetail?id=${c.courseID}">
+                        <div class="thumb">
+                            <img src="${c.thumbnail}" alt="">
+                        </div>
+                        <div class="body">
+                            <div class="title">${c.title}</div>
+                            <div class="meta">Instructor ID: ${c.instructorID}</div>
+                            <div class="price">
+                                <c:choose>
+                                    <c:when test="${c.price == 0}">
+                                        Miễn phí
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${c.price}đ
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </a>
+                </c:forEach>
             </div>
         </section>
 
