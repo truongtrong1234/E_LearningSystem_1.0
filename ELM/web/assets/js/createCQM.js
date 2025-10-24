@@ -161,12 +161,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!valid) return;
       alert("Quiz created successfully!");
-      window.location.href = "instructorDashboard.jsp?page=quiz";
+      window.location.href = "dashboard.jsp?page=quiz";
     });
 
     cancelBtn?.addEventListener("click", () => {
       if (confirm("Cancel and return to Dashboard?")) {
-        window.location.href = "instructorDashboard.jsp?page=quiz";
+        window.location.href = "dashboard.jsp?page=quiz";
       }
     });
   }
@@ -191,12 +191,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       alert("Material uploaded successfully!");
-      window.location.href = "instructorDashboard.jsp?page=materials";
+      window.location.href = "dashboard.jsp?page=materials";
     });
 
     cancelBtn?.addEventListener("click", () => {
       if (confirm("Cancel upload and return to Dashboard?")) {
-        window.location.href = "instructorDashboard.jsp?page=materials";
+        window.location.href = "dashboard.jsp?page=materials";
       }
     });
   }

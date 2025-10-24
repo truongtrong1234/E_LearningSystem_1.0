@@ -54,18 +54,15 @@
 
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Level *</label>
+                        <label class="form-label">Class *</label>
                         <select id="level" class="form-select">
-                            <option value="">-- Select level --</option>
+                            <option value="">-- Select class --</option>
                             <option>10</option>
                             <option>11</option>
                             <option>12</option>
                         </select>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Language</label>
-                        <input type="text" id="language" class="form-control" placeholder="e.g. English, Vietnamese">
-                    </div>
+                 
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Price ($)</label>
                         <input type="number" id="price" class="form-control" placeholder="Enter price">
@@ -77,10 +74,6 @@
                     <input type="file" id="thumbnail" class="form-control">
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">General Material (optional)</label>
-                    <input type="file" id="generalMaterial" class="form-control" multiple>
-                </div>
             </div>
 
             <!-- STEP 2: CHAPTER CREATION -->
@@ -114,5 +107,6 @@
     </div>
 
     <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
 </body>
 </html>
