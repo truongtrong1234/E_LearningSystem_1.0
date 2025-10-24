@@ -10,16 +10,12 @@ public class Enrollment {
     private int enrollmentID;
     private int accountID;
     private int courseID;
-    private Date enrolledAt;
-    private String status; // 'Active',...
 
     public Enrollment() {}
-    public Enrollment(int enrollmentID, int accountID, int courseID, Date enrolledAt, String status) {
+    public Enrollment(int enrollmentID, int accountID, int courseID) {
         this.enrollmentID = enrollmentID;
         this.accountID = accountID;
         this.courseID = courseID;
-        this.enrolledAt = enrolledAt;
-        this.status = status;
     }
 
     public int getEnrollmentID() { return enrollmentID; }
@@ -28,8 +24,4 @@ public class Enrollment {
     public void setAccountID(int accountID) { this.accountID = accountID; }
     public int getCourseID() { return courseID; }
     public void setCourseID(int courseID) { this.courseID = courseID; }
-    public Date getEnrolledAt() { return enrolledAt; }
-    public void setEnrolledAt(Date enrolledAt) { this.enrolledAt = enrolledAt; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
 }
