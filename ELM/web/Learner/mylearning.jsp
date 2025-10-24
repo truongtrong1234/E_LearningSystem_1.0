@@ -194,9 +194,43 @@
             color:#6a6f73;
             margin-top:28px
         }
+         .course, .chapter {
+        cursor: pointer;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .course-title {
+        font-size: 20px;
+        color: #333;
+    }
+    .course-info, .course-desc {
+        margin-left: 20px;
+        font-style: italic;
+        font-weight: normal;
+    }
+    .chapters, .lessons {
+        margin-left: 20px;
+        display: none;
+    }
+    .lesson {
+        margin-left: 20px;
+        font-weight: normal;
+        margin-bottom: 3px;
+    }
     </style>
 </head>
 <body>
+    <script>
+    function toggle(id) {
+        var el = document.getElementById(id);
+        if (el.style.display === "none") {
+            el.style.display = "block";
+        } else {
+            el.style.display = "none";
+        }
+    }
+</script>
+
 
 <!-- HEADER -->
 <header class="header">
@@ -211,7 +245,6 @@
     </div>
 
     <nav class="nav-links">
-        <a href="<%=ctx%>/my_learning.jsp">My Learning</a>
         <a href="<%=ctx%>/course">Instructor</a>
     </nav>
 
@@ -225,45 +258,38 @@
 
 
 
-<!-- MAIN CONTENT -->
 <main class="learning-container">
-    <h1>My FPTU Fall 2025 Learning</h1>
+    <h1>My Courses</h1>
 
-    <div class="tabs">
-        <button class="tab">In Progress</button>
-        <button class="tab">Saved</button>
-        <button class="tab">Completed</button>
-    </div>
-
-    <!-- Course 1 -->
-    <div class="course-card">
-        <img src="images/ux-course.jpg" alt="UX Course">
-        <div class="course-info">
-            <h2>User Experience Research and Design</h2>
-            <p>Integrate UX Research and UX Design to create great products through understanding user needs, rapidly generating prototypes, and evaluating design concepts.</p>
-            <div class="course-steps">
-                <span>6 courses</span>
-                <div class="steps">
-                    <div class="circle">1</div>
-                    <div class="circle">2</div>
-                    <div class="circle">3</div>
-                    <div class="circle">4</div>
-                    <div class="circle">5</div>
-                    <div class="circle">6</div>
+    <c:forEach var="course" items="${courses}">
+        <div class="course-card" onclick="toggle('chapters-${course.title.hashCode()}')" style="cursor:pointer;">
+            <img src="${course.thumbnail}" alt="${course.title}">
+            <div class="course-info" style="flex:1; display:flex; flex-direction:column;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>${course.title}</h2>
+                    <span style="font-style:italic; color:#555;">Instructor: ${course.instructor}</span>
                 </div>
+                <p>${course.description}</p>
+                <span style="font-style:italic; color:#777;">Class: ${course.className}</span>
             </div>
         </div>
-    </div>
 
-    <!-- Course 2 -->
-    <div class="course-card">
-        <img src="images/ux-capstone.jpg" alt="UX Capstone">
-        <div class="course-info">
-            <h2>UX (User Experience) Capstone</h2>
-            <p><span class="done">✔</span> Completed on September 21, 2025</p>
-            <a href="#" class="btn-review">Review</a>
+        <div class="chapters" id="chapters-${course.title.hashCode()}" 
+             style="background:#f7f7f7; padding:10px 20px; border-radius:6px; margin-bottom:16px;">
+            <c:forEach var="chapter" items="${course.chapters}">
+                <div class="chapter" onclick="toggle('lessons-${chapter.title.hashCode()}')" 
+                     style="background:#eaeaea; padding:6px 12px; border-radius:4px; margin-bottom:6px;">
+                    ${chapter.title}
+                </div>
+                <div class="lessons" id="lessons-${chapter.title.hashCode()}" 
+                     style="background:#fff; padding:6px 16px; border-radius:4px; margin-bottom:6px;">
+                    <c:forEach var="lesson" items="${chapter.lessons}">
+                        <div class="lesson">${lesson.title}</div>
+                    </c:forEach>
+                </div>
+            </c:forEach>
         </div>
-    </div>
+    </c:forEach>
 </main>
 
 <footer>© 2025 SecretCoder. All rights reserved.</footer>
