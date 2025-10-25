@@ -93,7 +93,7 @@ public class ChapterDAO extends DBContext {
         ChapterDAO dao = new ChapterDAO();
         System.out.println("Danh sách chương:");
         for (Chapter c : dao.getAllChap()) {
-            System.out.println(c.getChapterID() + " - " + c.getTitle());
+            System.out.println(c.getChapterID() + " - " + c.getTitle()+ c.getCourseID());
         }
     }
 }

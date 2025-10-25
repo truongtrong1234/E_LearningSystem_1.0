@@ -109,33 +109,34 @@ public class CourseDAO extends DBContext {
         return false;
     }
     public static void main(String[] args) {
-        CourseDAO dao = new CourseDAO();
-        List<Course> list = dao.getAllCourses();
-
-        if (list != null && !list.isEmpty()) {
-            for (Course c : list) {
-                System.out.println("ID: " + c.getCourseID() + 
-                                   " | Title: " + c.getTitle() + 
-                                   " | Price: " + c.getPrice());
-            }
-        } else {
-            System.out.println("⚠️ Không có khóa học nào!");
-        }
+//        CourseDAO dao = new CourseDAO();
+//        List<Course> list = dao.getAllCourses();
+//
+//        if (list != null && !list.isEmpty()) {
+//            for (Course c : list) {
+//                System.out.println("ID: " + c.getCourseID() + 
+//                                   " | Title: " + c.getTitle() + 
+//                                   " | Price: " + c.getPrice());
+//            }
+//        } else {
+//            System.out.println("⚠️ Không có khóa học nào!");
+//        }
+        CourseDAO dao = new CourseDAO(); 
+        Course course = new Course();
+         course.setTitle("Java Web Basics");
+        course.setDescription("Learn how to build web apps using Java Servlets and JSP.");
+        course.setInstructorID(1);      // Giả sử instructorID = 1
+        course.setPrice(new BigDecimal("49.99"));
+        course.setCourseclass(11);      // Lớp 11
+        course.setCategoryID(2);        // Giả sử categoryID = 2
+         // test link        
+        boolean insertResult = dao.insertCourse(course);
+        System.out.println("Insert result: " + insertResult);
+        
     }
 }
 
-//        // 🟢 1. Thêm khóa học mới
-//        Course newCourse = new Course(
-//                "Java Web Development",
-//                "Khóa học lập trình web với Servlet & JSP",
-//                1005,
-//                new BigDecimal("1000"),
-//                new Date(),
-//                9 // CategoryID (giả sử có sẵn trong bảng Category)
-//        );
-//
-//        boolean insertResult = dao.insertCourse(newCourse);
-//        System.out.println("Insert result: " + insertResult);
+//       
 
         // 🟢 2. Lấy tất cả khóa học
 
