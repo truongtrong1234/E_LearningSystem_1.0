@@ -91,7 +91,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Jump Into Course Creation</span>
                                 <button class="btn create-cqm-btn py-2 px-4" 
-                                        onclick="window.location.href = '${pageContext.request.contextPath}/instructor/createCourse.jsp'">
+                                        onclick="window.location.href = 'createCourse'">
                                     Create New Course
                                 </button>
                             </div>
@@ -134,7 +134,7 @@
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
                                             Chưa có khóa học nào được tạo. Hãy nhấn 
-                                            <a href="${pageContext.request.contextPath}/instructor/createCourse.jsp" style="text-decoration: none">"Create New Course"</a> 
+                                            <a href="createCourse" style="text-decoration: none">"Create New Course"</a> 
                                             để bắt đầu!
                                         </div>
                                     </div>
