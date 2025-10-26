@@ -5,7 +5,10 @@ import model.Enrollment;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import model.Course;
 
 public class EnrollmentDAO extends DBContext {
 
@@ -81,8 +84,55 @@ public class EnrollmentDAO extends DBContext {
             ex.printStackTrace();
         }
         return list;
+        
     }
+  public List<Course> getCoursesByAccountId(int accountId) {
+        List<Course> list = new ArrayList<>();
 
+        String sql = """
+            SELECT 
+                c.CourseID, 
+                c.Title, 
+                c.Description, 
+                c.InstructorID,
+                c.Price,
+                c.Class,
+                c.CategoryID,
+                c.Thumbnail,
+                a.name AS InstructorName,
+                cat.CategoryName AS CategoryName
+            FROM Courses c
+            JOIN Enrollments e ON e.CourseID = c.CourseID
+            JOIN Accounts a ON a.AccountID = c.InstructorID
+            JOIN Category cat ON cat.CategoryID = c.CategoryID
+            WHERE e.AccountID = ?
+        """;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accountId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Course c = new Course();
+                c.setCourseID(rs.getInt("CourseID"));
+                c.setTitle(rs.getString("Title"));
+                c.setDescription(rs.getString("Description"));
+                c.setInstructorID(rs.getInt("InstructorID"));
+                c.setPrice(rs.getBigDecimal("Price"));
+                c.setCourseclass(Integer.parseInt(rs.getString("Class")));
+                c.setCategoryID(rs.getInt("CategoryID"));
+                c.setThumbnail(rs.getString("Thumbnail"));
+                c.setInstructorName(rs.getString("InstructorName"));
+                c.setCategoryName(rs.getString("CategoryName"));
+                list.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     // UPDATE
     public void updateEnrollment(Enrollment e) {
         String sql = "UPDATE Enrollments SET AccountID = ?, CourseID = ? WHERE EnrollmentID = ?";
@@ -126,11 +176,12 @@ public class EnrollmentDAO extends DBContext {
 
     // Test nhanh
     public static void main(String[] args) {
-        EnrollmentDAO dao = new EnrollmentDAO();
-
-        System.out.println("Danh sách enrollments:");
-        for (Enrollment e : dao.getAllEnrollment()) {
-            System.out.println(e.getEnrollmentID() + " | " + e.getAccountID() + " | " + e.getCourseID());
+       EnrollmentDAO dao = new EnrollmentDAO();
+        int accountID = 5; // 👈 đổi ID theo tài khoản thực tế trong DB của bạn
+       List<Course> courseList =  dao.getCoursesByAccountId(accountID); 
+        for (Course course : courseList) {
+            System.out.println(course);
         }
+    
     }
 }

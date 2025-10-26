@@ -11,12 +11,40 @@ public class Course {
     private int courseclass;     // thay createAt bằng courseclass (int)
     private int categoryID;
     private String thumbnail;
+    private String categoryName;
+    private String instructorName;
 
+    public Course(int courseID, String title, String description, int instructorID, BigDecimal price, int courseclass, int categoryID, String thumbnail, String categoryName, String instructorName) {
+        this.courseID = courseID;
+        this.title = title;
+        this.description = description;
+        this.instructorID = instructorID;
+        this.price = price;
+        this.courseclass = courseclass;
+        this.categoryID = categoryID;
+        this.thumbnail = thumbnail;
+        this.categoryName = categoryName;
+        this.instructorName = instructorName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
     public Course() {}
 
-    // FULL constructor có ID
-    public Course(int courseID, String title, String description, int instructorID,
-                  BigDecimal price, int courseclass, int categoryID, String thumbnail) {
+    public Course(int courseID, String title, String description, int instructorID, BigDecimal price, int courseclass, int categoryID, String thumbnail) {
         this.courseID = courseID;
         this.title = title;
         this.description = description;
@@ -26,6 +54,19 @@ public class Course {
         this.categoryID = categoryID;
         this.thumbnail = thumbnail;
     }
+
+    public Course(String title, String description, int instructorID, BigDecimal price, int courseclass, int categoryID, String thumbnail, String categoryName, String instructorName) {
+        this.title = title;
+        this.description = description;
+        this.instructorID = instructorID;
+        this.price = price;
+        this.courseclass = courseclass;
+        this.categoryID = categoryID;
+        this.thumbnail = thumbnail;
+        this.categoryName = categoryName;
+        this.instructorName = instructorName;
+    }
+
 
     // Constructor không ID
     public Course(String title, String description, int instructorID,
