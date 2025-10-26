@@ -1,8 +1,10 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Course {
+
     private int courseID;
     private String title;
     private String description;
@@ -13,6 +15,29 @@ public class Course {
     private String thumbnail;
     private String categoryName;
     private String instructorName;
+
+    private List<Chapter> chapters;
+
+    public Course(String title, String description, int instructorID, BigDecimal price, int courseclass, int categoryID, String thumbnail, String categoryName, String instructorName, List<Chapter> chapters) {
+        this.title = title;
+        this.description = description;
+        this.instructorID = instructorID;
+        this.price = price;
+        this.courseclass = courseclass;
+        this.categoryID = categoryID;
+        this.thumbnail = thumbnail;
+        this.categoryName = categoryName;
+        this.instructorName = instructorName;
+        this.chapters = chapters;
+    }
+
+    public List<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<Chapter> chapters) {
+        this.chapters = chapters;
+    }
 
     public Course(int courseID, String title, String description, int instructorID, BigDecimal price, int courseclass, int categoryID, String thumbnail, String categoryName, String instructorName) {
         this.courseID = courseID;
@@ -42,7 +67,9 @@ public class Course {
     public void setInstructorName(String instructorName) {
         this.instructorName = instructorName;
     }
-    public Course() {}
+
+    public Course() {
+    }
 
     public Course(int courseID, String title, String description, int instructorID, BigDecimal price, int courseclass, int categoryID, String thumbnail) {
         this.courseID = courseID;
@@ -67,10 +94,9 @@ public class Course {
         this.instructorName = instructorName;
     }
 
-
     // Constructor không ID
     public Course(String title, String description, int instructorID,
-                  BigDecimal price, int courseclass, int categoryID, String thumbnail) {
+            BigDecimal price, int courseclass, int categoryID, String thumbnail) {
         this.title = title;
         this.description = description;
         this.instructorID = instructorID;
@@ -82,40 +108,80 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "courseID=" + courseID +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", instructorID=" + instructorID +
-                ", price=" + price +
-                ", class=" + courseclass +
-                ", categoryID=" + categoryID +
-                ", thumbnail='" + thumbnail + '\'' +
-                '}';
+        return "Course{"
+                + "courseID=" + courseID
+                + ", title='" + title + '\''
+                + ", description='" + description + '\''
+                + ", instructorID=" + instructorID
+                + ", price=" + price
+                + ", class=" + courseclass
+                + ", categoryID=" + categoryID
+                + ", thumbnail='" + thumbnail + '\''
+                + '}';
     }
 
     // Getters & setters
-    public int getCourseID() { return courseID; }
-    public void setCourseID(int courseID) { this.courseID = courseID; }
+    public int getCourseID() {
+        return courseID;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getTitle() {
+        return title;
+    }
 
-    public int getInstructorID() { return instructorID; }
-    public void setInstructorID(int instructorID) { this.instructorID = instructorID; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public BigDecimal getPrice() { return price; }
-    public void setPrice(BigDecimal price) { this.price = price; }
+    public String getDescription() {
+        return description;
+    }
 
-    public int getCourseclass() { return courseclass; }
-    public void setCourseclass(int courseclass) { this.courseclass = courseclass; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public int getCategoryID() { return categoryID; }
-    public void setCategoryID(int categoryID) { this.categoryID = categoryID; }
+    public int getInstructorID() {
+        return instructorID;
+    }
 
-    public String getThumbnail() { return thumbnail; }
-    public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
+    public void setInstructorID(int instructorID) {
+        this.instructorID = instructorID;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public int getCourseclass() {
+        return courseclass;
+    }
+
+    public void setCourseclass(int courseclass) {
+        this.courseclass = courseclass;
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 }

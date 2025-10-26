@@ -10,6 +10,7 @@
         response.sendRedirect("/ELM/login");
         return;
     }
+    
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -369,8 +370,6 @@ function toggleChapters(courseId) {
     }
 }
 </script>
-
-
         <!-- HEADER -->
         <header class="header">
             <a class="logo" href="<%=ctx%>/home_learner.jsp">
@@ -398,30 +397,17 @@ function toggleChapters(courseId) {
 
 
       <main class="learning-container">
-    <h1>My Courses</h1>
-
-    <c:if test="${empty myLearningCourse}">
-        <p>Đã học cái gì đâu</p>
-    </c:if>
-
+    <h1>Chapter</h1>
     <!-- Danh sách course -->
-    <c:forEach var="course" items="${myLearningCourse}">
-        <div class="course-card" onclick="toggleChapters(${course.courseID})" style="cursor:pointer;">
-            <a href="myChapter?CourseID=${course.courseID}">
-                <iframe src="${course.thumbnail}" allowfullscreen></iframe>
+    <c:forEach var="course" items="${chapterList}">
+        <div class="course-card" onclick="toggleChapters()" style="cursor:pointer;">
+            <a href="myLesson?ChapterID=${course.chapterID}">
             <div class="course-info">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h2>${course.title}</h2>
-                    <div>
-                        <span style="font-style:italic; color:#555;">Category: ${course.categoryName}</span>
-                        <span style="font-style:italic; color:#555; margin-left:10px;">Instructor: ${course.instructorName}</span>
-                    </div>
                 </div>
-                <p>${course.description}</p>
-                <span style="font-style:italic; color:#777;">Class: ${course.courseclass}</span>
             </div>
             </a>
-            
         </div>
     </c:forEach>
 </main>

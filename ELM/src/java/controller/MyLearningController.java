@@ -6,6 +6,7 @@ package controller;
 
 import dao.AccountDAO;
 import dao.CategoryDAO;
+import dao.ChapterDAO;
 import dao.CourseDAO;
 import dao.EnrollmentDAO;
 import java.io.IOException;
@@ -52,7 +53,8 @@ public class MyLearningController extends HttpServlet {
         Account acc = (Account) session.getAttribute("account");
         int myID = acc.getAccountId();
         EnrollmentDAO edao = new EnrollmentDAO();
-        CategoryDAO cateDao = new CategoryDAO(); 
+        CategoryDAO cateDao = new CategoryDAO();
+        ChapterDAO chDao = new ChapterDAO();
         List<Course> myLearningCourse = edao.getCoursesByAccountId(myID);
         request.setAttribute("myLearningCourse", myLearningCourse);
         request.getRequestDispatcher("Learner/mylearning.jsp").forward(request, response);

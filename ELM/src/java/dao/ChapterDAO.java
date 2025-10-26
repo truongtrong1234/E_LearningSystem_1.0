@@ -61,7 +61,26 @@ public class ChapterDAO extends DBContext {
         }
         return null;
     }
+     public List<Chapter> getChaptersByCourseId(int courseId) {
+        List<Chapter> list = new ArrayList<>();
+        String sql = "SELECT ChapterID, CourseID, Title FROM Chapters WHERE CourseID = ?";
 
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, courseId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Chapter ch = new Chapter();
+                ch.setChapterID(rs.getInt("ChapterID"));
+                ch.setCourseID(rs.getInt("CourseID"));
+                ch.setTitle(rs.getString("Title"));
+                list.add(ch);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     // UPDATE
     public void updateChap(Chapter chapter) {
         String sql = "UPDATE Chapters SET CourseID = ?, title = ? WHERE ChapterID = ?";
@@ -92,7 +111,7 @@ public class ChapterDAO extends DBContext {
     public static void main(String[] args) {
         ChapterDAO dao = new ChapterDAO();
         System.out.println("Danh sách chương:");
-        for (Chapter c : dao.getAllChap()) {
+        for (Chapter c : dao.getChaptersByCourseId(1)) {
             System.out.println(c.getChapterID() + " - " + c.getTitle()+ c.getCourseID());
         }
     }

@@ -32,7 +32,7 @@
             </div>
 
             <nav class="nav-links">
-                <a href="<%=ctx%>/Learner/mylearning.jsp">My Learning</a>
+                <a href="/ELM/myLearning">My Learning</a>
                 <a href="<%=ctx%>/course">Instructor</a>
             </nav>
 
