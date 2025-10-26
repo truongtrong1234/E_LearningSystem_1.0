@@ -6,6 +6,28 @@ import context.DBContext;
 import model.GoogleAccount;
 
 public class AccountDAO extends DBContext {
+// 🔹 Lấy tài khoản theo ID (dùng để lấy thông tin giảng viên)
+public Account getAccountById(int accountId) {
+    String sql = "SELECT * FROM Accounts WHERE AccountID = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, accountId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            Account a = new Account();
+            a.setAccountId(rs.getInt("AccountID"));
+            a.setEmail(rs.getString("email"));
+            a.setPassword(rs.getString("password"));
+            a.setName(rs.getString("name"));
+            a.setPicture(rs.getString("picture"));
+            a.setRole(rs.getString("role"));
+            return a;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
 
     // Lấy tài khoản theo email
     public Account findByEmail(String email) {
