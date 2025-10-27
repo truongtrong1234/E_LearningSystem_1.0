@@ -4,7 +4,7 @@
  */
 package controller;
 
-import controller.GoogleLogin;
+import dao.GoogleLogin;
 import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;

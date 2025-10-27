@@ -126,7 +126,7 @@ public class CourseDAO extends DBContext {
          course.setTitle("Java Web Basics");
         course.setDescription("Learn how to build web apps using Java Servlets and JSP.");
         course.setInstructorID(1);      // Giả sử instructorID = 1
-        course.setPrice(new BigDecimal("49.99"));
+        course.setPrice(new BigDecimal("0"));
         course.setCourseclass(11);      // Lớp 11
         course.setCategoryID(2);        // Giả sử categoryID = 2
          // test link        
