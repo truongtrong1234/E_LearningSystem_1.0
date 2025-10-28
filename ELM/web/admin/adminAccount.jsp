@@ -34,7 +34,7 @@
         <li><a href="adminReport.jsp">User Reports</a></li>
     </ul>
     <div class="logout-btn mt-4">
-        <a href="../home_Guest">Logout</a>
+        <a href="../logout">Logout</a>
     </div>
 </div>
 
