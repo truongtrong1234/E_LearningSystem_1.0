@@ -70,8 +70,9 @@ public class CreateCourseController extends HttpServlet {
             }
             String url = CloudinaryUtil.uploadImage(filePart);
             Course c = new Course(title, description, instructorID, BigDecimal.ONE, theClass, categoryID, url);
-            new CourseDAO().insertCourse(c);
-            response.sendRedirect("createChapter");
+            CourseDAO cdao = new CourseDAO(); 
+            int newCourseID =  cdao.insertCourseAndReturnID(c);
+            response.sendRedirect("createChapter?courseID="+newCourseID);
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Failed to create course. Please check inputs.");

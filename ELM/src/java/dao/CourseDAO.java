@@ -71,12 +71,39 @@ public class CourseDAO extends DBContext {
             ps.setInt(6, course.getCategoryID());
             ps.setString(7, course.getThumbnail());
             return ps.executeUpdate() > 0;
+            
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+    public int insertCourseAndReturnID(Course course) {
+    String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) "
+               + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        ps.setString(1, course.getTitle());
+        ps.setString(2, course.getDescription());
+        ps.setInt(3, course.getInstructorID());
+        ps.setBigDecimal(4, course.getPrice());
+        ps.setInt(5, course.getCourseclass()); // ✅ field trong Course là courseclass
+        ps.setInt(6, course.getCategoryID());
+        ps.setString(7, course.getThumbnail());
 
+        int affected = ps.executeUpdate();
+
+        if (affected > 0) {
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // ✅ Trả về CourseID vừa tạo
+                }
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return -1;
+}
     // 🟢 Cập nhật khóa học
     public boolean updateCourse(Course course) {
         String sql = "UPDATE Courses SET Title=?, Description=?, InstructorID=?, Price=?, Class=?, CategoryID=?, Thumbnail=? " +
@@ -130,7 +157,7 @@ public class CourseDAO extends DBContext {
         course.setCourseclass(11);      // Lớp 11
         course.setCategoryID(2);        // Giả sử categoryID = 2
          // test link        
-        boolean insertResult = dao.insertCourse(course);
+        int insertResult = dao.insertCourseAndReturnID(course);
         System.out.println("Insert result: " + insertResult);
         
     }

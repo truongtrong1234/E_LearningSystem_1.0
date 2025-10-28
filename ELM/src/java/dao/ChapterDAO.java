@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Chapter;
+import model.Course;
 
 public class ChapterDAO extends DBContext {
 
@@ -20,6 +21,25 @@ public class ChapterDAO extends DBContext {
             ex.printStackTrace();
         }
     }
+    public int insertChapterAndReturnID(Chapter chapter) {
+    String sql = "INSERT INTO Chapters (CourseID, Title) VALUES (?, ?)";
+    try (PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        stm.setInt(1, chapter.getCourseID());
+        stm.setString(2, chapter.getTitle());
+
+        int affected = stm.executeUpdate(); // ✅ chỉ gọi 1 lần
+        if (affected > 0) {
+            try (ResultSet rs = stm.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // ✅ Trả về ChapterID vừa tạo
+                }
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return -1;
+}
 
     // READ - get all
     public List<Chapter> getAllChap() {
@@ -110,9 +130,10 @@ public class ChapterDAO extends DBContext {
     // (Tùy chọn) — kiểm tra nhanh
     public static void main(String[] args) {
         ChapterDAO dao = new ChapterDAO();
-        System.out.println("Danh sách chương:");
-        for (Chapter c : dao.getChaptersByCourseId(1)) {
-            System.out.println(c.getChapterID() + " - " + c.getTitle()+ c.getCourseID());
-        }
+        Chapter c = new Chapter();
+        c.setCourseID(30);
+        c.setTitle("gneiougnoi");
+        int id = dao.insertChapterAndReturnID(c); 
+        System.out.println(id);
     }
 }

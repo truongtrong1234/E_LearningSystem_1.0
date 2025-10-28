@@ -45,18 +45,35 @@
                         <div class="label">Review</div>
                     </div>
                 </div>
-                 <div class="step" id="step-2">
-                                <h5 class="mb-3">Chapters</h5>
-                                <div id="chapterList"></div>
-                                <button id="addChapterBtn" class="btn btn-outline-primary mb-3">+ Add New Chapter</button>
-                            </div><div class="d-flex justify-content-between mt-4">
-                        <button id="prevBtn" class="btn btn-outline-secondary">Back</button>
-                        <button type="submit" id="nextBtn"  class="btn btn-primary">Continue</button>
-                    </div>
+
+                <form action="createChapter" method="post" class="d-flex mb-4">
+                    <input type="hidden" name="thisCourseID" value="${thisCourseID}">
+                    <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Enter new chapter title..." required>
+                    <button type="submit" class="btn btn-primary">+ Add Chapter ${thisCourseID}</button>
+                </form>
+
+                <!-- Danh sách chương -->
+                <div id="chapterList">
+                    <c:if test="${empty chapters}">
+                        <p class="text-muted">No chapters yet. Create one above!</p>
+                    </c:if>
+
+                    <c:forEach var="ch" items="${chapters}">
+                        <div class="card mb-3">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <span><strong>${ch.title}</strong></span>
+                                <div>
+                                    <a href="createLession?ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
+                                    <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm">Create Quiz</a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </div>
-        
-         <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
+
+        <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
     </body>
 </html>

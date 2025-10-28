@@ -200,4 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-});
+}
+        )
+;
+
