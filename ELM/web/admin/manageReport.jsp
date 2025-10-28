@@ -20,12 +20,6 @@
             <li><a href="manageReport.jsp" class="active">User Reports</a></li>
         </ul>
         <div class="logout-btn">
-            <a href="../logout.jsp" style="text-decoration: none">Logout</a>
-            <li><a href="adminAccount">Manage Accounts</a></li>
-            <li><a href="viewCourses.jsp">Manage Courses</a></li>
-            <li><a href="adminReport.jsp" class="active">User Reports</a></li>
-        </ul>
-        <div class="logout-btn">
             <a href="../home_Guest">Logout</a>
         </div>
     </div>

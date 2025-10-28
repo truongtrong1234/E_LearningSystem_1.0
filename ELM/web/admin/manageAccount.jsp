@@ -20,7 +20,7 @@
             <li><a href="manageReport.jsp">User Reports</a></li>
         </ul>
         <div class="logout-btn">
-            <a href="../logout.jsp" style="text-decoration: none">Logout</a>
+            <a href="../home_Guest" style="text-decoration: none">Logout</a>
         </div>
     </div>
 
