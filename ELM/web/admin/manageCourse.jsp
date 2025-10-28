@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Manage Courses</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
 </head>
 <body>
     <!-- Sidebar -->
@@ -14,7 +14,7 @@
         <h2>Admin Panel</h2>
         <ul>
             <li><a href="adminIndex.jsp">Dashboard</a></li>
-            <li><a href="manageAccount">Manage Accounts</a></li>
+            <li><a href="manageAccount.jsp">Manage Accounts</a></li>
             <li><a href="manageCourse.jsp" class="active">Manage Courses</a></li>
             <li><a href="manageReport.jsp">User Reports</a></li>
         </ul>
@@ -25,11 +25,9 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <h2>Manage Courses</h2>
-        <p>Quản lý toàn bộ khóa học trong hệ thống</p>
-
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
+        <h1>Manage Courses</h1>
+        <table class="table data-table table-bordered align-middle">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Title</th>

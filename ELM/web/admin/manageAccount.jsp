@@ -27,8 +27,7 @@
     <!-- Main Content -->
     <div class="main-content">
         <h1>Manage User Accounts</h1>
-
-        <table class="data-table">
+        <table class="table data-table table-bordered align-middle">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -50,9 +49,9 @@
                     <td><%= acc.getName() %></td>
                     <td><%= acc.getRole() %></td>
                     <td>
-                        <a href="editAccount.jsp?id=<%= acc.getId() %>" class="btn edit">Edit</a>
-                        <a href="AdminAccountServlet?action=delete&id=<%= acc.getId() %>" class="btn delete" onclick="return confirm('Delete this account?');">Delete</a>
-                        <a href="AdminAccountServlet?action=removeRole&id=<%= acc.getId() %>" class="btn role" onclick="return confirm('Remove role for this account?');">Remove Role</a>
+                        <a href="editAccount.jsp?id=<%= acc.getAccountId() %>" class="btn edit">Edit</a>
+                        <a href="AdminAccountServlet?action=delete&id=<%= acc.getAccountId() %>" class="btn delete" onclick="return confirm('Delete this account?');">Delete</a>
+                        <a href="AdminAccountServlet?action=removeRole&id=<%= acc.getAccountId() %>" class="btn role" onclick="return confirm('Remove role for this account?');">Remove Role</a>
                     </td>
                 </tr>
                 <%
