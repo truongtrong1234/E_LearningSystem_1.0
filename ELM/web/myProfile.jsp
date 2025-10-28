@@ -1,24 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="java.net.URLEncoder" %>
-<%
-    String name     = (String) request.getAttribute("name");       if (name == null)     name = "nguyenvquang";
-    String email    = (String) request.getAttribute("email");      if (email == null)    email = "nguyenvquanghoanganh25@gmail.com";
-    String course   = (String) request.getAttribute("course");     if (course == null)   course = "Web Development - Java Servlet & JSP";
-    String learning = (String) request.getAttribute("learning");   if (learning == null) learning = course;
-    String avatar   = (String) request.getAttribute("avatarUrl");
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-    String courseId   = (String) request.getAttribute("courseId");   if (courseId == null)   courseId = "COURSE-001";
-    String learningId = (String) request.getAttribute("learningId"); if (learningId == null) learningId = courseId;
-
-    String firstName = name.trim();
-    int sp = firstName.lastIndexOf(' ');
-    if (sp >= 0 && sp < firstName.length()-1) firstName = firstName.substring(sp+1);
-    String initial = name.isEmpty() ? "U" : name.substring(0,1).toUpperCase();
-
-    String ctx = request.getContextPath(); // /ELM
-    String courseUrl = ctx + "/Course/detail?courseId=" + URLEncoder.encode(courseId, "UTF-8");
-    String learnUrl  = ctx + "/Course/detail?courseId=" + URLEncoder.encode(learningId, "UTF-8");
-%>
 <html>
     <head>
         <title>My Profile | SecretCoder</title>
@@ -241,63 +225,63 @@
     </head>
     <body>
 
-        <div class="navbar">
-            <a class="logo" href="<%= ctx %>/Learner/homeLearnerCourse">
-                <span class="s">Secret</span><span class="c">Coder</span>
-            </a>
-            <div>
-                <a href="<%= ctx %>/Learner/homeLearnerCourse">Home</a>
+<div class="navbar">
+    <a class="logo" href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">
+        <span class="s">Secret</span><span class="c">Coder</span>
+    </a>
+    <div>
+        <a href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">Home</a>
+    </div>
+</div>
+
+<div class="sheet-wrap">
+    <div class="sheet">
+
+        <div class="topline">${account.email}</div>
+
+        <div class="avatar-wrap">
+            <div class="avatar">
+                <c:choose>
+                    <c:when test="${not empty account.picture}">
+                        <img src="${account.picture}" alt="avatar"/>
+                    </c:when>
+                    <c:otherwise>
+                        ${fn:substring(account.name,0,1).toUpperCase()}
+                    </c:otherwise>
+                </c:choose>
             </div>
+            <div class="camera-badge">📷</div>
         </div>
 
-        <div class="sheet-wrap">
-            <div class="sheet">
+        <div class="hello">Chào ${fn:split(account.name,' ')[fn:length(fn:split(account.name,' '))-1]},</div>
 
-                <div class="topline"><%= email %></div>
-
-                <div class="avatar-wrap">
-                    <div class="avatar">
-                        <% if (avatar != null && !avatar.isEmpty()) { %>
-                        <img src="<%= avatar %>" alt="avatar">
-                        <% } else { %>
-                        <%= initial %>
-                        <% } %>
-                    </div>
-                    <div class="camera-badge">📷</div>
-                </div>
-
-                <div class="hello">Chào <%= firstName %>,</div>
-
-                <div class="actions">
-                    <a href="<%= ctx %>/Learner/edit_profile.jsp" class="btn">Quản lý hồ sơ</a>
-                    <a href="<%= ctx %>/logout" class="btn primary">Đăng xuất</a>
-                </div>
-
-                <div class="card">
-                    <div class="row"><span class="label">Họ tên: </span><span class="muted"><%= name %></span></div>
-                    <div class="row"><span class="label">Email: </span><span class="muted"><%= email %></span></div>
-
-                    <!-- Khóa học chính: chip bấm được -->
-                    <div class="row">
-                        <span class="label">Khóa học chính: </span>
-                        <a class="course-link" href="<%= courseUrl %>"><%= course %></a>
-                        <a class="course-link" href="<%= courseUrl %>"><%= course %></a>
-                        <a class="course-link" href="<%= courseUrl %>"><%= course %></a>
-                    </div>
-
-                    <!-- Đang học: chip bấm được (nếu nhiều khóa, lặp thêm <a class="course-link">...) -->
-                    <div class="row">
-                        <span class="label">Đang học:</span>
-                        <div class="chips">
-                            <a class="course-link" href="<%= learnUrl %>"><%= learning %></a>
-                        </div>
-                    </div>
-
-                    <a class="back" href="<%= ctx %>/Learner/homeLearnerCourse">← Back to Home</a>
-                </div>
-
-            </div>
+        <div class="actions">
+            <a href="${pageContext.request.contextPath}/edit_profile.jsp" class="btn">Quản lý hồ sơ</a>
+            <a href="${pageContext.request.contextPath}/logout" class="btn primary">Đăng xuất</a>
         </div>
 
-    </body>
+        <div class="card">
+            <div class="row"><span class="label">Họ tên: </span><span class="muted">${account.name}</span></div>
+            <div class="row"><span class="label">Email: </span><span class="muted">${account.email}</span></div>
+
+            <div class="row">
+                <span class="label">Khóa học chính: </span>
+                <a class="course-link" href="${pageContext.request.contextPath}/Course/detail?courseId=${courseId}">${course}</a>
+            </div>
+
+            <div class="row">
+                <span class="label">Đang học:</span>
+                <div class="chips">
+                    <a class="course-link" href="${pageContext.request.contextPath}/Course/detail?courseId=${learningId}">${learning}</a>
+                </div>
+            </div>
+
+            <a class="back" href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">← Back to Home</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
 </html>

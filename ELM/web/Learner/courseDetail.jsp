@@ -14,7 +14,7 @@
 <body>
 
     <!-- HEADER -->
-    <jsp:include page="header.jsp" />
+    <jsp:include page="web/components/headerLearner.jsp"/>
 
     <!-- MAIN CONTENT -->
     <div class="course-detail-container">

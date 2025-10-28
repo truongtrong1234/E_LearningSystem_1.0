@@ -16,6 +16,8 @@
 </head>
 
 <body>
+    <jsp:include page="components/headerLearner.jsp"/>
+    
 <div class="container mt-4 mb-5">
 
     <!-- 🧭 Breadcrumb -->
