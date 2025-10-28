@@ -8,14 +8,15 @@
 <head>
     <meta charset="UTF-8">
     <title>SecretCoder | Guest</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css">
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css">
 </head>
 <body>
 
     <!-- HEADER -->
     <header class="header">
-        <a class="logo">
+        <a class="logo" href="${pageContext.request.contextPath}/home_Guest">
             <span class="s">Secret</span><span class="c">Coder</span>
         </a>
 

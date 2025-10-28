@@ -242,11 +242,11 @@
     <body>
 
         <div class="navbar">
-            <a class="logo" href="<%= ctx %>/Learner/home_learner.jsp">
+            <a class="logo" href="<%= ctx %>/Learner/homeLearnerCourse">
                 <span class="s">Secret</span><span class="c">Coder</span>
             </a>
             <div>
-                <a href="<%= ctx %>/Learner/home_learner.jsp">Home</a>
+                <a href="<%= ctx %>/Learner/homeLearnerCourse">Home</a>
             </div>
         </div>
 
@@ -293,7 +293,7 @@
                         </div>
                     </div>
 
-                    <a class="back" href="<%= ctx %>/Learner/home_learner.jsp">← Back to Home</a>
+                    <a class="back" href="<%= ctx %>/Learner/homeLearnerCourse">← Back to Home</a>
                 </div>
 
             </div>
