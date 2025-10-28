@@ -30,6 +30,9 @@
     <nav class="nav-links">
         <a href="${pageContext.request.contextPath}/course">Instructor</a>
     </nav>
+    <nav class="nav-links">
+        <a href="${pageContext.request.contextPath}/myLearning">My Learning</a>
+    </nav>
 
     <div class="header-icons">
         <button class="icon-btn" title="Wishlist"><i class="bi bi-heart"></i></button>
