@@ -20,8 +20,8 @@ import model.Account;
  *
  * @author ADMIN
  */
-@WebServlet("/adminAccount")
-public class adminAccount extends HttpServlet {
+@WebServlet("/AdminAccount")
+public class AdminAccount extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
