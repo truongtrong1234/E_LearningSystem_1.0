@@ -17,6 +17,7 @@ public class HomeLearnerCourse extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        
         // Load Categories
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategories = categoryDAO.getAllCat();
