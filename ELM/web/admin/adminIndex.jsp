@@ -16,7 +16,7 @@
             <li><a href="adminIndex.jsp">Dashboard</a></li>
             <li><a href="viewUsers.jsp">Manage Accounts</a></li>
             <li><a href="viewCourses.jsp">Manage Courses</a></li>
-            <li><a href="viewFeedback.jsp">User Reports</a></li>
+            <li><a href="adminReport.jsp">User Reports</a></li>
             <li><a href="../logout.jsp">Logout</a></li>
         </ul>
     </div>
