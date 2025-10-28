@@ -25,6 +25,9 @@ public class DBContext {
         }
         
     }
+    public Connection getConnection() {
+        return connection;
+    }
      public static void main(String[] args) {
         DBContext conn= new DBContext();
         System.out.println(conn.connection);

@@ -198,7 +198,7 @@
 
         <!-- Header -->
         <div class="topbar">
-            <a class="logo" href="<%= ctx %>/home_Guest.jsp">
+            <a class="logo" href="<%= ctx %>/home_Guest">
                 <span class="s">Secret</span><span class="c">Coder</span>
             </a>
             <div>

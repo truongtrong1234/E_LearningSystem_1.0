@@ -61,12 +61,8 @@
         <servlet-class>controller.MyLessonController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreaterChapterController</servlet-name>
-        <servlet-class>controller.CreaterChapterController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CreateChapterController</servlet-name>
-        <servlet-class>controller.CreateChapterController</servlet-class>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controller.AdminController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -125,8 +121,8 @@
         <url-pattern>/myLesson</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CreateChapterController</servlet-name>
-        <url-pattern>/createChapter</url-pattern>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>/AdminController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -21,8 +21,8 @@
 
         <!-- HEADER -->
         <header class="header">
-            <a class="logo">
-                <span class="s">Secret</span><span class="c">Coder</span>
+            <a class="logo" href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">
+                <span class="s" >Secret</span><span class="c">Coder</span>
             </a>
 
             <div class="search-bar">

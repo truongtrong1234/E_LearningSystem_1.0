@@ -58,7 +58,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("account", validAccount);
             session.setMaxInactiveInterval(60 * 60 * 2); // 2 giờ
 
-            response.sendRedirect(request.getContextPath() + "/Learner/home_learner.jsp");
+            response.sendRedirect(request.getContextPath() + "/Learner/homeLearnerCourse");
         } else {
             // 🔴 Sai mật khẩu → giữ lại email
             request.setAttribute("error", "Sai mật khẩu!");
