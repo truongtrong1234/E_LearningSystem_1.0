@@ -14,10 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Chapter;
 
-/**
- *
- * @author Admin
- */
 public class CreateChapterController extends HttpServlet {
 
     /**

@@ -40,26 +40,25 @@
                     </div>
                 </div>
 
-                <form action="createChapter" method="post" class="d-flex mb-4">
-                    <input type="hidden" name="thisCourseID" value="${thisCourseID}">
+                <form action="createLesson" method="post" class="d-flex mb-4">
+                    <input type="hidden" name="thischapterID" value="${thischapterID}">
                     <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Enter new chapter title..." required>
-                    <button type="submit" class="btn btn-primary">+ Add Chapter </button>
+                    <button type="submit" class="btn btn-primary">+ Add Lesson ${thischapterID}</button>
                 </form>
 
                 <!-- Danh sách chương -->
                 <div id="chapterList">
-                    <c:if test="${empty chapters}">
-                        <p class="text-muted">No chapters yet. Create one above!</p>
+                    <c:if test="${empty Lessons}">
+                        <p class="text-muted">No Lessons yet. Create one above!</p>
                     </c:if>
 
-                    <c:forEach var="ch" items="${chapters}">
+                    <c:forEach var="ch" items="${Lessons}">
                         <div class="card mb-3">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <span><strong>${ch.title}</strong></span>
                                 <div>
-                                    <a href="createLesson?ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
-                                    <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm">Create Quiz</a>
-                                    <button type="submit" value="delete" class="btn btn-primary">Delete Chapter</button>
+                                    <a href="createMaterial?ChapterID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
+                                    <button type="submit" value="delete" class="btn btn-primary">Delete </button>
                                 </div>
                             </div>
                         </div>

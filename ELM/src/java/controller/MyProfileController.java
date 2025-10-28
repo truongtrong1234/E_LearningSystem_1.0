@@ -15,7 +15,6 @@ public class MyProfileController extends HttpServlet {
         request.setAttribute("name", "Eric Nguyen");
         request.setAttribute("email", "nguyen.quang.hoang.anh@fpt.edu.vn");
         request.setAttribute("course", "Web Development - Java Servlet & JSP");
-
         // Chuyển đến JSP
         RequestDispatcher dispatcher = request.getRequestDispatcher("myProfile.jsp");
         dispatcher.forward(request, response);
