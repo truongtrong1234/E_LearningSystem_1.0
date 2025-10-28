@@ -33,13 +33,13 @@ root{
                 font-size:24px;
                 white-space:nowrap;
                 text-decoration:none;
-                color:#000
+                color:orange
             }
             .logo span{
                 color:#000
             }
             .logo .s{
-                color:var(--orange)
+                color:orange
             }
             .logo .c{
                 color:#000
