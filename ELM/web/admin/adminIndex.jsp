@@ -1,63 +1,76 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.sql.*, util.DBConnection" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="context.DBContext" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard | E-Learning</title>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
 </head>
 <body>
     <div class="sidebar">
         <h2>Admin Panel</h2>
-        <a href="index.jsp">🏠 Dashboard</a>
-        <a href="admin.jsp#accounts">👤 Accounts</a>
-        <a href="admin.jsp#courses">📚 Courses</a>
-        <a href="admin.jsp#feedback">💬 Feedback</a>
+        <ul>
+            <li><a href="adminIndex.jsp">Dashboard</a></li>
+            <li><a href="viewUsers.jsp">Manage Accounts</a></li>
+            <li><a href="viewCourses.jsp">Manage Courses</a></li>
+            <li><a href="viewFeedback.jsp">User Reports</a></li>
+            <li><a href="../logout.jsp">Logout</a></li>
+        </ul>
     </div>
 
-    <div class="content">
-        <h1>Welcome, Admin!</h1>
-        <p>Quản lý hệ thống e-learning của bạn từ một nơi duy nhất.</p>
 
+    <div class="main-content">
+        <h1>Admin Dashboard</h1>
         <div class="dashboard-cards">
             <%
                 int userCount = 0, courseCount = 0, feedbackCount = 0;
-                try (Connection conn = DBConnection.getConnection()) {
+                try {
+                    DBContext db = new DBContext();
+                    Connection conn = db.getConnection();
                     Statement st = conn.createStatement();
 
-                    ResultSet rs1 = st.executeQuery("SELECT COUNT(*) FROM users");
+                    // Đếm user
+                    ResultSet rs1 = st.executeQuery("SELECT COUNT(*) FROM Users");
                     if (rs1.next()) userCount = rs1.getInt(1);
+                    rs1.close();
 
-                    ResultSet rs2 = st.executeQuery("SELECT COUNT(*) FROM courses");
+                    // Đếm course
+                    ResultSet rs2 = st.executeQuery("SELECT COUNT(*) FROM Courses");
                     if (rs2.next()) courseCount = rs2.getInt(1);
+                    rs2.close();
 
-                    ResultSet rs3 = st.executeQuery("SELECT COUNT(*) FROM feedback");
+                    // Đếm feedback
+                    ResultSet rs3 = st.executeQuery("SELECT COUNT(*) FROM Feedback");
                     if (rs3.next()) feedbackCount = rs3.getInt(1);
+                    rs3.close();
+
+                    st.close();
+                    conn.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             %>
 
-            <div class="card">
-                <h3>👥 Users</h3>
+            <div class="card orange">
+                <h3>User Accounts</h3>
                 <p><%= userCount %></p>
-                <a href="admin.jsp#accounts">Manage</a>
             </div>
 
-            <div class="card">
-                <h3>📘 Courses</h3>
+            <div class="card orange">
+                <h3>Courses</h3>
                 <p><%= courseCount %></p>
-                <a href="admin.jsp#courses">Manage</a>
             </div>
 
-            <div class="card">
-                <h3>💬 Feedback</h3>
+            <div class="card orange">
+                <h3>Feedback</h3>
                 <p><%= feedbackCount %></p>
-                <a href="admin.jsp#feedback">Manage</a>
             </div>
         </div>
     </div>
-    
-    <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>            
+
+    <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
 </body>
 </html>
