@@ -20,6 +20,8 @@
         </ul>
         <div class="logout-btn">
             <a href="../logout.jsp" style="text-decoration: none">Logout</a>
+        <div class="logout-btn">
+            <a href="../home_Guest">Logout</a>
         </div>
     </div>
 

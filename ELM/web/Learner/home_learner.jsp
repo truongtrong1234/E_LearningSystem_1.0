@@ -20,30 +20,7 @@
     <body>
 
         <!-- HEADER -->
-        <header class="header">
-            <a class="logo" href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">
-                <span class="s" >Secret</span><span class="c">Coder</span>
-            </a>
-
-            <div class="search-bar">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="Search for anything">
-                <button title="Search"><i class="bi bi-arrow-return-left"></i></button>
-            </div>
-
-            <nav class="nav-links">
-                <a href="/ELM/myLearning">My Learning</a>
-                <a href="<%=ctx%>/course">Instructor</a>
-            </nav>
-
-
-            <div class="header-icons">
-                <button class="icon-btn" title="Wishlist"><i class="bi bi-heart"></i></button>
-                <button class="icon-btn" title="Cart"><i class="bi bi-cart3"></i></button>
-                <button class="icon-btn" title="Notifications"><i class="bi bi-bell"></i></button>
-                <a href="<%=ctx%>/myProfile.jsp" class="avatar" title="Profile">U</a>
-            </div>
-        </header>
+<jsp:include page="/components/headerLearner.jsp" />
 
         <!-- CATEGORY BAR -->
         <div class="category-wrap">

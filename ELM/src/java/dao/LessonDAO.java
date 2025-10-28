@@ -10,16 +10,24 @@ import java.util.List;
 public class LessonDAO extends DBContext {
 
     // CREATE
-    public void insert(Lesson l) {
+    public int insert(Lesson l) {
         String sql = "INSERT INTO Lessons (ChapterID, Title) VALUES (?, ?)";
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, l.getChapterID());
             stm.setString(2, l.getTitle());
-            stm.executeUpdate();
+            int affected = stm.executeUpdate(); // ✅ chỉ gọi 1 lần
+            if (affected > 0) {
+                try (ResultSet rs = stm.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // ✅ Trả về ChapterID vừa tạo
+                    }
+                }
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return -1;
     }
 
     // READ - get all lessons
@@ -112,9 +120,10 @@ public class LessonDAO extends DBContext {
     // Kiểm tra nhanh
     public static void main(String[] args) {
         LessonDAO dao = new LessonDAO();
-        System.out.println("Danh sách lessons:");
-        for (Lesson l : dao.getAll()) {
-            System.out.println(l.getLessonID() + " | " + l.getChapterID() + " | " + l.getTitle());
-        }
+        Lesson les = new Lesson(); 
+        les.setChapterID(1);
+        les.setTitle("vldvl");
+        int id = dao.insert(les); 
+        System.out.println(id);
     }
 }

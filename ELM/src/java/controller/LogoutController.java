@@ -19,6 +19,6 @@ public class LogoutController extends HttpServlet {
             session.invalidate();
         }
 
-        response.sendRedirect(request.getContextPath() + "/home_Guest.jsp");
+        response.sendRedirect(request.getContextPath() + "/home_Guest");
     }
 }
