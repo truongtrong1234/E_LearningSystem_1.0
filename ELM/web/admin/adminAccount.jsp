@@ -1,31 +1,81 @@
-<%@page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="java.util.*, model.Account" %>
-<!-- <%
-    List<Account> users = (List<Account>) request.getAttribute("users");
-    if (users == null) users = new ArrayList<>();
-%> -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.Account" %>
 
-<h2>User Accounts</h2>
-<table>
-    <thead>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Accounts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
+    <style>
+        table {
+            background: white;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul class=>
+        <li><a href="adminIndex.jsp">Dashboard</a></li>
+        <li><a href="adminAccount">Manage Accounts</a></li>
+        <li><a href="viewCourses.jsp">Manage Courses</a></li>
+        <li><a href="adminReport.jsp">User Reports</a></li>
+    </ul>
+    <div class="logout-btn mt-4">
+        <a href="../home_Guest">Logout</a>
+    </div>
+</div>
+
+<div class="main-content">
+    <h1>User Accounts</h1>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
         <tr>
-            <th>ID</th><th>Email</th><th>Name</th><th>Role</th><th>Status</th><th>Actions</th>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Actions</th>
         </tr>
-    </thead>
-    <tbody>
-    <% for (Account u : users) { %>
-        <tr id="user-row-<%=u.getId()%>">
-            <td><%=u.getId()%></td>
-            <td><%=u.getEmail()%></td>
-            <td><%=u.getName()==null?"":u.getName()%></td>
-            <td><%=u.getRole()%></td>
-            <td><%=u.getStatus()%></td>
+        </thead>
+        <tbody>
+        <%
+            List<Account> list = (List<Account>) request.getAttribute("accounts");
+            if (list != null) {
+                for (Account a : list) {
+        %>
+        <tr>
+            <td><%= a.getAccountId() %></td>
+            <td><%= a.getEmail() %></td>
+            <td><%= a.getName() %></td>
+            <td><%= a.getRole() %></td>
             <td>
-                <a href="<%=request.getContextPath()%>/admin?section=editAccount&id=<%=u.getId()%>">Edit</a>
-                &nbsp;|&nbsp;
-                <button class="btn-delete-account" data-id="<%=u.getId()%>">Delete</button>
+                <a href="editAccount?id=<%= a.getAccountId() %>" class="btn btn-warning btn-sm">Edit</a>
+                <a href="deleteAccount?id=<%= a.getAccountId() %>" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
-    <% } %>
-    </tbody>
-</table>
+        <%
+                }
+            } else {
+        %>
+        <tr><td colspan="5">No accounts found.</td></tr>
+        <% } %>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

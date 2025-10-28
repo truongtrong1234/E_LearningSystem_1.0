@@ -3,6 +3,8 @@ package dao;
 import java.sql.*;
 import model.Account;
 import context.DBContext;
+import java.util.ArrayList;
+import java.util.List;
 import model.GoogleAccount;
 
 public class AccountDAO extends DBContext {
@@ -28,6 +30,29 @@ public Account getAccountById(int accountId) {
     }
     return null;
 }
+// 🔹 Lấy toàn bộ danh sách tài khoản
+public List<Account> getAllAccounts() {
+    List<Account> list = new ArrayList<>();
+    String sql = "SELECT * FROM Accounts";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Account a = new Account();
+            a.setAccountId(rs.getInt("AccountID"));
+            a.setEmail(rs.getString("email"));
+            a.setPassword(rs.getString("password"));
+            a.setName(rs.getString("name"));
+            a.setPicture(rs.getString("picture"));
+            a.setRole(rs.getString("role"));
+            list.add(a);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
 
     // Lấy tài khoản theo email
     public Account findByEmail(String email) {

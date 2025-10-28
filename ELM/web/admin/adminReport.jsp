@@ -86,12 +86,12 @@
         <h2>Admin Panel</h2>
         <ul>
             <li><a href="adminIndex.jsp">Dashboard</a></li>
-            <li><a href="viewUsers.jsp">Manage Accounts</a></li>
+            <li><a href="adminAccount">Manage Accounts</a></li>
             <li><a href="viewCourses.jsp">Manage Courses</a></li>
             <li><a href="adminReport.jsp" class="active">User Reports</a></li>
         </ul>
         <div class="logout-btn">
-            <a href="../logout.jsp">Logout</a>
+            <a href="../home_Guest">Logout</a>
         </div>
     </div>
 
