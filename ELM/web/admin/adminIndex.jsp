@@ -13,14 +13,15 @@
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <ul>
-            <li><a href="adminIndex.jsp">Dashboard</a></li>
-            <li><a href="viewUsers.jsp">Manage Accounts</a></li>
-            <li><a href="viewCourses.jsp">Manage Courses</a></li>
-            <li><a href="adminReport.jsp">User Reports</a></li>
-            <li><a href="../logout.jsp">Logout</a></li>
+            <li><a href="adminIndex.jsp" class="active">Dashboard</a></li>
+            <li><a href="manageAccount.jsp">Manage Accounts</a></li>
+            <li><a href="manageCourse.jsp">Manage Courses</a></li>
+            <li><a href="manageReport.jsp">User Reports</a></li>
         </ul>
+        <div class="logout-btn">
+            <a href="../logout.jsp" style="text-decoration: none">Logout</a>
+        </div>
     </div>
-
 
     <div class="main-content">
         <h1>Admin Dashboard</h1>
