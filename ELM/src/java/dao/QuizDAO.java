@@ -33,11 +33,11 @@ public class QuizDAO extends DBContext {
         List<Quiz> list = new ArrayList<>();
         String sql = """
             SELECT q.QuizID, q.Title, q.ChapterID,
-                   c.Title AS ChapterName,
-                   cr.Title AS CourseName
+                   ch.Title AS ChapterName,
+                   c.Title AS CourseName
             FROM Quizzes q
-            JOIN Chapters c ON q.ChapterID = c.ChapterID
-            JOIN Courses cr ON c.CourseID = cr.CourseID
+            JOIN Chapters ch ON q.ChapterID = ch.ChapterID
+            JOIN Courses c ON c.CourseID = c.CourseID
             ORDER BY q.QuizID DESC
         """;
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -58,12 +58,12 @@ public class QuizDAO extends DBContext {
         List<Quiz> list = new ArrayList<>();
         String sql = """
             SELECT q.QuizID, q.Title, q.ChapterID,
-                   c.Title AS ChapterName,
-                   cr.Title AS CourseName
+                   ch.Title AS ChapterName,
+                   c.Title AS CourseName
             FROM Quizzes q
-            JOIN Chapters c ON q.ChapterID = c.ChapterID
-            JOIN Courses cr ON c.CourseID = cr.CourseID
-            WHERE cr.InstructorID = ?
+            JOIN Chapters ch ON q.ChapterID = c.ChapterID
+            JOIN Courses c ON c.CourseID = cr.CourseID
+            WHERE c.InstructorID = ?
             ORDER BY q.QuizID DESC
         """;
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -84,11 +84,11 @@ public class QuizDAO extends DBContext {
     public Quiz getQuizById(int id) {
         String sql = """
             SELECT q.QuizID, q.Title, q.ChapterID,
-                   c.Title AS ChapterName,
-                   cr.Title AS CourseName
+                   ch.Title AS ChapterName,
+                   c.Title AS CourseName
             FROM Quizzes q
-            JOIN Chapters c ON q.ChapterID = c.ChapterID
-            JOIN Courses cr ON c.CourseID = cr.CourseID
+            JOIN Chapters ch ON q.ChapterID = c.ChapterID
+            JOIN Courses c ON c.CourseID = cr.CourseID
             WHERE q.QuizID = ?
         """;
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
