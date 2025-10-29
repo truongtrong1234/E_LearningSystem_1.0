@@ -57,7 +57,7 @@
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <span><strong>${ch.title}</strong></span>
                                 <div>
-                                    <a href="createMaterial?ChapterID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
+                                    <a href="uploadMaterial?LessonID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
                                     <button type="submit" value="delete" class="btn btn-primary">Delete </button>
                                 </div>
                             </div>
