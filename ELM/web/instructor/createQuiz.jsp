@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
 </head>
 <body>
+    <form action="${pageContext.request.contextPath}/instructor/quiz" method="post">
     <div class="create-quiz-container">
         <h3>Create New Quiz</h3>
         <!-- Select Course -->
@@ -49,7 +50,8 @@
             <button class="btn btn-add" id="addQuestionBtn">+ Add Question</button>
             <button class="btn btn-save" id="saveQuizBtn">Create Quiz</button>
         </div>
-      </div>
+    </div>
+    </form>
     
     <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>

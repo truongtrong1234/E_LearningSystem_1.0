@@ -97,7 +97,6 @@
                             </div>
                         </div>
                         <!-- List Courses -->
-
                         <div class="row mt-4 course-list">
                             <c:choose>
                                 <c:when test="${not empty courseList}">
