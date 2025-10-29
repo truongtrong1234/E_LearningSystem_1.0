@@ -12,7 +12,7 @@
         <title>SecretCoder | Learner</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css">
         <style>
 
         </style>
