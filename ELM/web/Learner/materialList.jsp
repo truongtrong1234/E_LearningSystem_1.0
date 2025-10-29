@@ -10,44 +10,6 @@
     </head>
     <body>
 <div class="container mt-5">
-    <div class="row">
-        <!-- Cột trái: Form Upload -->
-        <div class="col-md-6">
-            <h2 class="mb-4 fw-bold text-center text-primary">Upload Material</h2>
-            <form action="uploadMaterial" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="thisLessonID" value="${thisLessonID}">
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Title</label>
-                    <input type="text" class="form-control" name="title" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Material Type</label>
-                    <select class="form-select" name="type" required>
-                        <option value="" disabled selected>Select type</option>
-                        <option value="Video">Video</option>
-                        <option value="PDF">PDF</option>
-                        <option value="Other">Khác</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Upload File</label>
-                    <input type="file" class="form-control" name="PartFile" required>
-                </div>
-
-                <div class="d-flex justify-content-between">
-                    <a href="" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </div>
-            </form>
-
-            <c:if test="${not empty errorMessage}">
-                <div class="alert alert-danger mt-3">${errorMessage}</div>
-            </c:if>
-        </div>
-
         <!-- Cột phải: Danh sách Material -->
         <div class="col-md-6">
             <h4 class="fw-bold mb-3 text-secondary">Uploaded Materials</h4>
@@ -73,7 +35,7 @@
                                 </video>
                             </c:when>
                             <c:otherwise>
-                                <a href="viewMaterial?LessonID=${thisLessonID}&url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <a href="viewMaterial?url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
                                     Xem tài liệu
                                 </a>
                             </c:otherwise>

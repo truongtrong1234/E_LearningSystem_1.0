@@ -48,6 +48,10 @@ public class CloudinaryUtil {
                 )
         );
         String url = (String) result.get("secure_url");
+        if (url.endsWith(".pdf")) {
+            url = url.replace("/upload/", "/upload/fl_inline/");
+        }
+        
         return url;
     }
 }

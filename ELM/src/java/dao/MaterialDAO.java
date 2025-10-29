@@ -10,18 +10,27 @@ import java.util.List;
 public class MaterialDAO extends DBContext {
 
     // CREATE
-    public void insert(Material m) {
+    public int insert(Material m) {
         String sql = "INSERT INTO Materials (LessonID, Title, ContentURL, MaterialType) VALUES (?, ?, ?, ?)";
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, m.getLessonID());
             stm.setString(2, m.getTitle());
             stm.setString(3, m.getContentURL());
             stm.setString(4, m.getMaterialType());
-            stm.executeUpdate();
+            int affected = stm.executeUpdate();
+
+        if (affected > 0) {
+            try (ResultSet rs = stm.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // ✅ Trả về CourseID vừa tạo
+                }
+            }
+        }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+         return -1;
     }
 
     // READ - get all materials
@@ -118,15 +127,12 @@ public class MaterialDAO extends DBContext {
     public static void main(String[] args) {
         MaterialDAO dao = new MaterialDAO();
         List<Material> list = dao.getAll();
-        for (Material m : list) {
-            System.out.println(
-                "MaterialID: " + m.getMaterialID() +
-                " | LessonID: " + m.getLessonID() +
-                " | Title: " + m.getTitle() +
-                " | ContentURL: " + m.getContentURL() +
-                " | Type: " + m.getMaterialType() +
-                " | CreatedAt: " + m.getCreatedAt()
-            );
-        }
+        Material mate = new Material(); 
+        mate.setLessonID(24);
+        mate.setMaterialType("PDF");
+        mate.setContentURL("https://example.com/video1.mp4");
+        mate.setTitle("Video bài giảng đạo hàm");
+        int newID = dao.insert(mate); 
+        System.out.println(newID);
     }
 }

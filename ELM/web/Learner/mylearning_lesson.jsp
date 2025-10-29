@@ -53,7 +53,7 @@
     <!-- Danh sách course -->
     <c:forEach var="course" items="${LessonList}">
         <div class="course-card" onclick="toggleChapters()" style="cursor:pointer;">
-            <a href="myMaterial?ChapterID=${course.lessonID}">
+            <a href="materialList?LessonID=${course.lessonID}">
             <div class="course-info">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h2>${course.title}</h2>
