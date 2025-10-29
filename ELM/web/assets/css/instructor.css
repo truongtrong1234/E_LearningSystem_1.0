@@ -230,3 +230,112 @@
 .send-report-message.error {
     color: #dc3545;
 }
+
+/* -------------------- Analytics Page -------------------- */
+.analytics-container {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.analytics-title {
+    color: var(--primary-dark);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.analytics-card {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    text-align: center;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.analytics-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+}
+
+.analytics-card h5 {
+    color: var(--primary-dark);
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.analytics-card h3 {
+    color: #333;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.analytics-icon {
+    font-size: 2rem;
+    color: var(--primary-light);
+}
+
+/* Biểu đồ */
+.analytics-chart {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-top: 2rem;
+}
+
+.analytics-chart h5 {
+    text-align: center;
+    color: var(--primary-dark);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Bảng tiến độ học viên */
+.analytics-table {
+    margin-top: 2.5rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+}
+
+.analytics-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.analytics-table th {
+    background-color: rgba(255, 127, 0, 0.15);
+    color: var(--primary-dark);
+    font-weight: 600;
+    text-align: center;
+    padding: 0.75rem;
+}
+
+.analytics-table td {
+    padding: 0.75rem;
+    text-align: center;
+    border-top: 1px solid #f2f2f2;
+}
+
+.analytics-progress .progress {
+    height: 10px;
+    border-radius: 5px;
+    background-color: #eee;
+}
+
+.analytics-progress .progress-bar {
+    background-color: var(--primary-dark);
+}
+
+/* Badge trạng thái */
+.analytics-status .badge {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+}
