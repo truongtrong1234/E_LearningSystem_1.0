@@ -22,26 +22,26 @@
             <!-- Sidebar -->
             <div class="sidebar d-flex flex-column" id="sidebar">
                 <div class="sidebar-header p-3 text-white fs-4 fw-bold">
-                    <span class="logo-icon">Ú</span>
+                    <span class="logo-icon">E</span>
                 </div>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="dashboard.jsp" class="nav-link text-white sidebar-link active">
+                        <a href="${pageContext.request.contextPath}/instructor/dashboard.jsp" class="nav-link text-white sidebar-link active">
                             <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
                         </a>
                     </li>
                     <li>
-                        <a href="communication" class="nav-link text-white sidebar-link">
+                        <a href="${pageContext.request.contextPath}/instructor/communication.jsp" class="nav-link text-white sidebar-link">
                             <i class="fas fa-comments me-2"></i> Communication
                         </a>
                     </li>
                     <li>
-                        <a href="analytics" class="nav-link text-white sidebar-link">
+                        <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
                             <i class="fas fa-chart-bar me-2"></i> Analytics
                         </a>
                     </li>
                     <li>
-                        <a href="analytics" class="nav-link text-white sidebar-link">
+                        <a href="${pageContext.request.contextPath}/instructor/sendReport.jsp" class="nav-link text-white sidebar-link">
                             <i class="fas fa-question-circle me-2"></i> Helps
                         </a>
                     </li>
@@ -51,13 +51,12 @@
             <div class="main-content flex-grow-1 p-0">
                 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom p-3">
                     <div class="container-fluid">
-                        <h1 class="h3 mb-0">Dashboard </h1>
                         <div class="mx-auto">
                             <h4 class="fw-semibold mb-0">Xin chào ${sessionScope.account.getName()}</h4>
                         </div>
                         <div class="d-flex align-items-center ms-auto">
                             <span class="me-3 text-muted nav-profile-text">
-                                <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Learner</a>
+                                <a href="${pageContext.request.contextPath}/Learner/homeLearnerCourse" style="color: #495057; text-decoration: none;">Learner</a>
                             </span>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
                                 <a href="${pageContext.request.contextPath}/notification.jsp" style="color: #495057">

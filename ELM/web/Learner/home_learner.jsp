@@ -10,29 +10,27 @@
     <head>
         <meta charset="UTF-8">
         <title>SecretCoder | Learner</title>
-         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-               
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css">
         <style>
-            
+
         </style>
     </head>
     <body>
 
         <!-- HEADER -->
-<jsp:include page="/components/headerLearner.jsp" />
+        <jsp:include page="/components/headerLearner.jsp" />
 
-        <!-- CATEGORY BAR -->
-        <div class="category-wrap">
+    <div class="category-wrap">
             <div class="category-bar">
                 <c:forEach var="cat" items="${listOfCategories}">
-                    <a href="${pageContext.request.contextPath}/load?cats=${cat.cate_id}">
+                    <a href="${pageContext.request.contextPath}/searchCourse?cats=${cat.cate_id}">
                         ${cat.cate_name}
                     </a>
                 </c:forEach>
             </div>
         </div>
-
 
         <!-- BANNER -->
         <section class="hero">
@@ -52,33 +50,33 @@
         </section>
 
 
-           <!-- COURSES -->
-    <section class="section">
-        <h3>Popular Courses</h3>
-        <div class="grid">
-            <c:forEach var="c" items="${listCourse}">
-                <a class="course-card" href="${pageContext.request.contextPath}/courseDetail?id=${c.courseID}">
-                    <div class="thumb">
-                        <img src="${c.thumbnail}" alt="${c.title}">
-                    </div>
-                    <div class="body">
-                        <div class="title">${c.title}</div>
-                        <div class="meta">Instructor ID: ${c.instructorID}</div>
-                        <div class="price">
-                            <c:choose>
-                                <c:when test="${c.price == 0}">
-                                    Miễn phí
-                                </c:when>
-                                <c:otherwise>
-                                    ${c.price}đ
-                                </c:otherwise>
-                            </c:choose>
+        <!-- COURSES -->
+        <section class="section">
+            <h3>Popular Courses</h3>
+            <div class="grid">
+                <c:forEach var="c" items="${listCourse}">
+                    <a class="course-card" href="${pageContext.request.contextPath}/courseDetail?id=${c.courseID}">
+                        <div class="thumb">
+                            <img src="${c.thumbnail}" alt="${c.title}">
                         </div>
-                    </div>
-                </a>
-            </c:forEach>
-        </div>
-    </section>
+                        <div class="body">
+                            <div class="title">${c.title}</div>
+                            <div class="meta">Instructor ID: ${c.instructorID}</div>
+                            <div class="price">
+                                <c:choose>
+                                    <c:when test="${c.price == 0}">
+                                        Miễn phí
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${c.price}đ
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </a>
+                </c:forEach>
+            </div>
+        </section>
         <footer>© 2025 SecretCoder. All rights reserved.</footer>
     </body>
 </html>

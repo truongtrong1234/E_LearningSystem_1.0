@@ -58,6 +58,30 @@ public class CourseDAO extends DBContext {
         return null;
     }
 
+    //
+    public List<Course> getCoursesByCategory(int categoryID) throws SQLException {
+        List<Course> list = new ArrayList<>();
+        String sql = "SELECT * FROM Courses WHERE categoryID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, categoryID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setCourseID(rs.getInt("courseID"));
+                c.setTitle(rs.getString("title"));
+                c.setDescription(rs.getString("description"));
+                c.setCategoryID(rs.getInt("categoryID"));
+                c.setInstructorID(rs.getInt("InstructorID"));
+c.setPrice(rs.getBigDecimal("Price"));
+c.setCourseclass(rs.getInt("Class"));
+c.setThumbnail(rs.getString("Thumbnail"));
+
+                // add các field khác nếu cần
+                list.add(c);
+            }
+        }
+        return list;
+    }
     // 🟢 Thêm khóa học mới
     public boolean insertCourse(Course course) {
         String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) " +
@@ -135,6 +159,39 @@ public class CourseDAO extends DBContext {
         }
         return false;
     }
+    //tìm kiếm
+    public List<Course> searchCourses(String keyword) {
+    List<Course> list = new ArrayList<>();
+
+    String sql = """
+    SELECT * FROM Courses 
+    WHERE Title COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ? 
+       OR Description COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ?
+""";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        String k = "%" + keyword + "%";
+        ps.setString(1, k);
+        ps.setString(2, k);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Course course = new Course(
+                rs.getInt("CourseID"),
+                rs.getString("Title"),
+                rs.getString("Description"),
+                rs.getInt("InstructorID"),
+                rs.getBigDecimal("Price"),
+                rs.getInt("Class"),
+                rs.getInt("CategoryID"),
+                rs.getString("Thumbnail")
+            );
+            list.add(course);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
     public static void main(String[] args) {
 //        CourseDAO dao = new CourseDAO();
 //        List<Course> list = dao.getAllCourses();

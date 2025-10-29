@@ -1,0 +1,124 @@
+/* ==== HEADER CHUNG ==== */
+.header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 32px;
+    height: 70px;
+    transition: all 0.3s ease;
+}
+
+/* ==== LOGO ==== */
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+}
+.logo .s {
+    color: #ff6b00; /* cam chủ đạo */
+}
+.logo .c {
+    color: #222;
+}
+
+/* ==== THANH TÌM KIẾM ==== */
+.search-bar {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 40px;
+    position: relative;
+}
+
+.search-bar form {
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 6px 12px;
+    transition: all 0.3s;
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 8px 10px;
+    font-size: 15px;
+}
+
+.search-bar .search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    font-size: 16px;
+}
+
+.search-bar button {
+    background: none;
+    border: none;
+    color: #ff6b00;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 6px;
+    transition: 0.3s;
+}
+.search-bar button:hover {
+    transform: scale(1.1);
+}
+
+/* ==== NAVIGATION LINKS ==== */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: color 0.25s;
+}
+
+.nav-links a:hover {
+    color: #ff6b00;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 900px) {
+    .header {
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto;
+        padding: 16px;
+    }
+
+    .search-bar {
+        order: 3;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .nav-links {
+        order: 2;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 10px;
+    }
+}
+
+

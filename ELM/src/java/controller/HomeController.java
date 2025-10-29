@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Category;
 import model.Course;
 
+//homeGuestControler
 public class HomeController extends HttpServlet {
 
     @Override
