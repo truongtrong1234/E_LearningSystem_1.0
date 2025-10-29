@@ -20,7 +20,6 @@ import model.Account;
  *
  * @author ADMIN
  */
-@WebServlet("/adminAccount")
 public class manageAccount extends HttpServlet {
    
     /** 
