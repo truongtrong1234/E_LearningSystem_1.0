@@ -135,6 +135,39 @@ public class CourseDAO extends DBContext {
         }
         return false;
     }
+    //tìm kiếm
+    public List<Course> searchCourses(String keyword) {
+    List<Course> list = new ArrayList<>();
+
+    String sql = """
+    SELECT * FROM Courses 
+    WHERE Title COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ? 
+       OR Description COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ?
+""";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        String k = "%" + keyword + "%";
+        ps.setString(1, k);
+        ps.setString(2, k);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Course course = new Course(
+                rs.getInt("CourseID"),
+                rs.getString("Title"),
+                rs.getString("Description"),
+                rs.getInt("InstructorID"),
+                rs.getBigDecimal("Price"),
+                rs.getInt("Class"),
+                rs.getInt("CategoryID"),
+                rs.getString("Thumbnail")
+            );
+            list.add(course);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
     public static void main(String[] args) {
 //        CourseDAO dao = new CourseDAO();
 //        List<Course> list = dao.getAllCourses();
