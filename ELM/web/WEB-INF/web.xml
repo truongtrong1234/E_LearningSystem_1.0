@@ -69,8 +69,8 @@
         <servlet-class>controller.EditProfileController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>adminAccount</servlet-name>
-        <servlet-class>controller.adminAccount</servlet-class>
+        <servlet-name>manageAccount</servlet-name>
+        <servlet-class>controller.manageAccount</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -137,8 +137,8 @@
         <url-pattern>/editProfile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>adminAccount</servlet-name>
-        <url-pattern>/admin/adminAccount</url-pattern>
+        <servlet-name>manageAccount</servlet-name>
+        <url-pattern>/admin/manageAccount</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
