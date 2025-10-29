@@ -12,7 +12,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Course;
 
 
@@ -24,22 +27,39 @@ public class SearchCourseController extends HttpServlet {
             throws ServletException, IOException {
 
         String keyword = request.getParameter("keyword"); 
+        String categoryIdParam = request.getParameter("cats"); // category filter
         List<Course> courses = null;
 
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            CourseDAO dao = new CourseDAO();
-            courses = dao.searchCourses(keyword.trim());
-            
-        request.setAttribute("courses", courses);
-        request.setAttribute("keyword", keyword);
-        request.getRequestDispatcher("SearchResults.jsp").forward(request, response);
-        }
-      else {
-    // Không thực hiện search
-   
-     request.getRequestDispatcher("Learner/homeLearnerCourse").forward(request, response);
-}
+        CourseDAO dao = new CourseDAO();
 
+  
+            if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
+                // Lọc theo category
+                System.out.println("c");
+                int categoryId = Integer.parseInt(categoryIdParam);
+                System.out.println("ca");
+            try {
+                courses = dao.getCoursesByCategory(categoryId);
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCourseController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                System.out.println("cat");
+                
+
+            } else if (keyword != null && !keyword.trim().isEmpty()) {
+                // Tìm theo keyword
+                courses = dao.searchCourses(keyword.trim());
+            } else {
+                // Không filter hay search => load tất cả
+                courses = dao.getAllCourses();
+            }
+
+            request.setAttribute("courses", courses);
+            request.setAttribute("keyword", keyword);
+            request.getRequestDispatcher("SearchResults.jsp").forward(request, response);
+
+       
+        
     }
 }
 

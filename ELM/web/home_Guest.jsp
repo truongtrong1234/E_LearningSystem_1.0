@@ -9,37 +9,22 @@
         <meta charset="UTF-8"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
         <!-- thêm ?v=3 để phá cache -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css?v=3">
+           <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/homeGuest.css?v=3">
         <title>SecretCoder | Guest</title>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-        <!-- thêm ?v=3 để phá cache -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css?v=3">
+        
+        
     </head>
     <body>
 
         <!-- HEADER -->
-        <header class="header">
-            <a class="logo" href="${pageContext.request.contextPath}/home_Guest">
-                <span class="s">Secret</span><span class="c">Coder</span>
-            </a>
-
-            <div class="search-bar">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="Search for anything">
-                <button title="Search"><i class="bi bi-arrow-return-left"></i></button>
-            </div>
-
-            <nav class="nav-links">
-                <a href="<%=ctx%>/login.jsp">Login</a>
-                <a href="<%=ctx%>/register.jsp">Register</a>
-            </nav>
-        </header>
+        <jsp:include page="components/homeGuest.jsp"/>
 
         <!-- CATEGORY BAR -->
         <div class="category-wrap">
             <div class="category-bar">
                 <c:forEach var="cat" items="${listOfCategories}">
-                    <a href="${pageContext.request.contextPath}/load?cats=${cat.cate_id}">
+                    <a href="${pageContext.request.contextPath}/searchCourse?cats=${cat.cate_id}">
                         ${cat.cate_name}
                     </a>
                 </c:forEach>

@@ -22,17 +22,15 @@
         <!-- HEADER -->
         <jsp:include page="/components/headerLearner.jsp" />
 
-        <!-- CATEGORY BAR -->
-        <div class="category-wrap">
+    <div class="category-wrap">
             <div class="category-bar">
                 <c:forEach var="cat" items="${listOfCategories}">
-                    <a href="${pageContext.request.contextPath}/load?cats=${cat.cate_id}">
+                    <a href="${pageContext.request.contextPath}/searchCourse?cats=${cat.cate_id}">
                         ${cat.cate_name}
                     </a>
                 </c:forEach>
             </div>
         </div>
-
 
         <!-- BANNER -->
         <section class="hero">

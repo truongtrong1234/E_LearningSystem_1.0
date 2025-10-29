@@ -58,6 +58,30 @@ public class CourseDAO extends DBContext {
         return null;
     }
 
+    //
+    public List<Course> getCoursesByCategory(int categoryID) throws SQLException {
+        List<Course> list = new ArrayList<>();
+        String sql = "SELECT * FROM Courses WHERE categoryID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, categoryID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setCourseID(rs.getInt("courseID"));
+                c.setTitle(rs.getString("title"));
+                c.setDescription(rs.getString("description"));
+                c.setCategoryID(rs.getInt("categoryID"));
+                c.setInstructorID(rs.getInt("InstructorID"));
+c.setPrice(rs.getBigDecimal("Price"));
+c.setCourseclass(rs.getInt("Class"));
+c.setThumbnail(rs.getString("Thumbnail"));
+
+                // add các field khác nếu cần
+                list.add(c);
+            }
+        }
+        return list;
+    }
     // 🟢 Thêm khóa học mới
     public boolean insertCourse(Course course) {
         String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) " +
