@@ -156,10 +156,10 @@
         <servlet-name>AdminIndex</servlet-name>
         <url-pattern>/admin/adminIndex</url-pattern>
     </servlet-mapping>   
-    <servlet-mapping> 
+<!--    <servlet-mapping> 
         <servlet-name>SearchCourseController</servlet-name>
         <url-pattern>/searchCourse</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 <!--    <servlet-mapping>
         <servlet-name>CommunicationController</servlet-name>
         <url-pattern>/CommunicationController</url-pattern>
