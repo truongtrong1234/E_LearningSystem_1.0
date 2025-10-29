@@ -44,8 +44,11 @@
                 font-weight:800;
                 font-size:24px;
             }
+            .logo span{
+                color:orange !important
+            }
             .logo .s{
-                color:var(--brand)
+                color:orange
             }
             .logo .c{
                 color:#000
