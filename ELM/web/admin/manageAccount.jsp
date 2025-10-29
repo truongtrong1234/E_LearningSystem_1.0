@@ -3,6 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
 <head>
     <meta charset="UTF-8">
     <title>Manage Accounts</title>
@@ -14,13 +15,13 @@
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <ul>
-            <li><a href="adminIndex.jsp">Dashboard</a></li>
-            <li><a href="manageAccount" class="active">Manage Accounts</a></li>
+            <li><a href="adminIndex">Dashboard</a></li>
+            <li><a href="manageAccount">Manage Accounts</a></li>
             <li><a href="manageCourse.jsp">Manage Courses</a></li>
             <li><a href="manageReport.jsp">User Reports</a></li>
         </ul>
         <div class="logout-btn">
-            <a href="../home_Guest" style="text-decoration: none">Logout</a>
+            <a href="../logout" style="text-decoration: none">Logout</a>
         </div>
     </div>
 

@@ -14,11 +14,18 @@ public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // 🔒 Hủy session
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
 
+        // ❌ Ngăn trình duyệt lưu cache
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+        // 🔁 Quay về trang chính
         response.sendRedirect(request.getContextPath() + "/home_Guest");
     }
 }

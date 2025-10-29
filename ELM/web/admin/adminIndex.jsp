@@ -3,75 +3,79 @@
 <%@ page import="context.DBContext" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
-</head>
-<body>
-    <div class="sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-            <li><a href="adminIndex.jsp" class="active">Dashboard</a></li>
-            <li><a href="manageAccount.jsp">Manage Accounts</a></li>
-            <li><a href="manageCourse.jsp">Manage Courses</a></li>
-            <li><a href="manageReport.jsp">User Reports</a></li>
-        </ul>
-        <div class="logout-btn">
-            <a href="../home_Guest" style="text-decoration: none">Logout</a>
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin Dashboard</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li><a href="adminIndex">Dashboard</a></li>
+                <li><a href="manageAccount">Manage Accounts</a></li>
+                <li><a href="manageCourse.jsp">Manage Courses</a></li>
+                <li><a href="manageReport.jsp">User Reports</a></li>
+            </ul>
+            <div class="logout-btn">
+                <a href="../logout" style="text-decoration: none">Logout</a>
+            </div>
         </div>
-    </div>
 
-    <div class="main-content">
-        <h1>Admin Dashboard</h1>
-        <div class="dashboard-cards">
-            <%
-                int userCount = 0, courseCount = 0, feedbackCount = 0;
-                try {
-                    DBContext db = new DBContext();
-                    Connection conn = db.getConnection();
-                    Statement st = conn.createStatement();
-
-                    // Đếm user
-                    ResultSet rs1 = st.executeQuery("SELECT COUNT(*) FROM Users");
-                    if (rs1.next()) userCount = rs1.getInt(1);
-                    rs1.close();
-
-                    // Đếm course
-                    ResultSet rs2 = st.executeQuery("SELECT COUNT(*) FROM Courses");
-                    if (rs2.next()) courseCount = rs2.getInt(1);
-                    rs2.close();
-
-                    // Đếm feedback
-                    ResultSet rs3 = st.executeQuery("SELECT COUNT(*) FROM Feedback");
-                    if (rs3.next()) feedbackCount = rs3.getInt(1);
-                    rs3.close();
-
-                    st.close();
-                    conn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            %>
-
+<!--        <div class="main-content">
+            <h1>Admin Dashboard</h1>
             <div class="card orange">
                 <h3>User Accounts</h3>
-                <p><%= userCount %></p>
+                <p>${userCount}</p>
             </div>
 
             <div class="card orange">
                 <h3>Courses</h3>
-                <p><%= courseCount %></p>
+                <p>${courseCount}</p>
             </div>
 
             <div class="card orange">
                 <h3>Feedback</h3>
-                <p><%= feedbackCount %></p>
+                <p>${feedbackCount}</p>
             </div>
-        </div>
-    </div>
 
-    <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
-</body>
+        </div>-->
+<div class="main-content">
+    <h1>Admin Dashboard</h1>
+    <div class="dashboard-cards d-flex gap-4">
+
+        <!-- User Accounts Card -->
+        <a href="manageAccount" class="text-decoration-none text-dark" style="flex:1;">
+            <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                <h3>User Accounts</h3>
+                <p>${userCount}</p>
+            </div>
+        </a>
+
+        <!-- Courses Card -->
+        <a href="manageCourse.jsp" class="text-decoration-none text-dark" style="flex:1;">
+            <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                <h3>Courses</h3>
+                <p>${courseCount}</p>
+            </div>
+        </a>
+
+        <!-- Feedback Card (nếu dùng sau này) -->
+        
+        <a href="manageReport.jsp" class="text-decoration-none text-dark" style="flex:1;">
+            <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                <h3>Feedback</h3>
+                <p>${feedbackCount}</p>
+            </div>
+        </a>
+        
+    </div>
+</div>
+
+
+        <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
+    </body>
 </html>

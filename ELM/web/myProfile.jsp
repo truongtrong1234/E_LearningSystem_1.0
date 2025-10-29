@@ -4,6 +4,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
+    <%
+    // Chặn cache trình duyệt
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+
+    // Kiểm tra session đăng nhập
+    if (session == null || session.getAttribute("account") == null) {
+    response.sendRedirect(request.getContextPath() + "/login.jsp");
+    return;
+}
+
+%>
+
     <head>
         <title>My Profile | SecretCoder</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/myProfile.css">
