@@ -56,7 +56,7 @@
                         </div>
                         <div class="d-flex align-items-center ms-auto">
                             <span class="me-3 text-muted nav-profile-text">
-                                <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Learner</a>
+                                <a href="${pageContext.request.contextPath}/Learner/homeLearnerCourse" style="color: #495057; text-decoration: none;">Learner</a>
                             </span>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
                                 <a href="${pageContext.request.contextPath}/notification.jsp" style="color: #495057">
