@@ -20,8 +20,8 @@ import model.Account;
  *
  * @author ADMIN
  */
-@WebServlet("/AdminAccount")
-public class AdminAccount extends HttpServlet {
+@WebServlet("/adminAccount")
+public class manageAccount extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -62,7 +62,7 @@ public class AdminAccount extends HttpServlet {
         List<Account> accounts = dao.getAllAccounts();
 
         request.setAttribute("accounts", accounts);
-        request.getRequestDispatcher("/admin/adminAccount.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/manageAccount.jsp").forward(request, response);
     } 
 
     /** 
