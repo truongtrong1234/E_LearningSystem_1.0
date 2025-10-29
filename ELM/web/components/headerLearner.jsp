@@ -6,7 +6,7 @@
 <header class="main-header">
   <div class="header-container">
 
-    <a class="logo" href="${pageContext.request.contextPath}/home_learner.jsp">
+    <a class="logo" href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">
       <span class="s">Secret</span><span class="c">Coder</span>
     </a>
 

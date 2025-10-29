@@ -9,7 +9,7 @@
         <meta charset="UTF-8"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
         <!-- thêm ?v=3 để phá cache -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css?v=3">
-           <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/homeGuest.css?v=3">
+           <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerGuest.css?v=3">
         <title>SecretCoder | Guest</title>
 
         
@@ -18,7 +18,7 @@
     <body>
 
         <!-- HEADER -->
-        <jsp:include page="components/homeGuest.jsp"/>
+        <jsp:include page="components/headerGuest.jsp"/>
 
         <!-- CATEGORY BAR -->
         <div class="category-wrap">

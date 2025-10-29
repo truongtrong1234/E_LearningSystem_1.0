@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -10,15 +11,27 @@
     <!-- Bootstrap + FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/courseDetail.css">
-
-   
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerGuest.css?v=3">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css?v=3">
 </head>
 
 <body>
-    <jsp:include page="components/headerLearner.jsp"/>
-    
+    <c:choose>
+        <%-- Nếu người dùng đã đăng nhập --%>
+        <c:when test="${not empty sessionScope.account}">
+            <jsp:include page="components/headerLearner.jsp"/>
+        </c:when>
+
+        <%-- Nếu là khách chưa đăng nhập --%>
+        <c:otherwise>
+            <jsp:include page="components/headerGuest.jsp"/>
+        </c:otherwise>
+    </c:choose>
+
 <div class="container mt-4 mb-5">
+
 
     <!-- 🧭 Breadcrumb -->
     <nav aria-label="breadcrumb">
