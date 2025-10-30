@@ -19,7 +19,7 @@
     </div>
 
     <nav class="nav-links">
-      <a href="${pageContext.request.contextPath}/course">Instructor</a>
+      <a href="${pageContext.request.contextPath}/instructor/dashboard">Instructor</a>
       <a href="${pageContext.request.contextPath}/myLearning">My Learning</a>
     </nav>
 

@@ -20,12 +20,12 @@
                 <!-- STEP HEADER -->
                 <div class="step-header mb-4">
                     <div class="text-center">
-                        <div class="circle active">1</div>
+                        <div class="circle">1</div>
                         <div class="label">Basic</div>
                     </div>
                     <div class="step-indicator"></div>
                     <div class="text-center">
-                        <div class="circle">2</div>
+                        <div class="circle active">2</div>
                         <div class="label">Chapters</div>
                     </div>
                     <div class="step-indicator"></div>

@@ -26,7 +26,7 @@
         </div>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/instructor/dashboard.jsp" class="nav-link text-white sidebar-link">
+                <a href="${pageContext.request.contextPath}/instructor/dashboard" class="nav-link text-white sidebar-link">
                     <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
                 </a>
             </li>
