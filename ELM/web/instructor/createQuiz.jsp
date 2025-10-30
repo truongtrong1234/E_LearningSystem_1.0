@@ -46,14 +46,11 @@
         <!-- Question -->
         <div id="questionsContainer"></div>
         <div class="d-flex justify-content-between mt-4 gap-3">
-            <button class="btn btn-cancel" id="cancelBtn">Cancel</button>
+            <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
             <button class="btn btn-add" id="addQuestionBtn">+ Add Question</button>
             <button class="btn btn-save" id="saveQuizBtn">Create Quiz</button>
         </div>
     </div>
     </form>
-    
-    <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
 </body>
 </html>

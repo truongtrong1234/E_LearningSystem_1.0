@@ -175,7 +175,8 @@
                                                     </ul>
                                                 </div>
                                                 <div class="cqm-image-placeholder bg-light rounded-top">
-                                                    <i class="fas fa-question-circle fa-3x text-secondary"></i> </div>
+                                                    <i class="fas fa-question-circle fa-3x text-secondary"></i> 
+                                                </div>
                                                 <div class="card-body">
                                                     <a href="quiz?id=${quiz.quizId}" class="text-decoration-none text-dark">
                                                         <h5 class="card-title fw-bold text-truncate" title="${quiz.quizName}">${quiz.quizName}</h5>
@@ -262,8 +263,6 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
     </body>
 </html>

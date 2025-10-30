@@ -9,80 +9,80 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
     </head>
     <body>
-<div class="container mt-5">
-    <div class="row">
-        <!-- Cột trái: Form Upload -->
-        <div class="col-md-6">
-            <h2 class="mb-4 fw-bold text-center text-primary">Upload Material</h2>
-            <form action="uploadMaterial" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="thisLessonID" value="${thisLessonID}">
+        <div class="container mt-5">
+            <div class="row">
+                <!-- Cột trái: Form Upload -->
+                <div class="col-md-6">
+                    <h2 class="mb-4 fw-bold text-center text-primary">Upload Material</h2>
+                    <form action="uploadMaterial" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="thisLessonID" value="${thisLessonID}">
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Title</label>
-                    <input type="text" class="form-control" name="title" required>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Title *</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Material Type</label>
+                            <select class="form-select" name="type" required>
+                                <option value="" disabled selected>Select type</option>
+                                <option value="Video">Video</option>
+                                <option value="PDF">PDF</option>
+                                <option value="Other">Khác</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Upload File</label>
+                            <input type="file" class="form-control" name="PartFile" required>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+
+                    <c:if test="${not empty errorMessage}">
+                        <div class="alert alert-danger mt-3">${errorMessage}</div>
+                    </c:if>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Material Type</label>
-                    <select class="form-select" name="type" required>
-                        <option value="" disabled selected>Select type</option>
-                        <option value="Video">Video</option>
-                        <option value="PDF">PDF</option>
-                        <option value="Other">Khác</option>
-                    </select>
-                </div>
+                <!-- Cột phải: Danh sách Material -->
+                <div class="col-md-6">
+                    <h4 class="fw-bold mb-3 text-secondary">Uploaded Materials</h4>
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Upload File</label>
-                    <input type="file" class="form-control" name="PartFile" required>
-                </div>
+                    <c:if test="${empty material}">
+                        <p class="text-muted">Chưa có tài liệu nào được tải lên.</p>
+                    </c:if>
 
-                <div class="d-flex justify-content-between">
-                    <a href="" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Upload</button>
+                    <c:forEach var="m" items="${material}">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">${m.title}</h5>
+                                <p class="card-text">
+                                    Ngày đăng: ${m.createdAt}
+                                </p>
+                                <c:choose>
+                                    <c:when test="${m.materialType eq 'image'}">
+                                        <img src="${m.contentURL}" alt="${m.title}" class="img-fluid rounded">
+                                    </c:when>
+                                    <c:when test="${m.materialType eq 'video'}">
+                                        <video controls class="w-100 rounded">
+                                            <source src="${m.contentURL}" type="video/mp4">
+                                        </video>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="viewMaterial?LessonID=${thisLessonID}&url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            Xem tài liệu
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-            </form>
-
-            <c:if test="${not empty errorMessage}">
-                <div class="alert alert-danger mt-3">${errorMessage}</div>
-            </c:if>
+            </div>
         </div>
-
-        <!-- Cột phải: Danh sách Material -->
-        <div class="col-md-6">
-            <h4 class="fw-bold mb-3 text-secondary">Uploaded Materials</h4>
-
-            <c:if test="${empty material}">
-                <p class="text-muted">Chưa có tài liệu nào được tải lên.</p>
-            </c:if>
-
-            <c:forEach var="m" items="${material}">
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">${m.title}</h5>
-                        <p class="card-text">
-                            Ngày đăng: ${m.createdAt}
-                        </p>
-                        <c:choose>
-                            <c:when test="${m.materialType eq 'image'}">
-                                <img src="${m.contentURL}" alt="${m.title}" class="img-fluid rounded">
-                            </c:when>
-                            <c:when test="${m.materialType eq 'video'}">
-                                <video controls class="w-100 rounded">
-                                    <source src="${m.contentURL}" type="video/mp4">
-                                </video>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="viewMaterial?LessonID=${thisLessonID}&url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
-                                    Xem tài liệu
-                                </a>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-</div>
- </body>
+    </body>
 </html>

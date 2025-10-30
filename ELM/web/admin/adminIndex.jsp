@@ -3,7 +3,6 @@
 <%@ page import="context.DBContext" %>
 <!DOCTYPE html>
 <html>
-    
     <head>
         <meta charset="UTF-8">
         <title>Admin Dashboard</title>
@@ -43,39 +42,37 @@
             </div>
 
         </div>-->
-<div class="main-content">
-    <h1>Admin Dashboard</h1>
-    <div class="dashboard-cards d-flex gap-4">
+    <div class="main-content">
+        <h1>Admin Dashboard</h1>
+        <div class="dashboard-cards d-flex gap-4">
 
-        <!-- User Accounts Card -->
-        <a href="manageAccount" class="text-decoration-none text-dark" style="flex:1;">
-            <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
-                <h3>User Accounts</h3>
-                <p>${userCount}</p>
-            </div>
-        </a>
+            <!-- User Accounts Card -->
+            <a href="manageAccount" class="text-decoration-none text-dark" style="flex:1;">
+                <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                    <h3>User Accounts</h3>
+                    <p>${userCount}</p>
+                </div>
+            </a>
 
-        <!-- Courses Card -->
-        <a href="manageCourse.jsp" class="text-decoration-none text-dark" style="flex:1;">
-            <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
-                <h3>Courses</h3>
-                <p>${courseCount}</p>
-            </div>
-        </a>
+            <!-- Courses Card -->
+            <a href="manageCourse.jsp" class="text-decoration-none text-dark" style="flex:1;">
+                <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                    <h3>Courses</h3>
+                    <p>${courseCount}</p>
+                </div>
+            </a>
 
-        <!-- Feedback Card (nếu dùng sau này) -->
-        
-        <a href="manageReport.jsp" class="text-decoration-none text-dark" style="flex:1;">
-            <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
-                <h3>Feedback</h3>
-                <p>${feedbackCount}</p>
-            </div>
-        </a>
-        
+            <!-- Feedback Card (dùng sau này) -->
+            <a href="manageReport.jsp" class="text-decoration-none text-dark" style="flex:1;">
+                <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                    <h3>Feedback</h3>
+                    <p>${feedbackCount}</p>
+                </div>
+            </a>
+
+        </div>
     </div>
-</div>
-
-
-        <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
+    
+    <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
     </body>
 </html>

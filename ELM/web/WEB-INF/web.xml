@@ -29,6 +29,14 @@
         <servlet-class>controller.CreateChapterController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateLessonController</servlet-name>
+        <servlet-class>controller.CreateLessonController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadMaterial</servlet-name>
+        <servlet-class>controller.UploadMaterial</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>java</servlet-name>
         <servlet-class>MyProfileServlet.java</servlet-class>
     </servlet>
@@ -115,6 +123,14 @@
     <servlet-mapping>
         <servlet-name>CreateChapterController</servlet-name>
         <url-pattern>/instructor/createChapter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateLessonController</servlet-name>
+        <url-pattern>/instructor/createLesson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadMaterial</servlet-name>
+        <url-pattern>/instructor/uploadMaterial</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>java</servlet-name>

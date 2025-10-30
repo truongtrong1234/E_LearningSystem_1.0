@@ -61,7 +61,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea id="description" name="description" class="form-control" rows="3" placeholder="Short description about the course" required=""></textarea>
+                            <textarea id="description" name="description" class="form-control" rows="3" placeholder="Short description about the course"></textarea>
                         </div>
 
                         <div class="row">
@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Price ($)</label>
+                                <label class="form-label">Price($) *</label>
                                 <input type="number" id="price" name="price" class="form-control" placeholder="Enter price" required="">
                             </div>
                         </div>
@@ -95,10 +95,10 @@
                     </c:if>
 
                     <div class="d-flex justify-content-between mt-4">
-                        <button id="prevBtn" class="btn btn-outline-secondary">Back</button>
-                        <button type="submit" id="nextBtn"  class="btn btn-primary">Continue</button>
-                    </div></form>
-
+                        <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+                </form>
                 <!--             STEP 2: CHAPTER CREATION 
                             <div class="step" id="step-2">
                                 <h5 class="mb-3">Chapters</h5>
@@ -123,8 +123,5 @@
 
             </div>
         </div>
-
-        <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
     </body>
 </html>

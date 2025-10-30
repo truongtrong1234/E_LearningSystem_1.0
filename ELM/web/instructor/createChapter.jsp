@@ -39,13 +39,12 @@
                         <div class="label">Review</div>
                     </div>
                 </div>
-
+                <!-- Add Chapter -->
                 <form action="createChapter" method="post" class="d-flex mb-4">
                     <input type="hidden" name="thisCourseID" value="${thisCourseID}">
                     <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Enter new chapter title..." required>
-                    <button type="submit" class="btn btn-primary">+ Add Chapter </button>
+                    <button type="submit" class="btn btn-primary">+ Add Chapter </button>                  
                 </form>
-
                 <!-- Danh sách chương -->
                 <div id="chapterList">
                     <c:if test="${empty chapters}">
@@ -65,10 +64,12 @@
                         </div>
                     </c:forEach>
                 </div>
+                <!-- Button -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                    <!-- <button type="submit" id="nextBtn"  class="btn btn-primary">Continue</button> -->
+                </div> 
             </div>
         </div>
-
-        <script src="${pageContext.request.contextPath}/assets/js/createCQM.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
     </body>
 </html>
