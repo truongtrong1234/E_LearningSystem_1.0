@@ -28,7 +28,7 @@
       <button class="icon-btn"><i class="bi bi-cart3"></i></button>
       <button class="icon-btn"><i class="bi bi-bell"></i></button>
 
-      <a href="${pageContext.request.contextPath}/myProfile.jsp" class="avatar">
+      <a href="${pageContext.request.contextPath}/myProfile" class="avatar">
         <c:choose>
           <c:when test="${not empty sessionScope.account.picture}">
             <img src="${sessionScope.account.picture}" alt="avatar" class="avatar-img"/>
