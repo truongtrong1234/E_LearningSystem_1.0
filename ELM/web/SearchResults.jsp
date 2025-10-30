@@ -30,18 +30,36 @@
         </c:otherwise>
     </c:choose>
                         
-<c:if test="${empty courses}">
+<c:if test="${empty listCourse}">
     <p>Không tìm thấy khóa học nào.</p>
 </c:if>
 
-<c:forEach var="course" items="${courses}">
-    <div class="course-item">
-        <img src="${course.thumbnail}" alt="${course.title}" width="120"/>
-        <h3>${course.title}</h3>
-        <p>${course.description}</p>
-        <p>Price: ${course.price}</p>
-    </div>
-</c:forEach>
+<section class="section">
+            
+            <div class="grid">
+                <c:forEach var="c" items="${listCourse}">
+                    <a class="course-card" href="${pageContext.request.contextPath}/courseDetail?id=${c.courseID}">
+                        <div class="thumb">
+                            <img src="${c.thumbnail}" alt="${c.title}">
+                        </div>
+                        <div class="body">
+                            <div class="title">${c.title}</div>
+                            <div class="meta">Instructor ID: ${c.instructorID}</div>
+                            <div class="price">
+                                <c:choose>
+                                    <c:when test="${c.price == 0}">
+                                        Miễn phí
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${c.price}đ
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </a>
+                </c:forEach>
+            </div>
+        </section>
     
 </body> 
     </html>
