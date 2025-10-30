@@ -190,7 +190,7 @@
     </servlet-mapping>
     <servlet-mapping>
     <servlet-name>ViewMaterial</servlet-name>
-    <url-pattern>/viewMaterial</url-pattern>
+    <url-pattern>/instructor/viewMaterial</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
