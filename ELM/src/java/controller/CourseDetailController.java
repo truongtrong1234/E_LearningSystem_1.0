@@ -56,19 +56,19 @@ EnrollmentDAO eDao = new EnrollmentDAO(); // 👈 thêm dòng này
 
       // 🔹 Lấy Category tương ứng với khóa học
 Category category = catDao.getCategoryById(course.getCategoryID());
- // 👈 thêm dòng này
-    // 3️⃣ Lấy danh sách chương (chapter)
+    // thêm dòng này
+    // Lấy danh sách chương (chapter)
     List<Chapter> chapters = chDao.getAllChap();
     chapters.removeIf(ch -> ch.getCourseID() != courseID);
 
-    // 4️⃣ Map: mỗi chapterID -> danh sách bài học
+    // Map: mỗi chapterID -> danh sách bài học
     Map<Integer, List<Lesson>> lessonsMap = new HashMap<>();
     for (Chapter ch : chapters) {
         List<Lesson> lessons = lDao.getByChapterID(ch.getChapterID());
         lessonsMap.put(ch.getChapterID(), lessons);
     }
 
-    // 5️⃣ Xác định người dùng hiện tại là khách hay học viên
+    // Xác định người dùng hiện tại là khách hay học viên
     HttpSession session = request.getSession(false);
     String homePage;
     boolean isEnrolled = false; // 👈 thêm biến này
@@ -78,7 +78,7 @@ Category category = catDao.getCategoryById(course.getCategoryID());
         homePage = "home_Guest";
     }
 
-    // 6️⃣ Gửi dữ liệu sang JSP
+    // Gửi dữ liệu sang JSP
     request.setAttribute("course", course);
     request.setAttribute("category", category);
     request.setAttribute("chapters", chapters);
@@ -88,7 +88,7 @@ Category category = catDao.getCategoryById(course.getCategoryID());
        request.setAttribute("instructor", instructor);
 
 
-    // 7️⃣ Chuyển tiếp tới trang chi tiết khóa học
+    // Chuyển tiếp tới trang chi tiết khóa học
     request.getRequestDispatcher("courseDetail.jsp").forward(request, response);
 }
 

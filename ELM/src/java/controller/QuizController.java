@@ -49,7 +49,7 @@ public class QuizController extends HttpServlet {
             throws IOException {
         int quizId = Integer.parseInt(request.getParameter("id"));
         quizDAO.deleteQuiz(quizId);
-        response.sendRedirect(request.getContextPath() + "/instructor/quiz");
+        response.sendRedirect(request.getContextPath() + "/instructor/dashboard");
     }
 
     @Override
@@ -75,7 +75,7 @@ public class QuizController extends HttpServlet {
 
         if (inserted) {
             // Sau khi tạo xong quay về dashboard hiển thị danh sách mới
-            response.sendRedirect(request.getContextPath() + "/instructor/quiz");
+            response.sendRedirect(request.getContextPath() + "/instructor/dashboard");
         } else {
             request.setAttribute("error", "Không thể tạo quiz, vui lòng thử lại.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/instructor/createQuiz.jsp");

@@ -14,10 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Course;
 
-/**
- *
- * @author Admin
- */
 public class CourseController extends HttpServlet {
 
     /**
@@ -34,7 +30,7 @@ public class CourseController extends HttpServlet {
         CourseDAO cdao = new  CourseDAO(); 
         List<Course> courseList = cdao.getAllCourses(); 
         request.setAttribute("courseList", courseList);
-        request.getRequestDispatcher("instructor/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("/instructor/dashboard.jsp").forward(request, response);
         
     }
 

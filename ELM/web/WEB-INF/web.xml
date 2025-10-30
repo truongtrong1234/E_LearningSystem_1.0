@@ -21,12 +21,12 @@
         <servlet-class>controller.CourseController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreateCourse</servlet-name>
-        <servlet-class>controller.CreateCourse</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CreateCourseController</servlet-name>
         <servlet-class>controller.CreateCourseController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateChapterController</servlet-name>
+        <servlet-class>controller.CreateChapterController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>java</servlet-name>
@@ -106,11 +106,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CourseController</servlet-name>
-        <url-pattern>/course</url-pattern>
+        <url-pattern>/instructor/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateCourseController</servlet-name>
-        <url-pattern>/createCourse</url-pattern>
+        <url-pattern>/instructor/createCourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateChapterController</servlet-name>
+        <url-pattern>/instructor/createChapter</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>java</servlet-name>

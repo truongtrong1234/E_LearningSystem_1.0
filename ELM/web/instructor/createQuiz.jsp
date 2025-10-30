@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/instructor/quiz" method="post">
+    <form action="${pageContext.request.contextPath}/instructor/createQuiz" method="post">
     <div class="create-quiz-container">
         <h3>Create New Quiz</h3>
         <!-- Select Course -->
