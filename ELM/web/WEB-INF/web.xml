@@ -105,12 +105,12 @@
         <servlet-class>controller.MaterialListController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ViewMaterial</servlet-name>
-        <servlet-class>controller.ViewMaterial</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>PaymentController</servlet-name>
         <servlet-class>controller.PaymentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewMaterialController</servlet-name>
+        <servlet-class>controller.ViewMaterialController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -205,10 +205,6 @@
         <url-pattern>/materialList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewMaterial</servlet-name>
-        <url-pattern>/instructor/viewMaterial</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ManageReport</servlet-name>
         <url-pattern>/admin/manageReport</url-pattern>
     </servlet-mapping>
@@ -223,6 +219,10 @@
     <servlet-mapping>
         <servlet-name>PaymentController</servlet-name>
         <url-pattern>/payment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewMaterialController</servlet-name>
+        <url-pattern>/viewMaterial</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -20,7 +20,7 @@ import model.Material;
  *
  * @author Admin
  */
-public class ViewMaterial extends HttpServlet {
+public class ViewMaterialController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
