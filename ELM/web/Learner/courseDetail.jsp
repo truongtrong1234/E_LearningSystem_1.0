@@ -10,6 +10,7 @@
     <title>${course.title} | SecretCoder</title>
     <link rel="stylesheet" href="${ctx}/assets/css/courseDetail.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${ctx}/assets/css/footer.css">
 </head>
 <body>
 

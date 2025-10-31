@@ -77,6 +77,8 @@
                 </c:forEach>
             </div>
         </section>
-        <footer>© 2025 SecretCoder. All rights reserved.</footer>
+        <!-- FOOTER -->
+        <jsp:include page="/components/footer.jsp" />
+
     </body>
 </html>
