@@ -24,6 +24,18 @@ public class EnrollmentDAO extends DBContext {
             ex.printStackTrace();
         }
     }
+    // ✅ Hàm tiện lợi: chèn enrollment bằng ID, không cần tạo object
+public void insertEnrollment(int accountID, int courseID) {
+    String sql = "INSERT INTO Enrollments (AccountID, CourseID) VALUES (?, ?)";
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setInt(1, accountID);
+        stm.setInt(2, courseID);
+        stm.executeUpdate();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+
 
     // READ - get all
     public List<Enrollment> getAllEnrollment() {
