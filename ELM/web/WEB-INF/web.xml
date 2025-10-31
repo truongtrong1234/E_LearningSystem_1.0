@@ -73,6 +73,18 @@
         <servlet-class>controller.AdminController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ManageReport</servlet-name>
+        <servlet-class>controller.ManageReport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportDetail</servlet-name>
+        <servlet-class>controller.ReportDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReplyReport</servlet-name>
+        <servlet-class>controller.ReplyReport</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditProfileController</servlet-name>
         <servlet-class>controller.EditProfileController</servlet-class>
     </servlet>
@@ -195,6 +207,18 @@
     <servlet-mapping>
         <servlet-name>ViewMaterial</servlet-name>
         <url-pattern>/instructor/viewMaterial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageReport</servlet-name>
+        <url-pattern>/admin/manageReport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportDetail</servlet-name>
+        <url-pattern>/admin/reportDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReplyReport</servlet-name>
+        <url-pattern>/replyReport</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PaymentController</servlet-name>

@@ -13,7 +13,7 @@
             padding: 30px;
             flex: 1;
             background-color: var(--light-bg);
-             margin-right: auto;
+            
         }
         .report-card {
             background: white;
