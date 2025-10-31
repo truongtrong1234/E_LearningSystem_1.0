@@ -87,10 +87,9 @@
 
         
         <c:otherwise>
-            <form action="" method="post" style="display:inline;">
+            <form action="vnpay" method="post" style="display:inline;">
                 <input type="hidden" name="courseID" value="${course.courseID}">
                 <input type="hidden" name="amount" value="${course.price}">
-                <input type="hidden" name="method" value="FakeGateway">
                 <button type="submit" class="btn btn-primary">
                     <i class="fa-solid fa-credit-card"></i> Đăng ký học
                 </button>

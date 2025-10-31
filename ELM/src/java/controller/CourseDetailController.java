@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.*;
 import model.*;
 
-///@WebServlet("/course-detail")
 public class CourseDetailController extends HttpServlet {
 
     @Override
