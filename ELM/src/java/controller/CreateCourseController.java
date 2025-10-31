@@ -59,7 +59,8 @@ public class CreateCourseController extends HttpServlet {
             String description = request.getParameter("description");
             int theClass = Integer.parseInt(request.getParameter("class"));
             int categoryID = Integer.parseInt(request.getParameter("categoryID"));
-            double price = Double.parseDouble(request.getParameter("price"));
+            double pricedouble = Double.parseDouble(request.getParameter("price"));
+            BigDecimal price  = BigDecimal.valueOf(pricedouble); 
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("account");
             int instructorID = acc.getAccountId();
@@ -69,7 +70,7 @@ public class CreateCourseController extends HttpServlet {
                 request.setAttribute("errorMessage", "không được để trống thumbnail");
             }
             String url = CloudinaryUtil.uploadImage(filePart);
-            Course c = new Course(title, description, instructorID, BigDecimal.ONE, theClass, categoryID, url);
+            Course c = new Course(title, description, instructorID, price, theClass, categoryID, url);
             CourseDAO cdao = new CourseDAO(); 
             int newCourseID =  cdao.insertCourseAndReturnID(c);
             response.sendRedirect("createChapter?courseID="+newCourseID);

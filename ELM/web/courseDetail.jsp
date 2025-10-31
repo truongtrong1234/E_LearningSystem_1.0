@@ -87,15 +87,7 @@
 
         
         <c:otherwise>
-            <button class="btn btn-outline-primary me-2">
-                <i class="fa-solid fa-cart-plus"></i> Thêm giỏ hàng
-            </button>
-
-            <button class="btn-heart me-2">
-                <i class="fa-regular fa-heart"></i>
-            </button>
-
-            <form action="payment" method="post" style="display:inline;">
+            <form action="" method="post" style="display:inline;">
                 <input type="hidden" name="courseID" value="${course.courseID}">
                 <input type="hidden" name="amount" value="${course.price}">
                 <input type="hidden" name="method" value="FakeGateway">
