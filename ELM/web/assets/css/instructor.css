@@ -123,6 +123,7 @@
 
 /* -------------------- Main Content --------------------- */
 .main-content {
+    width: calc(100% - 250px);
     background-color: #f8f9fa; 
 }
 

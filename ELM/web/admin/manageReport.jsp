@@ -1,9 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="context.DBContext" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-    
 <head>
     <meta charset="UTF-8">
     <title>User Reports | Admin Dashboard</title>
@@ -11,75 +9,59 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
 </head>
 <body>
-    <!-- Sidebar -->
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <ul>
             <li><a href="adminIndex">Dashboard</a></li>
             <li><a href="manageAccount">Manage Accounts</a></li>
             <li><a href="manageCourse.jsp">Manage Courses</a></li>
-            <li><a href="manageReport.jsp">User Reports</a></li>
+            <li><a href="manageReport">User Reports</a></li>
         </ul>
         <div class="logout-btn">
-            <a href="../logout" style="text-decoration: none">Logout</a>
+            <a href="../logout" style="text-decoration:none;">Logout</a>
         </div>
     </div>
 
-    <!-- Main content -->
     <div class="main-content">
         <h1>User Reports</h1>
 
-        <div class="report-container">
-            <%
-                try {
-                    DBContext db = new DBContext();
-                    Connection conn = db.getConnection();
-                    String sql = "SELECT f.FeedbackID, f.SenderID, u.FullName, f.Message, f.CreatedAt " +
-                                 "FROM Feedback f LEFT JOIN Users u ON f.SenderID = u.UserID " +
-                                 "ORDER BY f.CreatedAt DESC";
-                    PreparedStatement ps = conn.prepareStatement(sql);
-                    ResultSet rs = ps.executeQuery();
-
-                    boolean hasData = false;
-                    while (rs.next()) {
-                        hasData = true;
-                        int id = rs.getInt("FeedbackID");
-                        String sender = rs.getString("FullName");
-                        if (sender == null || sender.trim().isEmpty()) sender = "(Unknown)";
-                        String message = rs.getString("Message");
-                        Timestamp createdAt = rs.getTimestamp("CreatedAt");
-            %>
-
-            <div class="report-item" id="report-<%=id%>">
-                <div class="report-info">
-                    <strong>ID: <%=id%></strong> — 
-                    <span>User: <%=sender%></span>
-                    <div class="report-message"><%=message%></div>
-                </div>
-                <div class="report-date"><%=createdAt%></div>
-                <button class="btn-delete" data-id="<%=id%>">🗑 Delete</button>
-            </div>
-
-            <%
-                    }
-                    if (!hasData) {
-            %>
-                <div class="no-report">No reports found.</div>
-            <%
-                    }
-                    rs.close();
-                    ps.close();
-                    conn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-            %>
-                <div class="alert alert-danger">Error loading reports!</div>
-            <%
-                }
-            %>
-        </div>
+        <c:choose>
+            <c:when test="${empty listReports}">
+                <div class="alert alert-warning">No reports found.</div>
+            </c:when>
+            <c:otherwise>
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Sender Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="r" items="${listReports}">
+                            <tr>
+                                <td>${r.reportId}</td>
+                                <td>${r.title}</td>
+                                <td>${r.senderName}</td>
+                                <td>${r.senderEmail}</td>
+                                <td>${r.status}</td>
+                                <td>${r.createdAt}</td>
+                                <td>
+                                    <a href="reportDetail?id=${r.reportId}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="deleteReport?id=${r.reportId}" class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Delete this report?')">Delete</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
     </div>
-
-    <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
 </body>
 </html>

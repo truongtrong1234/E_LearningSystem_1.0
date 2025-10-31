@@ -11,7 +11,7 @@ public class AdminIndex extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int userCount = 0, courseCount = 0;
+        int userCount = 0, courseCount = 0, reportCount = 0 ;
 
         try (Connection conn = new DBContext().getConnection();
              Statement st = conn.createStatement()) {
@@ -24,9 +24,9 @@ public class AdminIndex extends HttpServlet {
             if (rs2.next()) courseCount = rs2.getInt(1);
             rs2.close();
 
-//            ResultSet rs3 = st.executeQuery("SELECT COUNT(*) FROM Feedback");
-//            if (rs3.next()) feedbackCount = rs3.getInt(1);
-//            rs3.close();
+            ResultSet rs3 = st.executeQuery("SELECT COUNT(*) FROM Reports");
+            if (rs3.next()) reportCount = rs3.getInt(1);
+            rs3.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,7 +34,7 @@ public class AdminIndex extends HttpServlet {
 
         request.setAttribute("userCount", userCount);
         request.setAttribute("courseCount", courseCount);
-//        request.setAttribute("feedbackCount", feedbackCount);
+        request.setAttribute("reportCount", reportCount);
 
         request.getRequestDispatcher("/admin/adminIndex.jsp").forward(request, response);
     }

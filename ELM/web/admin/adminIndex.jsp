@@ -17,31 +17,12 @@
                 <li><a href="adminIndex">Dashboard</a></li>
                 <li><a href="manageAccount">Manage Accounts</a></li>
                 <li><a href="manageCourse.jsp">Manage Courses</a></li>
-                <li><a href="manageReport.jsp">User Reports</a></li>
+                <li><a href="manageReport">User Reports</a></li>
             </ul>
             <div class="logout-btn">
                 <a href="../logout" style="text-decoration: none">Logout</a>
             </div>
         </div>
-
-<!--        <div class="main-content">
-            <h1>Admin Dashboard</h1>
-            <div class="card orange">
-                <h3>User Accounts</h3>
-                <p>${userCount}</p>
-            </div>
-
-            <div class="card orange">
-                <h3>Courses</h3>
-                <p>${courseCount}</p>
-            </div>
-
-            <div class="card orange">
-                <h3>Feedback</h3>
-                <p>${feedbackCount}</p>
-            </div>
-
-        </div>-->
     <div class="main-content">
         <h1>Admin Dashboard</h1>
         <div class="dashboard-cards d-flex gap-4">
@@ -62,14 +43,13 @@
                 </div>
             </a>
 
-            <!-- Feedback Card (dùng sau này) -->
-            <a href="manageReport.jsp" class="text-decoration-none text-dark" style="flex:1;">
+            <!-- Reports Card -->
+            <a href="manageReport" class="text-decoration-none text-dark" style="flex:1;">
                 <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
-                    <h3>Feedback</h3>
-                    <p>${feedbackCount}</p>
+                    <h3>User Reports</h3>
+                    <p>${reportCount}</p>
                 </div>
             </a>
-
         </div>
     </div>
     

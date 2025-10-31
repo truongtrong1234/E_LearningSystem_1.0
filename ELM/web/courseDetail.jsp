@@ -84,13 +84,22 @@
                 </button>
 
                 <c:choose>
-                    <c:when test="${isEnrolled}">
-                        <a href="learnCourse?id=${course.courseID}" class="btn btn-success">Tiếp tục học</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="enrollCourse?id=${course.courseID}" class="btn btn-primary">Đăng ký học</a>
-                    </c:otherwise>
-                </c:choose>
+    <c:when test="${isEnrolled}">
+        <a href="myChapter?CourseID=${course.courseID}" class="btn btn-success">Tiếp tục học</a>
+    </c:when>
+
+    <c:otherwise>
+        <form action="payment" method="post" style="display:inline;">
+            <input type="hidden" name="courseID" value="${course.courseID}">
+            <input type="hidden" name="amount" value="${course.price}">
+            <input type="hidden" name="method" value="FakeGateway">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-credit-card"></i> Đăng ký học
+            </button>
+        </form>
+    </c:otherwise>
+</c:choose>
+
             </div>
         </div>
     </div>
