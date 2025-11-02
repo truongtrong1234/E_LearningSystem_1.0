@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!--%
     if (session.getAttribute("account") == null) {
-        response.sendRedirect("../login.jsp");
+        response.sendRedirect("login.jsp");
         return;
     }
 %-->
@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <title>View and Edit Course</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/veCourse.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/veCQ.css">
 </head>
 <body>
     <div class="container mt-5 mb-5">
@@ -100,11 +100,11 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="alert alert-info text-center">Khóa học này chưa có chương nào.</div>
+                <div class="alert alert-info text-center">This course does not have any chapters yet.</div>
             </c:otherwise>
         </c:choose>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/veCourse.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/veCQ.js"></script>
 </body>
 </html>
