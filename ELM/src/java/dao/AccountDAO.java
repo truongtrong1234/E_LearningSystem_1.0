@@ -8,7 +8,7 @@ import java.util.List;
 import model.GoogleAccount;
 
 public class AccountDAO extends DBContext {
-// 🔹 Lấy tài khoản theo ID (dùng để lấy thông tin giảng viên)
+// Lấy tài khoản theo ID (dùng để lấy thông tin giảng viên)
 public Account getAccountById(int accountId) {
     String sql = "SELECT * FROM Accounts WHERE AccountID = ?";
     try {
@@ -30,7 +30,7 @@ public Account getAccountById(int accountId) {
     }
     return null;
 }
-// 🔹 Lấy toàn bộ danh sách tài khoản
+// Lấy toàn bộ danh sách tài khoản
 public List<Account> getAllAccounts() {
     List<Account> list = new ArrayList<>();
     String sql = "SELECT * FROM Accounts";

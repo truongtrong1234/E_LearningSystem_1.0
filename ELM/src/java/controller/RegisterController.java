@@ -76,7 +76,7 @@ public class RegisterController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", account);
 
-            response.sendRedirect(request.getContextPath() + "/Learner/homeLearnerCourse");
+            response.sendRedirect(request.getContextPath() + "/Learner/homeLearnerCourse    ");
             return; // thêm return để dừng luôn, tránh ghi thêm ra response
         } else {
             // Nếu thất bại thì forward về lại trang register.jsp
