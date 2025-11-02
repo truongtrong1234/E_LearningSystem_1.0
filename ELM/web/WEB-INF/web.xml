@@ -37,6 +37,10 @@
         <servlet-class>controller.UploadMaterial</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddQuestionController</servlet-name>
+        <servlet-class>controller.AddQuestionController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>MyProfileController</servlet-name>
         <servlet-class>controller.MyProfileController</servlet-class>
     </servlet>
@@ -147,6 +151,10 @@
     <servlet-mapping>
         <servlet-name>UploadMaterial</servlet-name>
         <url-pattern>/instructor/uploadMaterial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddQuestionController</servlet-name>
+        <url-pattern>/AddQuestionController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MyProfileController</servlet-name>
