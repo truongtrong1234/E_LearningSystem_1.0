@@ -6,25 +6,49 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import dao.EnrollmentDAO;
 import dao.PaymentDAO;
-import java.io.PrintWriter;
+import dao.CourseProgressDAO;
+import dao.ChapterProgressDAO;
+import dao.LessonProgressDAO;
 import java.math.BigDecimal;
 import model.Account;
 import model.Payment;
-import util.ConfigVnPay;
 
 public class PaymentReturnController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         Integer courseID = Integer.parseInt(request.getParameter("vnp_OrderInfo"));
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
+        
+        if (account == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        
         Integer accountID = account.getAccountId();
 
         EnrollmentDAO enrollment = new EnrollmentDAO();
-        enrollment.insertEnrollment(accountID, courseID);;
+        enrollment.insertEnrollment(accountID, courseID); // ✅ Chèn enrollment như cũ
 
+        // ✅ Khởi tạo tiến độ học cho người dùng trong khóa học này
+        try {
+            CourseProgressDAO courseProgressDAO = new CourseProgressDAO();
+            ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
+            LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
+
+            courseProgressDAO.insertCourseProgress(accountID, courseID);
+            chapterProgressDAO.insertChapterProgressForCourse(accountID, courseID);
+            lessonProgressDAO.insertLessonProgressForCourse(accountID, courseID);
+
+            System.out.println("✅ Đã khởi tạo progress cho AccountID " + accountID + " - CourseID " + courseID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // ===== Xử lý VNPAY như cũ =====
         String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
         String vnp_Amount = request.getParameter("vnp_Amount");
@@ -56,6 +80,7 @@ public class PaymentReturnController extends HttpServlet {
             paymentDAO.insertPayment(p);
             request.setAttribute("status", "fail");
         }
+
         request.getRequestDispatcher("Learner/payment_result.jsp").forward(request, response);
     }
 }

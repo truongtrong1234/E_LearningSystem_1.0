@@ -1,0 +1,175 @@
+/* ===== BODY & TIÊU ĐỀ ===== */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #e0f0ff;
+    margin: 0 0 20px 0;
+    font-size: 28px;
+    color: #0d3b66;
+    font-weight: 600;
+}
+
+/* ===== WRAPPER 2 CỘT ===== */
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+    padding: 0 20px 20px 20px;
+    flex-wrap: wrap; /* cho responsive */
+}
+
+/* ===== CỘT TRÁI: MATERIALS ===== */
+.materials-pane {
+    flex: 2.0; /* tăng chiếm nhiều hơn */
+    min-width: 280px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-height: 80vh;
+    overflow-y: auto;
+    transition: transform 0.2s;
+}
+
+.materials-pane:hover {
+    transform: translateY(-2px);
+}
+
+.materials-pane h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #0d3b66;
+    font-size: 20px;
+    border-bottom: 2px solid #cce6ff;
+    padding-bottom: 5px;
+}
+
+.materials-pane ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.materials-pane li {
+    margin-bottom: 10px;
+}
+
+.materials-pane a {
+    text-decoration: none;
+    color: #05668d;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.materials-pane a:hover {
+    color: #028090;
+    transform: translateX(3px);
+}
+
+/* ===== CỘT PHẢI: LESSONS ===== */
+.lessons-pane {
+    flex: 1; /* nhỏ lại */
+    min-width: 250px;
+    background-color: #fff;
+    padding: 15px; /* giảm padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-height: 80vh;
+    overflow-y: auto;
+    transition: transform 0.2s;
+}
+
+.lessons-pane:hover {
+    transform: translateY(-2px);
+}
+
+.chapter-block {
+    margin-bottom: 18px;
+}
+
+.chapter-block h4 {
+    font-size: 18px; /* nhỏ hơn một chút */
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #05668d;
+}
+
+.chapter-block input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4169E1; /* ✅ checkbox xanh lá khi tích */
+}
+
+/* LESSON ITEMS */
+.chapter-block ul {
+    list-style: none;
+    padding-left: 25px;
+}
+
+.chapter-block li {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lesson-check {
+    width: 16px;
+    height: 16px;
+    accent-color: #4169E1; /* ✅ checkbox xanh lá khi tích */
+}
+
+.chapter-block a {
+    text-decoration: none;
+    color: #333;
+    padding: 3px 6px; /* nhỏ gọn hơn */
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 14px;
+}
+
+.chapter-block a:hover {
+    background-color: #d0ebff;
+    color: #05668d;
+}
+
+.chapter-block a.active {
+    background-color: #4169E1;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* SCROLLBAR HIỆN ĐẸP */
+.materials-pane::-webkit-scrollbar,
+.lessons-pane::-webkit-scrollbar {
+    width: 8px;
+}
+
+.materials-pane::-webkit-scrollbar-thumb,
+.lessons-pane::-webkit-scrollbar-thumb {
+    background-color: rgba(5,102,141,0.3);
+    border-radius: 4px;
+}
+
+.materials-pane::-webkit-scrollbar-track,
+.lessons-pane::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+    .materials-pane, .lessons-pane {
+        max-height: none;
+    }
+}

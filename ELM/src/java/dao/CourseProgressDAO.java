@@ -9,33 +9,58 @@ import java.math.BigDecimal;
 
 public class CourseProgressDAO extends DBContext {
 
-    // CREATE
+    // 🟢 CREATE
     public void insertCourseProgress(CourseProgress cp) {
-        String sql = "INSERT INTO CourseProgress (EnrollmentID, CompletedPercent, LastAccess) VALUES (?, ?, ?)";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+        String sql = "INSERT INTO CourseProgress (EnrollmentID, CompletedPercent) VALUES (?, ?)";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, cp.getEnrollmentID());
             stm.setBigDecimal(2, cp.getCompletedPercent() != null ? cp.getCompletedPercent() : BigDecimal.ZERO);
-            stm.setTimestamp(3, cp.getLastAccess() != null ? new Timestamp(cp.getLastAccess().getTime()) : new Timestamp(System.currentTimeMillis()));
             stm.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+   // ✅ Tạo tiến độ khóa học
+    public void insertCourseProgress(int accountID, int courseID) {
+        int enrollmentID = getEnrollmentID(accountID, courseID);
+        if (enrollmentID == -1) return;
 
-    // READ - get all
+        String sql = "INSERT INTO CourseProgress (EnrollmentID, CompletedPercent) VALUES (?, 0)";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, enrollmentID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    
+    // ✅ Lấy EnrollmentID
+    private int getEnrollmentID(int accountID, int courseID) {
+        String sql = "SELECT EnrollmentID FROM Enrollments WHERE AccountID = ? AND CourseID = ?";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, accountID);
+            stm.setInt(2, courseID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) return rs.getInt("EnrollmentID");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
+    // 🟢 READ - get all
     public List<CourseProgress> getAllCourseProgress() {
         List<CourseProgress> list = new ArrayList<>();
         String sql = "SELECT * FROM CourseProgress";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
+        try (PreparedStatement stm = connection.prepareStatement(sql);
+             ResultSet rs = stm.executeQuery()) {
+
             while (rs.next()) {
                 list.add(new CourseProgress(
                         rs.getInt("ProgressID"),
                         rs.getInt("EnrollmentID"),
-                        rs.getBigDecimal("CompletedPercent"),
-                        rs.getTimestamp("LastAccess")
+                        rs.getBigDecimal("CompletedPercent")
                 ));
             }
         } catch (SQLException ex) {
@@ -44,19 +69,17 @@ public class CourseProgressDAO extends DBContext {
         return list;
     }
 
-    // READ - get by EnrollmentID (vì UNIQUE)
+    // 🟢 READ - get by EnrollmentID
     public CourseProgress getByEnrollmentID(int enrollmentID) {
         String sql = "SELECT * FROM CourseProgress WHERE EnrollmentID = ?";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, enrollmentID);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return new CourseProgress(
                         rs.getInt("ProgressID"),
                         rs.getInt("EnrollmentID"),
-                        rs.getBigDecimal("CompletedPercent"),
-                        rs.getTimestamp("LastAccess")
+                        rs.getBigDecimal("CompletedPercent")
                 );
             }
         } catch (SQLException ex) {
@@ -65,40 +88,27 @@ public class CourseProgressDAO extends DBContext {
         return null;
     }
 
-    // UPDATE
-    public void updateCourseProgress(CourseProgress cp) {
-        String sql = "UPDATE CourseProgress SET CompletedPercent = ?, LastAccess = ? WHERE EnrollmentID = ?";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setBigDecimal(1, cp.getCompletedPercent());
-            stm.setTimestamp(2, new Timestamp(cp.getLastAccess().getTime()));
-            stm.setInt(3, cp.getEnrollmentID());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+ // Giả sử CourseProgress có int progress
+public void updateCourseProgress(int enrollmentID, int progress) {
+    String sql = "UPDATE CourseProgress SET CompletedPercent = ? WHERE EnrollmentID = ?";
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setInt(1, progress);  // dùng int luôn
+        stm.setInt(2, enrollmentID);
+        stm.executeUpdate();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+}
 
-    // DELETE (theo EnrollmentID)
+
+    // 🟢 DELETE
     public void deleteByEnrollmentID(int enrollmentID) {
         String sql = "DELETE FROM CourseProgress WHERE EnrollmentID = ?";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, enrollmentID);
             stm.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-    }
-
-    // Kiểm tra nhanh
-    public static void main(String[] args) {
-        CourseProgressDAO dao = new CourseProgressDAO();
-
-        System.out.println("Tất cả CourseProgress:");
-        for (CourseProgress cp : dao.getAllCourseProgress()) {
-            System.out.println(cp.getProgressID() + " | " + cp.getEnrollmentID() + " | " +
-                               cp.getCompletedPercent() + "% | " + cp.getLastAccess());
         }
     }
 }

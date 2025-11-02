@@ -80,7 +80,7 @@
     <c:choose>
         
         <c:when test="${isEnrolled}">
-            <a href="myChapter?CourseID=${course.courseID}" class="btn btn-success">
+            <a href="myContent?CourseID=${course.courseID}" class="btn btn-success">
                 <i class="fa-solid fa-play"></i> Tiếp tục học
             </a>
         </c:when>

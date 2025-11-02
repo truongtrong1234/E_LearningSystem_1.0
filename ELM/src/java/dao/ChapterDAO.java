@@ -8,6 +8,39 @@ import model.Chapter;
 import model.Course;
 
 public class ChapterDAO extends DBContext {
+public int countLessonsByCourse(int courseID) {
+    String sql = "SELECT COUNT(*) AS total " +
+                 "FROM Lessons l " +
+                 "JOIN Chapters c ON l.ChapterID = c.ChapterID " +
+                 "WHERE c.CourseID = ?";
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setInt(1, courseID);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) return rs.getInt("total");
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return 0;
+}
+
+public int countCompletedLessons(int accountID, int courseID) {
+    String sql = "SELECT COUNT(*) AS completed " +
+                 "FROM LessonProgress lp " +
+                 "JOIN Lessons l ON lp.LessonID = l.LessonID " +
+                 "JOIN Chapters c ON l.ChapterID = c.ChapterID " +
+                 "JOIN Enrollments e ON lp.EnrollmentID = e.EnrollmentID " +
+                 "WHERE e.AccountID = ? AND c.CourseID = ? AND lp.IsCompleted = 1";
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setInt(1, accountID);
+        stm.setInt(2, courseID);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) return rs.getInt("completed");
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return 0;
+}
+
 
     // CREATE
     public void insertChap(Chapter chapter) {

@@ -1,3 +1,24 @@
+
+
+:root {
+    --orange:#ff6600;
+    --orange-dark:#e85500;
+    --line:#eaeaea;
+    --ink:#1c1d1f;
+    --muted:#6a6f73;
+    --bg:#fff;
+}
+
+/* Reset */
+*{
+    box-sizing:border-box
+}
+html,body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
 /* ==== HEADER CHUNG ==== */
 .header {
     position: sticky;
@@ -14,6 +35,7 @@
     height: 70px;
     transition: all 0.3s ease;
 }
+
 
 /* ==== LOGO ==== */
 .logo {
