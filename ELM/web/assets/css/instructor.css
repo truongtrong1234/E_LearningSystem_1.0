@@ -1,9 +1,9 @@
 :root {
-    --primary-dark: #cc5500; 
-    --primary-light: #ff7f00; 
+    --primary-dark: #cc5500;
+    --primary-light: #ff7f00;
     --text-light: #f3f3f3;
-    --hover-bg: rgba(255, 127, 0, 0.25); 
-    --hover-text: var(--primary-dark); 
+    --hover-bg: rgba(255, 127, 0, 0.25);
+    --hover-text: var(--primary-dark);
     --primary-dark: #cc5500;
     --primary-light: #ff7f00;
 }
@@ -11,7 +11,7 @@
 /* -------------------- Sidebar -------------------- */
 .sidebar {
     width: 250px;
-    min-height: 100vh; 
+    min-height: 100vh;
     background-color: var(--primary-dark);
     padding-top: 0;
 }
@@ -37,7 +37,7 @@
 .sidebar-link {
     color: var(--text-light) !important;
     padding: 1rem 1.5rem;
-    border-left: 3px solid transparent; 
+    border-left: 3px solid transparent;
     opacity: 0.7;
     transition: all 0.2s;
 }
@@ -55,7 +55,7 @@
 }
 
 /* -------------------- Navbar -------------------- */
-.nav-profile-text { 
+.nav-profile-text {
     padding: 0.5rem;
     border-radius: 5px;
     cursor: pointer;
@@ -65,7 +65,7 @@
 .user-avatar {
     width: 35px;
     height: 35px;
-    background-color: #000; 
+    background-color: #000;
     color: var(--text-light);
     border-radius: 50%;
     display: flex;
@@ -73,7 +73,7 @@
     align-items: center;
     font-weight: bold;
     font-size: 0.8rem;
-    cursor: pointer; 
+    cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -83,7 +83,7 @@
     color: #495057;
     font-size: 1.1rem;
     cursor: pointer;
-    padding: 0.5rem; 
+    padding: 0.5rem;
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -94,18 +94,18 @@
 }
 
 .notification-btn:hover {
-    background-color: var(--hover-bg); 
-    color: var(--hover-text); 
+    background-color: var(--hover-bg);
+    color: var(--hover-text);
 }
 
 .user-avatar:hover {
-    background-color: var(--hover-bg); 
-    color: var(--hover-text); 
+    background-color: var(--hover-bg);
+    color: var(--hover-text);
 }
 
 /* -------------------- Tabs -------------------- */
 .custom-tabs .nav-link {
-    color: #6c757d; 
+    color: #6c757d;
     border: none;
     border-bottom: 2px solid transparent;
     padding-bottom: 0.5rem;
@@ -116,22 +116,22 @@
 }
 
 .custom-tabs .nav-link.active {
-    color: var(--primary-dark); 
-    border-bottom-color: var(--primary-dark); 
+    color: var(--primary-dark);
+    border-bottom-color: var(--primary-dark);
     font-weight: 600;
 }
 
 /* -------------------- Main Content --------------------- */
 .main-content {
     width: calc(100% - 250px);
-    background-color: #f8f9fa; 
+    background-color: #f8f9fa;
 }
 
 /* -------------------- Create CQM (Course-Quiz-Material) Box -------------------- */
 .create-cqm-box {
     min-height: 100px;
     background-color: #fff;
-    border: 1px solid #e9ecef !important; 
+    border: 1px solid #e9ecef !important;
 }
 
 .create-cqm-btn {
@@ -143,13 +143,13 @@
 }
 
 .create-cqm-btn:hover {
-    background-color: #e67300; 
+    background-color: #e67300;
     color: var(--text-light);
 }
 
 /* -------------------- CQM (Course-Quiz-Material) List -------------------- */
 .cqm-card {
-    position: relative; 
+    position: relative;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     border-radius: 8px !important;
     overflow: hidden;
@@ -157,12 +157,12 @@
 }
 
 .cqm-card:hover {
-    transform: translateY(-5px); 
+    transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
 .cqm-image-placeholder {
-    height: 150px; 
+    height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -174,8 +174,8 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10; 
-    background-color: rgba(255, 255, 255, 0.8); 
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     padding: 0 5px;
     line-height: 2;
@@ -339,4 +339,155 @@
     font-size: 0.85rem;
     padding: 0.4rem 0.6rem;
     border-radius: 6px;
+}
+
+
+/* -------------------- Communication Page (refined) -------------------- */
+.communication-page {
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --shadow-sm: 0 2px 6px rgba(0,0,0,.05);
+    --shadow-md: 0 8px 16px rgba(0,0,0,.08);
+}
+
+/* Card khung chính */
+.communication-page .card {
+    border: 1px solid #e9ecef;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    background: #fff;
+}
+
+/* Tiêu đề card */
+.communication-page .card-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+    margin-bottom: .75rem;
+}
+
+/* Nhãn & controls */
+.communication-page .form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: .4rem;
+}
+
+.communication-page .form-control,
+.communication-page .form-select,
+.communication-page textarea.form-control {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: .8rem .9rem;
+    background-color: #fff;
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.communication-page .form-control::placeholder,
+.communication-page textarea.form-control::placeholder {
+    color: #adb5bd;
+}
+
+.communication-page .form-control:focus,
+.communication-page .form-select:focus,
+.communication-page textarea.form-control:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(255,127,0,.15);
+    outline: none;
+    background-color: #fff;
+}
+
+.communication-page textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Nút hành động */
+.communication-page .btn-light {
+    border-radius: 10px;
+}
+
+.communication-page .btn-warning {
+    background-color: var(--primary-light);
+    border: none;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: .6rem 1.2rem;
+}
+
+.communication-page .btn-warning:hover,
+.communication-page .btn-warning:focus {
+    background-color: var(--primary-dark);
+    color: #fff;
+}
+
+/* Phần body trong các card */
+.communication-page .card.shadow-sm .card-body {
+    padding: 1.25rem;
+}
+
+/* Hộp mẹo / lọc (nếu còn) */
+.communication-page .card .small li + li {
+    margin-top: .3rem;
+}
+
+/* Lịch sử tin đã gửi */
+.communication-page .history-item {
+    border: 1px solid #eef0f2;
+    border-radius: var(--radius-md);
+    background-color: #fff;
+    padding: 1rem;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.communication-page .history-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: #e6e8ea;
+}
+
+.communication-page .history-title {
+    font-weight: 700;
+    margin-bottom: .25rem;
+    color: #333;
+}
+
+.communication-page .history-meta {
+    font-size: .875rem;
+    color: #6c757d;
+    margin-bottom: .5rem;
+}
+
+.communication-page .history-meta i {
+    opacity: .85;
+}
+
+/* Nút file/attachment (nếu dùng) */
+.communication-page .btn-outline-primary {
+    border-radius: var(--radius-sm);
+    padding: .25rem .6rem;
+}
+
+/* Pagination */
+.communication-page .pagination .page-link {
+    color: var(--primary-dark);
+    border: 1px solid #eee;
+}
+
+.communication-page .pagination .page-item.active .page-link {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: #fff;
+}
+
+.communication-page .pagination .page-item.disabled .page-link {
+    color: #adb5bd;
+}
+
+/* Alert spacing */
+.communication-page .alert {
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
 }
