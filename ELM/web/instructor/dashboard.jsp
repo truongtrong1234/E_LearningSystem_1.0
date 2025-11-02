@@ -131,9 +131,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            Chưa có khóa học nào được tạo. Hãy nhấn 
+                                            No courses have been created yet. Click
                                             <a href="createCourse" style="text-decoration: none">"Create New Course"</a> 
-                                            để bắt đầu!
+                                            to get started!
                                         </div>
                                     </div>
                                 </c:otherwise>
@@ -191,9 +191,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            Chưa có bài Quiz nào được tạo. Hãy nhấn 
+                                            No Quiz has been created yet. Click
                                             <a href="${pageContext.request.contextPath}/instructor/createQuiz.jsp" style="text-decoration: none">"Create New Quiz"</a> 
-                                            để bắt đầu!
+                                            to get started!
                                         </div>
                                     </div>
                                 </c:otherwise>
@@ -250,9 +250,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            Chưa có tài liệu nào được tải lên. Hãy nhấn 
+                                            No documents have been uploaded yet. Click
                                             <a href="${pageContext.request.contextPath}/instructor/uploadMaterial.jsp" style="text-decoration: none">"Upload New Material"</a>
-                                            để bắt đầu!
+                                            to get started!
                                         </div>
                                     </div>
                                 </c:otherwise>
