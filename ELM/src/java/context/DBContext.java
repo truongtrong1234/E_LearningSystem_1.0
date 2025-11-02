@@ -17,7 +17,7 @@ public class DBContext {
         try {
             String url = "jdbc:sqlserver://localhost:1433;databaseName=ElearningDB10;encrypt=true;trustServerCertificate=true;";
             String user = "sa";
-            String pass = "123";
+            String pass = "sa";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException | SQLException ex) {
@@ -27,6 +27,18 @@ public class DBContext {
     }
     public Connection getConnection() {
         return connection;
+    }
+    public static Connection getConnectionStatic() {
+        try {
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=ElearningDB10;encrypt=true;trustServerCertificate=true;";
+            String user = "sa";
+            String pass = "sa";
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            return DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
      public static void main(String[] args) {
         DBContext conn= new DBContext();
