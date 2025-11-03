@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Price($) *</label>
+                                <label class="form-label">Price(đ) *</label>
                                 <input type="number" id="price" name="price" class="form-control" placeholder="Enter price" required="">
                             </div>
                         </div>

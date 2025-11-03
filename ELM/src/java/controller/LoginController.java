@@ -31,11 +31,11 @@ public class LoginController extends HttpServlet {
 
         AccountDAO dao = new AccountDAO();
 
-        // 🔍 Tìm tài khoản theo email
+        //  Tìm tài khoản theo email
         Account account = dao.findByEmail(email);
 
         if (account == null) {
-            // ❌ Email không tồn tại
+            // Email không tồn tại
             request.setAttribute("error", "Email không tồn tại!");
             // Không giữ lại email để tránh lỗi người dùng
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -43,17 +43,17 @@ public class LoginController extends HttpServlet {
         }
 
         if (account.getPassword() == null) {
-            // ⚠️ Tài khoản Google (password NULL)
+            // Tài khoản Google (password NULL)
             request.setAttribute("error", "Tài khoản này đăng ký bằng Google. Vui lòng đăng nhập bằng Google.");
             request.setAttribute("emailValue", email);
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
 
-        // ✅ Kiểm tra đăng nhập
+        // Kiểm tra đăng nhập
         Account validAccount = dao.login(email, password);
         if (validAccount != null) {
-            // 🟢 Thành công
+            //  Thành công
             HttpSession session = request.getSession();
             session.setAttribute("account", validAccount);
             session.setMaxInactiveInterval(60 * 60 * 2); // 2 giờ
@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/Learner/homeLearnerCourse");
             }
         } else {
-            // 🔴 Sai mật khẩu → giữ lại email
+            // Sai mật khẩu → giữ lại email
             request.setAttribute("error", "Sai mật khẩu!");
             request.setAttribute("emailValue", email);
             request.getRequestDispatcher("login.jsp").forward(request, response);

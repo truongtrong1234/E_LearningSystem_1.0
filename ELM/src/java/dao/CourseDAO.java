@@ -98,9 +98,9 @@ public class CourseDAO extends DBContext {
                 c.setDescription(rs.getString("description"));
                 c.setCategoryID(rs.getInt("categoryID"));
                 c.setInstructorID(rs.getInt("InstructorID"));
-c.setPrice(rs.getBigDecimal("Price"));
-c.setCourseclass(rs.getInt("Class"));
-c.setThumbnail(rs.getString("Thumbnail"));
+                c.setPrice(rs.getBigDecimal("Price"));
+                c.setCourseclass(rs.getInt("Class"));
+                c.setThumbnail(rs.getString("Thumbnail"));
 
                 // add các field khác nếu cần
                 list.add(c);

@@ -90,6 +90,26 @@ public class LessonDAO extends DBContext {
         }
         return list;
     }
+    public List<Lesson> getByCourseID(int courseID){
+    List<Lesson> list = new ArrayList<>();
+    String sql = "SELECT * FROM Lessons WHERE CourseID = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, courseID);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            list.add(new Lesson(
+                rs.getInt("LessonID"),
+                rs.getInt("ChapterID"),
+               
+                rs.getString("Title")
+            ));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
 
     // UPDATE
     public void update(Lesson l) {

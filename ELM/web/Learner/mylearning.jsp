@@ -1,82 +1,184 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    String username = (String) session.getAttribute("username");
-    if (username == null) username = "Learner";
-    String ctx = request.getContextPath();
-%>
-<%
-    if (session.getAttribute("account") == null) {
-        response.sendRedirect("/ELM/login");
-        return;
-    }
-%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8">
-        <title>SecretCoder | My Learning</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-       <link rel="stylesheet" href="assets/css/mylearning.css">
-    </head>
-    <body>
-       
+<head>
+    <meta charset="UTF-8">
+    <title>SecretCoder | My Learning</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/headerLearner.css?v3">
+<style>
+    body {
+        background: #fafafa;
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-        <!-- HEADER -->
-        <header class="header">
-            <a class="logo" href="<%=ctx%>/home_learner.jsp">
-                <span class="s">Secret</span><span class="c">Coder</span>
-            </a>
+    main.learning-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
 
-            <div class="search-bar">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="Search for anything">
-                <button title="Search"><i class="bi bi-arrow-return-left"></i></button>
-            </div>
+    h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 24px;
+    }
 
-            <nav class="nav-links">
-                <a href="<%=ctx%>/course">Instructor</a>
-            </nav>
+    /* ===== COURSE CARD ===== */
+    .course-card {
+        display: flex;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
 
-            <div class="header-icons">
-                <button class="icon-btn" title="Wishlist"><i class="bi bi-heart"></i></button>
-                <button class="icon-btn" title="Cart"><i class="bi bi-cart3"></i></button>
-                <button class="icon-btn" title="Notifications"><i class="bi bi-bell"></i></button>
-                <a href="<%=ctx%>/myProfile.jsp" class="avatar" title="Profile">U</a>
-            </div>
-        </header>
+.course-card {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.course-thumb {
+    flex: 0 0 260px;
+    height: 172px;
+    overflow: hidden;
+}
+
+.course-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* vừa khung */
+}
 
 
+    .course-info {
+        flex: 1;
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
-      <main class="learning-container">
-    <h1>My Courses</h1>
+    .course-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .course-header h2 {
+        font-size: 20px;
+        color: #222;
+        margin: 0;
+    }
+
+    .course-instructor {
+        font-size: 14px;
+        color: #666;
+        margin: 4px 0 10px 0;
+    }
+
+    /* ===== PROGRESS ===== */
+    .progress-container {
+        margin-top: 12px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #eee;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #28a745; /* xanh lá */
+        width: var(--progress, 0%);
+        transition: width 0.5s ease;
+    }
+
+    .progress-text {
+        font-size: 14px;
+        color: #444;
+        margin-top: 6px;
+    }
+
+    /* ===== NÚT ===== */
+    .course-actions {
+        text-align: right;
+        margin-top: 12px;
+    }
+
+    .btn-continue {
+        background: #ff6b00; /* màu cam */
+        border: none;
+        padding: 8px 16px;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-continue:hover {
+        background: #ff8800;
+    }
+</style>
+
+</head>
+<body>
+
+<jsp:include page="/components/headerLearner.jsp"/>
+
+<main class="learning-container">
+    <h1>My Learning</h1>
 
     <c:if test="${empty myLearningCourse}">
-        <p>Đã học cái gì đâu</p>
+        <p>Bạn chưa đăng ký khóa học nào.</p>
     </c:if>
 
-    <!-- Danh sách course -->
     <c:forEach var="course" items="${myLearningCourse}">
-        <div class="course-card" onclick="toggleChapters(${course.courseID})" style="cursor:pointer;">
-            <a href="myChapter?CourseID=${course.courseID}">
-                <iframe src="${course.thumbnail}" allowfullscreen></iframe>
+        <div class="course-card">
+            <div class="course-thumb">
+    <img src="${course.thumbnail}" alt="${course.title}" />
+</div>
+
             <div class="course-info">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="course-header">
                     <h2>${course.title}</h2>
-                    <div>
-                        <span style="font-style:italic; color:#555;">Category: ${course.categoryName}</span>
-                        <span style="font-style:italic; color:#555; margin-left:10px;">Instructor: ${course.instructorName}</span>
-                    </div>
                 </div>
-                <p>${course.description}</p>
-                <span style="font-style:italic; color:#777;">Class: ${course.courseclass}</span>
+                <p class="course-instructor">${course.instructorName}</p>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="--progress: ${courseProgressMap[course.courseID]}%;"></div>
+                    </div>
+                    <span class="progress-text">${courseProgressMap[course.courseID]}% completed</span>
+                </div>
+
+                <div class="course-actions">
+                    <a href="myContent?CourseID=${course.courseID}">
+                        <button class="btn-continue">Tiếp tục học</button>
+                    </a>
+                </div>
             </div>
-            </a>
-            
         </div>
     </c:forEach>
+
 </main>
 
-        <footer>© 2025 SecretCoder. All rights reserved.</footer>
-    </body>
+</body>
 </html>

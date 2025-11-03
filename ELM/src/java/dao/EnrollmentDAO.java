@@ -24,17 +24,25 @@ public class EnrollmentDAO extends DBContext {
             ex.printStackTrace();
         }
     }
-    // ✅ Hàm tiện lợi: chèn enrollment bằng ID, không cần tạo object
-public void insertEnrollment(int accountID, int courseID) {
+// ✅ Trả về EnrollmentID mới được tạo
+public int insertEnrollment(int accountID, int courseID) {
     String sql = "INSERT INTO Enrollments (AccountID, CourseID) VALUES (?, ?)";
-    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+    try (PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
         stm.setInt(1, accountID);
         stm.setInt(2, courseID);
         stm.executeUpdate();
+
+        try (ResultSet rs = stm.getGeneratedKeys()) {
+            if (rs.next()) {
+                return rs.getInt(1); // EnrollmentID
+            }
+        }
     } catch (SQLException ex) {
         ex.printStackTrace();
     }
+    return -1;
 }
+
 
 
     // READ - get all
@@ -56,6 +64,19 @@ public void insertEnrollment(int accountID, int courseID) {
         }
         return list;
     }
+
+    public int getEnrollmentID(int accountID, int courseID){
+    String sql = "SELECT EnrollmentID FROM Enrollments WHERE AccountID = ? AND CourseID = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, accountID);
+        ps.setInt(2, courseID);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()) return rs.getInt("EnrollmentID");
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return -1; // nếu không có
+}
 
     // READ - get by ID
     public Enrollment getEnrollmentByID(int id) {
