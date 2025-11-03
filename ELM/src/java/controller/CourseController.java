@@ -11,7 +11,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Course;
 
 public class CourseController extends HttpServlet {
@@ -27,11 +29,16 @@ public class CourseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CourseDAO cdao = new  CourseDAO(); 
-        List<Course> courseList = cdao.getAllCourses(); 
-        request.setAttribute("courseList", courseList);
-        request.getRequestDispatcher("/instructor/dashboard.jsp").forward(request, response);
-        
+//        HttpSession session = request.getSession(); 
+//        Account account = (Account) session.getAttribute("account"); 
+//        int accountID = account.getAccountId(); 
+//        CourseDAO cdao = new  CourseDAO(); 
+//        List<Course> courseList = cdao.getCourseByInstructorID(accountID); 
+//        String action = request.getParameter("action"); 
+//        if ("delete".equalsIgnoreCase(action)) {int courseID = Integer.parseInt(request.getParameter("id")); 
+//            cdao.deleteCourse(courseID);
+//        }
+//        request.setAttribute("courseList", courseList);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,6 +54,13 @@ public class CourseController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        HttpSession session = request.getSession(); 
+        Account account = (Account) session.getAttribute("account"); 
+        int accountID = account.getAccountId();
+        CourseDAO cdao = new  CourseDAO(); 
+        List<Course> courseList = cdao.getCourseByInstructorID(accountID); 
+        request.setAttribute("courseList", courseList);
+        request.getRequestDispatcher("/instructor/dashboard.jsp").forward(request, response);
     }
 
     /**
@@ -60,7 +74,10 @@ public class CourseController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int action =Integer.parseInt(request.getParameter("action")) ;
+        CourseDAO cdao = new  CourseDAO();
+        cdao.deleteCourse(action); 
+        response.sendRedirect("/ELM/instructor/dashboard");
     }
 
     /**

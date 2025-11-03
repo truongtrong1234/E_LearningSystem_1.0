@@ -18,7 +18,6 @@ import model.Lesson;
 
 public class CreateLessonController extends HttpServlet {
 
-   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -52,12 +51,19 @@ public class CreateLessonController extends HttpServlet {
             throws ServletException, IOException {
         int ChapterID = Integer.parseInt(request.getParameter("thischapterID"));
         String title = request.getParameter("chapterTitle");
-        Lesson lesson =new Lesson(); 
+        Lesson lesson = new Lesson();
         lesson.setChapterID(ChapterID);
         lesson.setTitle(title);
-        LessonDAO lessonDAO = new LessonDAO(); 
+        LessonDAO lessonDAO = new LessonDAO();
         int newLessonID = lessonDAO.insert(lesson);
-        response.sendRedirect("createLesson?ChapterID=" + ChapterID);
+        String action = request.getParameter("action");
+        if ("delete".equalsIgnoreCase(action)) {
+            int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+            lessonDAO.delete(lessonID);
+            response.sendRedirect("createLesson?ChapterID=" + ChapterID);
+        }else
+        {response.sendRedirect("createLesson?ChapterID=" + ChapterID);}
+        
     }
 
     @Override

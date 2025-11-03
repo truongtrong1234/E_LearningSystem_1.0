@@ -57,7 +57,14 @@
                                 <span><strong>${ch.title}</strong></span>
                                 <div>
                                     <a href="uploadMaterial?LessonID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">Upload Material</a>
-                                    <button type="submit" value="delete" class="btn btn-primary">Delete </button>
+                                    <form action="createLesson" method="post" style="display:inline;">
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="lessonID" value="${ch.lessonID}">
+                                        <input type="hidden" name="thischapterID" value="${thischapterID}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Delete Chapter
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

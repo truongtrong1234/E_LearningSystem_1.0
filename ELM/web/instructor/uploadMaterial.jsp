@@ -79,9 +79,18 @@
                                         </video>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="viewMaterial?LessonID=${thisLessonID}&url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                        <a href="/ELM/viewMaterial?LessonID=${thisLessonID}&url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
                                             Xem tài liệu
                                         </a>
+                                        
+                                        <form action="uploadMaterial" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="thisLessonID" value="${thisLessonID}">
+                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="materialID" value="${m.materialID}">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Delete material ${m.materialID}
+                                            </button>
+                                        </form>
                                     </c:otherwise>
                                 </c:choose>
                             </div>

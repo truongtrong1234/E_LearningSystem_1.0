@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import model.Chapter;
 import model.Material;
 import util.CloudinaryUtil;
+
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
@@ -58,9 +59,10 @@ public class UploadMaterial extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        MaterialDAO mdao = new MaterialDAO();
+        int LessonID = Integer.parseInt(request.getParameter("thisLessonID"));
         try {
-            int LessonID = Integer.parseInt(request.getParameter("thisLessonID"));
+
             String title = request.getParameter("title");
             String type = request.getParameter("type");
             String urlType;
@@ -85,13 +87,21 @@ public class UploadMaterial extends HttpServlet {
             mate.setMaterialType("Video");
             mate.setContentURL(url);
             mate.setTitle(title);
-            MaterialDAO mdao = new MaterialDAO(); 
+            
             int materialIDUpload = mdao.insert(mate);
-            response.sendRedirect("uploadMaterial?LessonID=" + LessonID);
+
         } catch (Exception ex) {
             request.setAttribute("errorMessage", "Xem lại loại file và chọn lại ");
         }
 
+        String action = request.getParameter("action");
+        if ("delete".equalsIgnoreCase(action)) {
+            int materialID = Integer.parseInt(request.getParameter("materialID"));
+            mdao.delete(materialID);
+            response.sendRedirect("uploadMaterial?LessonID=" + LessonID);
+        } else {
+            response.sendRedirect("uploadMaterial?LessonID=" + LessonID);
+        }
     }
 
     @Override

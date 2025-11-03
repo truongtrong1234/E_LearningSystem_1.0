@@ -16,15 +16,7 @@ import model.Chapter;
 
 public class CreateChapterController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -42,15 +34,7 @@ public class CreateChapterController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -63,32 +47,27 @@ public class CreateChapterController extends HttpServlet {
         request.getRequestDispatcher("/instructor/createChapter.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int courseID = Integer.parseInt(request.getParameter("thisCourseID"));
         String title = request.getParameter("chapterTitle");
+        String action = request.getParameter("action"); 
         Chapter ch = new Chapter();
         ch.setCourseID(courseID);
         ch.setTitle(title);
         ChapterDAO dao = new ChapterDAO();
         int newchapterID = dao.insertChapterAndReturnID(ch);
-        response.sendRedirect("createChapter?courseID=" + courseID);
+        if ("delete".equalsIgnoreCase(action)) {
+            int chapterID = Integer.parseInt(request.getParameter("chapterID"));
+            dao.deleteChap(chapterID);
+            response.sendRedirect("createChapter?courseID=" + courseID);
+        }
+        else{response.sendRedirect("createChapter?courseID=" + courseID);}
+        
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+   
     @Override
     public String getServletInfo() {
         return "Short description";

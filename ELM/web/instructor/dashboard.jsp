@@ -111,9 +111,14 @@
                                                         <li><a class="dropdown-item" href="course?action=edit&id=${course.courseID}"><i class="fas fa-edit me-2"></i> Edit Course</a></li>
                                                         <li><hr class="dropdown-divider"></li>
                                                         <li>
-                                                            <a class="dropdown-item text-danger" href="course?action=delete&id=${course.courseID}" onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học ${course.title}?');">
-                                                                <i class="fas fa-trash-alt me-2"></i> Delete Course
-                                                            </a>
+                                                            <form action="/ELM/instructor/dashboard" method="post">
+<!--                                                                <a class="dropdown-item text-danger" href="dashboard?action=delete&id=${course.courseID}" onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học ${course.title}?');">
+                                                                    <i class="fas fa-trash-alt me-2"></i> Delete Course</a>-->
+                                                                <button type="submit" value="${course.courseID}" name="action">
+                                                                    Delete Course
+                                                                </button>
+                                                            </form>
+
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -262,7 +267,7 @@
                 </div>       
             </div>
         </div>
-                                    
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>                            
         <script src="${pageContext.request.contextPath}/assets/js/instructor.js"></script>
     </body>

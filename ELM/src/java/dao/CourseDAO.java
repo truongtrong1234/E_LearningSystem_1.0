@@ -57,6 +57,32 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
+    
+    // 🟢 Lấy khóa học theo ID
+    public List<Course> getCourseByInstructorID(int instructorID) {
+        List<Course> list = new ArrayList<>();
+        String sql = "SELECT * FROM Courses WHERE InstructorID=?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, instructorID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course(
+                        rs.getInt("CourseID"),
+                        rs.getString("Title"),
+                        rs.getString("Description"),
+                        rs.getInt("InstructorID"),
+                        rs.getBigDecimal("Price"),
+                        rs.getInt("Class"),   // ✅ Đổi ở đây
+                        rs.getInt("CategoryID"),
+                        rs.getString("Thumbnail")
+                );
+                list.add(course);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     //
     public List<Course> getCoursesByCategory(int categoryID) throws SQLException {
@@ -193,29 +219,19 @@ c.setThumbnail(rs.getString("Thumbnail"));
 }
 
     public static void main(String[] args) {
-//        CourseDAO dao = new CourseDAO();
-//        List<Course> list = dao.getAllCourses();
-//
-//        if (list != null && !list.isEmpty()) {
-//            for (Course c : list) {
-//                System.out.println("ID: " + c.getCourseID() + 
-//                                   " | Title: " + c.getTitle() + 
-//                                   " | Price: " + c.getPrice());
-//            }
-//        } else {
-//            System.out.println("⚠️ Không có khóa học nào!");
-//        }
-        CourseDAO dao = new CourseDAO(); 
-        Course course = new Course();
-         course.setTitle("Java Web Basics");
-        course.setDescription("Learn how to build web apps using Java Servlets and JSP.");
-        course.setInstructorID(1);      // Giả sử instructorID = 1
-        course.setPrice(new BigDecimal("0"));
-        course.setCourseclass(11);      // Lớp 11
-        course.setCategoryID(2);        // Giả sử categoryID = 2
-         // test link        
-        int insertResult = dao.insertCourseAndReturnID(course);
-        System.out.println("Insert result: " + insertResult);
+        CourseDAO dao = new CourseDAO();
+        List<Course> list = dao.getCourseByInstructorID(5);
+
+        if (list != null && !list.isEmpty()) {
+            for (Course c : list) {
+                System.out.println("ID: " + c.getCourseID() + 
+                                   " | Title: " + c.getTitle() + 
+                                   " | Price: " + c.getPrice());
+            }
+        } else {
+            System.out.println("⚠️ Không có khóa học nào!");
+        }
+       
         
     }
 }
