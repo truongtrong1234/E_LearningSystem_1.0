@@ -23,23 +23,23 @@
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/instructor/dashboard" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                            <i class="fas fa-tachometer-alt me-2"></i> Tổng quan
                         </a>
                     </li>
                     <li>
                         <!-- Active ở Communication -->
                         <a href="${pageContext.request.contextPath}/instructor/communication.jsp" class="nav-link text-white sidebar-link active">
-                            <i class="fas fa-comments me-2"></i> Communication
+                            <i class="fas fa-comments me-2"></i> Tương tác
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-chart-bar me-2"></i> Analytics
+                            <i class="fas fa-chart-bar me-2"></i> Phân tích
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/instructor/sendReport.jsp" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-question-circle me-2"></i> Helps
+                            <i class="fas fa-question-circle me-2"></i> Hỗ trợ
                         </a>
                     </li>
                 </ul>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="d-flex align-items-center ms-auto">
                             <span class="me-3 text-muted nav-profile-text">
-                                <a href="${pageContext.request.contextPath}/Learner/home_learner" style="color:#495057;text-decoration:none;">Learner</a>
+                                <a href="${pageContext.request.contextPath}/Learner/home_learner" style="color:#495057;text-decoration:none;">Học sinh</a>
                             </span>
                             <a class="btn btn-sm me-3 notification-btn" href="${pageContext.request.contextPath}/notification" style="color:#495057">
                                 <i class="fas fa-bell"></i>

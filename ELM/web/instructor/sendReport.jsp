@@ -27,22 +27,22 @@
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/instructor/dashboard" class="nav-link text-white sidebar-link">
-                    <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
+                    <i class="fas fa-tachometer-alt me-2"></i> Tổng quan 
                 </a>
             </li>
         <li>
             <a href="${pageContext.request.contextPath}/instructor/communication.jsp" class="nav-link text-white sidebar-link">
-                <i class="fas fa-comments me-2"></i> Communication
+                <i class="fas fa-comments me-2"></i> Tương tác
             </a>
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
-                <i class="fas fa-chart-bar me-2"></i> Analytics
+                <i class="fas fa-chart-bar me-2"></i> Phân tích
             </a>
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/instructor/sendReport.jsp" class="nav-link text-white sidebar-link active">
-                <i class="fas fa-question-circle me-2"></i> Helps
+                <i class="fas fa-question-circle me-2"></i> Hỗ trợ
             </a>
         </li>
         </ul>
@@ -56,7 +56,7 @@
                 </div>
             <div class="d-flex align-items-center ms-auto">
                 <span class="me-3 text-muted nav-profile-text">
-                    <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Learner</a>
+                    <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Học sinh</a>
                 </span>
                 <button class="btn btn-sm me-3 notification-btn" type="button">
                     <a href="${pageContext.request.contextPath}/notification.jsp" style="color: #495057">
@@ -75,17 +75,16 @@
         <!-- Report Form Card -->
         <div class="send-report-container card border-0 shadow-sm rounded-4 p-5">
             <h4 class="fw-bold text-center mb-4" style="color: var(--primary-dark);">
-                Report to Admin
+                Gửi báo cáo tới QUẢN TRỊ VIÊN
             </h4>
             <form action="SendReportServlet" method="post" class="send-report-form">
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Title</label>
+                    <label class="form-label fw-semibold">Tiêu đề</label>
                     <input type="text" name="subject" class="form-control" placeholder="" required>
                 </div>
-
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Description</label>
-                    <textarea name="description" class="form-control" rows="7" placeholder="Describe the issue in detail..." required></textarea>
+                    <label class="form-label fw-semibold">Mô tả</label>
+                    <textarea name="description" class="form-control" rows="7" placeholder="Mô tả vấn đề một cách chi tiết..." required></textarea>
                 </div>
 
                 <!-- Type bug 
@@ -99,11 +98,9 @@
                     </select>
                 </div>
                 -->
-
                 <div class="text-end">
-                    <button type="submit" class="btn send-report-btn px-5 py-2">Send</button>
+                    <button type="submit" class="btn send-report-btn px-5 py-2">Gửi</button>
                 </div>
-
                 <c:if test="${not empty message}">
                     <div class="send-report-message ${status}">
                         ${message}

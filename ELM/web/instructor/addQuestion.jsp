@@ -10,38 +10,38 @@
 <body class="bg-light">
     <div class="container mt-5">
       <div class="card p-4 shadow">
-        <h2 class="fw-bold text-orange">Add Question</h2>
+        <h2 class="fw-bold text-orange">Thêm câu hỏi</h2>
         <form action="AddQuestionServlet" method="post">
           <input type="hidden" name="quizID" value="${param.quizID}">
 
           <div class="mb-3">
-            <label class="form-label">Question</label>
+            <label class="form-label">Câu hỏi</label>
             <input type="text" class="form-control" name="questionText" required>
           </div>
 
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label class="form-label">Answer A</label>
+              <label class="form-label">Câu trả lời A</label>
               <input type="text" class="form-control" name="optionA" required>
             </div>
             <div class="col-md-6 mb-3">
-              <label class="form-label">Answer B</label>
+              <label class="form-label">Câu trả lời B</label>
               <input type="text" class="form-control" name="optionB" required>
             </div>
             <div class="col-md-6 mb-3">
-              <label class="form-label">Answer C</label>
+              <label class="form-label">Câu trả lời C</label>
               <input type="text" class="form-control" name="optionC" required>
             </div>
             <div class="col-md-6 mb-3">
-              <label class="form-label">Answer D</label>
+              <label class="form-label">Câu trả lời D</label>
               <input type="text" class="form-control" name="optionD" required>
             </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Correct Answer</label>
+            <label class="form-label">Câu trả lời đúng</label>
             <select class="form-select" name="correctAnswer" required>
-              <option value="">-- Select --</option>
+              <option value="">-- Chọn --</option>
               <option value="A">A</option>
               <option value="B">B</option>
               <option value="C">C</option>
@@ -51,7 +51,7 @@
 
           <div class="d-flex justify-content-between">
             <a href="veQuiz.jsp?quizID=${param.quizID}" class="btn btn-secondary">Hủy</a>
-            <button type="submit" class="btn btn-orange">Save</button>
+            <button type="submit" class="btn btn-orange">Lưu</button>
           </div>
         </form>
       </div>

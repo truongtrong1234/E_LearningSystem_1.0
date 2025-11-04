@@ -21,22 +21,22 @@
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
                     <a href="${pageContext.request.contextPath}/instructor/dashboard" class="nav-link text-white sidebar-link">
-                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
+                        <i class="fas fa-tachometer-alt me-2"></i> Tổng quan
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/instructor/communication.jsp" class="nav-link text-white sidebar-link">
-                        <i class="fas fa-comments me-2"></i> Communication
+                        <i class="fas fa-comments me-2"></i> Tương tác
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link active">
-                        <i class="fas fa-chart-bar me-2"></i> Analytics
+                        <i class="fas fa-chart-bar me-2"></i> Phân tích
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/instructor/sendReport.jsp" class="nav-link text-white sidebar-link">
-                        <i class="fas fa-question-circle me-2"></i> Helps
+                        <i class="fas fa-question-circle me-2"></i> Hỗ trợ
                     </a>
                 </li>
             </ul>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <span class="me-3 text-muted nav-profile-text">
-                            <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Learner</a>
+                            <a href="${pageContext.request.contextPath}/Learner/home_learner.jsp" style="color: #495057; text-decoration: none;">Học sinh</a>
                         </span>
                         <button class="btn btn-sm me-3 notification-btn" type="button">
                             <a href="${pageContext.request.contextPath}/notification.jsp" style="color: #495057">
@@ -67,30 +67,24 @@
             </nav>
             <div class="container-fluid p-4">                    
                 <div class="row g-4">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card p-3 text-center">
                             <h5 class="card-title mt-2">Tổng học viên</h5>
                             <h3>${totalStudents}</h3>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card p-3 text-center">
                             <h5 class="card-title mt-2">Khóa học</h5>
                             <h3>${totalCourses}</h3>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card p-3 text-center">
                             <h5 class="card-title mt-2">Điểm Quiz TB</h5>
                             <h3>${averageQuizScore}</h3>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card p-3 text-center">
-                            <h5 class="card-title mt-2">Doanh thu tháng</h5>
-                            <h3>${monthlyRevenue}₫</h3>
-                        </div>
-                    </div>
+                    </div>  
                 </div>
                 <!-- Student Progress Table -->
                 <div class="mt-5">
