@@ -1,11 +1,11 @@
 ﻿-- ====================================
--- 31.10.2025 (ver4)
+-- 04.11.2025 (v2)
 -- E-LEARNING DATABASE (Udemy-style, FIXED)
 -- Report Report replies addon
 -- ====================================
-create database ElearningDB11;
+create database ElearningDB12;
 go
-USE ElearningDB11;
+USE ElearningDB12;
 GO
 
 
@@ -255,11 +255,63 @@ BEGIN
     JOIN Reports R ON R.ReportID = RR.ReportID;
 END;
 GO
+--Question from learner
+CREATE TABLE QnAQuestion (
+    QnAID INT IDENTITY(1,1) PRIMARY KEY,
+    CourseID INT NOT NULL,
+    AskedBy INT NOT NULL,
+    Question NVARCHAR(MAX) NOT NULL,
+    AskedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
+    FOREIGN KEY (AskedBy) REFERENCES Accounts(AccountID)
+);
+--Reply by instrucotr
+CREATE TABLE QnAReply (
+    ReplyID INT IDENTITY(1,1) PRIMARY KEY,
+    QnAID INT NOT NULL,
+    RepliedBy INT NOT NULL,
+    ReplyMessage NVARCHAR(MAX) NOT NULL,
+    RepliedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (QnAID) REFERENCES QnAQuestion(QnAID),
+    FOREIGN KEY (RepliedBy) REFERENCES Accounts(AccountID)
+);
+go
+--trigger notifi when question
+CREATE TRIGGER trg_QnA_NewQuestion
+ON QnAQuestion
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO Notifications (AccountID, Type, Title, Message)
+    SELECT 
+        c.InstructorID, 
+        'CourseUpdate',
+        N'Câu hỏi mới trong khóa học',
+        CONCAT(N'Học viên đã đặt câu hỏi trong khóa "', c.Title, N'"')
+    FROM inserted i
+    JOIN Courses c ON i.CourseID = c.CourseID;
+END;
+GO
+----trigger notifi when reply
+CREATE TRIGGER trg_QnA_NewReply
+ON QnAReply
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO Notifications (AccountID, Type, Title, Message)
+    SELECT 
+        q.AskedBy, 
+        'System',
+        N'Phản hồi mới từ giảng viên',
+        CONCAT(N'Giảng viên đã trả lời câu hỏi của bạn trong khóa học ID ', q.CourseID)
+    FROM inserted i
+    JOIN QnAQuestion q ON q.QnAID = i.QnAID;
+END;
+GO
 -- =========================
 -- SAMPLE DATA
 -- =========================
 -- ====================================
--- 22.10.2025 (ver5)
 -- E-LEARNING DATABASE (Sample Data Expanded)
 -- ====================================
 
