@@ -31,11 +31,6 @@
                 </a>
             </li>
         <li>
-            <a href="${pageContext.request.contextPath}/instructor/communication.jsp" class="nav-link text-white sidebar-link">
-                <i class="fas fa-comments me-2"></i> Communication
-            </a>
-        </li>
-        <li>
             <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
                 <i class="fas fa-chart-bar me-2"></i> Analytics
             </a>
