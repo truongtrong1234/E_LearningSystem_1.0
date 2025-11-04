@@ -112,7 +112,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
     request.setAttribute("chapterCompletedMap", chapterCompletedMap);
 
-    request.getRequestDispatcher("/Learner/myLearning_content.jsp").forward(request, response);
+    request.getRequestDispatcher("/Learner/mylearning_content.jsp").forward(request, response);
 }
 
 
