@@ -8,21 +8,22 @@ import java.io.IOException;
 import model.Account;
 
 public class MyProfileController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-      HttpSession session = request.getSession();
-Account sessionAccount = (Account) session.getAttribute("account");
+        HttpSession session = request.getSession();
+        Account sessionAccount = (Account) session.getAttribute("account");
 
-if (sessionAccount == null) {
-    response.sendRedirect("login.jsp");
-    return;
-}
+        if (sessionAccount == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
         // Gọi DAO
-   AccountDAO dao = new AccountDAO();
-Account acc = dao.getAccountById(sessionAccount.getAccountId());
+        AccountDAO dao = new AccountDAO();
+        Account acc = dao.getAccountById(sessionAccount.getAccountId());
 
         if (acc != null) {
             request.setAttribute("name", acc.getName());
@@ -35,4 +36,3 @@ Account acc = dao.getAccountById(sessionAccount.getAccountId());
         dispatcher.forward(request, response);
     }
 }
-

@@ -52,7 +52,6 @@ public class VnPayController extends HttpServlet {
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount * 100));
         vnp_Params.put("vnp_CurrCode", "VND");
-
         if (bankCode != null && !bankCode.isEmpty()) {
             vnp_Params.put("vnp_BankCode", bankCode);
         }
@@ -105,11 +104,11 @@ public class VnPayController extends HttpServlet {
         String vnp_SecureHash = ConfigVnPay.hmacSHA512(ConfigVnPay.secretKey, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = ConfigVnPay.vnp_PayUrl + "?" + queryUrl;
-        com.google.gson.JsonObject job = new JsonObject();
-        job.addProperty("code", "00");
-        job.addProperty("message", "success");
-        job.addProperty("data", paymentUrl);
-        Gson gson = new Gson();
+//        com.google.gson.JsonObject job = new JsonObject();
+//        job.addProperty("code", "00");
+//        job.addProperty("message", "success");
+//        job.addProperty("data", paymentUrl);
+//        Gson gson = new Gson();
         resp.sendRedirect(paymentUrl);
     }
 

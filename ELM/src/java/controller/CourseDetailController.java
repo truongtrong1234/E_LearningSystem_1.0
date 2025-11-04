@@ -51,7 +51,9 @@ public class CourseDetailController extends HttpServlet {
         chapters.removeIf(ch -> ch.getCourseID() != courseID);
 
         Map<Integer, List<Lesson>> lessonsMap = new HashMap<>();
+        int count=0;
         for (Chapter ch : chapters) {
+            count++;
             List<Lesson> lessons = lDao.getByChapterID(ch.getChapterID());
             lessonsMap.put(ch.getChapterID(), lessons);
         }
@@ -72,6 +74,8 @@ public class CourseDetailController extends HttpServlet {
         }
 
         // 5️⃣ Gửi dữ liệu sang JSP
+                request.setAttribute("count", count);
+
         request.setAttribute("course", course);
         request.setAttribute("category", category);
         request.setAttribute("chapters", chapters);

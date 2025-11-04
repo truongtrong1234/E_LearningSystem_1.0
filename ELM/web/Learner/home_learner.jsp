@@ -60,7 +60,7 @@
                             <img src="${c.thumbnail}" alt="${c.title}">
                         </div>
                         <div class="body">
-                            <div class="title">${c.title}</div>
+                            <div class="title">${c.title} ${count}</div>
                             <div class="meta">Instructor ID: ${c.instructorID}</div>
                             <div class="price">
                                 <c:choose>

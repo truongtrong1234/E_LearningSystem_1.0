@@ -1,5 +1,4 @@
-
-package util; 
+package util;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ConfigVnPay {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-public static String vnp_ReturnUrl = "http://localhost:8080/ELM/payment_return";
+    public static String vnp_ReturnUrl = "http://localhost:8080/ELM/payment_return";
     public static String vnp_TmnCode = "BB7G6CNL";
     public static String secretKey = "VNW4R63I78TCUE31AR942UBUYSG60C6V";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
@@ -81,9 +80,9 @@ public static String vnp_ReturnUrl = "http://localhost:8080/ELM/payment_return";
                 sb.append("&");
             }
         }
-        return hmacSHA512(secretKey,sb.toString());
+        return hmacSHA512(secretKey, sb.toString());
     }
-    
+
     public static String hmacSHA512(final String key, final String data) {
         try {
 
@@ -106,7 +105,7 @@ public static String vnp_ReturnUrl = "http://localhost:8080/ELM/payment_return";
             return "";
         }
     }
-    
+
     public static String getIpAddress(HttpServletRequest request) {
         String ipAdress;
         try {
