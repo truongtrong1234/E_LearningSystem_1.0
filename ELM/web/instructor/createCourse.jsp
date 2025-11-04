@@ -10,48 +10,49 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Create Course</title>
+        <title>Tạo khoá học</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
     </head>
     <body>
-
         <div class="container my-5">
             <div class="card shadow-sm p-4">
                 <!-- STEP HEADER -->
                 <div class="step-header mb-4">
                     <div class="text-center">
                         <div class="circle active">1</div>
-                        <div class="label">Basic</div>
+                        <div class="label">Cơ bản</div>
                     </div>
                     <div class="step-indicator"></div>
                     <div class="text-center">
                         <div class="circle">2</div>
-                        <div class="label">Chapters</div>
+                        <div class="label">Thêm chương</div>
                     </div>
                     <div class="step-indicator"></div>
                     <div class="text-center">
                         <div class="circle">3</div>
-                        <div class="label">Lessons</div>
+                        <div class="label">Bài học</div>
                     </div>
                     <div class="step-indicator"></div>
                     <div class="text-center">
                         <div class="circle">4</div>
-                        <div class="label">Review</div>
+                        <div class="label">Kiểm tra</div>
                     </div>
                 </div>
-                <form id="courseForm"  action="createCourse" method="post" enctype="multipart/form-data"> <!-- STEP 1: BASIC INFO -->
+                
+                <!-- STEP 1: BASIC INFO -->
+                <form id="courseForm"  action="createCourse" method="post" enctype="multipart/form-data"> 
                     <div class="step active" id="step-1">
-                        <h5 class="mb-3">Basic Information</h5>
+                        <h5 class="mb-3">Thông tin cơ bản</h5>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="courseTitle" class="form-label" required="">Course Title *</label>
+                                <label for="courseTitle" class="form-label" required="">Tên khoá học *</label>
                                 <input type="text" id="courseTitle" name="courseTitle" class="form-control" placeholder="Enter course title">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Category *</label>
+                                <label class="form-label">Danh mục (Môn học) *</label>
                                 <select id="categorySelect" name="categoryID" class="form-select" required="">
-                                    <option value="" disabled selected>-- Select Category --</option>
+                                    <option value="" disabled selected>-- Chọn danh mục --</option>
                                     <c:forEach var="c" items="${categoryList}">
                                         <option value="${c.cate_id}">${c.cate_name}</option>
                                     </c:forEach>
@@ -60,15 +61,15 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
+                            <label class="form-label">Mô tả khoá học</label>
                             <textarea id="description" name="description" class="form-control" rows="3" placeholder="Short description about the course"></textarea>
                         </div>
 
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Class *</label>
+                                <label class="form-label">Khối *</label>
                                 <select id="class" name="class"  class="form-select" required="">
-                                    <option value="">-- Select class --</option>
+                                    <option value="">-- Chọn khối --</option>
                                     <option value="10">10</option>
                                     <option value="11">11</option>
                                     <option value="12">12</option>
@@ -76,13 +77,13 @@
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Price(đ) *</label>
+                                <label class="form-label">Giá(đ) *</label>
                                 <input type="number" id="price" name="price" class="form-control" placeholder="Enter price" required="">
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Thumbnail</label>
+                            <label class="form-label">Ảnh bìa</label>
                             <input type="file" id="thumbnail" name="thumbnail" class="form-control" required="">
                         </div>
 
@@ -95,8 +96,8 @@
                     </c:if>
 
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Continue</button>
+                        <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Huỷ</a>
+                        <button type="submit" class="btn btn-primary">Tiếp theo</button>
                     </div>
                 </form>
                 <!--             STEP 2: CHAPTER CREATION 
