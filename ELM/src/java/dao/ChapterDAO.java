@@ -160,7 +160,7 @@ public int countCompletedLessons(int accountID, int courseID) {
         }
     }
 
-    // (Tùy chọn) — kiểm tra nhanh
+    // Test
     public static void main(String[] args) {
         ChapterDAO dao = new ChapterDAO();
         Chapter c = new Chapter();

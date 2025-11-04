@@ -7,7 +7,7 @@ import java.util.*;
 
 public class MaterialProgressDAO extends DBContext {
 
-    // 🟢 Helper: map ResultSet → MaterialProgress
+    // Helper: map ResultSet → MaterialProgress
     private MaterialProgress map(ResultSet rs) throws SQLException {
         return new MaterialProgress(
             rs.getInt("MaterialProgressID"),
@@ -17,7 +17,7 @@ public class MaterialProgressDAO extends DBContext {
         );
     }
 
-    // 🟢 Lấy tất cả tiến độ material
+    // Lấy tất cả tiến độ material
     public List<MaterialProgress> getAll() {
         List<MaterialProgress> list = new ArrayList<>();
         String sql = "SELECT * FROM MaterialProgress";
@@ -30,7 +30,7 @@ public class MaterialProgressDAO extends DBContext {
         return list;
     }
 
-    // 🟢 Lấy tiến độ theo EnrollmentID
+    // Lấy tiến độ theo EnrollmentID
     public List<MaterialProgress> getByEnrollment(int enrollmentID) {
         List<MaterialProgress> list = new ArrayList<>();
         String sql = "SELECT * FROM MaterialProgress WHERE EnrollmentID = ?";
@@ -44,7 +44,7 @@ public class MaterialProgressDAO extends DBContext {
         return list;
     }
 
-    // 🟢 Lấy tiến độ cụ thể theo enrollment + material
+    // Lấy tiến độ cụ thể theo enrollment + material
     public MaterialProgress getOne(int enrollmentID, int materialID) {
         String sql = "SELECT * FROM MaterialProgress WHERE EnrollmentID = ? AND MaterialID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -58,7 +58,7 @@ public class MaterialProgressDAO extends DBContext {
         return null;
     }
 
-    // 🟢 Thêm tiến độ mới
+    // Thêm tiến độ mới
     public boolean insert(MaterialProgress mp) {
         String sql = "INSERT INTO MaterialProgress (EnrollmentID, MaterialID, IsCompleted) VALUES (?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -72,7 +72,7 @@ public class MaterialProgressDAO extends DBContext {
         }
     }
 
-    // 🟢 Cập nhật trạng thái hoàn thành
+    // Cập nhật trạng thái hoàn thành
     public boolean update(MaterialProgress mp) {
         String sql = "UPDATE MaterialProgress SET IsCompleted = ? WHERE EnrollmentID = ? AND MaterialID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -86,7 +86,7 @@ public class MaterialProgressDAO extends DBContext {
         }
     }
 
-    // 🟢 Xóa tiến độ theo Enrollment
+    // Xóa tiến độ theo Enrollment
     public boolean deleteByEnrollment(int enrollmentID) {
         String sql = "DELETE FROM MaterialProgress WHERE EnrollmentID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -98,7 +98,7 @@ public class MaterialProgressDAO extends DBContext {
         }
     }
 
-    // 🧪 Test nhanh
+    // Test nhanh
     public static void main(String[] args) {
         MaterialProgressDAO dao = new MaterialProgressDAO();
         List<MaterialProgress> list = dao.getAll();

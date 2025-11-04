@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class LessonProgressDAO extends DBContext {
 
-    // ✅ Tạo tiến độ cho tất cả Lesson của khóa học
+    // Tạo tiến độ cho tất cả Lesson của khóa học
     public void insertLessonProgressForCourse(int accountID, int courseID) {
         int enrollmentID = getEnrollmentID(accountID, courseID);
         if (enrollmentID == -1) return;
@@ -54,25 +54,24 @@ public class LessonProgressDAO extends DBContext {
 }
 
     public Map<Integer, Boolean> getLessonCompletionMap(int accountID, int courseID) {
-    Map<Integer, Boolean> map = new HashMap<>();
-    String sql = """
-        SELECT lp.LessonID, lp.IsCompleted
-        FROM LessonProgress lp
-        JOIN Enrollments e ON lp.EnrollmentID = e.EnrollmentID
-        WHERE e.AccountID = ? AND e.CourseID = ?
-    """;
+        Map<Integer, Boolean> map = new HashMap<>();
+        String sql = """
+            SELECT lp.LessonID, lp.IsCompleted
+            FROM LessonProgress lp
+            JOIN Enrollments e ON lp.EnrollmentID = e.EnrollmentID
+            WHERE e.AccountID = ? AND e.CourseID = ?
+        """;
 
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setInt(1, accountID);
-        ps.setInt(2, courseID);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("LessonID"), rs.getBoolean("IsCompleted"));
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accountID);
+            ps.setInt(2, courseID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                map.put(rs.getInt("LessonID"), rs.getBoolean("IsCompleted"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return map;
     }
-    return map;
-}
-
 }

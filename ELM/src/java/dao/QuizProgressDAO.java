@@ -8,7 +8,7 @@ import java.util.*;
 
 public class QuizProgressDAO extends DBContext {
 
-    // 🟢 Helper: map ResultSet → QuizProgress object
+    // Helper: map ResultSet → QuizProgress object
     private QuizProgress mapResultSet(ResultSet rs) throws SQLException {
         return new QuizProgress(
             rs.getInt("ProgressID"),
@@ -20,7 +20,7 @@ public class QuizProgressDAO extends DBContext {
         );
     }
 
-    // 🟢 Lấy tất cả tiến độ quiz
+    // Lấy tất cả tiến độ quiz
     public List<QuizProgress> getAllQuizProgress() {
         List<QuizProgress> list = new ArrayList<>();
         String sql = "SELECT * FROM QuizProgress";
@@ -35,7 +35,7 @@ public class QuizProgressDAO extends DBContext {
         return list;
     }
 
-    // 🟢 Lấy tiến độ theo ProgressID
+    // Lấy tiến độ theo ProgressID
     public QuizProgress getQuizProgressById(int progressID) {
         String sql = "SELECT * FROM QuizProgress WHERE ProgressID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -50,7 +50,7 @@ public class QuizProgressDAO extends DBContext {
         return null;
     }
 
-    // 🟢 Lấy tiến độ theo AccountID & QuizID
+    // Lấy tiến độ theo AccountID & QuizID
     public QuizProgress getQuizProgressByAccountAndQuiz(int accountID, int quizID) {
         String sql = "SELECT * FROM QuizProgress WHERE AccountID = ? AND QuizID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -66,7 +66,7 @@ public class QuizProgressDAO extends DBContext {
         return null;
     }
 
-    // 🟢 Thêm mới tiến độ quiz
+    // Thêm mới tiến độ quiz
     public boolean insertQuizProgress(QuizProgress qp) {
         String sql = """
             INSERT INTO QuizProgress (AccountID, QuizID, CorrectCount, TotalScore, TakenDate)
@@ -86,7 +86,7 @@ public class QuizProgressDAO extends DBContext {
         }
     }
 
-    // 🟢 Cập nhật tiến độ quiz
+    // Cập nhật tiến độ quiz
     public boolean updateQuizProgress(QuizProgress qp) {
         String sql = """
             UPDATE QuizProgress
@@ -108,7 +108,7 @@ public class QuizProgressDAO extends DBContext {
         }
     }
 
-    // 🟢 Xóa tiến độ quiz
+    // Xóa tiến độ quiz
     public boolean deleteQuizProgress(int progressID) {
         String sql = "DELETE FROM QuizProgress WHERE ProgressID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -120,7 +120,7 @@ public class QuizProgressDAO extends DBContext {
         }
     }
 
-    // 🧪 Test main
+    // Test main
     public static void main(String[] args) {
         QuizProgressDAO dao = new QuizProgressDAO();
         List<QuizProgress> list = dao.getAllQuizProgress();

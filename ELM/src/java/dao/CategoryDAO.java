@@ -11,10 +11,6 @@ import java.util.logging.Logger;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- *
- * @author nvtha
- */
 public class CategoryDAO extends DBContext{
     public  List<Category> getAllCat(){
         List<Category> list = new ArrayList();
