@@ -24,7 +24,7 @@
 <body>
      <!-- HEADER -->
         <jsp:include page="/components/headerLearner.jsp"/>
-    <h1>Nội dung khóa học</h1>
+    <h1>${course.title}</h1>
 
     <div class="content-wrapper">
         <!-- 🔹 CỘT TRÁI: TÀI LIỆU -->
@@ -52,11 +52,16 @@
         <div class="lessons-pane">
             <c:forEach var="entry" items="${chapterLessonMap}">
                 <div class="chapter-block">
-                    <h4>
-                        <input type="checkbox" disabled
-                               <c:if test="${chapterCompletedMap[entry.key]}">checked</c:if> />
-                        Chương ${entry.key}
-                    </h4>
+                   <c:forEach var="chapter" items="${chapterList}">
+    <c:if test="${chapter.chapterID == entry.key}">
+        <h4>
+            <input type="checkbox" disabled
+                   <c:if test="${chapterCompletedMap[chapter.chapterID]}">checked</c:if> />
+            ${chapter.title}
+        </h4>
+    </c:if>
+</c:forEach>
+
                     <ul>
                         <c:forEach var="lesson" items="${entry.value}">
                             <li>

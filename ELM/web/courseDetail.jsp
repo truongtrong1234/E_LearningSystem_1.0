@@ -38,9 +38,20 @@
     <!-- 🧭 Breadcrumb -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/${homePage}">Home</a></li>
+<li class="breadcrumb-item">
+    <c:choose>
+        
+        <c:when test="${not empty sessionScope.account}">
+            <a href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">Home</a>
+        </c:when>
+        
+        <c:otherwise>
+            <a href="${pageContext.request.contextPath}/home_Guest">Home</a>
+        </c:otherwise>
+    </c:choose>
+</li>
         <li class="breadcrumb-item">
-    <a href="category?id=${category.cate_id}">${category.cate_name}</a>
+    <a href="searchCourse?cats=${category.cate_id}">${category.cate_name}</a>
 </li>
 
             <li class="breadcrumb-item active" aria-current="page">${course.title}</li>
@@ -121,8 +132,9 @@
         <div class="chapter-title">${loop.index + 1}. ${ch.title}</div>
         <ul class="list-unstyled">
             <c:forEach var="lesson" items="${lessons[ch.chapterID]}">
+                
                 <li class="lesson-item">
-                    <i class="fa-regular fa-circle-play me-2"></i> ${lesson.title}
+                    <i class="fa-regular fa-circle-play me-2"></i> ${lesson.title} 
                 </li>
             </c:forEach>
         </ul>

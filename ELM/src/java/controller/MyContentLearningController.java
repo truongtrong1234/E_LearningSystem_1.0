@@ -33,6 +33,7 @@ import model.Material;
 ///@WebServlet(name="MyLearningContentServlet", value="/Learner/myLearningContent")
 public class MyContentLearningController extends HttpServlet {
 
+    private CourseDAO courseDAO=new CourseDAO();
     private EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
     private ChapterDAO chapterDAO = new ChapterDAO();
     private LessonDAO lessonDAO = new LessonDAO();
@@ -51,6 +52,9 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     int courseID = Integer.parseInt(request.getParameter("CourseID"));
     int lessonID = 0;
+    
+    
+    Course course=courseDAO.getCourseById(courseID);
     if (request.getParameter("LessonID") != null) {
         lessonID = Integer.parseInt(request.getParameter("LessonID"));
     }
@@ -100,6 +104,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     request.setAttribute("selectedLessonID", lessonID);
     request.setAttribute("CourseID", courseID);
     request.setAttribute("lessonCompletedMap", lessonCompletedMap);
+    request.setAttribute("course", course);
+    request.setAttribute("chapterList", chapterList);
 
     // Nếu có chapterCompletedMap bạn vẫn có thể gửi sang JSP
     ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
