@@ -30,9 +30,9 @@ public class DBContext {
     }
     public static Connection getConnectionStatic() {
         try {
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=ElearningDB10;encrypt=true;trustServerCertificate=true;";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=ElearningDB11;encrypt=true;trustServerCertificate=true;";
             String user = "sa";
-            String pass = "sa";
+            String pass = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             return DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {

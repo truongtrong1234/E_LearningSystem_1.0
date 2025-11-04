@@ -12,7 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>INSTRUCTOR</title>
+        <title>Dashboard</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/instructor.css">
@@ -27,22 +27,17 @@
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/instructor/dashboard" class="nav-link text-white sidebar-link active">
-                            <i class="fas fa-tachometer-alt me-2"></i> Tổng quan 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/instructor/communication.jsp" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-comments me-2"></i> Tương tác
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-chart-bar me-2"></i> Phân tích
+                            <i class="fas fa-chart-bar me-2"></i> Analytics
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/instructor/sendReport.jsp" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-question-circle me-2"></i> Hỗ trợ
+                            <i class="fas fa-question-circle me-2"></i> Helps
                         </a>
                     </li>
                 </ul>
@@ -56,7 +51,7 @@
                         </div>
                         <div class="d-flex align-items-center ms-auto">
                             <span class="me-3 text-muted nav-profile-text">
-                                <a href="${pageContext.request.contextPath}/Learner/homeLearnerCourse" style="color: #495057; text-decoration: none;">Học sinh</a>
+                                <a href="${pageContext.request.contextPath}/Learner/homeLearnerCourse" style="color: #495057; text-decoration: none;">Learner</a>
                             </span>
                             <button class="btn btn-sm me-3 notification-btn" type="button">
                                 <a href="${pageContext.request.contextPath}/notification.jsp" style="color: #495057">
@@ -74,13 +69,13 @@
                 <div class="container-fluid p-4">
                     <ul class="nav nav-tabs custom-tabs mb-4">
                         <li class="nav-item">
-                            <a class="nav-link active custom-tab-link" aria-current="page" data-tab="courses-content" href="#course-content">Danh sách khoá học</a>
+                            <a class="nav-link active custom-tab-link" aria-current="page" data-tab="courses-content" href="#course-content">Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link custom-tab-link" data-tab="quiz-content" href="#quiz-content">Danh sách bài kiểm tra</a>
+                            <a class="nav-link custom-tab-link" data-tab="quiz-content" href="#quiz-content">Quiz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link custom-tab-link" data-tab="materials-content" href="#materials-content">Danh sách tài liệu</a>
+                            <a class="nav-link custom-tab-link" data-tab="materials-content" href="#materials-content">Materials</a>
                         </li>
                     </ul>
                     <!-- Manage Course -->
@@ -88,10 +83,10 @@
                         <!-- Create Course -->
                         <div class="create-cqm-box p-4 rounded shadow-sm border">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="fs-5 text-muted">Ấn tạo khoá học mới ở bên phải</span>
+                                <span class="fs-5 text-muted">Jump Into Course Creation</span>
                                 <button class="btn create-cqm-btn py-2 px-4" 
                                         onclick="window.location.href = 'createCourse'">
-                                    Tạo khoá học mới
+                                    Create New Course
                                 </button>
                             </div>
                         </div>
@@ -107,17 +102,18 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="course?id=${course.courseID}"><i class="fas fa-eye me-2"></i> Xem khoá học</a></li>
-                                                        <li><a class="dropdown-item" href="course?action=edit&id=${course.courseID}"><i class="fas fa-edit me-2"></i>Chỉnh sửa khoá học</a></li>
+                                                        <li><a class="dropdown-item" href="course?id=${course.courseID}"><i class="fas fa-eye me-2"></i> View Course</a></li>
+                                                        <li><a class="dropdown-item" href="course?action=edit&id=${course.courseID}"><i class="fas fa-edit me-2"></i> Edit Course</a></li>
                                                         <li><hr class="dropdown-divider"></li>
                                                         <li>
                                                             <form action="/ELM/instructor/dashboard" method="post">
 <!--                                                                <a class="dropdown-item text-danger" href="dashboard?action=delete&id=${course.courseID}" onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học ${course.title}?');">
                                                                     <i class="fas fa-trash-alt me-2"></i> Delete Course</a>-->
                                                                 <button type="submit" value="${course.courseID}" name="action">
-                                                                    Xoá khoá học
+                                                                    Delete Course
                                                                 </button>
                                                             </form>
+
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -135,9 +131,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            Chưa có khoá học nào được tạo. Hãy nhấn
-                                            <a href="createCourse" style="text-decoration: none">"Tạo khoá học mới"</a> 
-                                            để bắt đầu!
+                                            No courses have been created yet. Click
+                                            <a href="createCourse" style="text-decoration: none">"Create New Course"</a> 
+                                            to get started!
                                         </div>
                                     </div>
                                 </c:otherwise>
@@ -149,10 +145,10 @@
                         <!-- Create Quiz -->
                         <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="fs-5 text-muted">Ấn tạo bài kiểm tra mới ở bên phải</span>
+                                <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
                                 <button class="btn create-cqm-btn py-2 px-4" 
                                         onclick="window.location.href = '${pageContext.request.contextPath}/instructor/createQuiz.jsp'">
-                                    Tạo bài kiểm tra mới
+                                    Create New Quiz
                                 </button>
                             </div>
                         </div>
@@ -173,7 +169,7 @@
                                                         <li><hr class="dropdown-divider"></li>
                                                         <li>
                                                             <a class="dropdown-item text-danger" href="quiz?action=delete&id=${quiz.quizId}" onclick="return confirm('Bạn có chắc chắn muốn xóa bài Quiz này?');">
-                                                                <i class="fas fa-trash-alt me-2"></i> Xoá bài kiểm tra
+                                                                <i class="fas fa-trash-alt me-2"></i> Delete Quiz
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -195,9 +191,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            Chưa có bài kiểm tra nào được tạo. Hãy nhấn
-                                            <a href="${pageContext.request.contextPath}/instructor/createQuiz.jsp" style="text-decoration: none">"Tạo bài kiểm tra mới"</a> 
-                                            để bắt đầu!
+                                            No Quiz has been created yet. Click
+                                            <a href="${pageContext.request.contextPath}/instructor/createQuiz.jsp" style="text-decoration: none">"Create New Quiz"</a> 
+                                            to get started!
                                         </div>
                                     </div>
                                 </c:otherwise>
@@ -207,6 +203,15 @@
                     <!-- Manage Material -->
                     <div id="materials-content" class="tab-content-block" style="display: none;">
                         <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fs-5 text-muted">Upload and Manage Course Materials</span>
+                                <button class="btn create-cqm-btn py-2 px-4" 
+                                        onclick="window.location.href = '${pageContext.request.contextPath}/instructor/uploadMaterial.jsp'">
+                                    Upload New Material
+                                </button>
+                            </div>
+                        </div>
                         <!-- List Material -->
                         <div class="row mt-4 material-list">
                             <c:choose>
@@ -245,7 +250,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            Chưa có tài liệu nào được tải lên!
+                                            No documents have been uploaded yet. Click
+                                            <a href="${pageContext.request.contextPath}/instructor/uploadMaterial.jsp" style="text-decoration: none">"Upload New Material"</a>
+                                            to get started!
                                         </div>
                                     </div>
                                 </c:otherwise>
