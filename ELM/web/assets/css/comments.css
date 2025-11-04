@@ -1,0 +1,167 @@
+/* ===========================
+   COMMENTS SECTION (E-LEARNING)
+   =========================== */
+.comments-section {
+    max-width: 1100px;
+    margin: 28px auto 40px;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* Header */
+.comments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.comments-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+#comments-count {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Form */
+#commentForm {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#commentContent {
+    width: 100%;
+    min-height: 110px;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    resize: vertical;
+    font-size: 14px;
+    line-height: 1.5;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#commentContent:focus {
+    border-color: #ffb26b;
+    box-shadow: 0 0 0 3px rgba(255, 127, 0, 0.15);
+    outline: none;
+}
+
+/* Nút đăng bình luận */
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+#submitComment {
+    background: #ff7f00;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.25s ease;
+}
+
+#submitComment:hover {
+    background: #e96e00;
+}
+
+#submitComment:active {
+    transform: translateY(1px);
+}
+
+/* Danh sách bình luận */
+.comments-list {
+    margin-top: 18px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    background: #fafafa;
+    margin-bottom: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.comment-item:hover {
+    background-color: #fdf8f3;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffe7d1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #ff7f00;
+    flex-shrink: 0;
+}
+
+.comment-body {
+    flex: 1;
+}
+
+.comment-meta {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.comment-meta strong {
+    color: #333;
+}
+
+.comment-content {
+    white-space: pre-wrap;
+    font-size: 14px;
+    color: #222;
+    word-break: break-word;
+}
+
+/* Khi chưa có bình luận */
+.no-comments {
+    text-align: center;
+    color: #777;
+    background: #fcfcfc;
+    border: 1px dashed #e5e5e5;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+/* Responsive nhỏ hơn 500px */
+@media (max-width: 500px) {
+    .comments-section {
+        padding: 16px;
+    }
+
+    .comment-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .avatar {
+        margin-bottom: 8px;
+    }
+}

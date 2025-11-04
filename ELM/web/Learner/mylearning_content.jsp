@@ -17,9 +17,8 @@
         <link rel="stylesheet" href="assets/css/mylearningcontent.css?v3">
         <link rel="stylesheet" href="assets/css/headerLearner.css?v3">
         <link rel="stylesheet" href="assets/css/footer.css?v3">
-        <style>
+        <link rel="stylesheet" href="assets/css/comments.css?v1">
 
-        </style>
     </head>
     <body>
         <!-- HEADER -->
@@ -80,54 +79,50 @@
                 </c:forEach>
             </div>
         </div>
-        <!-- ====== BÌNH LUẬN KHOÁ HỌC (no edit/delete) ====== -->
-<section class="comments-section" id="comments" style="max-width:1100px;margin:28px auto 40px;background:#fff;border:1px solid #e9ecef;border-radius:12px;padding:20px;box-shadow:0 6px 16px rgba(0,0,0,.04);">
-  <div class="comments-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-    <h3 style="margin:0;font-size:20px;font-weight:700;color:#333;">Bình luận khóa học</h3>
-    <div id="comments-count"><c:out value="${fn:length(comments)}"/> bình luận</div>
-  </div>
-
-  <!-- Form bình luận -->
-  <form id="commentForm" onsubmit="return false;" style="display:grid;gap:10px;margin-top:10px;">
-    <input type="hidden" id="courseId" value="${CourseID}">
-    <textarea id="commentContent" placeholder="Viết bình luận của bạn..." maxlength="2000" required
-              style="width:100%;min-height:110px;padding:12px 14px;border:1px solid #ddd;border-radius:10px;resize:vertical;font-size:14px;line-height:1.5;"></textarea>
-    <div style="display:flex;gap:10px;justify-content:flex-end;">
-      <button type="submit" id="submitComment"
-              style="background:#ff7f00;color:#fff;border:1px solid transparent;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer;">
-        Đăng bình luận
-      </button>
+<!-- ====== BÌNH LUẬN KHOÁ HỌC (no edit/delete) ====== -->
+<section class="comments-section" id="comments">
+    <div class="comments-header">
+        <h3>Bình luận khóa học</h3>
+        <div id="comments-count"><c:out value="${fn:length(comments)}"/> bình luận</div>
     </div>
-  </form>
 
-  <!-- Danh sách bình luận -->
-  <div class="comments-list" id="commentsList" style="margin-top:18px;">
-    <c:choose>
-      <c:when test="${not empty comments}">
-        <c:forEach var="cmt" items="${comments}">
-          <div class="comment-item" data-id="${cmt.id}" style="display:flex;gap:12px;padding:14px;border:1px solid #f0f0f0;border-radius:10px;background:#fafafa;margin-bottom:12px;">
-            <div class="avatar" style="width:40px;height:40px;border-radius:50%;background:#ffe7d1;display:flex;align-items:center;justify-content:center;font-weight:700;color:#ff7f00;">
-              <c:out value="${fn:substring(cmt.authorName,0,1)}"/>
-            </div>
-            <div class="comment-body" style="flex:1;">
-              <div class="comment-meta" style="font-size:13px;color:#666;display:flex;gap:8px;align-items:center;margin-bottom:6px;">
-                <strong><c:out value="${cmt.authorName}"/></strong> •
-                <span><fmt:formatDate value="${cmt.createdAt}" pattern="dd/MM/yyyy HH:mm"/></span>
-              </div>
-              <div class="comment-content" style="white-space:pre-wrap;font-size:14px;color:#222;">
-                <c:out value="${cmt.content}"/>
-              </div>
-            </div>
-          </div>
-        </c:forEach>
-      </c:when>
-      <c:otherwise>
-        <div style="text-align:center;color:#777;background:#fcfcfc;border:1px dashed #e5e5e5;padding:16px;border-radius:10px;">
-          Chưa có bình luận nào. Hãy là người đầu tiên!
+    <!-- Form bình luận -->
+    <form id="commentForm" onsubmit="return false;">
+        <input type="hidden" id="courseId" value="${CourseID}">
+        <textarea id="commentContent" placeholder="Viết bình luận của bạn..." maxlength="2000" required></textarea>
+        <div class="comment-actions">
+            <button type="submit" id="submitComment">Đăng bình luận</button>
         </div>
-      </c:otherwise>
-    </c:choose>
-  </div>
+    </form>
+
+    <!-- Danh sách bình luận -->
+    <div class="comments-list" id="commentsList">
+        <c:choose>
+            <c:when test="${not empty comments}">
+                <c:forEach var="cmt" items="${comments}">
+                    <div class="comment-item" data-id="${cmt.id}">
+                        <div class="avatar">
+                            <c:out value="${fn:substring(cmt.authorName,0,1)}"/>
+                        </div>
+                        <div class="comment-body">
+                            <div class="comment-meta">
+                                <strong><c:out value="${cmt.authorName}"/></strong> •
+                                <span><fmt:formatDate value="${cmt.createdAt}" pattern="dd/MM/yyyy HH:mm"/></span>
+                            </div>
+                            <div class="comment-content">
+                                <c:out value="${cmt.content}"/>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <div class="no-comments">
+                    Chưa có bình luận nào. Hãy là người đầu tiên!
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </section>
 
 
