@@ -137,7 +137,7 @@ public class LessonDAO extends DBContext {
         }
     }
 
-    // Kiểm tra nhanh
+    // Test
     public static void main(String[] args) {
         LessonDAO dao = new LessonDAO();
         Lesson les = new Lesson(); 

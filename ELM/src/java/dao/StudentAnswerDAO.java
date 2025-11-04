@@ -7,7 +7,7 @@ import java.util.*;
 
 public class StudentAnswerDAO extends DBContext {
 
-    // 🟢 Helper: map ResultSet → StudentAnswer
+    // Helper: map ResultSet → StudentAnswer
     private StudentAnswer mapResultSet(ResultSet rs) throws SQLException {
         return new StudentAnswer(
             rs.getInt("AnswerID"),
@@ -18,7 +18,7 @@ public class StudentAnswerDAO extends DBContext {
         );
     }
 
-    // 🟢 Lấy tất cả
+    // Lấy tất cả
     public List<StudentAnswer> getAll() {
         List<StudentAnswer> list = new ArrayList<>();
         String sql = "SELECT * FROM StudentAnswers";
@@ -33,7 +33,7 @@ public class StudentAnswerDAO extends DBContext {
         return list;
     }
 
-    // 🟢 Lấy theo AccountID
+    // Lấy theo AccountID
     public List<StudentAnswer> getByAccount(int accountID) {
         List<StudentAnswer> list = new ArrayList<>();
         String sql = "SELECT * FROM StudentAnswers WHERE AccountID = ?";
@@ -49,7 +49,7 @@ public class StudentAnswerDAO extends DBContext {
         return list;
     }
 
-    // 🟢 Lấy theo QuizID (thông qua QuestionID)
+    //  Lấy theo QuizID (thông qua QuestionID)
     public List<StudentAnswer> getByQuiz(int accountID, int quizID) {
         List<StudentAnswer> list = new ArrayList<>();
         String sql = """
@@ -71,7 +71,7 @@ public class StudentAnswerDAO extends DBContext {
         return list;
     }
 
-    // 🟢 Thêm câu trả lời
+    //  Thêm câu trả lời
     public boolean insert(StudentAnswer sa) {
         String sql = "INSERT INTO StudentAnswers (AccountID, QuestionID, SelectedAnswer, IsCorrect) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -86,7 +86,7 @@ public class StudentAnswerDAO extends DBContext {
         }
     }
 
-    // 🟢 Cập nhật
+    //  Cập nhật
     public boolean update(StudentAnswer sa) {
         String sql = "UPDATE StudentAnswers SET AccountID=?, QuestionID=?, SelectedAnswer=?, IsCorrect=? WHERE AnswerID=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -102,7 +102,7 @@ public class StudentAnswerDAO extends DBContext {
         }
     }
 
-    // 🟢 Xóa
+    //  Xóa
     public boolean delete(int answerID) {
         String sql = "DELETE FROM StudentAnswers WHERE AnswerID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -114,7 +114,7 @@ public class StudentAnswerDAO extends DBContext {
         }
     }
 
-    // 🟢 Xóa tất cả câu trả lời của 1 học sinh trong 1 quiz
+    //  Xóa tất cả câu trả lời của 1 học sinh trong 1 quiz
     public boolean deleteByQuiz(int accountID, int quizID) {
         String sql = """
             DELETE sa
@@ -132,7 +132,7 @@ public class StudentAnswerDAO extends DBContext {
         }
     }
 
-    // 🧪 Test main
+    // Test main
     public static void main(String[] args) {
         StudentAnswerDAO dao = new StudentAnswerDAO();
         List<StudentAnswer> list = dao.getAll();

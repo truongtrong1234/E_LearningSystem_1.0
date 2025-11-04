@@ -26,9 +26,7 @@ public class QuizDAO extends DBContext {
         return q;
     }
 
-    /** 
-     * Lấy tất cả Quiz kèm tên Chapter & Course 
-     */
+    // Lấy tất cả Quiz kèm tên Chapter & Course 
     public List<Quiz> getAllQuizzes() {
         List<Quiz> list = new ArrayList<>();
         String sql = """
@@ -51,9 +49,7 @@ public class QuizDAO extends DBContext {
         return list;
     }
 
-    /** 
-     * Lấy danh sách Quiz theo Instructor (nếu cần)
-     */
+    // Lấy danh sách Quiz theo Instructor (nếu cần)
     public List<Quiz> getQuizzesByInstructor(int instructorId) {
         List<Quiz> list = new ArrayList<>();
         String sql = """
@@ -78,9 +74,7 @@ public class QuizDAO extends DBContext {
         return list;
     }
 
-    /** 
-     * Lấy Quiz theo ID 
-     */
+    // Lấy Quiz theo ID 
     public Quiz getQuizById(int id) {
         String sql = """
             SELECT q.QuizID, q.Title, q.ChapterID,
@@ -103,9 +97,7 @@ public class QuizDAO extends DBContext {
         return null;
     }
 
-    /** 
-     * Thêm Quiz mới 
-     */
+    // hêm Quiz mới 
     public boolean insertQuiz(Quiz q) {
         String sql = "INSERT INTO Quizzes (ChapterID, Title) VALUES (?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -118,9 +110,7 @@ public class QuizDAO extends DBContext {
         }
     }
 
-    /** 
-     * Cập nhật Quiz 
-     */
+    // Cập nhật Quiz 
     public boolean updateQuiz(Quiz q) {
         String sql = "UPDATE Quizzes SET ChapterID = ?, Title = ? WHERE QuizID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -134,9 +124,7 @@ public class QuizDAO extends DBContext {
         }
     }
 
-    /** 
-     * Xóa Quiz theo ID 
-     */
+    // Xóa Quiz theo ID 
     public boolean deleteQuiz(int id) {
         String sql = "DELETE FROM Quizzes WHERE QuizID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

@@ -24,26 +24,24 @@ public class EnrollmentDAO extends DBContext {
             ex.printStackTrace();
         }
     }
-// ✅ Trả về EnrollmentID mới được tạo
-public int insertEnrollment(int accountID, int courseID) {
-    String sql = "INSERT INTO Enrollments (AccountID, CourseID) VALUES (?, ?)";
-    try (PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-        stm.setInt(1, accountID);
-        stm.setInt(2, courseID);
-        stm.executeUpdate();
+    // Trả về EnrollmentID mới được tạo
+    public int insertEnrollment(int accountID, int courseID) {
+        String sql = "INSERT INTO Enrollments (AccountID, CourseID) VALUES (?, ?)";
+        try (PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stm.setInt(1, accountID);
+            stm.setInt(2, courseID);
+            stm.executeUpdate();
 
-        try (ResultSet rs = stm.getGeneratedKeys()) {
-            if (rs.next()) {
-                return rs.getInt(1); // EnrollmentID
+            try (ResultSet rs = stm.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // EnrollmentID
+                }
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+        return -1;
     }
-    return -1;
-}
-
-
 
     // READ - get all
     public List<Enrollment> getAllEnrollment() {
@@ -66,17 +64,17 @@ public int insertEnrollment(int accountID, int courseID) {
     }
 
     public int getEnrollmentID(int accountID, int courseID){
-    String sql = "SELECT EnrollmentID FROM Enrollments WHERE AccountID = ? AND CourseID = ?";
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setInt(1, accountID);
-        ps.setInt(2, courseID);
-        ResultSet rs = ps.executeQuery();
-        if(rs.next()) return rs.getInt("EnrollmentID");
-    } catch (SQLException e) {
-        e.printStackTrace();
+        String sql = "SELECT EnrollmentID FROM Enrollments WHERE AccountID = ? AND CourseID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accountID);
+            ps.setInt(2, courseID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) return rs.getInt("EnrollmentID");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // nếu không có
     }
-    return -1; // nếu không có
-}
 
     // READ - get by ID
     public Enrollment getEnrollmentByID(int id) {
@@ -119,7 +117,7 @@ public int insertEnrollment(int accountID, int courseID) {
         return list;
         
     }
-  public List<Course> getCoursesByAccountId(int accountId) {
+    public List<Course> getCoursesByAccountId(int accountId) {
         List<Course> list = new ArrayList<>();
 
         String sql = """
@@ -163,9 +161,9 @@ public int insertEnrollment(int accountID, int courseID) {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
+    
     // UPDATE
     public void updateEnrollment(Enrollment e) {
         String sql = "UPDATE Enrollments SET AccountID = ?, CourseID = ? WHERE EnrollmentID = ?";

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public class CourseProgressDAO extends DBContext {
 
-    // 🟢 CREATE
+    // CREATE
     public void insertCourseProgress(CourseProgress cp) {
         String sql = "INSERT INTO CourseProgress (EnrollmentID, CompletedPercent) VALUES (?, ?)";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
@@ -20,7 +20,7 @@ public class CourseProgressDAO extends DBContext {
             ex.printStackTrace();
         }
     }
-   // ✅ Tạo tiến độ khóa học
+   // Tạo tiến độ khóa học
     public void insertCourseProgress(int accountID, int courseID) {
         int enrollmentID = getEnrollmentID(accountID, courseID);
         if (enrollmentID == -1) return;
@@ -35,7 +35,7 @@ public class CourseProgressDAO extends DBContext {
     }
     
     
-    // ✅ Lấy EnrollmentID
+    // Lấy EnrollmentID
     private int getEnrollmentID(int accountID, int courseID) {
         String sql = "SELECT EnrollmentID FROM Enrollments WHERE AccountID = ? AND CourseID = ?";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
@@ -49,7 +49,7 @@ public class CourseProgressDAO extends DBContext {
         return -1;
     }
 
-    // 🟢 READ - get all
+    // READ - get all
     public List<CourseProgress> getAllCourseProgress() {
         List<CourseProgress> list = new ArrayList<>();
         String sql = "SELECT * FROM CourseProgress";
@@ -69,7 +69,7 @@ public class CourseProgressDAO extends DBContext {
         return list;
     }
 
-    // 🟢 READ - get by EnrollmentID
+    // READ - get by EnrollmentID
     public CourseProgress getByEnrollmentID(int enrollmentID) {
         String sql = "SELECT * FROM CourseProgress WHERE EnrollmentID = ?";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
@@ -88,20 +88,20 @@ public class CourseProgressDAO extends DBContext {
         return null;
     }
 
- // Giả sử CourseProgress có int progress
-public void updateCourseProgress(int enrollmentID, int progress) {
-    String sql = "UPDATE CourseProgress SET CompletedPercent = ? WHERE EnrollmentID = ?";
-    try (PreparedStatement stm = connection.prepareStatement(sql)) {
-        stm.setInt(1, progress);  // dùng int luôn
-        stm.setInt(2, enrollmentID);
-        stm.executeUpdate();
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+    // Giả sử CourseProgress có int progress
+    public void updateCourseProgress(int enrollmentID, int progress) {
+        String sql = "UPDATE CourseProgress SET CompletedPercent = ? WHERE EnrollmentID = ?";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, progress);  // dùng int luôn
+            stm.setInt(2, enrollmentID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-}
 
 
-    // 🟢 DELETE
+    // DELETE
     public void deleteByEnrollmentID(int enrollmentID) {
         String sql = "DELETE FROM CourseProgress WHERE EnrollmentID = ?";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {

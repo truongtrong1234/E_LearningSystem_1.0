@@ -8,8 +8,7 @@ import context.DBContext;
 import java.util.Date;
 
 public class CourseDAO extends DBContext {
-
-    // 🟢 Lấy tất cả khóa học
+    // Lấy tất cả khóa học
     public List<Course> getAllCourses() {
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM Courses";
@@ -34,7 +33,7 @@ public class CourseDAO extends DBContext {
         return list;
     }
 
-    // 🟢 Lấy khóa học theo ID
+    // Lấy khóa học theo ID
     public Course getCourseById(int courseID) {
         String sql = "SELECT * FROM Courses WHERE CourseID=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -58,7 +57,7 @@ public class CourseDAO extends DBContext {
         return null;
     }
     
-    // 🟢 Lấy khóa học theo ID
+    // Lấy khóa học theo ID
     public List<Course> getCourseByInstructorID(int instructorID) {
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM Courses WHERE InstructorID=?";
@@ -108,7 +107,7 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    // 🟢 Thêm khóa học mới
+    // Thêm khóa học mới
     public boolean insertCourse(Course course) {
         String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -128,33 +127,33 @@ public class CourseDAO extends DBContext {
         }
     }
     public int insertCourseAndReturnID(Course course) {
-    String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) "
-               + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-    try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-        ps.setString(1, course.getTitle());
-        ps.setString(2, course.getDescription());
-        ps.setInt(3, course.getInstructorID());
-        ps.setBigDecimal(4, course.getPrice());
-        ps.setInt(5, course.getCourseclass()); // ✅ field trong Course là courseclass
-        ps.setInt(6, course.getCategoryID());
-        ps.setString(7, course.getThumbnail());
+        String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, course.getTitle());
+            ps.setString(2, course.getDescription());
+            ps.setInt(3, course.getInstructorID());
+            ps.setBigDecimal(4, course.getPrice());
+            ps.setInt(5, course.getCourseclass()); // ✅ field trong Course là courseclass
+            ps.setInt(6, course.getCategoryID());
+            ps.setString(7, course.getThumbnail());
 
-        int affected = ps.executeUpdate();
+            int affected = ps.executeUpdate();
 
-        if (affected > 0) {
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return rs.getInt(1); // ✅ Trả về CourseID vừa tạo
+            if (affected > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // ✅ Trả về CourseID vừa tạo
+                    }
                 }
             }
-        }
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
-    return -1;
-}
-    // 🟢 Cập nhật khóa học
+    // Cập nhật khóa học
     public boolean updateCourse(Course course) {
         String sql = "UPDATE Courses SET Title=?, Description=?, InstructorID=?, Price=?, Class=?, CategoryID=?, Thumbnail=? " +
                      "WHERE CourseID=?";
@@ -174,7 +173,7 @@ public class CourseDAO extends DBContext {
         }
     }
 
-    // 🟢 Xóa khóa học
+    // Xóa khóa học
     public boolean deleteCourse(int id) {
         String sql = "DELETE FROM Courses WHERE CourseID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -185,38 +184,39 @@ public class CourseDAO extends DBContext {
         }
         return false;
     }
-    //tìm kiếm
+    
+    // Tìm kiếm
     public List<Course> searchCourses(String keyword) {
-    List<Course> list = new ArrayList<>();
+        List<Course> list = new ArrayList<>();
 
-    String sql = """
-    SELECT * FROM Courses 
-    WHERE Title COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ? 
-       OR Description COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ?
-""";
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        String k = "%" + keyword + "%";
-        ps.setString(1, k);
-        ps.setString(2, k);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Course course = new Course(
-                rs.getInt("CourseID"),
-                rs.getString("Title"),
-                rs.getString("Description"),
-                rs.getInt("InstructorID"),
-                rs.getBigDecimal("Price"),
-                rs.getInt("Class"),
-                rs.getInt("CategoryID"),
-                rs.getString("Thumbnail")
-            );
-            list.add(course);
+        String sql = """
+        SELECT * FROM Courses 
+        WHERE Title COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ? 
+           OR Description COLLATE SQL_Latin1_General_Cp1253_CI_AI LIKE ?
+    """;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            String k = "%" + keyword + "%";
+            ps.setString(1, k);
+            ps.setString(2, k);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new Course(
+                    rs.getInt("CourseID"),
+                    rs.getString("Title"),
+                    rs.getString("Description"),
+                    rs.getInt("InstructorID"),
+                    rs.getBigDecimal("Price"),
+                    rs.getInt("Class"),
+                    rs.getInt("CategoryID"),
+                    rs.getString("Thumbnail")
+                );
+                list.add(course);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
 
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
@@ -235,13 +235,10 @@ public class CourseDAO extends DBContext {
         
     }
 }
-
-//       
-
-        // 🟢 2. Lấy tất cả khóa học
+        // 2. Lấy tất cả khóa học
 
 //
-//        // 🟢 3. Lấy 1 khóa học theo ID (ví dụ ID = 1)
+//        // 3. Lấy 1 khóa học theo ID (ví dụ ID = 1)
 //        Course c1 = dao.getCourseById(2);
 ////        if (c1 != null) {
 ////            System.out.println("Tìm thấy khóa học ID=1: " + c1.getTitle());
@@ -249,7 +246,7 @@ public class CourseDAO extends DBContext {
 ////            System.out.println("Không tìm thấy khóa học ID=1");
 ////        }
 //
-//        // 🟢 4. Cập nhật khóa học (ví dụ cập nhật title & price của ID = 1)
+//        // 4. Cập nhật khóa học (ví dụ cập nhật title & price của ID = 1)
 //        if (c1 != null) {
 //            c1.setTitle("Java Web Advanced");
 //            c1.setPrice(new BigDecimal("249.99"));
@@ -257,6 +254,6 @@ public class CourseDAO extends DBContext {
 //            System.out.println("Update result: " + updateResult);
 //        }
 
-        // 🟢 5. Xóa khóa học theo ID (ví dụ xóa ID = 3)
+        // 5. Xóa khóa học theo ID (ví dụ xóa ID = 3)
 //        boolean deleteResult = dao.deleteCourse(4);
 //        System.out.println("Delete result (ID=3): " + deleteResult);

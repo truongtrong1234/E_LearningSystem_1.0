@@ -9,7 +9,7 @@ public class ProgressDAO extends DBContext {
         try {
             connection.setAutoCommit(false);
 
-            // 🟢 CourseProgress
+            // CourseProgress
             PreparedStatement psCourse = connection.prepareStatement(
                 "INSERT INTO CourseProgress (EnrollmentID, CourseID, IsCompleted) VALUES (?, ?, 0)"
             );
@@ -17,7 +17,7 @@ public class ProgressDAO extends DBContext {
             psCourse.setInt(2, courseID);
             psCourse.executeUpdate();
 
-            // 🟢 ChapterProgress
+            // ChapterProgress
             String sqlChapters = "SELECT ChapterID FROM Chapters WHERE CourseID = ?";
             PreparedStatement psGetChapters = connection.prepareStatement(sqlChapters);
             psGetChapters.setInt(1, courseID);
@@ -38,7 +38,7 @@ public class ProgressDAO extends DBContext {
                 psChapter.setInt(2, chapterID);
                 psChapter.executeUpdate();
 
-                // 🟢 LessonProgress cho mỗi bài
+                // LessonProgress cho mỗi bài
                 String sqlLessons = "SELECT LessonID FROM Lessons WHERE ChapterID = ?";
                 PreparedStatement psGetLessons = connection.prepareStatement(sqlLessons);
                 psGetLessons.setInt(1, chapterID);
