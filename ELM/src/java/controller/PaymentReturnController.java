@@ -29,11 +29,7 @@ public class PaymentReturnController extends HttpServlet {
         }
         
         Integer accountID = account.getAccountId();
-
         EnrollmentDAO enrollment = new EnrollmentDAO();
-        enrollment.insertEnrollment(accountID, courseID); // ✅ Chèn enrollment như cũ
-
-        // ✅ Khởi tạo tiến độ học cho người dùng trong khóa học này
         try {
             CourseProgressDAO courseProgressDAO = new CourseProgressDAO();
             ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
@@ -61,6 +57,7 @@ public class PaymentReturnController extends HttpServlet {
         String vnp_SecureHash = request.getParameter("vnp_SecureHash");
 
         if ("00".equals(vnp_ResponseCode) && courseID != null && accountID != null) {
+            enrollment.insertEnrollment(accountID, courseID);
             long amount = Long.parseLong(vnp_Amount) / 100;
             PaymentDAO paymentDAO = new PaymentDAO();
             Payment p = new Payment();

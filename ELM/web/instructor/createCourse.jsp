@@ -76,8 +76,8 @@
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Price(đ) *</label>
-                                <input type="number" id="price" name="price" class="form-control" placeholder="Enter price" required="">
+                                <label class="form-label">Price(đ) *(ít nhất 10000 VND)</label>
+                                <input type="number" id="price" name="price" class="form-control" placeholder="Enter price" required="" step="1000" min="10000">
                             </div>
                         </div>
 

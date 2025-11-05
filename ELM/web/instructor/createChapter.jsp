@@ -59,7 +59,7 @@
                                 <span><strong>${ch.title}</strong></span>
 
                                 <div>
-                                    <a href="createLesson?ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
+                                    <a href="createLesson?courseID=${thisCourseID}&ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
                                     <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm me-2">Create Quiz</a>
 
                                     <form action="createChapter" method="post" style="display:inline;">

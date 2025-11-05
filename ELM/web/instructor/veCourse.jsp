@@ -53,8 +53,8 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold">Price (₫)</label>
-                                <input type="number" class="form-control editable-field" step="1000" min="0"
+                                <label class="form-label fw-semibold">Price (₫)(ít nhất 10000 VND)</label>
+                                <input type="number" class="form-control editable-field" step="1000" min="10000"
                                        name="price" value="${course.price}" readonly>
                         </div> 
                         <div class="col-md-4">

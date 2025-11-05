@@ -48,6 +48,10 @@ public class UploadMaterial extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int courseID = Integer.parseInt(request.getParameter("CourseID"));
+        request.setAttribute("CourseID", courseID);
+        int chapterID = Integer.parseInt(request.getParameter("ChapterID"));
+        request.setAttribute("ChapterID", chapterID);
         int LessonID = Integer.parseInt(request.getParameter("LessonID"));
         MaterialDAO mateDAO = new MaterialDAO();
         List<Material> material = mateDAO.getByLessonID(LessonID);
@@ -60,6 +64,8 @@ public class UploadMaterial extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         MaterialDAO mdao = new MaterialDAO();
+        int courseID = Integer.parseInt(request.getParameter("thisCourseID"));
+        int ChapterID = Integer.parseInt(request.getParameter("thisChapterID"));
         int LessonID = Integer.parseInt(request.getParameter("thisLessonID"));
         try {
 
@@ -98,9 +104,9 @@ public class UploadMaterial extends HttpServlet {
         if ("delete".equalsIgnoreCase(action)) {
             int materialID = Integer.parseInt(request.getParameter("materialID"));
             mdao.delete(materialID);
-            response.sendRedirect("uploadMaterial?LessonID=" + LessonID);
+            response.sendRedirect("uploadMaterial?CourseID="+courseID+"&ChapterID="+ChapterID+"&LessonID=" + LessonID);
         } else {
-            response.sendRedirect("uploadMaterial?LessonID=" + LessonID);
+            response.sendRedirect("uploadMaterial?CourseID="+courseID+"&ChapterID="+ChapterID+"&LessonID=" + LessonID);
         }
     }
 

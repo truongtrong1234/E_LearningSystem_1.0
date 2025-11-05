@@ -38,6 +38,8 @@ public class CreateLessonController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        request.setAttribute("courseID", courseID);
         int ChapterID = Integer.parseInt(request.getParameter("ChapterID"));
         LessonDAO lessonDao = new LessonDAO();
         List<Lesson> Lessons = lessonDao.getByChapterID(ChapterID);
@@ -49,6 +51,7 @@ public class CreateLessonController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int courseID = Integer.parseInt(request.getParameter("thisCourseID"));
         int ChapterID = Integer.parseInt(request.getParameter("thischapterID"));
         String title = request.getParameter("chapterTitle");
         Lesson lesson = new Lesson();
@@ -60,15 +63,16 @@ public class CreateLessonController extends HttpServlet {
         if ("delete".equalsIgnoreCase(action)) {
             int lessonID = Integer.parseInt(request.getParameter("lessonID"));
             lessonDAO.delete(lessonID);
-            response.sendRedirect("createLesson?ChapterID=" + ChapterID);
-        }else if ("edit".equalsIgnoreCase(action)) {
+            response.sendRedirect("createLesson?courseID="+ courseID +"&ChapterID=" + ChapterID);
+        } else if ("edit".equalsIgnoreCase(action)) {
             int lessonID = Integer.parseInt(request.getParameter("lessonID"));
             String EditedTitle = request.getParameter("title");
             lessonDAO.updateLesson(lessonID, EditedTitle);
-            response.sendRedirect("createLesson?ChapterID=" + ChapterID);
-        }else
-        {response.sendRedirect("createLesson?ChapterID=" + ChapterID);}
-        
+            response.sendRedirect("createLesson?courseID="+ courseID +"&ChapterID=" + ChapterID);
+        } else {
+            response.sendRedirect("createLesson?courseID="+ courseID +"&ChapterID=" + ChapterID);
+        }
+
     }
 
     @Override

@@ -6,6 +6,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body class="container mt-4">
+        <h4>Nếu không thấy được thì hãy F5(reload lại trang)</h4>
         <c:if test="${empty materials}">
             <div class="alert alert-info">No materials uploaded yet.</div>
         </c:if>

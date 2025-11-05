@@ -41,6 +41,7 @@
                 </div>
 
                 <form action="createLesson" method="post" class="d-flex mb-4">
+                    <input type="hidden" name="thisCourseID" value="${courseID}">
                     <input type="hidden" name="thischapterID" value="${thischapterID}">
                     <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Enter new lesson title..." required>
                     <button type="submit" class="btn btn-primary">+ Add Lesson</button>
@@ -60,13 +61,14 @@
 
                                 <div>
                                     <!-- Upload material -->
-                                    <a href="uploadMaterial?LessonID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">
+                                    <a href="uploadMaterial?CourseID=${courseID}&ChapterID=${thischapterID}&LessonID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">
                                         Upload Material
                                     </a>
 
                                     <!-- Delete lesson -->
                                     <form action="createLesson" method="post" style="display:inline;">
                                         <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="thisCourseID" value="${courseID}">
                                         <input type="hidden" name="lessonID" value="${ch.lessonID}">
                                         <input type="hidden" name="thischapterID" value="${thischapterID}">
                                         <button type="submit" class="btn btn-danger btn-sm">Delete Lesson</button>
@@ -80,6 +82,7 @@
                                 <form action="createLesson" method="post" class="d-flex gap-2 align-items-center">
                                     <input type="text" name="title" placeholder="Bạn có thể nhập lại nếu muốn" class="form-control" required>
                                     <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" name="thisCourseID" value="${courseID}">
                                     <input type="hidden" name="lessonID" value="${ch.lessonID}">
                                     <input type="hidden" name="thischapterID" value="${thischapterID}">
                                     <button type="submit" class="btn btn-success btn-sm">Save</button>
@@ -92,9 +95,7 @@
                 <!-- Button -->
                 <div class="d-flex justify-content-between mt-4">
                     <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                    <button type="button" onclick="history.back();" class="btn btn-secondary">
-                        Go Back
-                    </button>
+                    <a href="${pageContext.request.contextPath}/instructor/createChapter?courseID=${courseID}" class="btn btn-secondary">Go Back</a>
                 </div> 
             </div>
         </div>

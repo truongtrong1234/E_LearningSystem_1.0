@@ -21,8 +21,9 @@
                 <div class="col-md-6">
                     <h2 class="mb-4 fw-bold text-center text-primary">Upload Material</h2>
                     <form action="uploadMaterial" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="thisCourseID" value="${CourseID}">
+                        <input type="hidden" name="thisChapterID" value="${ChapterID}">
                         <input type="hidden" name="thisLessonID" value="${thisLessonID}">
-
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Title *</label>
                             <input type="text" class="form-control" name="title" required>
@@ -45,13 +46,10 @@
 
                         <div class="d-flex justify-content-between">
                             <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                            <button type="button" onclick="history.back();" class="btn btn-secondary">
-                                Go Back
-                            </button>
+                            <a href="${pageContext.request.contextPath}/instructor/createLesson?courseID=${CourseID}&ChapterID=${ChapterID}" class="btn btn-secondary">Back</a>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
                     </form>
-
                     <c:if test="${not empty errorMessage}">
                         <div class="alert alert-danger mt-3">${errorMessage}</div>
                     </c:if>
@@ -84,14 +82,15 @@
                                     <c:otherwise>
                                         <a href="/ELM/viewMaterial?LessonID=${thisLessonID}&url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
                                             Xem tài liệu
-                                        </a>
-
+                                        </a><br>
                                         <form action="uploadMaterial" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="thisCourseID" value="${CourseID}">
+                                            <input type="hidden" name="thisChapterID" value="${ChapterID}">
                                             <input type="hidden" name="thisLessonID" value="${thisLessonID}">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="materialID" value="${m.materialID}">
                                             <button type="submit" class="btn btn-danger btn-sm">
-                                                Delete material ${m.materialID}
+                                                Delete material 
                                             </button>
                                         </form>
                                     </c:otherwise>

@@ -65,10 +65,14 @@ public class CourseDetailController extends HttpServlet {
 
         if (session != null && session.getAttribute("account") != null) {
             homePage = "Learner/home_learner";
-
+            Course thisCourse = cDao.getCourseById(courseID); 
+            
             Account acc = (Account) session.getAttribute("account");
             isEnrolled = eDao.existsEnrollment(acc.getAccountId(), courseID);
-
+            if (acc.getAccountId()==thisCourse.getInstructorID()) {
+                isEnrolled = true; 
+                eDao.insertEnrollment(acc.getAccountId(), courseID); 
+            }
         } else {
             homePage = "home_Guest";
         }
