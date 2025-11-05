@@ -33,24 +33,24 @@
                 <label for="chapterSelect" class="form-label fw-bold">Select Chapter *</label>
                 <select id="chapterSelect" name="chapterId" class="form-select" required>
                     <option value="">-- Choose Chapter --</option>
-                    <c:forEach var="chapter" items="${chapters}">
-                        <option value="${chapter.id}">${chapter.title}</option>
-                    </c:forEach>
                 </select>
             </div>
             <!-- Quiz Title -->
             <div class="mb-3">
                 <label class="form-label">Quiz Title *</label>
-                <input type="text" id="quizTitle" class="form-control" placeholder="Enter quiz title">
+                <input type="text" name="quizTitle" id="quizTitle" class="form-control" placeholder="Enter quiz title">
             </div>
             <!-- Question -->
             <div id="questionsContainer"></div>
             <div class="d-flex justify-content-between mt-4 gap-3">
                 <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                <button class="btn btn-add" id="addQuestionBtn">+ Add Question</button>
-                <button class="btn btn-save" id="saveQuizBtn">Create Quiz</button>
+                <button type="button" class="btn btn-add" id="addQuestionBtn">+ Add Question</button>
+                <button type="submit" class="btn btn-save" id="saveQuizBtn">Create Quiz</button>
             </div>
         </div>
     </form>
+                
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/createQuiz.js"></script>
 </body>
 </html>
