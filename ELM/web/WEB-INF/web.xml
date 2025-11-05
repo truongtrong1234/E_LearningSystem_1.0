@@ -89,6 +89,10 @@
         <servlet-class>controller.EditProfileController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ManageCourse</servlet-name>
+        <servlet-class>controller.ManageCourse</servlet-class>
+    </servlet> 
+    <servlet>
         <servlet-name>manageAccount</servlet-name>
         <servlet-class>controller.manageAccount</servlet-class>
     </servlet>
@@ -214,6 +218,10 @@
         <url-pattern>/admin/adminIndex</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ManageCourse</servlet-name>
+        <url-pattern>/admin/manageCourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SearchCourseController</servlet-name>
         <url-pattern>/searchCourse</url-pattern>
     </servlet-mapping>
@@ -231,7 +239,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ReplyReport</servlet-name>
-        <url-pattern>/replyReport</url-pattern>
+        <url-pattern>/admin/replyReport</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewMaterialController</servlet-name>
