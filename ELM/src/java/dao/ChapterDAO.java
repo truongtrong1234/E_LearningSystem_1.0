@@ -135,18 +135,16 @@ public int countCompletedLessons(int accountID, int courseID) {
         return list;
     }
     // UPDATE
-    public void updateChap(Chapter chapter) {
-        String sql = "UPDATE Chapters SET CourseID = ?, title = ? WHERE ChapterID = ?";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, chapter.getCourseID());
-            stm.setString(2, chapter.getTitle());
-            stm.setInt(3, chapter.getChapterID());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    public void updateChapterTitle(int chapterID, String newTitle) {
+    String sql = "UPDATE Chapters SET Title = ? WHERE ChapterID = ?";
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setString(1, newTitle);
+        stm.setInt(2, chapterID);
+        stm.executeUpdate();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+}
 
     // DELETE
     public void deleteChap(int id) {
@@ -164,9 +162,6 @@ public int countCompletedLessons(int accountID, int courseID) {
     public static void main(String[] args) {
         ChapterDAO dao = new ChapterDAO();
         Chapter c = new Chapter();
-        c.setCourseID(30);
-        c.setTitle("gneiougnoi");
-        int id = dao.insertChapterAndReturnID(c); 
-        System.out.println(id);
+        dao.updateChapterTitle(6, "Chapter 2");
     }
 }

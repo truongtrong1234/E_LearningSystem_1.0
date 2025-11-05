@@ -45,6 +45,9 @@
 
                         <div class="d-flex justify-content-between">
                             <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                            <button type="button" onclick="history.back();" class="btn btn-secondary">
+                                Go Back
+                            </button>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
                     </form>
@@ -82,7 +85,7 @@
                                         <a href="/ELM/viewMaterial?LessonID=${thisLessonID}&url=${m.contentURL}" target="_blank" class="btn btn-outline-primary btn-sm">
                                             Xem tài liệu
                                         </a>
-                                        
+
                                         <form action="uploadMaterial" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="thisLessonID" value="${thisLessonID}">
                                             <input type="hidden" name="action" value="delete">

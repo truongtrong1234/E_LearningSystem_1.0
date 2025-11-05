@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     if (session.getAttribute("account") == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("/ELM/login.jsp");
         return;
     }
 %>
@@ -53,40 +53,42 @@
 
                     <c:forEach var="ch" items="${chapters}">
                         <div class="card mb-3">
+                            <!-- Dòng hiển thị tiêu đề và nút chức năng -->
                             <div class="card-body d-flex justify-content-between align-items-center">
+                                <!-- Tiêu đề -->
                                 <span><strong>${ch.title}</strong></span>
-                                <div>
 
+                                <div>
                                     <a href="createLesson?ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
-                                    <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm">Create Quiz</a>
+                                    <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm me-2">Create Quiz</a>
+
                                     <form action="createChapter" method="post" style="display:inline;">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="chapterID" value="${ch.chapterID}">
                                         <input type="hidden" name="thisCourseID" value="${thisCourseID}">
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            Delete Chapter
-                                        </button>
-
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete Chapter</button>
                                     </form>
-
-                                    <form action="createChapter" method="post" style="display:inline;">
-                                        <input type="hidden" name="action" value="edit">
-                                        <input type="hidden" name="chapterID" value="${ch.chapterID}">
-                                        <input type="hidden" name="thisCourseID" value="${thisCourseID}">
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            Edit
-                                        </button>
-                                    </form>
-
                                 </div>
+                            </div>
+
+                            <!-- Form edit nằm riêng bên dưới -->
+                            <div class="card-body border-top">
+                                <form action="createChapter" method="post" class="d-flex gap-2 align-items-center">
+                                    <input type="text" name="title" placeholder="Bạn có thể nhập lại nếu muốn" class="form-control" required>
+                                    <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" name="chapterID" value="${ch.chapterID}">
+                                    <input type="hidden" name="thisCourseID" value="${thisCourseID}">
+                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                </form>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
+
                 <!-- Button -->
                 <div class="d-flex justify-content-between mt-4">
                     <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                    <!-- <button type="submit" id="nextBtn"  class="btn btn-primary">Continue</button> -->
+                    <a href="${pageContext.request.contextPath}/instructor/editCourse?id=${thisCourseID}" class="btn btn-secondary">Go Back</a>
                 </div> 
             </div>
         </div>

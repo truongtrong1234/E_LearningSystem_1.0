@@ -46,35 +46,55 @@
                     <button type="submit" class="btn btn-primary">+ Add Lesson</button>
                 </form>
 
-                <!-- Danh sách chương -->
-                <div id="chapterList">
+                <div id="lessonList">
                     <c:if test="${empty Lessons}">
                         <p class="text-muted">No Lessons yet. Create one above!</p>
                     </c:if>
+
                     <c:forEach var="ch" items="${Lessons}">
                         <div class="card mb-3">
+
                             <div class="card-body d-flex justify-content-between align-items-center">
+                                <!-- Tiêu đề -->
                                 <span><strong>${ch.title}</strong></span>
+
                                 <div>
-                                    <a href="uploadMaterial?LessonID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">Upload Material</a>
+                                    <!-- Upload material -->
+                                    <a href="uploadMaterial?LessonID=${ch.lessonID}" class="btn btn-outline-success btn-sm me-2">
+                                        Upload Material
+                                    </a>
+
+                                    <!-- Delete lesson -->
                                     <form action="createLesson" method="post" style="display:inline;">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="lessonID" value="${ch.lessonID}">
                                         <input type="hidden" name="thischapterID" value="${thischapterID}">
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            Delete Chapter
-                                        </button>
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete Lesson</button>
                                     </form>
                                 </div>
+                            </div>
+
+                            <!-- Form edit lesson nằm riêng bên dưới (tương tự Chapter) -->
+
+                            <div class="card-body border-top">
+                                <form action="createLesson" method="post" class="d-flex gap-2 align-items-center">
+                                    <input type="text" name="title" placeholder="Bạn có thể nhập lại nếu muốn" class="form-control" required>
+                                    <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" name="lessonID" value="${ch.lessonID}">
+                                    <input type="hidden" name="thischapterID" value="${thischapterID}">
+                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                </form>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
-                
+
                 <!-- Button -->
                 <div class="d-flex justify-content-between mt-4">
                     <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                    <!-- <button type="submit" id="nextBtn"  class="btn btn-primary">Continue</button> -->
+                    <button type="button" onclick="history.back();" class="btn btn-secondary">
+                        Go Back
+                    </button>
                 </div> 
             </div>
         </div>

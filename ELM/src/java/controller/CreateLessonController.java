@@ -61,6 +61,11 @@ public class CreateLessonController extends HttpServlet {
             int lessonID = Integer.parseInt(request.getParameter("lessonID"));
             lessonDAO.delete(lessonID);
             response.sendRedirect("createLesson?ChapterID=" + ChapterID);
+        }else if ("edit".equalsIgnoreCase(action)) {
+            int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+            String EditedTitle = request.getParameter("title");
+            lessonDAO.updateLesson(lessonID, EditedTitle);
+            response.sendRedirect("createLesson?ChapterID=" + ChapterID);
         }else
         {response.sendRedirect("createLesson?ChapterID=" + ChapterID);}
         

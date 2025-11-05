@@ -64,6 +64,8 @@ public class CreateChapterController extends HttpServlet {
             response.sendRedirect("createChapter?courseID=" + courseID);
         }else if ("edit".equalsIgnoreCase(action)) {
             int chapterID = Integer.parseInt(request.getParameter("chapterID"));
+            String EditedTitle = request.getParameter("title");
+            dao.updateChapterTitle(chapterID,EditedTitle);
             response.sendRedirect("createChapter?courseID=" + courseID);
         }
         else{response.sendRedirect("createChapter?courseID=" + courseID);}

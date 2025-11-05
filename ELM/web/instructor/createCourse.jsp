@@ -83,7 +83,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Thumbnail</label>
-                            <input type="file" id="thumbnail" name="thumbnail" class="form-control" required="">
+                            <input type="file" id="thumbnail" name="thumbnail" class="form-control" >
                         </div>
 
                     </div>

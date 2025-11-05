@@ -90,35 +90,31 @@ public class LessonDAO extends DBContext {
         }
         return list;
     }
-    public List<Lesson> getByCourseID(int courseID){
-    List<Lesson> list = new ArrayList<>();
-    String sql = "SELECT * FROM Lessons WHERE CourseID = ?";
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setInt(1, courseID);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            list.add(new Lesson(
-                rs.getInt("LessonID"),
-                rs.getInt("ChapterID"),
-               
-                rs.getString("Title")
-            ));
+
+    public List<Lesson> getByCourseID(int courseID) {
+        List<Lesson> list = new ArrayList<>();
+        String sql = "SELECT * FROM Lessons WHERE CourseID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, courseID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Lesson(
+                        rs.getInt("LessonID"),
+                        rs.getInt("ChapterID"),
+                        rs.getString("Title")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
 
-
-    // UPDATE
-    public void update(Lesson l) {
-        String sql = "UPDATE Lessons SET ChapterID = ?, Title = ? WHERE LessonID = ?";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, l.getChapterID());
-            stm.setString(2, l.getTitle());
-            stm.setInt(3, l.getLessonID());
+    public void updateLesson(int lessonID, String newTitle) {
+        String sql = "UPDATE Lessons SET Title = ? WHERE LessonID = ?";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, newTitle);
+            stm.setInt(2, lessonID);
             stm.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -140,10 +136,10 @@ public class LessonDAO extends DBContext {
     // Test
     public static void main(String[] args) {
         LessonDAO dao = new LessonDAO();
-        Lesson les = new Lesson(); 
+        Lesson les = new Lesson();
         les.setChapterID(1);
         les.setTitle("vldvl");
-        int id = dao.insert(les); 
+        int id = dao.insert(les);
         System.out.println(id);
     }
 }

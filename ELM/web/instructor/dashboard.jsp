@@ -102,14 +102,11 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="course?id=${course.courseID}"><i class="fas fa-eye me-2"></i> View Course</a></li>
-                                                        <li><a class="dropdown-item" href="course?action=edit&id=${course.courseID}"><i class="fas fa-edit me-2"></i> Edit Course</a></li>
+                                                        <li><a class="dropdown-item" href="editCourse?id=${course.courseID}"><i class="fas fa-edit me-2"></i> Edit Course</a></li>
                                                         <li><hr class="dropdown-divider"></li>
                                                         <li>
                                                             <form action="/ELM/instructor/dashboard" method="post">
-<!--                                                                <a class="dropdown-item text-danger" href="dashboard?action=delete&id=${course.courseID}" onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học ${course.title}?');">
-                                                                    <i class="fas fa-trash-alt me-2"></i> Delete Course</a>-->
-                                                                <button type="submit" value="${course.courseID}" name="action">
+                                                                <button type="submit" class="dropdown-item" value="${course.courseID}" name="action">
                                                                     Delete Course
                                                                 </button>
                                                             </form>
