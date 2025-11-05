@@ -62,6 +62,9 @@ public class CreateChapterController extends HttpServlet {
             int chapterID = Integer.parseInt(request.getParameter("chapterID"));
             dao.deleteChap(chapterID);
             response.sendRedirect("createChapter?courseID=" + courseID);
+        }else if ("edit".equalsIgnoreCase(action)) {
+            int chapterID = Integer.parseInt(request.getParameter("chapterID"));
+            response.sendRedirect("createChapter?courseID=" + courseID);
         }
         else{response.sendRedirect("createChapter?courseID=" + courseID);}
         

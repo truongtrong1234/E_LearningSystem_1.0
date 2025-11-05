@@ -56,6 +56,7 @@
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <span><strong>${ch.title}</strong></span>
                                 <div>
+
                                     <a href="createLesson?ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
                                     <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm">Create Quiz</a>
                                     <form action="createChapter" method="post" style="display:inline;">
@@ -65,7 +66,18 @@
                                         <button type="submit" class="btn btn-danger btn-sm">
                                             Delete Chapter
                                         </button>
+
                                     </form>
+
+                                    <form action="createChapter" method="post" style="display:inline;">
+                                        <input type="hidden" name="action" value="edit">
+                                        <input type="hidden" name="chapterID" value="${ch.chapterID}">
+                                        <input type="hidden" name="thisCourseID" value="${thisCourseID}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Edit
+                                        </button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>

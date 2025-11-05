@@ -1,4 +1,3 @@
-
 package controller;
 
 import dao.ChapterDAO;
@@ -33,87 +32,94 @@ import model.Material;
 ///@WebServlet(name="MyLearningContentServlet", value="/Learner/myLearningContent")
 public class MyContentLearningController extends HttpServlet {
 
-    private CourseDAO courseDAO=new CourseDAO();
+    private CourseDAO courseDAO = new CourseDAO();
     private EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
     private ChapterDAO chapterDAO = new ChapterDAO();
     private LessonDAO lessonDAO = new LessonDAO();
     private MaterialDAO materialDAO = new MaterialDAO();
 
- @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    HttpSession session = request.getSession();
-    Account account = (Account) session.getAttribute("account");
-    if (account == null) {
-        response.sendRedirect("login");
-        return;
-    }
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            response.sendRedirect("login");
+            return;
+        }
 
-    int courseID = Integer.parseInt(request.getParameter("CourseID"));
-    int lessonID = 0;
-    
-    
-    Course course=courseDAO.getCourseById(courseID);
-    if (request.getParameter("LessonID") != null) {
-        lessonID = Integer.parseInt(request.getParameter("LessonID"));
-    }
+        int courseID = Integer.parseInt(request.getParameter("CourseID"));
+        int lessonID = 0;
 
-    // 🟢 Lấy Enrollment
-    int enrollmentID = enrollmentDAO.getEnrollmentID(account.getAccountId(), courseID);
-    request.setAttribute("enrollmentID", enrollmentID);
+        Course course = courseDAO.getCourseById(courseID);
+        if (request.getParameter("LessonID") != null) {
+            lessonID = Integer.parseInt(request.getParameter("LessonID"));
+        }
 
-    // 🟢 Lấy danh sách Chapter và Lesson
-    List<Chapter> chapterList = chapterDAO.getChaptersByCourseId(courseID);
-    Map<Integer, List<Lesson>> chapterLessonMap = new LinkedHashMap<>();
-    for (Chapter ch : chapterList) {
-        List<Lesson> lessons = lessonDAO.getByChapterID(ch.getChapterID());
-        chapterLessonMap.put(ch.getChapterID(), lessons);
-    }
+        // 🟢 Lấy Enrollment
+        int enrollmentID = enrollmentDAO.getEnrollmentID(account.getAccountId(), courseID);
+        request.setAttribute("enrollmentID", enrollmentID);
 
-    // 🟢 Lấy map tiến độ của lesson
-    LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
-    Map<Integer, Boolean> lessonCompletedMap = lessonProgressDAO.getLessonCompletionMap(account.getAccountId(), courseID);
-
-    // 🟢 Chọn lesson hiển thị
-    if (lessonID == 0) {
-        outerLoop:
+        // 🟢 Lấy danh sách Chapter và Lesson
+        List<Chapter> chapterList = chapterDAO.getChaptersByCourseId(courseID);
+        Map<Integer, List<Lesson>> chapterLessonMap = new LinkedHashMap<>();
         for (Chapter ch : chapterList) {
-            List<Lesson> lessons = chapterLessonMap.get(ch.getChapterID());
-            for (Lesson l : lessons) {
-                if (!lessonCompletedMap.getOrDefault(l.getLessonID(), false)) {
-                    lessonID = l.getLessonID(); // lesson chưa học đầu tiên
-                    break outerLoop;
+            List<Lesson> lessons = lessonDAO.getByChapterID(ch.getChapterID());
+            chapterLessonMap.put(ch.getChapterID(), lessons);
+        }
+
+        // 🟢 Lấy map tiến độ của lesson
+        LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
+        Map<Integer, Boolean> lessonCompletedMap = lessonProgressDAO.getLessonCompletionMap(account.getAccountId(), courseID);
+
+        // 🟢 Chọn lesson hiển thị
+        if (lessonID == 0) {
+            outerLoop:
+            for (Chapter ch : chapterList) {
+                List<Lesson> lessons = chapterLessonMap.get(ch.getChapterID());
+                for (Lesson l : lessons) {
+                    if (!lessonCompletedMap.getOrDefault(l.getLessonID(), false)) {
+                        lessonID = l.getLessonID(); // lesson chưa học đầu tiên
+                        break outerLoop;
+                    }
+                }
+            }
+            // Nếu tất cả lesson đã học → chọn lesson cuối cùng
+            if (lessonID == 0) {
+                if (chapterList != null && !chapterList.isEmpty()) {
+                    Chapter lastChapter = chapterList.get(chapterList.size() - 1);
+                    List<Lesson> lastLessons = chapterLessonMap.get(lastChapter.getChapterID());
+
+                    if (lastLessons != null && !lastLessons.isEmpty()) {
+                        lessonID = lastLessons.get(lastLessons.size() - 1).getLessonID();
+                    } else {
+                        System.out.println("⚠️ lastLessons rỗng, không có bài học nào trong chương cuối cùng.");
+                    }
+                } else {
+                    System.out.println("⚠️ chapterList rỗng, khóa học chưa có chương nào.");
                 }
             }
         }
-        // Nếu tất cả lesson đã học → chọn lesson cuối cùng
-        if (lessonID == 0) {
-            Chapter lastChapter = chapterList.get(chapterList.size() - 1);
-            List<Lesson> lastLessons = chapterLessonMap.get(lastChapter.getChapterID());
-            lessonID = lastLessons.get(lastLessons.size() - 1).getLessonID();
-        }
+
+        // 🟢 Lấy materials của lesson được chọn
+        List<Material> materials = materialDAO.getByLessonID(lessonID);
+
+        // 🟢 Gửi dữ liệu sang JSP
+        request.setAttribute("chapterLessonMap", chapterLessonMap);
+        request.setAttribute("materials", materials);
+        request.setAttribute("selectedLessonID", lessonID);
+        request.setAttribute("CourseID", courseID);
+        request.setAttribute("lessonCompletedMap", lessonCompletedMap);
+        request.setAttribute("course", course);
+        request.setAttribute("chapterList", chapterList);
+
+        // Nếu có chapterCompletedMap bạn vẫn có thể gửi sang JSP
+        ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
+        Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
+        request.setAttribute("chapterCompletedMap", chapterCompletedMap);
+
+        request.getRequestDispatcher("/Learner/mylearning_content.jsp").forward(request, response);
     }
-
-    // 🟢 Lấy materials của lesson được chọn
-    List<Material> materials = materialDAO.getByLessonID(lessonID);
-
-    // 🟢 Gửi dữ liệu sang JSP
-    request.setAttribute("chapterLessonMap", chapterLessonMap);
-    request.setAttribute("materials", materials);
-    request.setAttribute("selectedLessonID", lessonID);
-    request.setAttribute("CourseID", courseID);
-    request.setAttribute("lessonCompletedMap", lessonCompletedMap);
-    request.setAttribute("course", course);
-    request.setAttribute("chapterList", chapterList);
-
-    // Nếu có chapterCompletedMap bạn vẫn có thể gửi sang JSP
-    ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
-    Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
-    request.setAttribute("chapterCompletedMap", chapterCompletedMap);
-
-    request.getRequestDispatcher("/Learner/mylearning_content.jsp").forward(request, response);
-}
-
 
 }

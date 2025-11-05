@@ -29,16 +29,7 @@ public class CourseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        HttpSession session = request.getSession(); 
-//        Account account = (Account) session.getAttribute("account"); 
-//        int accountID = account.getAccountId(); 
-//        CourseDAO cdao = new  CourseDAO(); 
-//        List<Course> courseList = cdao.getCourseByInstructorID(accountID); 
-//        String action = request.getParameter("action"); 
-//        if ("delete".equalsIgnoreCase(action)) {int courseID = Integer.parseInt(request.getParameter("id")); 
-//            cdao.deleteCourse(courseID);
-//        }
-//        request.setAttribute("courseList", courseList);
+ 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,11 +71,6 @@ public class CourseController extends HttpServlet {
         response.sendRedirect("/ELM/instructor/dashboard");
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

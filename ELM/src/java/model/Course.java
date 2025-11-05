@@ -108,17 +108,9 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{"
-                + "courseID=" + courseID
-                + ", title='" + title + '\''
-                + ", description='" + description + '\''
-                + ", instructorID=" + instructorID
-                + ", price=" + price
-                + ", class=" + courseclass
-                + ", categoryID=" + categoryID
-                + ", thumbnail='" + thumbnail + '\''
-                + '}';
+        return "Course{" + "courseID=" + courseID + ", title=" + title + ", description=" + description + ", instructorID=" + instructorID + ", price=" + price + ", courseclass=" + courseclass + ", categoryID=" + categoryID + ", thumbnail=" + thumbnail + ", categoryName=" + categoryName + ", instructorName=" + instructorName + ", chapters=" + chapters + '}';
     }
+
 
     // Getters & setters
     public int getCourseID() {
