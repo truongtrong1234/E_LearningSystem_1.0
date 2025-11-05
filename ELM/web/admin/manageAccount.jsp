@@ -17,7 +17,7 @@
         <ul>
                 <li><a href="adminIndex">Dashboard</a></li>
                 <li><a href="manageAccount">Manage Accounts</a></li>
-                <li><a href="manageCourse.jsp">Manage Courses</a></li>
+                <li><a href="manageCourse">Manage Courses</a></li>
                 <li><a href="manageReport">User Reports</a></li>
             </ul>
         <div class="logout-btn">
@@ -27,7 +27,22 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <h1>Manage User Accounts</h1>
+        <h1 class="mb-0">Manage User Accounts</h1>
+
+    <!-- Bộ lọc role -->
+    <form method="get" action="manageAccount" class="d-flex align-items-center gap-2">
+        <label for="role" class="fw-semibold me-2" style="min-width: 110px; text-align: right;">
+            Filter by Role:
+        </label>
+        <select name="role" id="role" class="form-select form-select-sm" style="width: 160px;"
+                onchange="this.form.submit()">
+            <option value="all" <%= "all".equalsIgnoreCase((String)request.getAttribute("selectedRole")) || request.getAttribute("selectedRole")==null ? "selected" : "" %>>All</option>
+            <option value="admin" <%= "admin".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Admin</option>
+            <option value="instructor" <%= "instructor".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Instructor</option>
+            <option value="learner" <%= "learner".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Learner</option>
+        </select>
+    </form>
+    </form>
         <table class="table data-table table-bordered align-middle">
             <thead>
                 <tr>

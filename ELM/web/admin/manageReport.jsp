@@ -14,7 +14,7 @@
         <ul>
             <li><a href="adminIndex">Dashboard</a></li>
             <li><a href="manageAccount">Manage Accounts</a></li>
-            <li><a href="manageCourse.jsp">Manage Courses</a></li>
+            <li><a href="manageCourse">Manage Courses</a></li>
             <li><a href="manageReport">User Reports</a></li>
         </ul>
         <div class="logout-btn">

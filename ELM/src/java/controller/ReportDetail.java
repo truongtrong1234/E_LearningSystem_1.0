@@ -1,10 +1,13 @@
 package controller;
 
 import dao.ReportDAO;
+import dao.ReportReplyDAO;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.util.List;
 import model.Report;
+import model.ReportReply;
 
 public class ReportDetail extends HttpServlet {
 
@@ -17,7 +20,11 @@ public class ReportDetail extends HttpServlet {
         ReportDAO dao = new ReportDAO();
         Report r = dao.getReportById(id);
 
+        ReportReplyDAO replyDao = new ReportReplyDAO();
+        List<ReportReply> replies = replyDao.getRepliesByReportId(id);
+        
         request.setAttribute("report", r);
+        request.setAttribute("replies", replies);
         request.getRequestDispatcher("/admin/reportDetail.jsp").forward(request, response);
     }
 }

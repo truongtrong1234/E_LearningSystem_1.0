@@ -306,3 +306,28 @@ body {
         padding: 25px;
     }
 }
+    /* Làm cho label gọn và cân giữa */
+    label[for="role"] {
+        font-size: 15px;
+        color: #333;
+        letter-spacing: 0.3px;
+    }
+
+    /* Giảm chiều cao dropdown */
+    .form-select-sm {
+        height: 36px;
+        font-size: 14px;
+        padding: 4px 8px;
+    }
+
+    /* Làm filter align đẹp khi co màn hình */
+    @media (max-width: 768px) {
+        form[method="get"] {
+            width: 100%;
+            justify-content: flex-start;
+            margin-top: 8px;
+        }
+        .form-select-sm {
+            width: 100%;
+        }
+    }

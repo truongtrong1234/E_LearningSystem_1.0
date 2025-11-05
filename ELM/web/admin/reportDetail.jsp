@@ -46,7 +46,7 @@
         <ul>
             <li><a href="adminIndex">Dashboard</a></li>
             <li><a href="manageAccount">Manage Accounts</a></li>
-            <li><a href="manageCourse.jsp">Manage Courses</a></li>
+            <li><a href="manageCourse">Manage Courses</a></li>
             <li><a href="manageReport">User Reports</a></li>
         </ul>
         <div class="logout-btn mt-4">
@@ -76,7 +76,7 @@
                         <h4>💬 Previous Replies</h4>
                         <c:forEach var="rep" items="${replies}">
                             <div class="reply-item">
-                                <p><strong>Admin #${rep.adminId}</strong> at ${rep.repliedAt}</p>
+                                <p><strong>Admin ${rep.adminId}</strong> at ${rep.repliedAt}</p>
                                 <p>${rep.replyMessage}</p>
                             </div>
                         </c:forEach>

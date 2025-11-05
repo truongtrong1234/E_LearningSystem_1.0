@@ -30,6 +30,29 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+    public List<Account> getAccountsByRole(String role) {
+    List<Account> list = new ArrayList<>();
+    String sql = "SELECT * FROM Accounts WHERE role = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, role);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Account a = new Account();
+            a.setAccountId(rs.getInt("AccountID"));
+            a.setEmail(rs.getString("email"));
+            a.setPassword(rs.getString("password"));
+            a.setName(rs.getString("name"));
+            a.setPicture(rs.getString("picture"));
+            a.setRole(rs.getString("role"));
+            list.add(a);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
     // Lấy toàn bộ danh sách tài khoản
     public List<Account> getAllAccounts() {
         List<Account> list = new ArrayList<>();

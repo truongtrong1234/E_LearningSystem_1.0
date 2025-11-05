@@ -16,7 +16,7 @@
             <ul>
                 <li><a href="adminIndex">Dashboard</a></li>
                 <li><a href="manageAccount">Manage Accounts</a></li>
-                <li><a href="manageCourse.jsp">Manage Courses</a></li>
+                <li><a href="manageCourse">Manage Courses</a></li>
                 <li><a href="manageReport">User Reports</a></li>
             </ul>
             <div class="logout-btn">
@@ -36,7 +36,7 @@
             </a>
 
             <!-- Courses Card -->
-            <a href="manageCourse.jsp" class="text-decoration-none text-dark" style="flex:1;">
+            <a href="manageCourse" class="text-decoration-none text-dark" style="flex:1;">
                 <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
                     <h3>Courses</h3>
                     <p>${courseCount}</p>
