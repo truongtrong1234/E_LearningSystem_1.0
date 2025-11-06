@@ -7,6 +7,7 @@ import dao.EnrollmentDAO;
 import dao.LessonDAO;
 import dao.LessonProgressDAO;
 import dao.MaterialDAO;
+import dao.QnADAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,7 @@ import model.Chapter;
 import model.Course;
 import model.Lesson;
 import model.Material;
+import model.QnAQuestion;
 
 /**
  *
@@ -118,6 +120,15 @@ public class MyContentLearningController extends HttpServlet {
         ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
         Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
         request.setAttribute("chapterCompletedMap", chapterCompletedMap);
+        
+        //hoi dap
+        QnADAO qnaDAO = new QnADAO();
+List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
+System.out.println("qnalist: "+qnaList.size());
+request.setAttribute("qnaList", qnaList);
+
+        
+
 
         request.getRequestDispatcher("/Learner/mylearning_content.jsp").forward(request, response);
     }

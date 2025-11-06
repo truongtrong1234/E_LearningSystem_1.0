@@ -79,51 +79,112 @@
                 </c:forEach>
             </div>
         </div>
-<!-- ====== BÌNH LUẬN KHOÁ HỌC (no edit/delete) ====== -->
-<section class="comments-section" id="comments">
-    <div class="comments-header">
-        <h3>Bình luận khóa học</h3>
-        <div id="comments-count"><c:out value="${fn:length(comments)}"/> bình luận</div>
+
+
+
+        
+        
+        <!-- ====== HỎI & ĐÁP (Q&A) ====== -->
+<!-- ====== HỎI & ĐÁP (Q&A) ====== -->
+<section class="qna-section" id="qna">
+    <div class="qna-header">
+        <h3>Hỏi & Đáp khóa học</h3>
+
     </div>
 
-    <!-- Form bình luận -->
-    <form id="commentForm" onsubmit="return false;">
-        <input type="hidden" id="courseId" value="${CourseID}">
-        <textarea id="commentContent" placeholder="Viết bình luận của bạn..." maxlength="2000" required></textarea>
-        <div class="comment-actions">
-            <button type="submit" id="submitComment">Đăng bình luận</button>
+    <!-- ===== Form đặt câu hỏi ===== -->
+    <form action="${pageContext.request.contextPath}/qnaQuestion" method="post">
+        <input type="hidden" name="courseID" value="${course.courseID}">
+        <div class="qna-ask">
+            <textarea name="question" placeholder="Nhập câu hỏi của bạn..." maxlength="2000" required></textarea>
+        </div>
+        <div class="qna-actions">
+            <button type="submit" class="btn btn-primary">Gửi câu hỏi</button>
         </div>
     </form>
 
-    <!-- Danh sách bình luận -->
-    <div class="comments-list" id="commentsList">
+    <!-- ===== Danh sách câu hỏi ===== -->
+    <div class="qna-list">
         <c:choose>
-            <c:when test="${not empty comments}">
-                <c:forEach var="cmt" items="${comments}">
-                    <div class="comment-item" data-id="${cmt.id}">
+            <c:when test="${not empty qnaList}">
+                <c:forEach var="q" items="${qnaList}">
+                    <div class="qna-item">
                         <div class="avatar">
-                            <c:out value="${fn:substring(cmt.authorName,0,1)}"/>
+                                        <img src="${sessionScope.account.picture}" alt="avatar" class="avatar-img"/>
+
+                            
                         </div>
-                        <div class="comment-body">
-                            <div class="comment-meta">
-                                <strong><c:out value="${cmt.authorName}"/></strong> •
-                                <span><fmt:formatDate value="${cmt.createdAt}" pattern="dd/MM/yyyy HH:mm"/></span>
+
+                        <div class="qna-body">
+                            <!-- ===== Người hỏi ===== -->
+                            <div class="qna-meta">
+                                <strong>${q.askedByName}</strong>
+                                <span class="time">
+                                    <fmt:formatDate value="${q.askedAt}" pattern="dd/MM/yyyy HH:mm"/>
+                                </span>
                             </div>
-                            <div class="comment-content">
-                                <c:out value="${cmt.content}"/>
+
+                            <div class="qna-question">
+                                <c:out value="${q.question}"/>
                             </div>
+
+                            <!-- ===== Trả lời (nếu có) ===== -->
+                            <c:if test="${not empty q.reply}">
+                                <div class="qna-reply">
+                                    <div class="reply-meta">
+                                        <img src="${q.repliedByAvatar}" alt="instructor"
+                                             onerror="this.src='https://i.imgur.com/6VBx3io.png'">
+                                        <strong>${q.repliedByName}</strong>
+                                        <span class="text-muted">(Giảng viên)</span>
+                                    </div>
+                                    <div class="reply-content">
+                                        <c:out value="${q.reply.replyMessage}"/>
+                                    </div>
+                                    <div class="reply-time">
+                                        <fmt:formatDate value="${q.reply.repliedAt}" pattern="dd/MM/yyyy HH:mm"/>
+                                    </div>
+                                </div>
+                            </c:if>
+
+                            <!-- ===== Form trả lời (chỉ Instructor chủ khóa) ===== -->
+                            <c:if test="${account.role eq 'Instructor' && account.accountID == course.instructorID && empty q.reply}">
+                                <form action="${pageContext.request.contextPath}/qnaReply" method="post" class="reply-form">
+                                    <input type="hidden" name="qnaID" value="${q.qnaID}">
+                                    <textarea name="replyMessage" placeholder="Nhập câu trả lời..." required></textarea>
+                                    <button type="submit" class="btn btn-success">Gửi phản hồi</button>
+                                </form>
+                            </c:if>
                         </div>
                     </div>
                 </c:forEach>
             </c:when>
+
             <c:otherwise>
-                <div class="no-comments">
-                    Chưa có bình luận nào. Hãy là người đầu tiên!
-                </div>
+                <div class="no-qna">Chưa có câu hỏi nào. Hãy là người đầu tiên đặt câu hỏi!</div>
             </c:otherwise>
         </c:choose>
     </div>
 </section>
+        <!-- Form hỏi -->
+<form action="qnaQuestion" method="post">
+    <input type="hidden" name="courseID" value="${CourseID}">
+    <textarea name="question" placeholder="Nhập câu hỏi của bạn..." maxlength="2000" required></textarea>
+    <div class="qna-actions">
+        <button type="submit">Gửi câu hỏi</button>
+    </div>
+</form>
+
+
+<!-- Form trả lời -->
+<c:if test="${account.role == 'Instructor' && empty q.reply}">
+    <form action="qnaReply" method="post">
+        <input type="hidden" name="qnaID" value="${q.qnaID}">
+        <textarea name="replyMessage" placeholder="Nhập câu trả lời..." required></textarea>
+        <button type="submit">Gửi phản hồi</button>
+    </form>
+</c:if>
+
+
 
 
         <!-- footer -->

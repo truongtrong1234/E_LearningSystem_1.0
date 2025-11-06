@@ -98,13 +98,20 @@
 
         
         <c:otherwise>
+            <c:choose>
+            <c:when test="${ empty sessionScope.account}">
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/login.jsp">Đăng ký học</a>
+            </c:when>
+            <c:otherwise>       
             <form action="vnpay" method="post" style="display:inline;">
                 <input type="hidden" name="courseID" value="${course.courseID}">
                 <input type="hidden" name="amount" value="${course.price}">
                 <button type="submit" class="btn btn-primary">
-                    <i class="fa-solid fa-credit-card"></i> Đăng ký học
+                     Đăng ký học
                 </button>
             </form>
+                </c:otherwise>
+                    </c:choose>  
         </c:otherwise>
     </c:choose>
 </div>

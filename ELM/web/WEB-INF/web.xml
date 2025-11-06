@@ -136,6 +136,17 @@
         <servlet-name>EditCourseController</servlet-name>
         <servlet-class>controller.EditCourseController</servlet-class>
     </servlet>  
+      <servlet>
+        <servlet-name>QnAQuestionController</servlet-name>
+        <servlet-class>controller.QnAQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QnAReplyController</servlet-name>
+        <servlet-class>controller.QnAReplyController</servlet-class>
+    </servlet>
+    
+    
+    
 
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -273,6 +284,16 @@
         <servlet-name>EditCourseController</servlet-name>
         <url-pattern>/instructor/editCourse</url-pattern>
     </servlet-mapping>
+       <servlet-mapping>
+        <servlet-name>QnAQuestionController</servlet-name>
+        <url-pattern>/qnaQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QnAReplyController</servlet-name>
+        <url-pattern>/qnaReply</url-pattern>
+    </servlet-mapping>
+    
+    
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
