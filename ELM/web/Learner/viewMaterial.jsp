@@ -11,6 +11,7 @@
             <div class="alert alert-info">No materials uploaded yet.</div>
         </c:if>
             <c:if test="${not empty materials}">
+                <span><strong>Bấm vào đường link để có thể xem video</strong></span>
             ${materials}
         </c:if>
     </body>

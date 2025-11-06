@@ -44,7 +44,13 @@ public class ViewMaterialController extends HttpServlet {
             throws ServletException, IOException {
 //        urlMaterial
         String url = request.getParameter("url");
-        String materials = "<iframe src='https://docs.google.com/gview?url="+url+"&embedded=true' width='100%' height='600px'></iframe>";
+        String materials = null;
+        MaterialDAO materialDAO = new MaterialDAO();
+        if (url.contains("/video/")) {
+            materials = "<a href='" + url + "'>Link</a>";
+        } else {
+            materials = "<iframe src='https://docs.google.com/gview?url=" + url + "&embedded=true' width='100%' height='600px'></iframe>";
+        }
         request.setAttribute("materials", materials);
         request.getRequestDispatcher("/Learner/viewMaterial.jsp").forward(request, response);
     }

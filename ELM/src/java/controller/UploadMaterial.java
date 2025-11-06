@@ -67,33 +67,48 @@ public class UploadMaterial extends HttpServlet {
         int courseID = Integer.parseInt(request.getParameter("thisCourseID"));
         int ChapterID = Integer.parseInt(request.getParameter("thisChapterID"));
         int LessonID = Integer.parseInt(request.getParameter("thisLessonID"));
+        Part filePart = request.getPart("PartFile");
+        String contentType = filePart.getContentType();
+        boolean valid = false;
         try {
 
             String title = request.getParameter("title");
             String type = request.getParameter("type");
             String urlType;
             switch (type) {
-                case "Image":
-                    urlType = "image";
-                    break;
                 case "Video":
+                    valid = contentType.startsWith("video/");
                     urlType = "video";
                     break;
-                default: // PDF, Other,...
+                case "PDF":
+                    valid = contentType.equals("application/pdf");
                     urlType = "raw";
                     break;
+                case "Doc":
+                    valid = contentType.equals("application/msword")
+                            || contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+                    urlType = "raw";
+                    break;
+                default:
+                    valid = false;
+                    urlType = null;
+                    break;
             }
-            Part filePart = request.getPart("PartFile");
+
+            if (!valid) {
+                request.setAttribute("errorMessage", "Loại file không khớp với lựa chọn ");
+                response.sendRedirect("uploadMaterial?CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
+                return;
+            }
             if (filePart == null) {
                 request.setAttribute("errorMessage", "không được để trống");
             }
-            String url = CloudinaryUtil.uploadFile(filePart, "raw");
+            String url = CloudinaryUtil.uploadFile(filePart, urlType);
             Material mate = new Material();
             mate.setLessonID(LessonID);
-            mate.setMaterialType("Video");
+            mate.setMaterialType(type);
             mate.setContentURL(url);
             mate.setTitle(title);
-            
             int materialIDUpload = mdao.insert(mate);
 
         } catch (Exception ex) {
@@ -104,9 +119,9 @@ public class UploadMaterial extends HttpServlet {
         if ("delete".equalsIgnoreCase(action)) {
             int materialID = Integer.parseInt(request.getParameter("materialID"));
             mdao.delete(materialID);
-            response.sendRedirect("uploadMaterial?CourseID="+courseID+"&ChapterID="+ChapterID+"&LessonID=" + LessonID);
+            response.sendRedirect("uploadMaterial?CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
         } else {
-            response.sendRedirect("uploadMaterial?CourseID="+courseID+"&ChapterID="+ChapterID+"&LessonID=" + LessonID);
+            response.sendRedirect("uploadMaterial?CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
         }
     }
 

@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Material Type</label>
+                            <label class="form-label fw-semibold">Material Type (tất cả các file đều phải dưới 10MB)</label>
                             <select class="form-select" name="type" required>
                                 <option value="" disabled selected>Select type</option>
                                 <option value="Video">Video</option>
@@ -41,11 +41,10 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Upload File</label>
-                            <input type="file" class="form-control" name="PartFile" required>
+                            <input type="file" class="form-control" name="PartFile" required accept="video/*,.pdf,.doc,.docx">
                         </div>
-
-                        <div class="d-flex justify-content-between">
-                            <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                            <div class="d-flex justify-content-between">
+                                <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
                             <a href="${pageContext.request.contextPath}/instructor/createLesson?courseID=${CourseID}&ChapterID=${ChapterID}" class="btn btn-secondary">Back</a>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>

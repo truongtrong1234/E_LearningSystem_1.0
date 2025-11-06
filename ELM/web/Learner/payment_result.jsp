@@ -25,9 +25,10 @@
                 </div>
                 <h2 class="text-danger mb-3">Thanh toán thất bại!</h2>
                 <p class="mb-4">Giao dịch không được xử lý. Vui lòng thử lại.</p>
-                <a href="courseList" class="btn btn-danger px-4">Quay lại danh sách khóa học</a>
+                <a href="myLearning" class="btn btn-danger px-4">Quay lại danh sách khóa học</a>
             </c:otherwise>
         </c:choose>
+                
     </div>
 
     <!-- Bootstrap JS + Icons -->
