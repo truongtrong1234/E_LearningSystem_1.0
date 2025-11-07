@@ -198,42 +198,16 @@ public class CourseDAO extends DBContext {
     }
 
     // Xóa khóa học
-    public boolean deleteCourse(int id) {
-        String deleteEnrollmentsSql = "DELETE FROM Enrollments WHERE CourseID = ?";
-        String deleteCourseSql = "DELETE FROM Courses WHERE CourseID = ?";
-        try {
-            connection.setAutoCommit(false); // bắt đầu transaction
-
-            // Xóa các enrollments liên quan
-            try (PreparedStatement ps1 = connection.prepareStatement(deleteEnrollmentsSql)) {
-                ps1.setInt(1, id);
-                ps1.executeUpdate();
-            }
-
-            // Xóa khóa học
-            int rowsAffected;
-            try (PreparedStatement ps2 = connection.prepareStatement(deleteCourseSql)) {
-                ps2.setInt(1, id);
-                rowsAffected = ps2.executeUpdate();
-            }
-
-            connection.commit(); // xác nhận giao dịch
-            return rowsAffected > 0;
-        } catch (Exception e) {
+   public boolean deleteCourse(int courseId) {
+        String sql = "{call deleteCourse(?)}"; // gọi stored procedure
+        try (CallableStatement stmt = connection.prepareCall(sql)) {
+            stmt.setInt(1, courseId); // truyền CourseID
+            stmt.execute();
+            return true; // xóa thành công
+        } catch (SQLException e) {
             e.printStackTrace();
-            try {
-                connection.rollback(); // hoàn tác nếu có lỗi
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            return false; // xóa thất bại
         }
-        return false;
     }
 
     // Tìm kiếm
@@ -271,24 +245,7 @@ public class CourseDAO extends DBContext {
 
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
-        Course course = new Course();
-        course.setCourseID(1003);
-        course.setTitle("Advanced Java Programming");
-        course.setDescription("Updated course description - advanced topics.");
-        course.setInstructorID(2);
-        course.setPrice(new BigDecimal(10000));
-        course.setCourseclass(12);
-        course.setCategoryID(5);
-        dao.updateCourse(course);
-        course.setThumbnail(null);
-
-        boolean updated = dao.updateCourse(course);
-        if (updated) {
-            System.out.println("✅ Update course ID=1003 thành công (không thay đổi thumbnail).");
-        } else {
-            System.out.println("❌ Update thất bại hoặc không có dòng nào bị ảnh hưởng.");
-        }
-
+        dao.deleteCourse(3);
     }
 }
 // 2. Lấy tất cả khóa học
