@@ -74,6 +74,33 @@ public class QuizDAO {
         }
         return null;
     }
+    public List<Quiz> getQuizzesByCourseID(int courseID) {
+    List<Quiz> list = new ArrayList<>();
+    String sql = "SELECT q.QuizID, q.ChapterID, q.Title " +
+                 "FROM Quizzes q " +
+                 "JOIN Chapters c ON q.ChapterID = c.ChapterID " +
+                 "WHERE c.CourseID = ?";
+
+    try (Connection con = new DBContext().getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, courseID);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Quiz q = new Quiz();
+                q.setQuizID(rs.getInt("QuizID"));
+                q.setChapterID(rs.getInt("ChapterID"));
+                q.setTitle(rs.getString("Title"));
+                list.add(q);
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return list;
+}
 
     // Thêm mới quiz - trả về boolean (cũ)
     public boolean insertQuiz(Quiz q) {
@@ -144,6 +171,13 @@ public class QuizDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    public static void main(String[] args) {
+        QuizDAO dao = new QuizDAO(); 
+        List<Quiz> list = dao.getQuizzesByCourseID(10);
+        for (Quiz quiz : list) {
+            System.out.println(quiz);
         }
     }
 }

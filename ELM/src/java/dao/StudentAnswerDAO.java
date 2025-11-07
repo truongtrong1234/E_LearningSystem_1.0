@@ -131,22 +131,24 @@ public class StudentAnswerDAO extends DBContext {
             return false;
         }
     }
+     public void saveAnswer(int accountID, int questionID, char selected, boolean isCorrect) {
+        String sql = "INSERT INTO StudentAnswers (AccountID, QuestionID, SelectedAnswer, IsCorrect) " +
+                     "VALUES (?, ?, ?, ?)";
+        try (Connection con = new DBContext().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, accountID);
+            ps.setInt(2, questionID);
+            ps.setString(3, String.valueOf(selected));
+            ps.setBoolean(4, isCorrect);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     // Test main
     public static void main(String[] args) {
         StudentAnswerDAO dao = new StudentAnswerDAO();
-        List<StudentAnswer> list = dao.getAll();
-
-        if (list.isEmpty()) {
-            System.out.println("⚠️ Không có dữ liệu StudentAnswers trong DB!");
-        } else {
-            for (StudentAnswer sa : list) {
-                System.out.println("AnswerID: " + sa.getAnswerID() +
-                                   " | AccountID: " + sa.getAccountID() +
-                                   " | QuestionID: " + sa.getQuestionID() +
-                                   " | Selected: " + sa.getSelectedAnswer() +
-                                   " | Correct: " + sa.isCorrect());
-            }
-        }
+       
     }
 }

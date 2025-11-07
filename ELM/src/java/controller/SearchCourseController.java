@@ -25,24 +25,18 @@ public class SearchCourseController extends HttpServlet {
 
         CourseDAO dao = new CourseDAO();
         List<Course> listCourse = null; // ✅ Đổi tên để khớp với JSP
-
-        try {
-            if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
-                // 🔹 Lọc theo category
-                int categoryId = Integer.parseInt(categoryIdParam);
-                listCourse = dao.getCoursesByCategory(categoryId);
-
-            } else if (keyword != null && !keyword.trim().isEmpty()) {
-                // 🔹 Tìm theo keyword
-                listCourse = dao.searchCourses(keyword.trim());
-
-            } else {
-                // 🔹 Không có điều kiện => lấy tất cả
-                listCourse = dao.getAllCourses();
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCourseController.class.getName()).log(Level.SEVERE, null, ex);
+        if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
+            // 🔹 Lọc theo category
+            int categoryId = Integer.parseInt(categoryIdParam);
+            listCourse = dao.getCoursesByCategory(categoryId);
+            
+        } else if (keyword != null && !keyword.trim().isEmpty()) {
+            // 🔹 Tìm theo keyword
+            listCourse = dao.searchCourses(keyword.trim());
+            
+        } else {
+            // 🔹 Không có điều kiện => lấy tất cả
+            listCourse = dao.getAllCourses();
         }
 
         // ✅ Gửi dữ liệu cho JSP

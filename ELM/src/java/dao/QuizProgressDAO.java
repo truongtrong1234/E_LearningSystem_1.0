@@ -119,23 +119,59 @@ public class QuizProgressDAO extends DBContext {
             return false;
         }
     }
+    public int countCorrectAnswers(int accountID, int quizID) {
+        int correctCount = 0;
+        String sql = "SELECT COUNT(*) FROM StudentAnswers sa " +
+                     "JOIN Questions q ON sa.QuestionID = q.QuestionID " +
+                     "WHERE sa.AccountID = ? AND q.QuizID = ? AND sa.IsCorrect = 1";
+        try (
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accountID);
+            ps.setInt(2, quizID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                correctCount = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return correctCount;
+    }
 
+    public int totalQuestions(int quizID) {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM Questions WHERE QuizID = ?";
+        try (
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, quizID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public void saveProgress(int accountID, int quizID, int correctCount, double totalScore) {
+        String sql = "INSERT INTO QuizProgress(AccountID, QuizID, CorrectCount, TotalScore, TakenDate) " +
+                     "VALUES (?, ?, ?, ?, GETDATE())";
+        try (
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accountID);
+            ps.setInt(2, quizID);
+            ps.setInt(3, correctCount);
+            ps.setDouble(4, totalScore);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     // Test main
     public static void main(String[] args) {
         QuizProgressDAO dao = new QuizProgressDAO();
-        List<QuizProgress> list = dao.getAllQuizProgress();
-
-        if (list.isEmpty()) {
-            System.out.println("⚠️ Không có dữ liệu QuizProgress trong database!");
-        } else {
-            for (QuizProgress qp : list) {
-                System.out.println("ProgressID: " + qp.getProgressID() +
-                                   " | AccountID: " + qp.getAccountID() +
-                                   " | QuizID: " + qp.getQuizID() +
-                                   " | CorrectCount: " + qp.getCorrectCount() +
-                                   " | TotalScore: " + qp.getTotalScore() +
-                                   " | TakenDate: " + qp.getTakenDate());
-            }
-        }
+        int i = dao.countCorrectAnswers(2, 5); 
+        System.out.println(i);
     }
 }

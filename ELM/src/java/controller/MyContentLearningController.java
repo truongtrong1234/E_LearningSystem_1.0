@@ -8,6 +8,8 @@ import dao.LessonDAO;
 import dao.LessonProgressDAO;
 import dao.MaterialDAO;
 import dao.QnADAO;
+import dao.QuizDAO;
+import dao.QuizProgressDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -27,6 +30,8 @@ import model.Lesson;
 import model.Material;
 import model.QnAQuestion;
 import model.QnAReply;
+import model.Quiz;
+import model.QuizProgress;
 
 /**
  *
@@ -40,6 +45,8 @@ public class MyContentLearningController extends HttpServlet {
     private ChapterDAO chapterDAO = new ChapterDAO();
     private LessonDAO lessonDAO = new LessonDAO();
     private MaterialDAO materialDAO = new MaterialDAO();
+    private QuizDAO quizDAO = new QuizDAO();
+    private QuizProgressDAO quizProgressDAO = new QuizProgressDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -64,12 +71,22 @@ public class MyContentLearningController extends HttpServlet {
         int enrollmentID = enrollmentDAO.getEnrollmentID(account.getAccountId(), courseID);
         request.setAttribute("enrollmentID", enrollmentID);
 
-        // 🟢 Lấy danh sách Chapter và Lesson
         List<Chapter> chapterList = chapterDAO.getChaptersByCourseId(courseID);
         Map<Integer, List<Lesson>> chapterLessonMap = new LinkedHashMap<>();
         for (Chapter ch : chapterList) {
             List<Lesson> lessons = lessonDAO.getByChapterID(ch.getChapterID());
             chapterLessonMap.put(ch.getChapterID(), lessons);
+        }
+        Map<Integer, List<Quiz>> chapterQuizMap = new LinkedHashMap<>();
+        for (Chapter ch : chapterList) {
+            List<Quiz> quizzes = quizDAO.getQuizzesByChapter(ch.getChapterID());
+            chapterQuizMap.put(ch.getChapterID(), quizzes);
+        }
+        List<Quiz> quizList = quizDAO.getQuizzesByCourseID(courseID);
+        Map<String, BigDecimal> QuizMap = new LinkedHashMap<>();
+        for (Quiz quiz : quizList) {
+            QuizProgress progress = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), quiz.getQuizID());
+            QuizMap.put(quiz.getTitle(), progress.getTotalScore());
         }
 
         // 🟢 Lấy map tiến độ của lesson
@@ -111,38 +128,36 @@ public class MyContentLearningController extends HttpServlet {
         // Gửi dữ liệu sang JSP
         request.setAttribute("account", account);
         request.setAttribute("chapterLessonMap", chapterLessonMap);
+        request.setAttribute("chapterQuizMap", chapterQuizMap);
         request.setAttribute("materials", materials);
         request.setAttribute("selectedLessonID", lessonID);
         request.setAttribute("CourseID", courseID);
         request.setAttribute("lessonCompletedMap", lessonCompletedMap);
         request.setAttribute("course", course);
         request.setAttribute("chapterList", chapterList);
+        request.setAttribute("QuizMap", QuizMap);
 
         // Nếu có chapterCompletedMap bạn vẫn có thể gửi sang JSP
         ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
         Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
         request.setAttribute("chapterCompletedMap", chapterCompletedMap);
-        
+
         //hoi dap
         QnADAO qnaDAO = new QnADAO();
-List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
-System.out.println("qnalist: "+qnaList.size());
-Map<Integer, List<QnAReply>> replyMap = new HashMap<>();
+        List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
+        System.out.println("qnalist: " + qnaList.size());
+        Map<Integer, List<QnAReply>> replyMap = new HashMap<>();
 
-for (QnAQuestion q : qnaList) {
-    List<QnAReply> replies = qnaDAO.getRepliesByQnAID(q.getQnaID());
-    replyMap.put(q.getQnaID(), replies);
-    
-    System.out.println("Replies for QnA " + q.getQnaID() + ": " + replies.size());
+        for (QnAQuestion q : qnaList) {
+            List<QnAReply> replies = qnaDAO.getRepliesByQnAID(q.getQnaID());
+            replyMap.put(q.getQnaID(), replies);
 
-}
+            System.out.println("Replies for QnA " + q.getQnaID() + ": " + replies.size());
 
-request.setAttribute("qnaList", qnaList);
-request.setAttribute("replyMap", replyMap);
+        }
 
-
-        
-
+        request.setAttribute("qnaList", qnaList);
+        request.setAttribute("replyMap", replyMap);
 
         request.getRequestDispatcher("/Learner/mylearning_content.jsp").forward(request, response);
     }
