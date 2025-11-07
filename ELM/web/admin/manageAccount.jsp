@@ -3,46 +3,47 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    
-<head>
-    <meta charset="UTF-8">
-    <title>Manage Accounts</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
-</head>
-<body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Manage Accounts</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
                 <li><a href="adminIndex">Dashboard</a></li>
                 <li><a href="manageAccount">Manage Accounts</a></li>
                 <li><a href="manageCourse">Manage Courses</a></li>
                 <li><a href="manageReport">User Reports</a></li>
-            </ul>
-        <div class="logout-btn">
-            <a href="../logout" style="text-decoration: none">Logout</a>
+
+                <div class="logout-btn mt-4">
+                    <a href="../logout" style="text-decoration: none;">Logout</a>
+                </div>
+            </ul>      
         </div>
-    </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <h1 class="mb-0">Manage User Accounts</h1>
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1 class="mb-0">Manage User Accounts</h1>
 
-    <!-- Bộ lọc role -->
-    <form method="get" action="manageAccount" class="d-flex align-items-center gap-2">
-        <label for="role" class="fw-semibold me-2" style="min-width: 110px; text-align: right;">
-            Filter by Role:
-        </label>
-        <select name="role" id="role" class="form-select form-select-sm" style="width: 160px;"
-                onchange="this.form.submit()">
-            <option value="all" <%= "all".equalsIgnoreCase((String)request.getAttribute("selectedRole")) || request.getAttribute("selectedRole")==null ? "selected" : "" %>>All</option>
-            <option value="admin" <%= "admin".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Admin</option>
-            <option value="instructor" <%= "instructor".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Instructor</option>
-            <option value="learner" <%= "learner".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Learner</option>
-        </select>
-    </form>
-    </form>
+            <!-- Bộ lọc role -->
+            <form method="get" action="manageAccount" class="d-flex align-items-center gap-2">
+                <label for="role" class="fw-semibold me-2" style="min-width: 110px; text-align: right;">
+                    Filter by Role:
+                </label>
+                <select name="role" id="role" class="form-select form-select-sm" style="width: 160px;"
+                        onchange="this.form.submit()">
+                    <option value="all" <%= "all".equalsIgnoreCase((String)request.getAttribute("selectedRole")) || request.getAttribute("selectedRole")==null ? "selected" : "" %>>All</option>
+                    <option value="admin" <%= "admin".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Admin</option>
+                    <option value="instructor" <%= "instructor".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Instructor</option>
+                    <option value="learner" <%= "learner".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Learner</option>
+                </select>
+            </form>
+        </form>
         <table class="table data-table table-bordered align-middle">
             <thead>
                 <tr>
@@ -77,7 +78,7 @@
             </tbody>
         </table>
     </div>
-            
+
     <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
 </body>
 </html>

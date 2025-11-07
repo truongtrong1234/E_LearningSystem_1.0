@@ -56,22 +56,36 @@ public class ManageCourse extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-        // --- 1️⃣ Load danh sách Category ---
-        CategoryDAO categoryDAO = new CategoryDAO();
-        List<Category> listCategories = categoryDAO.getAllCat();
-        request.setAttribute("listOfCategories", listCategories);
+    CategoryDAO categoryDAO = new CategoryDAO();
+    List<Category> listCategories = categoryDAO.getAllCat();
+    request.setAttribute("listOfCategories", listCategories);
 
-        // --- 2️⃣ Load danh sách Course ---
-        CourseDAO courseDAO = new CourseDAO();
-        List<Course> listCourses = courseDAO.getAllCourses();
-        request.setAttribute("listCourse", listCourses);
+    CourseDAO courseDAO = new CourseDAO();
 
-        // --- 3️⃣ Forward sang JSP ---
-        request.getRequestDispatcher("/admin/manageCourse.jsp").forward(request, response);
+    // Nhận tham số cateID hoặc cats từ URL
+    String cateID_raw = request.getParameter("cats");
+
+    List<Course> listCourses;
+    if (cateID_raw != null && !cateID_raw.isEmpty()) {
+        try {
+            int cateID = Integer.parseInt(cateID_raw);
+            listCourses = courseDAO.getCoursesByCategory(cateID);
+        } catch (NumberFormatException e) {
+            listCourses = courseDAO.getAllCourses();
+        }
+    } else {
+        listCourses = courseDAO.getAllCourses();
     }
+
+    request.setAttribute("listCourse", listCourses);
+
+    // Forward về JSP
+    request.getRequestDispatcher("/admin/manageCourse.jsp").forward(request, response);
+}
+
 
     /** 
      * Handles the HTTP <code>POST</code> method.

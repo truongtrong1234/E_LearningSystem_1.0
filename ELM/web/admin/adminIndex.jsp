@@ -18,41 +18,42 @@
                 <li><a href="manageAccount">Manage Accounts</a></li>
                 <li><a href="manageCourse">Manage Courses</a></li>
                 <li><a href="manageReport">User Reports</a></li>
-            </ul>
-            <div class="logout-btn">
-                <a href="../logout" style="text-decoration: none">Logout</a>
+
+                <div class="logout-btn mt-4">
+                    <a href="../logout" style="text-decoration: none;">Logout</a>
+                </div>
+            </ul>      
+        </div>
+        <div class="main-content">
+            <h1>Admin Dashboard</h1>
+            <div class="dashboard-cards d-flex gap-4">
+
+                <!-- User Accounts Card -->
+                <a href="manageAccount" class="text-decoration-none text-dark" style="flex:1;">
+                    <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                        <h3>User Accounts</h3>
+                        <p>${userCount}</p>
+                    </div>
+                </a>
+
+                <!-- Courses Card -->
+                <a href="manageCourse" class="text-decoration-none text-dark" style="flex:1;">
+                    <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                        <h3>Courses</h3>
+                        <p>${courseCount}</p>
+                    </div>
+                </a>
+
+                <!-- Reports Card -->
+                <a href="manageReport" class="text-decoration-none text-dark" style="flex:1;">
+                    <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                        <h3>User Reports</h3>
+                        <p>${reportCount}</p>
+                    </div>
+                </a>
             </div>
         </div>
-    <div class="main-content">
-        <h1>Admin Dashboard</h1>
-        <div class="dashboard-cards d-flex gap-4">
 
-            <!-- User Accounts Card -->
-            <a href="manageAccount" class="text-decoration-none text-dark" style="flex:1;">
-                <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
-                    <h3>User Accounts</h3>
-                    <p>${userCount}</p>
-                </div>
-            </a>
-
-            <!-- Courses Card -->
-            <a href="manageCourse" class="text-decoration-none text-dark" style="flex:1;">
-                <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
-                    <h3>Courses</h3>
-                    <p>${courseCount}</p>
-                </div>
-            </a>
-
-            <!-- Reports Card -->
-            <a href="manageReport" class="text-decoration-none text-dark" style="flex:1;">
-                <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
-                    <h3>User Reports</h3>
-                    <p>${reportCount}</p>
-                </div>
-            </a>
-        </div>
-    </div>
-    
-    <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
     </body>
 </html>

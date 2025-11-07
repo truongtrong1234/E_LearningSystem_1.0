@@ -6,6 +6,24 @@ import java.sql.*;
 import java.util.*;
 
 public class ReportDAO extends DBContext {
+        // Thêm mới một report (khi người dùng gửi)
+    public boolean insertReport(Report report) {
+        String sql = """
+            INSERT INTO Reports (AccountID, Title, Message, Status, CreatedAt)
+            VALUES (?, ?, ?, ?, GETDATE())
+        """;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, report.getAccountId());
+            ps.setString(2, report.getTitle());
+            ps.setString(3, report.getMessage());
+            ps.setString(4, "Pending"); // Trạng thái mặc định là chờ xử lý
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     // Lấy toàn bộ báo cáo (JOIN với bảng Accounts)
     public List<Report> getAllReports() {

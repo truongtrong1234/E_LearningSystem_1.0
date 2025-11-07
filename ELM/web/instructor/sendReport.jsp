@@ -72,7 +72,8 @@
             <h4 class="fw-bold text-center mb-4" style="color: var(--primary-dark);">
                 Report to Admin
             </h4>
-            <form action="SendReportServlet" method="post" class="send-report-form">
+            <form action="sendReport" method="post">
+
                 <div class="mb-4">
                     <label class="form-label fw-semibold">Title</label>
                     <input type="text" name="subject" class="form-control" placeholder="" required>

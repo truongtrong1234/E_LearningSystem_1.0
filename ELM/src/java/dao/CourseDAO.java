@@ -92,7 +92,7 @@ public class CourseDAO extends DBContext {
     }
 
     //
-    public List<Course> getCoursesByCategory(int categoryID) throws SQLException {
+    public List<Course> getCoursesByCategory(int categoryID){
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM Courses WHERE categoryID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -112,6 +112,8 @@ public class CourseDAO extends DBContext {
                 // add các field khác nếu cần
                 list.add(c);
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return list;
     }
