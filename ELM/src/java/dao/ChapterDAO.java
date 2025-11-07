@@ -171,6 +171,6 @@ public int countCompletedLessons(int accountID, int courseID) {
     public static void main(String[] args) {
         ChapterDAO dao = new ChapterDAO();
         Chapter c = new Chapter();
-        dao.deleteChapter(11);
+       
     }
 }

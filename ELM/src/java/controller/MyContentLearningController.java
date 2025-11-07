@@ -26,6 +26,7 @@ import model.Course;
 import model.Lesson;
 import model.Material;
 import model.QnAQuestion;
+import model.QnAReply;
 
 /**
  *
@@ -126,7 +127,19 @@ public class MyContentLearningController extends HttpServlet {
         QnADAO qnaDAO = new QnADAO();
 List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
 System.out.println("qnalist: "+qnaList.size());
+Map<Integer, List<QnAReply>> replyMap = new HashMap<>();
+
+for (QnAQuestion q : qnaList) {
+    List<QnAReply> replies = qnaDAO.getRepliesByQnAID(q.getQnaID());
+    replyMap.put(q.getQnaID(), replies);
+    
+    System.out.println("Replies for QnA " + q.getQnaID() + ": " + replies.size());
+
+}
+
 request.setAttribute("qnaList", qnaList);
+request.setAttribute("replyMap", replyMap);
+
 
         
 

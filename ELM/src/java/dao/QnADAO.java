@@ -83,6 +83,37 @@ public class QnADAO extends DBContext {
     return list;
 }
 
+    public List<QnAReply> getRepliesByQnAID(int qnaID) {
+    List<QnAReply> replies = new ArrayList<>();
+    String sql = """
+        SELECT r.ReplyID, r.ReplyMessage, r.RepliedAt,
+               a.name AS RepliedByName, a.picture AS RepliedByAvatar
+        FROM QnAReply r
+        JOIN Accounts a ON r.RepliedBy = a.AccountID
+        WHERE r.QnAID = ?
+        ORDER BY r.RepliedAt ASC
+    """;
+
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, qnaID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            QnAReply reply = new QnAReply();
+            reply.setReplyID(rs.getInt("ReplyID"));
+            reply.setReplyMessage(rs.getString("ReplyMessage"));
+            reply.setRepliedAt(rs.getTimestamp("RepliedAt"));
+            reply.setRepliedByName(rs.getString("RepliedByName"));
+            reply.setRepliedByAvatar(rs.getString("RepliedByAvatar"));
+            replies.add(reply);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+        System.out.println(replies.size());
+    return replies;
+}
+
 
     /**
      * Thêm câu hỏi mới.

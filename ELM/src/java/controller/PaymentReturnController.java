@@ -30,6 +30,8 @@ public class PaymentReturnController extends HttpServlet {
         
         Integer accountID = account.getAccountId();
         EnrollmentDAO enrollment = new EnrollmentDAO();
+           enrollment.insertEnrollment(accountID, courseID);
+        
         try {
             CourseProgressDAO courseProgressDAO = new CourseProgressDAO();
             ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();

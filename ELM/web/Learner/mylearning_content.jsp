@@ -121,24 +121,7 @@
                             <c:out value="${q.question}"/>
                         </div>
 
-                        <!-- ===== Trả lời (nếu có) ===== -->
-                        <c:if test="${not empty q.reply}">
-                            <div class="qna-reply">
-                                <div class="reply-meta">
-                                    <img src="${q.reply.repliedByAvatar}" 
-                                         alt="instructor"
-                                         onerror="this.src='https://i.imgur.com/6VBx3io.png'">
-                                    <strong>${q.reply.repliedByName}</strong>
-                                    <span class="text-muted">(Giảng viên)</span>
-                                </div>
-                                <div class="reply-content">
-                                    <c:out value="${q.reply.replyMessage}"/>
-                                </div>
-                                <div class="reply-time">
-                                    <fmt:formatDate value="${q.reply.repliedAt}" pattern="dd/MM/yyyy HH:mm"/>
-                                </div>
-                            </div>
-                        </c:if>
+                    
 
                         
                    <!-- ===== Nút Reply (chỉ Instructor chủ khóa, nếu chưa có reply) ===== -->
@@ -170,6 +153,28 @@
 </div>
 
 </c:if>
+    
+ 
+
+
+        <!-- ===== Trả lời (nếu có) ===== -->
+<c:forEach var="r" items="${replyMap[q.qnaID]}">
+    <div class="qna-reply">
+        <div class="reply-meta">
+            <img src="${r.repliedByAvatar}" alt="instructor"
+                 onerror="this.src='https://i.imgur.com/6VBx3io.png'">
+            <strong>${r.repliedByName}</strong>
+            <span class="text-muted">(Giảng viên)</span>
+        </div>
+        <div class="reply-content">
+            <c:out value="${r.replyMessage}"/>
+        </div>
+        <div class="reply-time">
+            <fmt:formatDate value="${r.repliedAt}" pattern="dd/MM/yyyy HH:mm"/>
+        </div>
+    </div>
+</c:forEach>
+
 
                     </div>
                 </div>
