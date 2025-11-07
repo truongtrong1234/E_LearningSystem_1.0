@@ -104,10 +104,11 @@ public class MyContentLearningController extends HttpServlet {
             }
         }
 
-        // 🟢 Lấy materials của lesson được chọn
+        //  Lấy materials của lesson được chọn
         List<Material> materials = materialDAO.getByLessonID(lessonID);
 
-        // 🟢 Gửi dữ liệu sang JSP
+        // Gửi dữ liệu sang JSP
+        request.setAttribute("account", account);
         request.setAttribute("chapterLessonMap", chapterLessonMap);
         request.setAttribute("materials", materials);
         request.setAttribute("selectedLessonID", lessonID);
