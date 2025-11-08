@@ -20,7 +20,7 @@ public class Quiz {
         this.courseName = courseName;
     }
 
-    // Constructor cơ bản (dùng khi tạo mới) - Đã thêm courseID
+    // Constructor đã thêm courseID
     public Quiz(int chapterID, int courseID, String title) {
         this.chapterID = chapterID;
         this.courseID = courseID;

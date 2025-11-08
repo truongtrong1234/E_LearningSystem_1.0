@@ -12,74 +12,92 @@ public class CreateQuizController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // 1. Nhận Course ID và Chapter ID từ URL
-        String courseId = request.getParameter("courseId");
-        String chapterId = request.getParameter("chapterId"); 
 
-        // 2. Lưu ID vào Request Scope để sử dụng trong createQuiz.jsp
-        request.setAttribute("currentCourseId", courseId);
-        request.setAttribute("currentChapterId", chapterId);
+        String courseParam = request.getParameter("courseID");
+        String chapterParam = request.getParameter("ChapterID");
 
-        // 3. Điều hướng đến form tạo quiz
-        request.getRequestDispatcher("/createQuiz.jsp").forward(request, response);
+        int courseID = 0;
+        int chapterID = 0;
+
+        try {
+            if (courseParam != null && chapterParam != null) {
+                courseID = Integer.parseInt(courseParam);
+                chapterID = Integer.parseInt(chapterParam);
+            } else {
+                // Nếu không có trong URL thì thử lấy từ attribute (khi forward lại)
+                Object courseAttr = request.getAttribute("courseID");
+                Object chapterAttr = request.getAttribute("thisChapterID");
+                if (courseAttr != null) courseID = Integer.parseInt(courseAttr.toString());
+                if (chapterAttr != null) chapterID = Integer.parseInt(chapterAttr.toString());
+            }
+        } catch (NumberFormatException e) {
+            courseID = 0;
+            chapterID = 0;
+        }
+
+        // Gửi sang JSP
+        request.setAttribute("courseID", courseID);
+        request.setAttribute("thisChapterID", chapterID);
+
+        // Hiển thị form
+        request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
 
-        // Lấy các ID đã được gửi từ trường ẩn (hidden fields) của createQuiz.jsp
-        String courseIdStr = request.getParameter("courseId"); 
-        String chapterIdStr = request.getParameter("chapterId");
-        String title = request.getParameter("quizTitle"); // Tên input trong form là quizTitle
+        String courseParam = request.getParameter("thisCourseID");
+        String chapterParam = request.getParameter("thisChapterID");
+        String title = request.getParameter("quizTitle");
+
+        int courseID = 0;
+        int chapterID = 0;
 
         try {
-            if (title == null || title.trim().isEmpty() || chapterIdStr == null || chapterIdStr.isEmpty() || courseIdStr == null || courseIdStr.isEmpty()) {
-                // Nếu lỗi, set lại các ID để forward lại trang JSP
-                request.setAttribute("currentCourseId", courseIdStr);
-                request.setAttribute("currentChapterId", chapterIdStr);
-                
-                request.setAttribute("error", "Vui lòng nhập đầy đủ Tiêu đề Quiz và các ID không được thiếu!");
-                request.getRequestDispatcher("/createQuiz.jsp").forward(request, response);
+            courseID = Integer.parseInt(courseParam);
+            chapterID = Integer.parseInt(chapterParam);
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Không tìm thấy Course ID hoặc Chapter ID hợp lệ.");
+            request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            // Kiểm tra hợp lệ
+            if (title == null || title.trim().isEmpty()) {
+                request.setAttribute("error", "Vui lòng nhập tiêu đề Quiz!");
+                request.setAttribute("courseID", courseID);
+                request.setAttribute("thisChapterID", chapterID);
+                request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
                 return;
             }
 
-            int chapterID = Integer.parseInt(chapterIdStr);
-            int courseID = Integer.parseInt(courseIdStr);
-
-            // Tạo đối tượng Quiz và SET Course ID
+            // Tạo đối tượng Quiz
             Quiz quiz = new Quiz();
             quiz.setTitle(title);
             quiz.setChapterID(chapterID);
-            quiz.setCourseID(courseID); // <--- SET COURSE ID ĐƯỢC THÊM
+            quiz.setCourseID(courseID);
 
-            // Gọi DAO để lưu vào DB
+            // Gọi DAO thêm mới
             QuizDAO dao = new QuizDAO();
-            boolean success = dao.insertQuiz(quiz); 
+            boolean success = dao.insertQuiz(quiz);
 
             if (success) {
-                // Chuyển hướng đến danh sách quiz
-                response.sendRedirect(request.getContextPath() + "/instructor/listQuiz?chapterId=" + chapterID + "&courseId=" + courseID);
+                response.sendRedirect("createQuiz?courseID=" + courseID + "&ChapterID=" + chapterID);
             } else {
-                // Nếu lỗi, set lại các ID trước khi forward
-                request.setAttribute("currentCourseId", courseIdStr);
-                request.setAttribute("currentChapterId", chapterIdStr);
-                
                 request.setAttribute("error", "Thêm quiz thất bại. Vui lòng thử lại!");
-                request.getRequestDispatcher("/createQuiz.jsp").forward(request, response);
+                request.setAttribute("courseID", courseID);
+                request.setAttribute("thisChapterID", chapterID);
+                request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
             }
 
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Lỗi định dạng ID Chương hoặc ID Khóa học.");
-            request.getRequestDispatcher("/createQuiz.jsp").forward(request, response);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Lỗi hệ thống khi thêm quiz: " + e.getMessage());
-            request.getRequestDispatcher("/createQuiz.jsp").forward(request, response);
+            request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
         }
     }
 }

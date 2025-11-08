@@ -15,14 +15,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/instructor/createQuiz" method="post">
+    <form action="createQuiz" method="post">
         <div class="create-quiz-container">
-            <div class="create-quiz-container">
-                <input type="hidden" name="courseId" value="${requestScope.currentCourseId}">
-                <input type="hidden" name="chapterId" value="${requestScope.currentChapterId}">
-                <p>Creating Quiz for Course ID: ${requestScope.currentCourseId} and Chapter ID: ${requestScope.currentChapterId}</p>
-            </div>
-            
             <!-- Quiz Title -->
             <div class="mb-3">
                 <label class="form-label">Quiz Title *</label>

@@ -38,7 +38,7 @@
     </servlet>
     <servlet>
         <servlet-name>CreateQuizController</servlet-name>
-        <servlet-class>controller.CreateLessonController</servlet-class>
+        <servlet-class>controller.CreateQuizController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddQuestionController</servlet-name>
