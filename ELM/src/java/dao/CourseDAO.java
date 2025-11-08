@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.*;
 import model.Course;
 import context.DBContext;
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class CourseDAO extends DBContext {
@@ -33,7 +32,47 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
+      public List<Course> getTop5MostEnrolledCourses() {
+        List<Course> list = new ArrayList<>();
+        String sql = """
+            SELECT TOP 5 
+                        c.CourseID,
+                        c.Title,
+                        c.Description,
+                        c.InstructorID,
+                        c.Price,
+                        c.Class,
+                        c.CategoryID,
+                        c.Thumbnail,
+                        COUNT(e.EnrollmentID) AS TotalEnroll
+                    FROM Courses c
+                    JOIN Enrollments e ON c.CourseID = e.CourseID
+                    GROUP BY c.CourseID, c.Title, c.Description, c.InstructorID, c.Price, c.Class, c.CategoryID, c.Thumbnail
+                    ORDER BY COUNT(e.EnrollmentID) DESC
+        """;
 
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Course c = new Course();
+                c.setCourseID(rs.getInt("CourseID"));
+                c.setTitle(rs.getString("Title"));
+                c.setDescription(rs.getString("Description"));
+                c.setCategoryID(rs.getInt("CategoryID"));
+                c.setPrice(rs.getBigDecimal("Price"));
+                c.setInstructorID(rs.getInt("InstructorID"));
+                c.setTotalEnroll(rs.getInt("TotalEnroll"));
+                list.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     public Course getCourseById(int courseID) {
         String sql = """
         SELECT c.CourseID, c.Title, c.Description, c.InstructorID, 
@@ -247,7 +286,10 @@ public class CourseDAO extends DBContext {
 
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
-        dao.deleteCourse(3);
+        List<Course> course = dao.getTop5MostEnrolledCourses(); 
+        for (Course course1 : course) {
+            System.out.println(course1);
+        }
     }
 }
 // 2. Lấy tất cả khóa học

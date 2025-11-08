@@ -15,6 +15,15 @@ public class Course {
     private String thumbnail;
     private String categoryName;
     private String instructorName;
+    private int totalEnroll; 
+
+    public int getTotalEnroll() {
+        return totalEnroll;
+    }
+
+    public void setTotalEnroll(int totalEnroll) {
+        this.totalEnroll = totalEnroll;
+    }
 
     private List<Chapter> chapters;
 

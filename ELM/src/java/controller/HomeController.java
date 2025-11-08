@@ -23,7 +23,7 @@ public class HomeController extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
 
         // 2️⃣ Lấy danh sách khoá học & danh mục
-        List<Course> listCourse = courseDAO.getAllCourses();
+        List<Course> listCourse = courseDAO.getTop5MostEnrolledCourses();
         List<Category> listOfCategories = categoryDAO.getAllCat();
 
         // 3️⃣ Gửi sang JSP

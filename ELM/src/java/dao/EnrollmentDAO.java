@@ -205,14 +205,6 @@ public class EnrollmentDAO extends DBContext {
         return false;
     }
 
-    // Test nhanh
-    public static void main(String[] args) {
-       EnrollmentDAO dao = new EnrollmentDAO();
-        int accountID = 5; // 👈 đổi ID theo tài khoản thực tế trong DB của bạn
-       List<Course> courseList =  dao.getCoursesByAccountId(accountID); 
-        for (Course course : courseList) {
-            System.out.println(course);
-        }
-    
-    }
+  
+   
 }

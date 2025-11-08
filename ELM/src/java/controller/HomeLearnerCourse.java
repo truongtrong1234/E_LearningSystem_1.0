@@ -25,7 +25,7 @@ public class HomeLearnerCourse extends HttpServlet {
 
         // Load Courses
         CourseDAO courseDAO = new CourseDAO();
-        List<Course> listCourses = courseDAO.getAllCourses();
+        List<Course> listCourses = courseDAO.getTop5MostEnrolledCourses();
         request.setAttribute("listCourse", listCourses);
 
         // Forward tới JSP
