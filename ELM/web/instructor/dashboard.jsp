@@ -144,7 +144,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
                                 <button class="btn create-cqm-btn py-2 px-4" 
-                                        onclick="window.location.href = '${pageContext.request.contextPath}/instructor/createQuiz.jsp'">
+                                        onclick="window.location.href = 'createQuiz'">
                                     Create New Quiz
                                 </button>
                             </div>
