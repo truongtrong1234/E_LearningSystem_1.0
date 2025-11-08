@@ -76,8 +76,7 @@
                                 </div>
                             </div>
 
-                            <!-- Form edit lesson nằm riêng bên dưới (tương tự Chapter) -->
-
+                            <!-- Form edit lesson -->
                             <div class="card-body border-top">
                                 <form action="createLesson" method="post" class="d-flex gap-2 align-items-center">
                                     <input type="text" name="title" placeholder="Bạn có thể nhập lại nếu muốn" class="form-control" required>

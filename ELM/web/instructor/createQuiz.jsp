@@ -5,6 +5,10 @@
         response.sendRedirect("login.jsp");
         return;
     }
+
+    // Lấy tổng số question hiện có từ attribute (do servlet set)
+    Integer totalQuestions = (Integer) request.getAttribute("totalQuestions");
+    if (totalQuestions == null) totalQuestions = 1;
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,18 +27,42 @@
                 <input type="text" id="quizTitle" name="quizTitle" class="form-control" placeholder="Enter quiz title" required>
             </div>
 
-            <!-- Question Container -->
-            <div id="questionsContainer"></div>
+            <!-- Questions -->
+            <c:forEach var="q" items="${questions}" varStatus="status">
+                <div class="border p-3 mb-3 rounded">
+                    <h5>Question ${status.index + 1}</h5>
+                    <input type="text" name="questionText${status.index + 1}" class="form-control mb-2"
+                           placeholder="Question text" value="${q.questionText}" required>
+                    <input type="text" name="optionA${status.index + 1}" class="form-control mb-2"
+                           placeholder="Option A" value="${q.optionA}" required>
+                    <input type="text" name="optionB${status.index + 1}" class="form-control mb-2"
+                           placeholder="Option B" value="${q.optionB}" required>
+                    <input type="text" name="optionC${status.index + 1}" class="form-control mb-2"
+                           placeholder="Option C" value="${q.optionC}" required>
+                    <input type="text" name="optionD${status.index + 1}" class="form-control mb-2"
+                           placeholder="Option D" value="${q.optionD}" required>
+                    <select name="correctAnswer${status.index + 1}" class="form-select" required>
+                        <option value="">Select Correct Answer</option>
+                        <option value="A" ${q.correctAnswer=='A' ? 'selected' : ''}>A</option>
+                        <option value="B" ${q.correctAnswer=='B' ? 'selected' : ''}>B</option>
+                        <option value="C" ${q.correctAnswer=='C' ? 'selected' : ''}>C</option>
+                        <option value="D" ${q.correctAnswer=='D' ? 'selected' : ''}>D</option>
+                    </select>
+                </div>
+            </c:forEach>
+            
+            <!-- Hidden fields -->
+            <input type="hidden" name="totalQuestions" value="${totalQuestions}">
+            <input type="hidden" name="thisCourseID" value="${courseID}">
+            <input type="hidden" name="thischapterID" value="${thischapterID}">
 
+            <!-- Button -->
             <div class="d-flex justify-content-between mt-4 gap-3">
                 <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                <button type="button" class="btn btn-warning" id="addQuestionBtn">+ Add Question</button>
-                <button type="submit" class="btn btn-success" id="saveQuizBtn">Create Quiz</button>
+                <button type="submit" name="action" value="addQuestion" class="btn btn-primary">+ Add Question</button>
+                <button type="submit" name="action" value="submitQuiz" class="btn btn-success">Create Quiz</button>
             </div>
         </div>
     </form>
-                
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/createQuiz.js"></script>
 </body>
 </html>

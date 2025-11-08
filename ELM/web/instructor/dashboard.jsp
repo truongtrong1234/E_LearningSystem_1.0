@@ -154,42 +154,28 @@
                             <c:choose>
                                 <c:when test="${not empty quizList}">
                                     <c:forEach var="quiz" items="${quizList}">
-                                        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                                            <div class="card cqm-card border-0 shadow-sm">
-                                                <div class="dropdown cqm-actions">
-                                                    <button class="btn p-0 text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="quiz?id=${quiz.quizId}"><i class="fas fa-eye me-2"></i> View Quiz</a></li>
-                                                        <li><a class="dropdown-item" href="quiz?action=edit&id=${quiz.quizId}"><i class="fas fa-edit me-2"></i> Edit Quiz</a></li>
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li>
-                                                            <a class="dropdown-item text-danger" href="quiz?action=delete&id=${quiz.quizId}" onclick="return confirm('Bạn có chắc chắn muốn xóa bài Quiz này?');">
-                                                                <i class="fas fa-trash-alt me-2"></i> Delete Quiz
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="cqm-image-placeholder bg-light rounded-top">
-                                                    <i class="fas fa-question-circle fa-3x text-secondary"></i> 
-                                                </div>
-                                                <div class="card-body">
-                                                    <a href="quiz?id=${quiz.quizId}" class="text-decoration-none text-dark">
-                                                        <h5 class="card-title fw-bold text-truncate" title="${quiz.quizName}">${quiz.quizName}</h5>
-                                                    </a>
-                                                    <p class="card-text text-muted mb-2">Questions: ${quiz.totalQuestions}</p>
-                                                    <span class="badge bg-primary-dark">${quiz.status}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <tr>
+                                            <td>${quiz.quizID}</td>
+                                            <td>${quiz.title}</td>
+                                            <td>
+                                                <c:set var="questionCount" value="0"/>
+                                                <c:forEach var="q" items="${quiz.questions}">
+                                                    <c:set var="questionCount" value="${questionCount + 1}"/>
+                                                </c:forEach>
+                                                ${questionCount}
+                                            </td>
+                                            <td>
+                                                <a href="viewQuiz?id=${quiz.quizID}" class="btn btn-info btn-sm">View</a>
+                                                <a href="editQuiz?id=${quiz.quizID}" class="btn btn-warning btn-sm">Edit</a>
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
                                             No Quiz has been created yet. Click
-                                            <a href="${pageContext.request.contextPath}/instructor/createQuiz.jsp" style="text-decoration: none">"Create New Quiz"</a> 
+                                            <a href="${pageContext.request.contextPath}/instructor/createQuiz" style="text-decoration: none">"Create New Quiz"</a> 
                                             to get started!
                                         </div>
                                     </div>

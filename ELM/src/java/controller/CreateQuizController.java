@@ -1,11 +1,15 @@
 package controller;
 
+import dao.QuestionDAO;
 import dao.QuizDAO;
 import model.Quiz;
+import model.Question;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateQuizController extends HttpServlet {
 
@@ -13,33 +17,25 @@ public class CreateQuizController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String courseParam = request.getParameter("courseID");
-        String chapterParam = request.getParameter("ChapterID");
+        int courseID = parseIntSafe(request.getParameter("courseID"));
+        int chapterID = parseIntSafe(request.getParameter("ChapterID"));
 
-        int courseID = 0;
-        int chapterID = 0;
+        Object courseAttr = request.getAttribute("courseID");
+        Object chapterAttr = request.getAttribute("thisChapterID");
+        if (courseAttr != null) courseID = parseIntSafe(courseAttr.toString());
+        if (chapterAttr != null) chapterID = parseIntSafe(chapterAttr.toString());
 
-        try {
-            if (courseParam != null && chapterParam != null) {
-                courseID = Integer.parseInt(courseParam);
-                chapterID = Integer.parseInt(chapterParam);
-            } else {
-                // Nếu không có trong URL thì thử lấy từ attribute (khi forward lại)
-                Object courseAttr = request.getAttribute("courseID");
-                Object chapterAttr = request.getAttribute("thisChapterID");
-                if (courseAttr != null) courseID = Integer.parseInt(courseAttr.toString());
-                if (chapterAttr != null) chapterID = Integer.parseInt(chapterAttr.toString());
-            }
-        } catch (NumberFormatException e) {
-            courseID = 0;
-            chapterID = 0;
-        }
-
-        // Gửi sang JSP
         request.setAttribute("courseID", courseID);
         request.setAttribute("thisChapterID", chapterID);
 
-        // Hiển thị form
+        // Lần đầu mở form, tạo 1 question trống
+        List<Question> questions = (List<Question>) request.getAttribute("questions");
+        if (questions == null) {
+            questions = new ArrayList<>();
+            questions.add(new Question());
+        }
+
+        request.setAttribute("questions", questions);
         request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
     }
 
@@ -48,56 +44,97 @@ public class CreateQuizController extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
 
-        String courseParam = request.getParameter("thisCourseID");
-        String chapterParam = request.getParameter("thisChapterID");
-        String title = request.getParameter("quizTitle");
+        int courseID = parseIntSafe(request.getParameter("thisCourseID"));
+        int chapterID = parseIntSafe(request.getParameter("thisChapterID"));
+        String quizTitle = request.getParameter("quizTitle");
 
-        int courseID = 0;
-        int chapterID = 0;
+        // Lấy danh sách question từ request
+        List<Question> questions = new ArrayList<>();
+        int totalQuestions = parseIntSafe(request.getParameter("totalQuestions"), 1);
+        for (int i = 1; i <= totalQuestions; i++) {
+            Question q = new Question();
+            q.setQuestionText(request.getParameter("questionText" + i));
+            q.setOptionA(request.getParameter("optionA" + i));
+            q.setOptionB(request.getParameter("optionB" + i));
+            q.setOptionC(request.getParameter("optionC" + i));
+            q.setOptionD(request.getParameter("optionD" + i));
+            q.setCorrectAnswer(request.getParameter("correctAnswer" + i));
+            questions.add(q);
+        }
 
-        try {
-            courseID = Integer.parseInt(courseParam);
-            chapterID = Integer.parseInt(chapterParam);
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "Không tìm thấy Course ID hoặc Chapter ID hợp lệ.");
+        if ("cancel".equals(action)) {
+            response.sendRedirect(request.getContextPath() + "/instructor/dashboard?courseID=" + courseID + "&chapterID=" + chapterID);
+            return;
+        }
+
+        if ("addQuestion".equals(action)) {
+            // Thêm 1 question trống
+            questions.add(new Question());
+            request.setAttribute("questions", questions);
+            request.setAttribute("courseID", courseID);
+            request.setAttribute("thisChapterID", chapterID);
+            request.setAttribute("quizTitle", quizTitle);
+            request.setAttribute("totalQuestions", questions.size());
             request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
             return;
         }
 
-        try {
-            // Kiểm tra hợp lệ
-            if (title == null || title.trim().isEmpty()) {
+        if ("submitQuiz".equals(action)) {
+            if (quizTitle == null || quizTitle.trim().isEmpty()) {
                 request.setAttribute("error", "Vui lòng nhập tiêu đề Quiz!");
+                request.setAttribute("questions", questions);
                 request.setAttribute("courseID", courseID);
                 request.setAttribute("thisChapterID", chapterID);
+                request.setAttribute("totalQuestions", questions.size());
                 request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
                 return;
             }
 
-            // Tạo đối tượng Quiz
-            Quiz quiz = new Quiz();
-            quiz.setTitle(title);
-            quiz.setChapterID(chapterID);
-            quiz.setCourseID(courseID);
+            try {
+                Quiz quiz = new Quiz();
+                quiz.setTitle(quizTitle);
+                quiz.setCourseID(courseID);
+                quiz.setChapterID(chapterID);
 
-            // Gọi DAO thêm mới
-            QuizDAO dao = new QuizDAO();
-            boolean success = dao.insertQuiz(quiz);
+                QuizDAO quizDAO = new QuizDAO();
+                int quizID = quizDAO.insertQuizReturnId(quiz);
 
-            if (success) {
-                response.sendRedirect("createQuiz?courseID=" + courseID + "&ChapterID=" + chapterID);
-            } else {
-                request.setAttribute("error", "Thêm quiz thất bại. Vui lòng thử lại!");
+                if (quizID > 0) {
+                    QuestionDAO questionDAO = new QuestionDAO();
+                    for (Question q : questions) {
+                        if (q.getQuestionText() != null && !q.getQuestionText().trim().isEmpty() &&
+                                q.getCorrectAnswer() != null && !q.getCorrectAnswer().isEmpty()) {
+                            q.setQuizID(quizID);
+                            questionDAO.insertQuestion(q);
+                        }
+                    }
+                }
+
+                response.sendRedirect(request.getContextPath() + "/instructor/dashboard?courseID=" + courseID + "&chapterID=" + chapterID);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+                request.setAttribute("questions", questions);
                 request.setAttribute("courseID", courseID);
                 request.setAttribute("thisChapterID", chapterID);
+                request.setAttribute("quizTitle", quizTitle);
+                request.setAttribute("totalQuestions", questions.size());
                 request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Lỗi hệ thống khi thêm quiz: " + e.getMessage());
-            request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
         }
+    }
+
+    private int parseIntSafe(String s) {
+        return parseIntSafe(s, 0);
+    }
+
+    private int parseIntSafe(String s, int defaultValue) {
+        try {
+            if (s != null && !s.trim().isEmpty()) return Integer.parseInt(s.trim());
+        } catch (NumberFormatException e) { }
+        return defaultValue;
     }
 }
