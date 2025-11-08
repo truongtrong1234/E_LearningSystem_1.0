@@ -1,17 +1,47 @@
 package dao;
 
 import context.DBContext;
+import model.Quiz;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.Quiz;
 
 public class QuizDAO {
 
-    // Lấy tất cả quiz
+    // =============================
+    // Thêm Quiz mới và trả về ID
+    // =============================
+    public int insertQuizReturnId(Quiz quiz) {
+        String sql = "INSERT INTO Quizzes (ChapterID, Title) VALUES (?, ?)";
+        try (Connection con = new DBContext().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, quiz.getChapterID());
+            ps.setString(2, quiz.getTitle());
+            int affected = ps.executeUpdate();
+
+            if (affected > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // quizID mới tạo
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; // nếu fail
+    }
+
+    // =============================
+    // Lấy danh sách tất cả Quiz
+    // =============================
     public List<Quiz> getAllQuizzes() {
         List<Quiz> list = new ArrayList<>();
         String sql = "SELECT QuizID, ChapterID, Title FROM Quizzes ORDER BY QuizID DESC";
+
         try (Connection con = new DBContext().getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -30,10 +60,13 @@ public class QuizDAO {
         return list;
     }
 
-    // Lấy quiz theo Chapter
+    // =====================================
+    // Lấy danh sách Quiz theo ChapterID
+    // =====================================
     public List<Quiz> getQuizzesByChapter(int chapterID) {
         List<Quiz> list = new ArrayList<>();
         String sql = "SELECT QuizID, ChapterID, Title FROM Quizzes WHERE ChapterID = ? ORDER BY QuizID DESC";
+
         try (Connection con = new DBContext().getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -54,9 +87,12 @@ public class QuizDAO {
         return list;
     }
 
-    // Lấy quiz theo ID
+    // =================================
+    // Lấy Quiz theo QuizID
+    // =================================
     public Quiz getQuizById(int id) {
         String sql = "SELECT QuizID, ChapterID, Title FROM Quizzes WHERE QuizID = ?";
+
         try (Connection con = new DBContext().getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -77,14 +113,15 @@ public class QuizDAO {
         return null;
     }
 
-    // Lấy quiz theo Course
+    // ========================================
+    // Lấy tất cả quiz theo CourseID (JOIN)
+    // ========================================
     public List<Quiz> getQuizzesByCourseID(int courseID) {
         List<Quiz> list = new ArrayList<>();
         String sql = "SELECT q.QuizID, q.ChapterID, q.Title " +
                      "FROM Quizzes q " +
                      "JOIN Chapters c ON q.ChapterID = c.ChapterID " +
-                     "WHERE c.CourseID = ? " +
-                     "ORDER BY q.QuizID DESC";
+                     "WHERE c.CourseID = ? ORDER BY q.QuizID DESC";
 
         try (Connection con = new DBContext().getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -103,108 +140,57 @@ public class QuizDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return list;
     }
 
-    // Lấy quiz theo Course + Chapter (mới, dùng dashboard)
-    public List<Quiz> getQuizzesByCourseAndChapter(int courseID, int chapterID) {
-        List<Quiz> list = new ArrayList<>();
-        String sql = "SELECT q.QuizID, q.ChapterID, q.Title " +
-                     "FROM Quizzes q " +
-                     "JOIN Chapters c ON q.ChapterID = c.ChapterID " +
-                     "WHERE c.CourseID = ? AND q.ChapterID = ? " +
-                     "ORDER BY q.QuizID DESC";
+    // =====================================================
+    // Lấy courseID từ chapterID (để redirect sau khi lưu)
+    // =====================================================
+    public int getCourseIdByChapterId(int chapterID) {
+        String sql = "SELECT CourseID FROM Chapters WHERE ChapterID = ?";
         try (Connection con = new DBContext().getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, courseID);
-            ps.setInt(2, chapterID);
-
+            ps.setInt(1, chapterID);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Quiz q = new Quiz();
-                    q.setQuizID(rs.getInt("QuizID"));
-                    q.setChapterID(rs.getInt("ChapterID"));
-                    q.setTitle(rs.getString("Title"));
-                    list.add(q);
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    // Thêm quiz (cũ)
-    public boolean insertQuiz(Quiz q) {
-        String sql = "INSERT INTO Quizzes (ChapterID, Title) VALUES (?, ?)";
-        try (Connection con = new DBContext().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setInt(1, q.getChapterID());
-            ps.setString(2, q.getTitle());
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Thêm quiz và trả về ID vừa tạo
-    public int insertQuizReturnId(Quiz q) {
-        String sql = "INSERT INTO Quizzes (ChapterID, Title) VALUES (?, ?)";
-        try (Connection con = new DBContext().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            ps.setInt(1, q.getChapterID());
-            ps.setString(2, q.getTitle());
-
-            int affected = ps.executeUpdate();
-            if (affected == 0) return -1;
-
-            try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    return rs.getInt(1);
+                    return rs.getInt("CourseID");
                 }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1;
+        return -1; // Không tìm thấy
     }
 
-    // Cập nhật quiz
-    public boolean updateQuiz(Quiz q) {
-        String sql = "UPDATE Quizzes SET ChapterID=?, Title=? WHERE QuizID=?";
-        try (Connection con = new DBContext().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+    // =============================
+    // Test nhanh DAO
+    // =============================
+    public static void main(String[] args) {
+        QuizDAO dao = new QuizDAO();
 
-            ps.setInt(1, q.getChapterID());
-            ps.setString(2, q.getTitle());
-            ps.setInt(3, q.getQuizID());
-            return ps.executeUpdate() > 0;
+        try {
+            // Test chèn quiz mới
+            Quiz quiz = new Quiz();
+            quiz.setChapterID(3);
+            quiz.setTitle("Unit Test Quiz");
+            int newId = dao.insertQuizReturnId(quiz);
+            System.out.println("New QuizID: " + newId);
 
-        } catch (SQLException e) {
+            // Test lấy theo chapter
+            List<Quiz> list = dao.getQuizzesByChapter(3);
+            for (Quiz q : list) {
+                System.out.println(q.getQuizID() + " - " + q.getTitle());
+            }
+
+            // Test lấy courseID từ chapterID
+            int courseID = dao.getCourseIdByChapterId(3);
+            System.out.println("CourseID of Chapter 3: " + courseID);
+
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Xóa quiz
-    public boolean deleteQuiz(int id) {
-        String sql = "DELETE FROM Quizzes WHERE QuizID = ?";
-        try (Connection con = new DBContext().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 }

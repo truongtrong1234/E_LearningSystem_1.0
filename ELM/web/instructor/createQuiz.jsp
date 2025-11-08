@@ -24,12 +24,17 @@
             <!-- Quiz Title -->
             <div class="mb-3">
                 <label class="form-label">Quiz Title *</label>
-                <input type="text" id="quizTitle" name="quizTitle" class="form-control" placeholder="Enter quiz title" required>
+                <input type="text" name="titleQuiz" value="${quizTitle != null ? quizTitle : ''}" class="form-control" placeholder="Enter quiz title" required>
             </div>
+            
+            <!-- Hidden fields -->
+            <input type="hidden" name="totalQuestions" value="${totalQuestions}">
+            <input type="hidden" name="thisCourseID" value="${courseID}">
+            <input type="hidden" name="thisChapterID" value="${thischapterID}">
 
             <!-- Questions -->
             <c:forEach var="q" items="${questions}" varStatus="status">
-                <div class="border p-3 mb-3 rounded">
+                <div class="border p-3 mt-3 rounded">
                     <h5>Question ${status.index + 1}</h5>
                     <input type="text" name="questionText${status.index + 1}" class="form-control mb-2"
                            placeholder="Question text" value="${q.questionText}" required>
@@ -48,16 +53,12 @@
                         <option value="C" ${q.correctAnswer=='C' ? 'selected' : ''}>C</option>
                         <option value="D" ${q.correctAnswer=='D' ? 'selected' : ''}>D</option>
                     </select>
+                    <button type="submit" name="deleteIndex" value="${status.index}" class="mt-3 btn btn-danger btn-sm">Delete Question</button>
                 </div>
             </c:forEach>
-            
-            <!-- Hidden fields -->
-            <input type="hidden" name="totalQuestions" value="${totalQuestions}">
-            <input type="hidden" name="thisCourseID" value="${courseID}">
-            <input type="hidden" name="thischapterID" value="${thischapterID}">
 
             <!-- Button -->
-            <div class="d-flex justify-content-between mt-4 gap-3">
+            <div class="d-flex justify-content-between mt-5 gap-3">
                 <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
                 <button type="submit" name="action" value="addQuestion" class="btn btn-primary">+ Add Question</button>
                 <button type="submit" name="action" value="submitQuiz" class="btn btn-success">Create Quiz</button>
