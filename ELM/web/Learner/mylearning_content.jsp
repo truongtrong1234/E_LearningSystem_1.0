@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="assets/css/mylearningcontent.css?v3">
         <link rel="stylesheet" href="assets/css/headerLearner.css?v3">
         <link rel="stylesheet" href="assets/css/footer.css?v3">
-        <link rel="stylesheet" href="assets/css/comments.css?v1">
+        <link rel="stylesheet" href="assets/css/comments.css?v5">
 
     </head>
     <body>
@@ -133,8 +133,6 @@
 
 
 
-
-        <!-- ====== HỎI & ĐÁP (Q&A) ====== -->
         <!-- ====== HỎI & ĐÁP (Q&A) ====== -->
         <section class="qna-section" id="qna">
             <div class="qna-header">
@@ -262,7 +260,7 @@
                     </div>
                 </div>
             </form>
-
+        </section>
 
 
             <!-- footer -->
