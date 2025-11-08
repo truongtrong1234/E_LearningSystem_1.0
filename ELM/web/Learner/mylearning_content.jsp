@@ -57,21 +57,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="entry" items="${QuizMap}">
-                                <tr>
-                                    <td>${entry.key}</td>
-                                    <td class="text-end">
-                                        <c:choose>
-                                            <c:when test="${entry.value != null}">
-                                                <span class="fw-bold text-dark">${entry.value}</span>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="text-muted fst-italic">Chưa làm</span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+
+                            <c:choose>
+                                <c:when test="${not empty QuizMap}">
+                                    <c:forEach var="entry" items="${QuizMap}">
+                                        <tr>
+                                            <td>${entry.key}</td>
+                                            <td class="text-end">
+                                                <c:choose>
+                                                    <c:when test="${entry.value != null}">
+                                                        <span class="fw-bold text-dark">${entry.value}</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="text-muted fst-italic">Chưa làm</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:forEach> 
+                                </c:when>
+                                <c:otherwise>
+                                <span class="text-muted fst-italic">Không có bài kiểm tra nào</span>
+                            </c:otherwise>
+                        </c:choose>
+
                         </tbody>
                     </table>
                 </div>
@@ -106,6 +115,7 @@
                         </ul>
                         <p>Bài kiểm tra</p>
                         <ul>
+
                             <c:forEach var="quiz" items="${chapterQuizMap[entry.key]}">
                                 <li>
                                     <a href="Learner/doQuiz?CourseID=${CourseID}&ChapterID=${entry.key}&QuizID=${quiz.quizID}"
@@ -114,6 +124,7 @@
                                     </a>
                                 </li>
                             </c:forEach>
+
                         </ul>
                     </div>
                 </c:forEach>

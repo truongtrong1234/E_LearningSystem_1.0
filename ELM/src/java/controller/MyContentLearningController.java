@@ -86,7 +86,11 @@ public class MyContentLearningController extends HttpServlet {
         Map<String, BigDecimal> QuizMap = new LinkedHashMap<>();
         for (Quiz quiz : quizList) {
             QuizProgress progress = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), quiz.getQuizID());
-            QuizMap.put(quiz.getTitle(), progress.getTotalScore());
+            if (progress==null) {
+                
+            }
+            BigDecimal totalscore = (progress != null) ? progress.getTotalScore() : null; 
+            QuizMap.put(quiz.getTitle(),totalscore );
         }
 
         // 🟢 Lấy map tiến độ của lesson
