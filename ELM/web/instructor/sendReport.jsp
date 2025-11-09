@@ -126,15 +126,15 @@
                                     <td>${r.shortMessage}</td>
 
                                     <td>
-                                        <form action="reportDetail" method="get">
-                                            <input type="hidden" name="id" value="${r.reportId}">
-                                            <button type="submit" class="btn btn-link p-0">View</button>
-                                        </form>
+                                        <a href="${pageContext.request.contextPath}/instructor/viewReport?id=${r.reportId}" 
+                                           class="btn btn-link p-0">View</a>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
-
-                    </body>
-                    </html>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
