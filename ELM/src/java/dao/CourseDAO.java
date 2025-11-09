@@ -21,7 +21,7 @@ public class CourseDAO extends DBContext {
                         rs.getString("Description"),
                         rs.getInt("InstructorID"),
                         rs.getBigDecimal("Price"),
-                        rs.getInt("Class"), // ✅ Đổi ở đây
+                        rs.getInt("Class"), // Đổi ở đây
                         rs.getInt("CategoryID"),
                         rs.getString("Thumbnail")
                 );
@@ -118,7 +118,7 @@ public class CourseDAO extends DBContext {
                         rs.getString("Description"),
                         rs.getInt("InstructorID"),
                         rs.getBigDecimal("Price"),
-                        rs.getInt("Class"), // ✅ Đổi ở đây
+                        rs.getInt("Class"), // Đổi ở đây
                         rs.getInt("CategoryID"),
                         rs.getString("Thumbnail")
                 );
@@ -239,7 +239,7 @@ public class CourseDAO extends DBContext {
     }
 
     // Xóa khóa học
-   public boolean deleteCourse(int courseId) {
+    public boolean deleteCourse(int courseId) {
         String sql = "{call deleteCourse(?)}"; // gọi stored procedure
         try (CallableStatement stmt = connection.prepareCall(sql)) {
             stmt.setInt(1, courseId); // truyền CourseID

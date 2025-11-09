@@ -19,20 +19,33 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
 </head>
 <body>
-    <form action="createQuiz" method="post">
+<!--    <form action="createQuiz" method="post">
         <div class="create-quiz-container">
-            <!-- Quiz Title -->
+            <div class="mb-3">
+                <label for="courseSelect" class="form-label fw-bold">Select Course:</label>
+                    <select name="courseID" id="courseSelect" class="form-select" onchange="this.form.submit()" required>
+                        <option value="">-- Choose Course --</option>
+                        <c:forEach var="course" items="${coursesList}">
+                            <option value="${course.courseID}" 
+                                    <c:if test="${selectedCourseID == course.courseID}">selected</c:if>>
+                                ${course.title}
+                            </option>
+                        </c:forEach>
+                    </select>
+            </div>
+            
+             Quiz Title 
             <div class="mb-3">
                 <label class="form-label">Quiz Title *</label>
                 <input type="text" name="titleQuiz" value="${quizTitle != null ? quizTitle : ''}" class="form-control" placeholder="Enter quiz title" required>
             </div>
             
-            <!-- Hidden fields -->
+             Hidden fields 
             <input type="hidden" name="totalQuestions" value="${totalQuestions}">
             <input type="hidden" name="thisCourseID" value="${courseID}">
             <input type="hidden" name="thisChapterID" value="${thischapterID}">
 
-            <!-- Questions -->
+             Questions 
             <c:forEach var="q" items="${questions}" varStatus="status">
                 <div class="border p-3 mt-3 rounded">
                     <h5>Question ${status.index + 1}</h5>
@@ -57,9 +70,66 @@
                 </div>
             </c:forEach>
 
-            <!-- Button -->
+             Button 
             <div class="d-flex justify-content-between mt-5 gap-3">
                 <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                <button type="submit" name="action" value="addQuestion" class="btn btn-primary">+ Add Question</button>
+                <button type="submit" name="action" value="submitQuiz" class="btn btn-success">Create Quiz</button>
+            </div>
+        </div>
+    </form>-->
+    
+    <form action="createQuiz" method="post">
+        <div class="create-quiz-container">
+
+            <div class="mb-3">
+                <label for="courseSelect" class="form-label fw-bold">Select Course:</label>
+                <select name="courseID" id="courseSelect" class="form-select" onchange="this.form.submit()" required>
+                    <option value="">-- Choose Course --</option>
+                    <c:forEach var="course" items="${coursesList}">
+                        <option value="${course.courseID}" 
+                                <c:if test="${selectedCourseID == course.courseID}">selected</c:if>>
+                            ${course.title}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="chapterSelect" class="form-label fw-bold">Select Chapter:</label>
+                <select name="chapterID" id="chapterSelect" class="form-select" required 
+                        <c:if test="${empty chaptersList}">disabled</c:if>>
+
+                    <option value="">
+                        <c:choose>
+                            <c:when test="${selectedCourseID == null}">-- Select a Course first --</c:when>
+                            <c:otherwise>-- Choose Chapter --</c:otherwise>
+                        </c:choose>
+                    </option>
+
+                    <c:forEach var="chapter" items="${chaptersList}">
+                        <option value="${chapter.chapterID}" 
+                                <c:if test="${selectedChapterID == chapter.chapterID}">selected</c:if>>
+                            ${chapter.title}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Quiz Title *</label>
+                <input type="text" name="titleQuiz" value="${quizTitle != null ? quizTitle : ''}" class="form-control" placeholder="Enter quiz title" required>
+            </div>
+
+            <input type="hidden" name="totalQuestions" value="${totalQuestions}">
+            <input type="hidden" name="thisCourseID" value="${selectedCourseID}"> 
+            <input type="hidden" name="thisChapterID" value="${selectedChapterID}">
+
+            <c:forEach var="q" items="${questions}" varStatus="status">
+                </c:forEach>
+
+            <div class="d-flex justify-content-between mt-5 gap-3">
+                <a href="${pageContext.request.contextPath}/instructor/dashboard?tab=quiz" class="btn btn-secondary">Cancel</a>
                 <button type="submit" name="action" value="addQuestion" class="btn btn-primary">+ Add Question</button>
                 <button type="submit" name="action" value="submitQuiz" class="btn btn-success">Create Quiz</button>
             </div>
