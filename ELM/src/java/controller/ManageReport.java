@@ -57,9 +57,26 @@ public class ManageReport extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ReportDAO dao = new ReportDAO();
-        List<Report> list = dao.getAllReports();
+         ReportDAO dao = new ReportDAO();
 
+        // ✅ Kiểm tra nếu có action=delete
+        String action = request.getParameter("action");
+        String id_raw = request.getParameter("id");
+
+        if ("delete".equals(action) && id_raw != null) {
+            try {
+                int id = Integer.parseInt(id_raw);
+                dao.deleteReport(id);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            // Xóa xong redirect để tránh F5 lặp lại lệnh xóa
+            response.sendRedirect("manageReport");
+            return;
+        }
+
+        // ✅ Mặc định: hiển thị danh sách báo cáo
+        List<Report> list = dao.getAllReports();
         request.setAttribute("listReports", list);
         request.getRequestDispatcher("/admin/manageReport.jsp").forward(request, response);
     }

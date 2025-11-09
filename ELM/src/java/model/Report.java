@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 public class Report {
+
     private int reportId;
     private int accountId;
     private String title;
@@ -12,28 +13,75 @@ public class Report {
     private String senderName;
     private String senderEmail;
 
+    public String getShortMessage() {
+        if (message == null) {
+            return "";
+        }
+        return message.length() > 50 ? message.substring(0, 50) + "..." : message;
+    }
+
     // Getters & Setters
-    public int getReportId() { return reportId; }
-    public void setReportId(int reportId) { this.reportId = reportId; }
+    public int getReportId() {
+        return reportId;
+    }
 
-    public int getAccountId() { return accountId; }
-    public void setAccountId(int accountId) { this.accountId = accountId; }
+    public void setReportId(int reportId) {
+        this.reportId = reportId;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public int getAccountId() {
+        return accountId;
+    }
 
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getTitle() {
+        return title;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getSenderName() { return senderName; }
-    public void setSenderName(String senderName) { this.senderName = senderName; }
+    public String getMessage() {
+        return message;
+    }
 
-    public String getSenderEmail() { return senderEmail; }
-    public void setSenderEmail(String senderEmail) { this.senderEmail = senderEmail; }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
+    }
+
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
+    }
 }

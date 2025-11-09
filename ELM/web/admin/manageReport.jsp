@@ -54,7 +54,8 @@
                                     <td>${r.createdAt}</td>
                                     <td>
                                         <a href="reportDetail?id=${r.reportId}" class="btn btn-primary btn-sm">View</a>
-                                        <a href="deleteReport?id=${r.reportId}" class="btn btn-danger btn-sm"
+                                        <a href="manageReport?action=delete&id=${r.reportId}" 
+                                           class="btn btn-danger btn-sm"
                                            onclick="return confirm('Delete this report?')">Delete</a>
                                     </td>
                                 </tr>

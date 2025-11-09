@@ -26,8 +26,9 @@ public class ReportDetail extends HttpServlet {
 
         // Lấy thông tin report
         ReportDAO dao = new ReportDAO();
+        dao.markAsRead(id);
         Report report = dao.getReportById(id);
-
+        
         // Lấy danh sách reply
         ReportReplyDAO replyDao = new ReportReplyDAO();
         List<ReportReply> replies = replyDao.getRepliesByReportId(id);
@@ -41,7 +42,7 @@ public class ReportDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String action = request.getParameter("action");
         ReportReplyDAO replyDao = new ReportReplyDAO();
 

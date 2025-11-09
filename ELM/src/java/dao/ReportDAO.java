@@ -87,6 +87,43 @@ public class ReportDAO extends DBContext {
         }
         return null;
     }
+    public List<Report> getListReportById(int accountId) {
+    List<Report> list = new ArrayList<>();
+    String sql = """
+        SELECT ReportID, AccountID, Title, Message, Status, CreatedAt
+        FROM Reports
+        WHERE AccountID = ?
+        ORDER BY CreatedAt DESC
+    """;
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, accountId);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Report r = new Report();
+            r.setReportId(rs.getInt("ReportID"));
+            r.setAccountId(rs.getInt("AccountID"));
+            r.setTitle(rs.getString("Title"));
+            r.setMessage(rs.getString("Message"));
+            r.setStatus(rs.getString("Status"));
+            Timestamp ts = rs.getTimestamp("CreatedAt");
+            if (ts != null) r.setCreatedAt(ts.toLocalDateTime());
+            list.add(r);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return list;
+}   
+    public void markAsRead(int reportId) {
+    String sql = "UPDATE Reports SET Status = 'Reviewed' WHERE ReportID = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, reportId);
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 
     // Xóa report
     public void deleteReport(int id) {

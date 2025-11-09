@@ -7,6 +7,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.util.List;
 
 public class SendReport extends HttpServlet {
 
@@ -48,6 +49,26 @@ public class SendReport extends HttpServlet {
         }
 
         // Quay lại trang sendReport.jsp
+        // Sau khi thêm report, gọi lại doGet() để load lại danh sách
+        doGet(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
+
+        if (acc == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        ReportDAO dao = new ReportDAO();
+        List<Report> reports = dao.getListReportById(acc.getAccountId());
+        request.setAttribute("reports", reports);
         request.getRequestDispatcher("/instructor/sendReport.jsp").forward(request, response);
     }
+
 }

@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/instructor/sendReport.jsp" class="nav-link text-white sidebar-link">
+                    <a href="${pageContext.request.contextPath}/instructor/sendReport" class="nav-link text-white sidebar-link">
                         <i class="fas fa-question-circle me-2"></i> Helps
                     </a>
                 </li>
