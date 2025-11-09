@@ -14,10 +14,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Nội dung học</title>
-        <link rel="stylesheet" href="assets/css/mylearningcontent.css?v3">
-        <link rel="stylesheet" href="assets/css/headerLearner.css?v3">
-        <link rel="stylesheet" href="assets/css/footer.css?v3">
-        <link rel="stylesheet" href="assets/css/comments.css?v5">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mylearningcontent.css?v=3">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css?v=3">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css?v=3">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/comments.css">
+
+
 
     </head>
     <body>
@@ -26,7 +28,7 @@
         <h1>${course.title}</h1>
 
         <div class="content-wrapper">
-            <!-- 🔹 CỘT TRÁI: TÀI LIỆU -->
+            <!-- CỘT TRÁI: TÀI LIỆU -->
             <div class="materials-pane">
                 <h3>Tài liệu bài học</h3>
                 <c:choose>
@@ -42,7 +44,7 @@
                         </ul>
                     </c:when>
                     <c:otherwise>
-                        <p>👉 Hãy chọn một bài học ở bên phải để xem tài liệu.</p>
+                        <p> Hãy chọn một bài học ở bên phải để xem tài liệu.</p>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -85,7 +87,7 @@
                     </table>
                 </div>
             </div>
-            <!-- 🔹 CỘT PHẢI: DANH SÁCH CHƯƠNG/BÀI -->
+            <!-- CỘT PHẢI: DANH SÁCH CHƯƠNG/BÀI -->
             <div class="lessons-pane">
                 <c:forEach var="entry" items="${chapterLessonMap}">
                     <div class="chapter-block">
@@ -263,50 +265,50 @@
         </section>
 
 
-            <!-- footer -->
+        <!-- footer -->
 
-            <jsp:include page="/components/footer.jsp"/>
-            <!--  Script xử lý tick bài học -->
-            <script>
-                document.querySelectorAll(".lesson-check").forEach(chk => {
-                    chk.addEventListener("change", function () {
-                        const lessonID = this.dataset.lessonid;
-                        const courseID = this.dataset.courseid;
-                        const isCompleted = this.checked;
+        <jsp:include page="/components/footer.jsp"/>
+        <!--  Script xử lý tick bài học -->
+        <script>
+            document.querySelectorAll(".lesson-check").forEach(chk => {
+                chk.addEventListener("change", function () {
+                    const lessonID = this.dataset.lessonid;
+                    const courseID = this.dataset.courseid;
+                    const isCompleted = this.checked;
 
-                        // Gửi request cập nhật
-                        const bodyData = "lessonID=" + encodeURIComponent(lessonID)
-                                + "&courseID=" + encodeURIComponent(courseID)
-                                + "&isCompleted=" + isCompleted;
+                    // Gửi request cập nhật
+                    const bodyData = "lessonID=" + encodeURIComponent(lessonID)
+                            + "&courseID=" + encodeURIComponent(courseID)
+                            + "&isCompleted=" + isCompleted;
 
-                        fetch("updateLessonProgress", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/x-www-form-urlencoded"
-                            },
-                            body: bodyData
-                        })
-                                .then(res => {
-                                    if (!res.ok)
-                                        throw new Error("Network response was not ok");
-                                    return res.text();
-                                })
-                                .then(data => console.log("✅ Update success:", data))
-                                .catch(err => console.error("❌ Fetch error:", err));
-                    });
+                    fetch("updateLessonProgress", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: bodyData
+                    })
+                            .then(res => {
+                                if (!res.ok)
+                                    throw new Error("Network response was not ok");
+                                return res.text();
+                            })
+                            .then(data => console.log("Update success:", data))
+                            .catch(err => console.error("Fetch error:", err));
                 });
-            </script>
-            <!-- Xử lí nút rep -->
-            <script>
-                function toggleReplyForm(qnaID) {
-                    const form = document.getElementById("reply-form-" + qnaID);
-                    if (form.style.display === "none" || form.style.display === "") {
-                        form.style.display = "block";
-                    } else {
-                        form.style.display = "none";
-                    }
+            });
+        </script>
+        <!-- Xử lí nút rep -->
+        <script>
+            function toggleReplyForm(qnaID) {
+                const form = document.getElementById("reply-form-" + qnaID);
+                if (form.style.display === "none" || form.style.display === "") {
+                    form.style.display = "block";
+                } else {
+                    form.style.display = "none";
                 }
-            </script>
+            }
+        </script>
 
 
     </body>
