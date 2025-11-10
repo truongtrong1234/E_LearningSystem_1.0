@@ -27,17 +27,17 @@
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/instructor/dashboard" class="nav-link text-white sidebar-link active">
-                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
+                            <i class="fas fa-tachometer-alt me-2"></i> Tổng quan
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-chart-bar me-2"></i> Analytics
+                            <i class="fas fa-chart-bar me-2"></i> Phân tích
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/instructor/sendReport" class="nav-link text-white sidebar-link">
-                            <i class="fas fa-question-circle me-2"></i> Helps
+                            <i class="fas fa-question-circle me-2"></i> Hỗ trợ
                         </a>
                     </li>
                 </ul>
@@ -69,13 +69,13 @@
                 <div class="container-fluid p-4">
                     <ul class="nav nav-tabs custom-tabs mb-4">
                         <li class="nav-item">
-                            <a class="nav-link active custom-tab-link" aria-current="page" data-tab="courses-content" href="#course-content">Courses</a>
+                            <a class="nav-link active custom-tab-link" aria-current="page" data-tab="courses-content" href="#course-content">Khoá học</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link custom-tab-link" data-tab="quiz-content" href="#quiz-content">Quiz</a>
+                            <a class="nav-link custom-tab-link" data-tab="quiz-content" href="#quiz-content">Bài kiểm tra</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link custom-tab-link" data-tab="materials-content" href="#materials-content">Materials</a>
+                            <a class="nav-link custom-tab-link" data-tab="materials-content" href="#materials-content">Tài liệu</a>
                         </li>
                     </ul>
                     <!-- Manage Course -->
@@ -83,10 +83,10 @@
                         <!-- Create Course -->
                         <div class="create-cqm-box p-4 rounded shadow-sm border">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="fs-5 text-muted">Jump Into Course Creation</span>
+                                <span class="fs-5 text-muted">Ấn tạo khoá học mới ở bên phải</span>
                                 <button class="btn create-cqm-btn py-2 px-4" 
                                         onclick="window.location.href = 'createCourse'">
-                                    Create New Course
+                                    Tạo khoá học mới
                                 </button>
                             </div>
                         </div>
@@ -102,12 +102,12 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="editCourse?id=${course.courseID}"><i class="fas fa-edit me-2"></i> Edit Course</a></li>
+                                                        <li><a class="dropdown-item" href="editCourse?id=${course.courseID}"><i class="fas fa-edit me-2"></i> Sửa khoá học </a></li>
                                                         <li><hr class="dropdown-divider"></li>
                                                         <li>
                                                             <form action="/ELM/instructor/dashboard" method="post">
                                                                 <button type="submit" class="dropdown-item" value="${course.courseID}" name="action">
-                                                                    Delete Course
+                                                                    Xoá khoá học
                                                                 </button>
                                                             </form>
 
@@ -128,9 +128,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            No courses have been created yet. Click
-                                            <a href="createCourse" style="text-decoration: none">"Create New Course"</a> 
-                                            to get started!
+                                            Chưa có khoá học nào được tạo. Hãy ấn
+                                            <a href="createCourse" style="text-decoration: none">"Tạo khoá học mới"</a> 
+                                            để bắt đầu!
                                         </div>
                                     </div>
                                 </c:otherwise>
@@ -142,10 +142,10 @@
                         <!-- Create Quiz -->
                         <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="fs-5 text-muted">Jump Into Quiz Creation</span>
+                                <span class="fs-5 text-muted">Ấn tạo bài kiểm tra mới ở bên phải</span>
                                 <button class="btn create-cqm-btn py-2 px-4" 
                                         onclick="window.location.href = 'createQuiz'">
-                                    Create New Quiz
+                                    Tạo bài kiểm tra mới
                                 </button>
                             </div>
                         </div>
@@ -165,8 +165,8 @@
                                                 ${questionCount}
                                             </td>
                                             <td>
-                                                <a href="viewQuiz?id=${quiz.quizID}" class="btn btn-info btn-sm">View</a>
-                                                <a href="editQuiz?id=${quiz.quizID}" class="btn btn-warning btn-sm">Edit</a>
+                                                <a href="viewQuiz?id=${quiz.quizID}" class="btn btn-info btn-sm">Xem bài kiểm tra</a>
+                                                <a href="editQuiz?id=${quiz.quizID}" class="btn btn-warning btn-sm">Sửa bài kiểm tra</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -174,9 +174,9 @@
                                 <c:otherwise>
                                     <div class="col-12">
                                         <div class="alert alert-info text-center" role="alert">
-                                            No Quiz has been created yet. Click
-                                            <a href="${pageContext.request.contextPath}/instructor/createQuiz" style="text-decoration: none">"Create New Quiz"</a> 
-                                            to get started!
+                                            Chưa có bài kiểm tra nào được tạo. Hãy ấn
+                                            <a href="${pageContext.request.contextPath}/instructor/createQuiz" style="text-decoration: none">"Tạo bài kiểm tra mới"</a> 
+                                            để bắt đầu!
                                         </div>
                                     </div>
                                 </c:otherwise>
@@ -186,7 +186,6 @@
                     <!-- Manage Material -->
                     <div id="materials-content" class="tab-content-block" style="display: none;">
                         <div class="create-cqm-box p-4 rounded shadow-sm border mb-4">
-
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 text-muted">Upload and Manage Course Materials</span>
                                 <button class="btn create-cqm-btn py-2 px-4" 
@@ -195,7 +194,7 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- List Material -->
+<!--                    List Material 
                         <div class="row mt-4 material-list">
                             <c:choose>
                                 <c:when test="${not empty materialList}">
@@ -241,7 +240,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
-                    </div>
+                    </div>-->
                 </div>       
             </div>
         </div>
