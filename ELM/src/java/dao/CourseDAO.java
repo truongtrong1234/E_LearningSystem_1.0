@@ -7,6 +7,77 @@ import context.DBContext;
 import java.util.Date;
 
 public class CourseDAO extends DBContext {
+    public List<Course> searchCourses(String keyword, Integer cateID, Integer instructorID) {
+    List<Course> list = new ArrayList<>();
+
+    StringBuilder sql = new StringBuilder("""
+        SELECT c.CourseID,
+               c.Title,
+               c.Description,
+               c.InstructorID,
+               c.Price,
+               c.Class,
+               c.CategoryID,
+               c.Thumbnail,
+               a.name AS InstructorName,
+               cat.CategoryName
+        FROM Courses c
+        JOIN Accounts a ON c.InstructorID = a.AccountID
+        JOIN Category cat ON c.CategoryID = cat.CategoryID
+        WHERE 1 = 1
+    """);
+
+    // Thêm điều kiện động
+    if (keyword != null && !keyword.trim().isEmpty()) {
+        sql.append(" AND (c.Title LIKE ? OR a.name LIKE ?)");
+    }
+    if (cateID != null) {
+        sql.append(" AND c.CategoryID = ?");
+    }
+    if (instructorID != null) {
+        sql.append(" AND c.InstructorID = ?");
+    }
+
+    sql.append(" ORDER BY c.Title ASC");
+
+    try (PreparedStatement stm = connection.prepareStatement(sql.toString())) {
+        int index = 1;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            stm.setString(index++, "%" + keyword + "%");
+            stm.setString(index++, "%" + keyword + "%");
+        }
+        if (cateID != null) {
+            stm.setInt(index++, cateID);
+        }
+        if (instructorID != null) {
+            stm.setInt(index++, instructorID);
+        }
+
+        ResultSet rs = stm.executeQuery();
+
+        while (rs.next()) {
+            Course c = new Course();
+            c.setCourseID(rs.getInt("CourseID"));
+            c.setTitle(rs.getString("Title"));
+            c.setDescription(rs.getString("Description"));
+            c.setInstructorID(rs.getInt("InstructorID"));
+            c.setInstructorName(rs.getString("InstructorName"));
+            c.setPrice(rs.getBigDecimal("Price"));
+            c.setCourseclass(rs.getInt("Class"));
+            c.setCategoryID(rs.getInt("CategoryID"));
+            c.setCategoryName(rs.getString("CategoryName"));
+            c.setThumbnail(rs.getString("Thumbnail"));
+
+            list.add(c);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return list;
+}
 
     // Lấy tất cả khóa học
     public List<Course> getAllCourses() {

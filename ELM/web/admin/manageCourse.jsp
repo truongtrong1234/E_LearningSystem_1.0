@@ -50,17 +50,60 @@
         <div class="main-content">
             <h1>Manage Courses</h1>
 
-            <!-- Category Header -->
+            <!--             Category Header 
+                        <div class="category-wrap mb-4">
+                            <div class="category-bar d-flex flex-wrap gap-3">
+            <c:forEach var="cat" items="${listOfCategories}">
+                <a href="manageCourse?cats=${cat.cate_id}" 
+                   class="btn btn-outline-primary btn-sm">
+                ${cat.cate_name}
+            </a>
+            </c:forEach>
+        </div>
+    </div>-->
+            <!-- Category & Instructor Filter -->
             <div class="category-wrap mb-4">
-                <div class="category-bar d-flex flex-wrap gap-3">
-                    <c:forEach var="cat" items="${listOfCategories}">
-                        <a href="manageCourse?cats=${cat.cate_id}" 
-                           class="btn btn-outline-primary btn-sm">
-                            ${cat.cate_name}
-                        </a>
-                    </c:forEach>
-                </div>
+                <form class="row g-2 align-items-center" method="get" action="manageCourse">
+                    <!-- Category -->
+                    <div class="col-md-3">
+                        <select name="cats" class="form-select">
+                            <option value="">All Categories</option>
+                            <c:forEach var="cat" items="${listOfCategories}">
+                                <option value="${cat.cate_id}" 
+                                        ${param.cats == cat.cate_id ? 'selected' : ''}>
+                                    ${cat.cate_name}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <!-- Instructor -->
+                    <div class="col-md-3">
+                        <select name="instructor" class="form-select">
+                            <option value="">All Instructors</option>
+                            <c:forEach var="ins" items="${listOfInstructors}">
+                                <option value="${ins.instructorID}" 
+                                        ${param.instructor == ins.instructorID ? 'selected' : ''}>
+                                    ${ins.instructorName}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control" 
+                               placeholder="Search by course or instructor"
+                               value="${param.search}">
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    </div>
+                </form>
             </div>
+
 
 
             <table class="table table-bordered align-middle">
@@ -92,7 +135,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="editCourse?id=${c.courseID}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="viewCourseDetail?id=${c.courseID}" class="btn btn-info btn-sm">View</a>
                                 <a href="deleteCourse?id=${c.courseID}" class="btn btn-danger btn-sm"
                                    onclick="return confirm('Delete this course?')">Delete</a>
                             </td>
