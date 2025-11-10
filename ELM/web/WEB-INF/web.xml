@@ -133,6 +133,10 @@
         <servlet-class>controller.EditCourseController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateQuizController</servlet-name>
+        <servlet-class>controller.CreateQuizController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>QnAQuestionController</servlet-name>
         <servlet-class>controller.QnAQuestionController</servlet-class>
     </servlet>
@@ -319,6 +323,10 @@
     <servlet-mapping>
         <servlet-name>ViewCourseDetail</servlet-name>
         <url-pattern>/admin/viewCourseDetail</url-pattern>
+    </servlet-mapping>CreateQuizController
+     <servlet-mapping>
+        <servlet-name>CreateQuizController</servlet-name>
+        <url-pattern>/instructor/createQuiz</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -144,4 +144,8 @@ public class QuestionDAO {
             return false;
         }
     }
+    public static void main(String[] args) {
+        QuestionDAO dao  = new QuestionDAO(); 
+        dao.deleteQuestion(21); 
+    }
 }

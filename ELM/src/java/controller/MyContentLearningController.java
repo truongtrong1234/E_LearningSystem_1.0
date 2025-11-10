@@ -88,8 +88,8 @@ public class MyContentLearningController extends HttpServlet {
             QuizProgress progress = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), quiz.getQuizID());
             BigDecimal totalscore = (progress != null) ? progress.getTotalScore() : null; 
             QuizMap.put(quiz.getTitle(),totalscore );
+            
         }
-
         // 🟢 Lấy map tiến độ của lesson
         LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
         Map<Integer, Boolean> lessonCompletedMap = lessonProgressDAO.getLessonCompletionMap(account.getAccountId(), courseID);

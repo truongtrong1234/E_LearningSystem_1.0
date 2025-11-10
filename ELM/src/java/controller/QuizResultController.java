@@ -19,25 +19,6 @@ import model.Account;
  * @author Admin
  */
 public class QuizResultController extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet QuizResultController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet QuizResultController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,18 +29,11 @@ public class QuizResultController extends HttpServlet {
         QuizProgressDAO dao = new QuizProgressDAO();
         int correctCount = dao.countCorrectAnswers(accountID, quizID);
         int totalQuestions = dao.totalQuestions(quizID);
-        double totalScore = (double) correctCount / totalQuestions * 10; // điểm max = 10
+        double totalScore = (double) correctCount / totalQuestions * 10;
         dao.saveProgress(accountID, quizID, correctCount, totalScore);
         request.setAttribute("correctCount", correctCount);
         request.setAttribute("totalQuestions", totalQuestions);
         request.setAttribute("totalScore", totalScore);
         request.getRequestDispatcher("quizResult.jsp").forward(request, response);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
 }

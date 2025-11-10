@@ -32,7 +32,7 @@
                 background:#fff;
             }
 
-            /* Top bar giống login */
+            /* Top bar */
             .topbar{
                 height:64px;
                 display:flex;
@@ -45,10 +45,6 @@
                 font-weight:800;
                 font-size:24px;
             }
-            .logo span{
-                color:orange !important
-            }
-
             .logo .s{
                 color:var(--brand)
             }
@@ -59,7 +55,7 @@
                 color:#2d2f31;
                 text-decoration:none;
                 font-weight:600;
-                margin-left:20px
+                margin-left:20px;
             }
             .topbar a:hover{
                 color:var(--brand)
@@ -74,7 +70,7 @@
                 grid-template-columns:1fr 460px;
                 gap:60px;
             }
-            @media (max-width: 992px){
+            @media (max-width:992px){
                 .wrap{
                     grid-template-columns:1fr;
                 }
@@ -103,13 +99,12 @@
                 font-size:14px;
                 font-weight:600;
             }
-
             .ud-input{
                 width:100%;
                 height:48px;
                 border:1px solid #d1d7dc;
                 border-radius:4px;
-                padding:0 12px;
+padding:0 12px;
                 font-size:16px;
                 outline:none;
                 background:#fff;
@@ -118,7 +113,6 @@
                 border-color:var(--brand);
                 box-shadow:0 0 0 2px rgba(255,102,0,.2);
             }
-
             .btn-primary{
                 width:100%;
                 height:48px;
@@ -185,12 +179,12 @@
             .foot{
                 margin-top:20px;
                 font-size:14px;
-                color:var(--muted)
+                color:var(--muted);
             }
             .foot a{
                 color:var(--brand);
                 text-decoration:none;
-                font-weight:700
+                font-weight:700;
             }
             .foot a:hover{
                 text-decoration:underline
@@ -213,7 +207,7 @@
         <!-- Top nav -->
         <div class="topbar">
             <a class="logo" href="<%= ctx %>/home_Guest">
-                <span class="s">Secret</span><span class="c">Coder</span>
+<span class="s">Secret</span><span class="c">Coder</span>
             </a>
             <div>
                 <a href="<%=ctx%>/login.jsp">Log in</a>
@@ -223,12 +217,12 @@
         <!-- Main -->
         <div class="wrap">
 
-            <!-- Illustration (trái) -->
+            <!-- Illustration -->
             <div class="illu">
                 <img src="https://frontends.udemycdn.com/components/auth/desktop-illustration-x1.webp" alt="Learning illustration">
             </div>
 
-            <!-- Form (phải) -->
+            <!-- Form -->
             <div class="panel">
                 <h1>Create your SecretCoder account</h1>
 
@@ -243,6 +237,36 @@
 
                     <div style="height:12px"></div>
 
+                    <label for="workplace">Nơi công tác</label>
+                    <input id="workplace" name="workplace" type="text" class="ud-input" placeholder="VD: Đại học Bách Khoa Hà Nội" required />
+
+                    <div style="height:12px"></div>
+
+                    <label for="phone">Số điện thoại</label>
+                    <input id="phone" name="phone" type="tel" class="ud-input" placeholder="VD: 0901234567" pattern="[0-9]{9,11}" required />
+
+                    <div style="height:12px"></div>
+
+                    <label for="dateofbirth">Ngày sinh</label>
+                    <input id="dateofbirth" name="dateofbirth" type="date" class="ud-input" required />
+
+                    <div style="height:12px"></div>
+
+                    <label for="gender">Giới tính</label>
+                    <select id="gender" name="gender" class="ud-input" required>
+                        <option value="">-- Chọn giới tính --</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+
+                    <div style="height:12px"></div>
+
+                    <label for="address">Địa chỉ</label>
+                    <input id="address" name="address" type="text" class="ud-input" placeholder="VD: 123 Nguyễn Trãi, Hà Nội" required />
+
+                    <div style="height:12px"></div>
+
                     <label for="password">Password</label>
                     <input id="password" name="password" type="password" class="ud-input" required />
 
@@ -251,8 +275,8 @@
                     <label for="confirm">Confirm password</label>
                     <input id="confirm" name="confirm" type="password" class="ud-input" required />
 
-                    <!-- JSTL error (nếu server trả về) -->
-                    <c:if test="${not empty errorMessage}">
+                    <!-- JSTL error -->
+<c:if test="${not empty errorMessage}">
                         <div class="error">${errorMessage}</div>
                     </c:if>
 
@@ -262,10 +286,9 @@
 
                 <div class="hr"><span>Or continue with</span></div>
 
-                <!-- Chỉ để Google cho sạch như bên login -->
                 <div class="socials">
                     <a class="social-btn"
-                       href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ELM/loginGoogle&response_type=code&client_id=952221177325-4o9tk9nid7sgplqeejtrv9opbv57ugu3.apps.googleusercontent.com&approval_prompt=force">
+                       href="https://accounts.google.com/o/oauth2/auth?scope=email%20pro…9opbv57ugu3.apps.googleusercontent.com&approval_prompt=force">
                         <img src="https://www.gstatic.com/images/branding/product/1x/gsa_64dp.png" alt="G"> Google
                     </a>
                 </div>
@@ -277,3 +300,4 @@
         </div>
     </body>
 </html>
+S
