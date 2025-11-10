@@ -115,7 +115,7 @@
                                                     </ul>
                                                 </div>
                                                 <div class="cqm-image-placeholder bg-light rounded-top">
-                                                    <i class="fas fa-book-open fa-3x text-secondary"></i>
+                                                    <img src="${course.thumbnail}" alt="alt"/>
                                                 </div>
                                                 <div class="card-body">
                                                     <h5 class="card-title fw-bold text-truncate" title="${course.title}">${course.title}</h5>
