@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Tạo chương</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
     </head>
@@ -21,34 +21,34 @@
                 <div class="step-header mb-4">
                     <div class="text-center">
                         <div class="circle">1</div>
-                        <div class="label">Basic</div>
+                        <div class="label">Cơ bản</div>
                     </div>
                     <div class="step-indicator"></div>
                     <div class="text-center">
                         <div class="circle active">2</div>
-                        <div class="label">Chapters</div>
+                        <div class="label">Chương</div>
                     </div>
                     <div class="step-indicator"></div>
                     <div class="text-center">
                         <div class="circle">3</div>
-                        <div class="label">Lessons</div>
+                        <div class="label">Bài giảng</div>
                     </div>
                     <div class="step-indicator"></div>
                     <div class="text-center">
                         <div class="circle">4</div>
-                        <div class="label">Review</div>
+                        <div class="label">Kiểm tra</div>
                     </div>
                 </div>
                 <!-- Add Chapter -->
                 <form action="createChapter" method="post" class="d-flex mb-4">
                     <input type="hidden" name="thisCourseID" value="${thisCourseID}">
-                    <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Enter new chapter title..." required>
-                    <button type="submit" class="btn btn-primary">+ Add Chapter </button>                  
+                    <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Nhập tiêu đề chương..." required>
+                    <button type="submit" class="btn btn-primary">+ Thêm chương </button>                  
                 </form>
                 <!-- Danh sách chương -->
                 <div id="chapterList">
                     <c:if test="${empty chapters}">
-                        <p class="text-muted">No chapters yet. Create one above!</p>
+                        <p class="text-muted">Chưa có chương nào. Hãy tạo một cái ở trên!</p>
                     </c:if>
 
                     <c:forEach var="ch" items="${chapters}">
@@ -59,14 +59,14 @@
                                 <span><strong>${ch.title}</strong></span>
 
                                 <div>
-                                    <a href="createLesson?courseID=${thisCourseID}&ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Create Lesson</a>
-                                    <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm me-2">Create Quiz</a>
+                                    <a href="createLesson?courseID=${thisCourseID}&ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Tạo bài giảng</a>
+                                    <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm me-2">Tạo bài kiểm tra</a>
 
                                     <form action="createChapter" method="post" style="display:inline;">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="chapterID" value="${ch.chapterID}">
                                         <input type="hidden" name="thisCourseID" value="${thisCourseID}">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete Chapter</button>
+                                        <button type="submit" class="btn btn-danger btn-sm">Xoá chương</button>
                                     </form>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                     <input type="hidden" name="action" value="edit">
                                     <input type="hidden" name="chapterID" value="${ch.chapterID}">
                                     <input type="hidden" name="thisCourseID" value="${thisCourseID}">
-                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                    <button type="submit" class="btn btn-success btn-sm">Lưu</button>
                                 </form>
                             </div>
                         </div>
@@ -87,8 +87,8 @@
 
                 <!-- Button -->
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
-                    <a href="${pageContext.request.contextPath}/instructor/editCourse?id=${thisCourseID}" class="btn btn-secondary">Go Back</a>
+                    <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-primary">Trang tổng quan</a>
+                    <a href="${pageContext.request.contextPath}/instructor/editCourse?id=${thisCourseID}" class="btn btn-secondary">Quay lại</a>
                 </div> 
             </div>
         </div>

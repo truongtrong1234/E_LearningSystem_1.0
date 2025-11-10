@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (editing) {
-            editBtn.textContent = "Cancel";
+            editBtn.textContent = "Huỷ";
             editBtn.classList.replace("btn-warning", "btn-secondary");
             saveBtn.classList.remove("d-none");
         } else {
-            editBtn.textContent = "Edit";
+            editBtn.textContent = "Sửa";
             editBtn.classList.replace("btn-secondary", "btn-warning");
             saveBtn.classList.add("d-none");
         }

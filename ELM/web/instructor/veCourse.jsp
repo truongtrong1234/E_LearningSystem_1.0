@@ -10,15 +10,15 @@
 <html lang="vi">
     <head>
         <meta charset="UTF-8">
-        <title>View and Edit Course</title>
+        <title>Xem và chỉnh sửa khoá học</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/veCQ.css">
     </head>
     <body>
         <div class="container mt-5 mb-5">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold text-orange">Course Information </h2>
-                <button id="editToggleBtn" class="btn btn-warning text-white fw-semibold px-4">Edit</button>
+                <h2 class="fw-bold text-orange">Thông tin khoá học </h2>
+                <button id="editToggleBtn" class="btn btn-warning text-white fw-semibold px-4">Sửa</button>
             </div>
 
             <form id="courseForm" action="${pageContext.request.contextPath}/instructor/editCourse" method="post" enctype="multipart/form-data">
@@ -26,12 +26,12 @@
                 <div class="card mb-4 p-4 shadow-sm border-0">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Course Title</label>
+                            <label class="form-label fw-semibold">Tiêu đề khoá học</label>
                             <input type="text" class="form-control editable-field" name="title"
                                    value="${course.title}" readonly>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Category</label>
+                            <label class="form-label fw-semibold">Danh mục (Môn học)</label>
                             <select id="categorySelect" name="categoryID" class="form-control editable-field" required="">
                                 <option value="" disabled selected>${course.categoryName}</option>
                                 <c:forEach var="c" items="${categoryList}">
@@ -40,12 +40,12 @@
                             </select>
                         </div>
                         <div class="col-md-12">
-                            <label class="form-label fw-semibold">Description</label>
+                            <label class="form-label fw-semibold">Mô tả</label>
                             <textarea class="form-control editable-field" rows="4"
                                       name="description" readonly>${course.description}</textarea>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Class</label>
+                            <label class="form-label fw-semibold">Khối</label>
                             <select class="form-select editable-field" name="className" disabled>
                                 <option value="10" <c:if test="${course.courseclass eq '10'}">selected</c:if>>10</option>
                                 <option value="11" <c:if test="${course.courseclass eq '11'}">selected</c:if>>11</option>
@@ -53,29 +53,28 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold">Price (₫)(ít nhất 10000 VND)</label>
+                                <label class="form-label fw-semibold">Giá(₫) (ít nhất 10000 VND)</label>
                                 <input type="number" class="form-control editable-field" step="1000" min="10000"
                                        name="price" value="${course.price}" readonly>
                         </div> 
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Thumbnail</label>
+                            <label class="form-label fw-semibold">Ảnh bìa</label>
                             <input type="file" id="thumbnail" name="thumbnail" class="form-control editable-field" readonly>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">My Thumbnail:</label>
+                            <label class="form-label fw-semibold">Ảnh bìa hiện tại: </label>
                             <img src="${course.thumbnail}"/>
                         </div>
                     </div>
                     <div class="text-end mt-4">
                         <a href="createChapter?courseID=${course.courseID}" class="btn btn-sm btn-orange me-2">
-                            Edit Chapter
+                            Chỉnh sửa thêm
                         </a>
-                        <a href="dashboard" class="btn btn-sm btn-orange me-2">
-                            Cancel View/Edit Course
+                        <a href="dashboard" class="btn btn-sm btn-dark me-2">
+                            Huỷ xem/chỉnh sửa
                         </a>
-                        
                         <button type="submit" id="saveBtn" class="btn btn-success fw-semibold d-none">
-                            Save
+                            Lưu
                         </button>
                     </div>
                 </div>
