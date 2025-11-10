@@ -95,9 +95,9 @@
                             <c:choose>
                                 <c:when test="${not empty courseList}">
                                     <c:forEach var="course" items="${courseList}">
-                                        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                                        <div class="col-xl-3 col-lg-4 col-md-6 mb-4" onclick="window.location='/ELM/myContent?CourseID=${course.courseID}'">
                                             <div class="card cqm-card border-0 shadow-sm">
-                                                <div class="dropdown cqm-actions">
+                                                <div class="dropdown cqm-actions" onclick="event.stopPropagation()">
                                                     <button class="btn p-0 text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
