@@ -13,9 +13,9 @@
         <title>Tạo khoá học</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/instructor.css">
     </head>
     <body>
-
         <div class="container my-5">
             <div class="card shadow-sm p-4">
                 <!-- STEP HEADER -->
@@ -120,7 +120,6 @@
                                 <p>Check all your course details before publishing.</p>
                                 <button class="btn btn-success">Submit Course</button>
                             </div>-->
-
             </div>
         </div>
     </body>
