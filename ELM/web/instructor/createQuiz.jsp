@@ -13,6 +13,7 @@
         <meta charset="UTF-8">
         <title>Create Quiz</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     </head>
 
     <body class="bg-light">
@@ -36,7 +37,9 @@
                                            required>
                                 </div>
                                 <div class="d-flex justify-content-between mt-4">
-                                    <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                                    <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-dark">
+                                        <i class="fas fa-home"></i>
+                                    </a>
                                     <button type="submit" 
                                             class="btn btn-warning text-white fw-bold">
                                         Create Quiz
