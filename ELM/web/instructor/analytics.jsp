@@ -62,30 +62,30 @@
             </nav>
             <div class="container-fluid p-4">                    
                 <div class="row g-4">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card p-3 text-center">
                             <h5 class="card-title mt-2">Tổng học viên</h5>
                             <h3>${totalStudents}</h3>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card p-3 text-center">
                             <h5 class="card-title mt-2">Khóa học</h5>
                             <h3>${totalCourses}</h3>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card p-3 text-center">
                             <h5 class="card-title mt-2">Điểm Quiz TB</h5>
                             <h3>${averageQuizScore}</h3>
                         </div>
                     </div>
-                    <div class="col-md-3">
+<!--                    <div class="col-md-3">
                         <div class="card p-3 text-center">
                             <h5 class="card-title mt-2">Doanh thu tháng</h5>
                             <h3>${monthlyRevenue}₫</h3>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <!-- Student Progress Table -->
                 <div class="mt-5">
