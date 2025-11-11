@@ -101,7 +101,7 @@ public class MaterialListController extends HttpServlet {
             }
         }
         // Chuyển hướng về MaterialListController để tải lại danh sách
-        response.sendRedirect("MaterialListController?activeTab=material-content"); //MaterialListController?activeTab=material-content
+        response.sendRedirect("MaterialListController?activeTab=material-content"); 
     }
     
     //Xử lý logic hiển thị danh sách material

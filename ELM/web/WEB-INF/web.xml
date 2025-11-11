@@ -262,7 +262,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MaterialListController</servlet-name>
-        <url-pattern>/materialList</url-pattern>
+        <url-pattern>/instructor/MaterialListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageReport</servlet-name>

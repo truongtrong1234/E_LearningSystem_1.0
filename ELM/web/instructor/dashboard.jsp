@@ -201,7 +201,7 @@
                     <!-- Material List -->
                     <div class="row mt-4">
                         <div class="col-12">
-                            <form action="${pageContext.request.contextPath}/instructor/MaterialListController" method="get" id="filterForm" class="mb-5">
+                            <form action="${pageContext.request.contextPath}/instructor/MaterialListController" method="get" id="filterForm" class="mb-3">
                                 <input type="hidden" name="activeTab" value="material-content">
                                 <div class="d-flex align-items-center">
                                     <label for="courseFilter" class="form-label me-3 mb-0 fw-bold">Lọc theo Khóa học:</label>
