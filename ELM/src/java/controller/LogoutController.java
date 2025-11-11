@@ -27,5 +27,5 @@ public class LogoutController extends HttpServlet {
 
         // Quay về trang chính
         response.sendRedirect(request.getContextPath() + "/home_Guest");
-    }
+    }   
 }

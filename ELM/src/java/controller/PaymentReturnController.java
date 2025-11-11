@@ -18,33 +18,18 @@ public class PaymentReturnController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         Integer courseID = Integer.parseInt(request.getParameter("vnp_OrderInfo"));
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        
+
         if (account == null) {
             response.sendRedirect("login");
             return;
         }
-        
+
         Integer accountID = account.getAccountId();
         EnrollmentDAO enrollment = new EnrollmentDAO();
-           enrollment.insertEnrollment(accountID, courseID);
-        
-        try {
-            CourseProgressDAO courseProgressDAO = new CourseProgressDAO();
-            ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
-            LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
-
-            courseProgressDAO.insertCourseProgress(accountID, courseID);
-            chapterProgressDAO.insertChapterProgressForCourse(accountID, courseID);
-            lessonProgressDAO.insertLessonProgressForCourse(accountID, courseID);
-
-            System.out.println("✅ Đã khởi tạo progress cho AccountID " + accountID + " - CourseID " + courseID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         // ===== Xử lý VNPAY như cũ =====
         String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
@@ -60,6 +45,19 @@ public class PaymentReturnController extends HttpServlet {
 
         if ("00".equals(vnp_ResponseCode) && courseID != null && accountID != null) {
             enrollment.insertEnrollment(accountID, courseID);
+            try {
+                CourseProgressDAO courseProgressDAO = new CourseProgressDAO();
+                ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
+                LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
+
+                courseProgressDAO.insertCourseProgress(accountID, courseID);
+                chapterProgressDAO.insertChapterProgressForCourse(accountID, courseID);
+                lessonProgressDAO.insertLessonProgressForCourse(accountID, courseID);
+
+                System.out.println("✅ Đã khởi tạo progress cho AccountID " + accountID + " - CourseID " + courseID);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             long amount = Long.parseLong(vnp_Amount) / 100;
             PaymentDAO paymentDAO = new PaymentDAO();
             Payment p = new Payment();
