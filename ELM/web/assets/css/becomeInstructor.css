@@ -1,0 +1,114 @@
+/* ===== KHỐI TRANG ĐĂNG KÝ INSTRUCTOR ===== */
+.instructor-page {
+  min-height: calc(100vh - 70px); /* trừ header cao 70px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px 60px;
+  background: linear-gradient(135deg, #f5f7fa, #e4ecf3);
+  box-sizing: border-box;
+}
+
+/* ===== KHỐI CHỨA FORM ===== */
+.instructor-form-wrapper {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  padding: 40px 50px;
+  width: 100%;
+  max-width: 950px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ===== TIÊU ĐỀ ===== */
+.instructor-form-wrapper h2 {
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 26px;
+  color: #2d2f31;
+  font-weight: 700;
+}
+
+/* ===== CHIA FORM THÀNH 2 CỘT ===== */
+.instructor-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 40px;
+}
+
+.instructor-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.instructor-form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.instructor-form input,
+.instructor-form textarea {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.instructor-form input:focus,
+.instructor-form textarea:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.instructor-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ===== FULL-WIDTH CÁC TRƯỜNG DÀI ===== */
+.instructor-form .full {
+  grid-column: 1 / 3;
+}
+
+/* ===== NÚT GỬI ===== */
+.submit-btn {
+  grid-column: 1 / 3;
+  width: 100%;
+  background: #ff6b00;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #e85500;
+}
+
+/* ===== HIỆU ỨNG XUẤT HIỆN ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .instructor-form {
+    grid-template-columns: 1fr;
+  }
+  .instructor-form .full {
+    grid-column: 1;
+  }
+}

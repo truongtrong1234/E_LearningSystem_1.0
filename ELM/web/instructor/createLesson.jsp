@@ -12,6 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tạo bài giảng</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
     </head>
     <body>
@@ -92,7 +93,7 @@
 
                 <!-- Button -->
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-primary">Trang tổng quan</a>
+                    <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-dark"><i class="fas fa-home"></i></a>
                     <a href="${pageContext.request.contextPath}/instructor/createChapter?courseID=${courseID}" class="btn btn-secondary">Quay lại</a>
                 </div> 
             </div>

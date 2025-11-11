@@ -34,23 +34,11 @@
     </head>
     <body>
         <!-- Sidebar -->
-        <div class="sidebar">
-            <h2>Admin Panel</h2>
-            <ul>
-                <li><a href="adminIndex">Dashboard</a></li>
-                <li><a href="manageAccount">Manage Accounts</a></li>
-                <li><a href="manageCourse">Manage Courses</a></li>
-                <li><a href="manageReport">User Reports</a></li>
-
-                <div class="logout-btn mt-4">
-                    <a href="../logout" style="text-decoration: none;">Logout</a>
-                </div>
-            </ul>      
-        </div>
+     <jsp:include page="/components/panelAdmin.jsp"/>
 
         <!-- Main Content -->
         <div class="main-content">
-            <h2>📩 Report Detail</h2>
+            <h2> Report Detail</h2>
 
             <c:choose>
                 <c:when test="${not empty report}">
@@ -67,7 +55,7 @@
                     <!-- Reply history -->
                     <c:if test="${not empty replies}">
                         <div class="reply-history">
-                            <h4>💬 Previous Replies</h4>
+                            <h4> Previous Replies</h4>
                             <c:forEach var="rep" items="${replies}">
                                 <div class="reply-item">
                                     <p><strong>Admin ${rep.adminId}</strong> at ${rep.repliedAt}</p>
@@ -89,7 +77,7 @@
 
                     <!-- Reply form -->
                     <div class="reply-box">
-                        <h5>✏️ Reply to User</h5>
+                        <h5>️ Reply to User</h5>
                         <form action="reportDetail" method="post">
                             <input type="hidden" name="action" value="reply">
                             <input type="hidden" name="reportId" value="${report.reportId}">
@@ -105,7 +93,7 @@
 
                 <c:otherwise>
                     <div class="alert alert-danger mt-4">
-                        ⚠️ Report not found or was deleted.
+                        ️ Report not found or was deleted.
                     </div>
                     <a href="manageReport" class="btn btn-secondary mt-3">← Back</a>
                 </c:otherwise>

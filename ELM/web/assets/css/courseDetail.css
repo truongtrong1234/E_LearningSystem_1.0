@@ -2,7 +2,9 @@ body {
         background-color: #fffaf5;
         font-family: 'Segoe UI', sans-serif;
     }
-
+    .section{
+        min-height: 700px;
+    }
     .course-thumbnail {
         width: 100%;
         border-radius: 12px;

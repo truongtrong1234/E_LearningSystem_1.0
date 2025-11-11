@@ -135,6 +135,95 @@ html,body{
 .icon-btn:hover {
     color: #ff6b00;
 }
+
+
+.notification-wrapper {
+  position: relative;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  font-size: 20px;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -2px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  padding: 2px 5px;
+}
+
+.notif-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 35px;
+  width: 320px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+.notif-dropdown.show {
+  display: block;
+}
+
+.notif-header {
+  font-weight: bold;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.notif-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.notif-item {
+  padding: 10px;
+  border-bottom: 1px solid #f2f2f2;
+  cursor: pointer;
+}
+
+.notif-item.unread {
+  background-color: #f8f9fa;
+}
+
+.notif-item:hover {
+  background-color: #f1f1f1;
+}
+
+.notif-footer {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.mark-read {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.view-all {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .avatar {
     width: 38px;
     height: 38px;

@@ -13,8 +13,7 @@
 
     <form action="doQuiz" method="post">
         <input type="hidden" name="quizID" value="${quizID}"/>
-
-        <c:forEach var="q" items="${questions}" varStatus="status">
+        <c:if test="${not empty questions}"><c:forEach var="q" items="${questions}" varStatus="status">
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Câu ${status.index + 1}: ${q.questionText}</h5>
@@ -42,7 +41,10 @@
                     </div>
                 </div>
             </div>
-        </c:forEach>
+        </c:forEach></c:if>
+        <c:if test="${ empty questions}">
+            <h5 class="card-title">Chưa có Quiz nào</h5>
+        </c:if>
 
         <div class="text-center">
             <button type="submit" class="btn btn-success px-4">Nộp bài

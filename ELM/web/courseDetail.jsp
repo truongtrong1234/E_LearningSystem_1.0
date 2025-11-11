@@ -35,7 +35,7 @@
 <div class="container mt-4 mb-5">
 
 
-    <!-- 🧭 Breadcrumb -->
+    <!--  Breadcrumb -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
 <li class="breadcrumb-item">
@@ -58,7 +58,7 @@
         </ol>
     </nav>
 
-    <!-- 🏫 Thông tin khóa học -->
+    <!--  Thông tin khóa học -->
     <div class="row mb-4 bg-white p-3 rounded shadow-sm">
         <div class="col-md-4">
             <img src="${course.thumbnail}" alt="${course.title}" class="course-thumbnail">
@@ -119,7 +119,7 @@
         </div>
     </div>
 
-    <!-- 📘 Mô tả tổng quan -->
+    <!--  Mô tả tổng quan -->
     <div class="bg-white p-4 rounded shadow-sm mb-4">
         
 

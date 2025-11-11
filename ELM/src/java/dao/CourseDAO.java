@@ -103,7 +103,8 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-      public List<Course> getTop5MostEnrolledCourses() {
+    
+    public List<Course> getTop5MostEnrolledCourses() {
         List<Course> list = new ArrayList<>();
         String sql = """
             SELECT TOP 5 
@@ -144,6 +145,8 @@ public class CourseDAO extends DBContext {
 
         return list;
     }
+      
+    // Lấy khoá học theo ID
     public Course getCourseById(int courseID) {
         String sql = """
         SELECT c.CourseID, c.Title, c.Description, c.InstructorID, 
@@ -175,33 +178,37 @@ public class CourseDAO extends DBContext {
         return null;
     }
 
-    // Lấy khóa học theo ID
+    // Lấy khóa học theo instructorID
     public List<Course> getCourseByInstructorID(int instructorID) {
         List<Course> list = new ArrayList<>();
-        String sql = "SELECT * FROM Courses WHERE InstructorID=?";
+        String sql = "SELECT * FROM Courses WHERE InstructorID=?"; 
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, instructorID);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Course course = new Course(
-                        rs.getInt("CourseID"),
-                        rs.getString("Title"),
-                        rs.getString("Description"),
-                        rs.getInt("InstructorID"),
-                        rs.getBigDecimal("Price"),
-                        rs.getInt("Class"), // Đổi ở đây
-                        rs.getInt("CategoryID"),
-                        rs.getString("Thumbnail")
-                );
-                list.add(course);
-            }
+            try (ResultSet rs = ps.executeQuery()) { 
+                while (rs.next()) {
+                    Course course = new Course(); 
+                    course.setCourseID(rs.getInt("CourseID"));
+                    course.setTitle(rs.getString("Title"));
+                    course.setDescription(rs.getString("Description"));
+                    course.setInstructorID(rs.getInt("InstructorID"));
+                    course.setPrice(rs.getBigDecimal("Price"));
+                    course.setCourseclass(rs.getInt("Class"));
+                    course.setCategoryID(rs.getInt("CategoryID"));
+                    course.setThumbnail(rs.getString("Thumbnail"));
+
+                    list.add(course);
+                }
+            } // rs đóng tự động
         } catch (SQLException e) {
-            e.printStackTrace();
+            // Đảm bảo log lỗi đầy đủ
+            System.err.println("Lỗi truy vấn Khóa học theo InstructorID: " + e.getMessage());
+            e.printStackTrace(); 
         }
         return list;
     }
 
-    //
+    //Lấy khoá học theo Category
     public List<Course> getCoursesByCategory(int categoryID){
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM Courses WHERE categoryID = ?";
@@ -363,24 +370,3 @@ public class CourseDAO extends DBContext {
         }
     }
 }
-// 2. Lấy tất cả khóa học
-
-//
-//        // 3. Lấy 1 khóa học theo ID (ví dụ ID = 1)
-//        Course c1 = dao.getCourseById(2);
-////        if (c1 != null) {
-////            System.out.println("Tìm thấy khóa học ID=1: " + c1.getTitle());
-////        } else {
-////            System.out.println("Không tìm thấy khóa học ID=1");
-////        }
-//
-//        // 4. Cập nhật khóa học (ví dụ cập nhật title & price của ID = 1)
-//        if (c1 != null) {
-//            c1.setTitle("Java Web Advanced");
-//            c1.setPrice(new BigDecimal("249.99"));
-//            boolean updateResult = dao.updateCourse(c1);
-//            System.out.println("Update result: " + updateResult);
-//        }
-// 5. Xóa khóa học theo ID (ví dụ xóa ID = 3)
-//        boolean deleteResult = dao.deleteCourse(4);
-//        System.out.println("Delete result (ID=3): " + deleteResult);

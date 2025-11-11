@@ -9,7 +9,11 @@ import util.CloudinaryUtil;
 
 import java.io.IOException;
 
-@MultipartConfig
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 2,  // 2MB
+    maxFileSize = 1024 * 1024 * 50,       // 50MB
+    maxRequestSize = 1024 * 1024 * 100    // 100MB
+)
 // @WebServlet("/edit_profile") đã có wedxml
 public class EditProfileController extends HttpServlet {
 

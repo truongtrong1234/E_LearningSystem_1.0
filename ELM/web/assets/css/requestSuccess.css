@@ -1,0 +1,76 @@
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf6f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Căn giữa phần container, tránh header */
+.container {
+    max-width: 600px;
+    margin: 120px auto 80px; /* cách header 120px */
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Tiêu đề */
+.container h2 {
+    text-align: center;
+    color: #2d3436;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+/* Trường thông tin */
+.field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.field label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.field span,
+.field a {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Nút trở về */
+.btn {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    padding: 10px 22px;
+    background-color: #ff7b54;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #ff5722;
+    transform: translateY(-2px);
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        margin-top: 100px;
+        padding: 25px 20px;
+    }
+    .container h2 {
+        font-size: 1.5rem;
+    }
+}

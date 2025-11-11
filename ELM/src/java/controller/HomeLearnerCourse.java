@@ -2,14 +2,17 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
+import dao.NotificationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import model.Account;
 import model.Category;
 import model.Course;
+import model.Notification;
 
 public class HomeLearnerCourse extends HttpServlet {
 
@@ -18,6 +21,11 @@ public class HomeLearnerCourse extends HttpServlet {
             throws ServletException, IOException {
 
         
+        Account acc = (Account) request.getSession().getAttribute("account");
+        if (acc == null) {
+            response.sendRedirect("login");
+            return;
+        }
         // Load Categories
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategories = categoryDAO.getAllCat();
@@ -27,6 +35,12 @@ public class HomeLearnerCourse extends HttpServlet {
         CourseDAO courseDAO = new CourseDAO();
         List<Course> listCourses = courseDAO.getTop5MostEnrolledCourses();
         request.setAttribute("listCourse", listCourses);
+        
+        //noti
+              NotificationDAO notifDAO = new NotificationDAO();
+        List<Notification> notifications = notifDAO.getNotificationByAccountID(acc.getAccountId());
+
+        request.setAttribute("notifications", notifications);
 
         // Forward tới JSP
         request.getRequestDispatcher("/Learner/home_learner.jsp").forward(request, response);

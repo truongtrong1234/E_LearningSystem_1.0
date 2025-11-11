@@ -10,9 +10,10 @@
     <head>
         <meta charset="UTF-8">
         <title>SecretCoder | Learner</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css?v3">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css?v3">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css?v3">
         <style>
 
         </style>

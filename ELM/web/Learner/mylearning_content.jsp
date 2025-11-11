@@ -29,7 +29,7 @@
 
         <div class="content-wrapper">
             <!-- CỘT TRÁI: TÀI LIỆU -->
-            <div class="materials-pane">
+            <div class="materials-pane" >
                 <h3>Tài liệu bài học</h3>
                 <c:choose>
                     <c:when test="${not empty materials}">

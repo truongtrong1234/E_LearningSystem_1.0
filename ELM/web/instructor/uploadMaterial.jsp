@@ -12,6 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/createCQM.css">
     </head>
     <body>
@@ -43,9 +44,12 @@
                             <label class="form-label fw-semibold">Upload File</label>
                             <input type="file" class="form-control" name="PartFile" required accept="video/*,.pdf,.doc,.docx">
                         </div>
-                            <div class="d-flex justify-content-between">
-                                <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-secondary">Cancel</a>
+                        
+                        <div class="d-flex justify-content-between">
                             <a href="${pageContext.request.contextPath}/instructor/createLesson?courseID=${CourseID}&ChapterID=${ChapterID}" class="btn btn-secondary">Back</a>
+                            <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-dark">
+                                <i class="fas fa-home"></i>
+                            </a>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
                     </form>

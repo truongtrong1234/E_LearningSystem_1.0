@@ -235,7 +235,7 @@
                            placeholder="Enter your password" required autocomplete="new-password">
 
                     <div style="margin:10px 0 5px; text-align:right;">
-                        <a href="#" style="color:#5624d0; text-decoration:none; font-size:14px;">Forgot password?</a>
+                        
                     </div>
 
                     <c:if test="${not empty error}">

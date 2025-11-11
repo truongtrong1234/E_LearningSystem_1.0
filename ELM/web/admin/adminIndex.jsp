@@ -11,19 +11,7 @@
     </head>
     <body>
         <!-- Sidebar -->
-        <div class="sidebar">
-            <h2>Admin Panel</h2>
-            <ul>
-                <li><a href="adminIndex">Dashboard</a></li>
-                <li><a href="manageAccount">Manage Accounts</a></li>
-                <li><a href="manageCourse">Manage Courses</a></li>
-                <li><a href="manageReport">User Reports</a></li>
-
-                <div class="logout-btn mt-4">
-                    <a href="../logout" style="text-decoration: none;">Logout</a>
-                </div>
-            </ul>      
-        </div>
+        <jsp:include page="/components/panelAdmin.jsp"/>
         <div class="main-content">
             <h1>Admin Dashboard</h1>
             <div class="dashboard-cards d-flex gap-4">
@@ -49,6 +37,13 @@
                     <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
                         <h3>User Reports</h3>
                         <p>${reportCount}</p>
+                    </div>
+                </a>
+                    
+                    <a href="manageRequest" class="text-decoration-none text-dark" style="flex:1;">
+                    <div class="card orange text-center p-4 shadow-sm" style="cursor:pointer;">
+                        <h3>Instructor Requests</h3>
+                        <p>${requestCount}</p>
                     </div>
                 </a>
             </div>

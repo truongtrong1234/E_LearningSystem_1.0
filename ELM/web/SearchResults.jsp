@@ -7,7 +7,7 @@
  <head>
      <meta charset="UTF-8">
         <title>SecretCoder | Learner</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css?v3">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerGuest.css?v=3">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css?v=3">
@@ -35,7 +35,7 @@
     <p>Không tìm thấy khóa học nào.</p>
 </c:if>
 
-<section class="section">
+<section class="section"  style="min-height: 500px;">
             
             <div class="grid">
                 <c:forEach var="c" items="${listCourse}">
