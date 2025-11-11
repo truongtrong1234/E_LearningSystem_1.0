@@ -99,15 +99,114 @@ public class MaterialDAO extends DBContext {
     }
 
     // DELETE
-    public void delete(int id) {
+//    public void delete(int id) throws SQLException{
+//        String sql = "DELETE FROM Materials WHERE MaterialID = ?";
+//        try {
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            stm.setInt(1, id);
+//            stm.executeUpdate();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+    public void delete(int id) { // Giữ nguyên chữ ký hàm
         String sql = "DELETE FROM Materials WHERE MaterialID = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
-            stm.executeUpdate();
+            int rowsAffected = stm.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new RuntimeException("Xóa không thành công. Material ID " + id + " không tồn tại.");
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
+            throw new RuntimeException("Lỗi SQL khi xóa material.", ex);
         }
+    }
+    
+    // Lấy tất cả material theo InstructorID
+    public List<Material> getByInstructor(int instructorID) {
+        List<Material> list = new ArrayList<>();
+        String sql = """
+            SELECT m.MaterialID, m.Title, m.ContentURL, m.MaterialType, m.CreatedAt, 
+                   l.Title AS LessonName, 
+                   c.ChapterID, c.Title AS ChapterName,      
+                   co.CourseID, co.Title AS CourseName
+            FROM Materials m
+            INNER JOIN Lessons l ON m.LessonID = l.LessonID
+            INNER JOIN Chapters c ON l.ChapterID = c.ChapterID
+            INNER JOIN Courses co ON c.CourseID = co.CourseID
+            WHERE co.InstructorID = ?
+            ORDER BY m.CreatedAt DESC
+        """;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, instructorID);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Material m = new Material();
+                    m.setMaterialID(rs.getInt("MaterialID"));
+                    m.setTitle(rs.getString("Title"));
+                    m.setContentURL(rs.getString("ContentURL"));
+                    m.setMaterialType(rs.getString("MaterialType"));
+                    m.setCreatedAt(rs.getTimestamp("CreatedAt"));
+                    m.setLessonName(rs.getString("LessonName"));
+                    m.setChapterName(rs.getString("ChapterName"));
+                    m.setCourseName(rs.getString("CourseName"));
+                    m.setChapterID(rs.getInt("ChapterID"));
+                    m.setCourseID(rs.getInt("CourseID"));
+                    list.add(m);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    // Lấy material theo courseID + instructorID
+    public List<Material> getByCourseAndInstructor(int courseID, int instructorID) {
+        List<Material> list = new ArrayList<>();
+        String sql = """
+            SELECT m.MaterialID, m.Title, m.ContentURL, m.MaterialType, m.CreatedAt, 
+                   l.Title AS LessonName,
+                   c.ChapterID, c.Title AS ChapterName,      
+                   co.CourseID, co.Title AS CourseName        
+            FROM Materials m
+            INNER JOIN Lessons l ON m.LessonID = l.LessonID
+            INNER JOIN Chapters c ON l.ChapterID = c.ChapterID
+            INNER JOIN Courses co ON c.CourseID = co.CourseID
+            WHERE co.InstructorID = ? AND co.CourseID = ?   -- THÊM ĐIỀU KIỆN LỌC
+            ORDER BY m.CreatedAt DESC
+        """;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, instructorID); 
+            ps.setInt(2, courseID);     
+
+            try (ResultSet rs = ps.executeQuery()) {
+                 while (rs.next()) {
+                    Material m = new Material();
+                    m.setMaterialID(rs.getInt("MaterialID"));
+                    m.setTitle(rs.getString("Title"));            
+                    m.setContentURL(rs.getString("ContentURL")); 
+                    m.setMaterialType(rs.getString("MaterialType"));
+                    m.setCreatedAt(rs.getTimestamp("CreatedAt"));
+                    m.setLessonName(rs.getString("LessonName"));
+                    m.setChapterName(rs.getString("ChapterName")); 
+                    m.setCourseName(rs.getString("CourseName"));   
+                    m.setChapterID(rs.getInt("ChapterID"));
+                    m.setCourseID(rs.getInt("CourseID"));
+                    list.add(m);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     // Helper - mapping ResultSet to Material

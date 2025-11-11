@@ -4,6 +4,11 @@ import java.util.Date;
 
 public class Material {
     private int materialID;
+    private String courseName;
+    private String chapterName;
+    private String lessonName;
+    private int courseID;
+    private int chapterID;
     private int lessonID;
     private String title;
     private String contentURL;
@@ -23,6 +28,21 @@ public class Material {
 
     public int getMaterialID() { return materialID; }
     public void setMaterialID(int materialID) { this.materialID = materialID; }
+    
+    public String getCourseName() {return courseName;}
+    public void setCourseName(String courseName) {this.courseName = courseName;}
+    
+    public String getChapterName() {return chapterName;}
+    public void setChapterName(String chapterName) {this.chapterName = chapterName;}
+    
+    public String getLessonName() { return lessonName; }
+    public void setLessonName(String lessonName) { this.lessonName = lessonName; }
+    
+    public int getCourseID() {return courseID;}
+    public void setCourseID(int courseID) {this.courseID = courseID;}
+    
+    public int getChapterID() {return chapterID;}
+    public void setChapterID(int chapterID) {this.chapterID = chapterID;}
 
     public int getLessonID() { return lessonID; }
     public void setLessonID(int lessonID) { this.lessonID = lessonID; }
@@ -43,7 +63,12 @@ public class Material {
     public String toString() {
         return "Material{" +
                 "materialID=" + materialID +
+                ", lessonID=" + courseID +
+                ", lessonID=" + courseName +
+                ", lessonID=" + chapterID +
+                ", lessonID=" + chapterName +
                 ", lessonID=" + lessonID +
+                ", lessonID=" + lessonName +
                 ", title='" + title + '\'' +
                 ", contentURL='" + contentURL + '\'' +
                 ", materialType='" + materialType + '\'' +
