@@ -53,8 +53,8 @@
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
                     </form>
-                    <c:if test="${not empty errorMessage}">
-                        <div class="alert alert-danger mt-3">${errorMessage}</div>
+                    <c:if test="${not empty sessionScope.errorMessage}">
+                        <div class="alert alert-danger mt-3">${sessionScope.errorMessage}</div>
                     </c:if>
                 </div>
 
@@ -92,6 +92,7 @@
                                             <input type="hidden" name="thisLessonID" value="${thisLessonID}">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="materialID" value="${m.materialID}">
+                                            <input type="hidden" name="PartFile" value="${m.contentURL}">
                                             <button type="submit" class="btn btn-danger btn-sm">
                                                 Delete material 
                                             </button>

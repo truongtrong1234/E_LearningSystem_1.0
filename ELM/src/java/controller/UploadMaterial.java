@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.util.List;
 import java.util.logging.Level;
@@ -63,6 +64,7 @@ public class UploadMaterial extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         MaterialDAO mdao = new MaterialDAO();
         int courseID = Integer.parseInt(request.getParameter("thisCourseID"));
         int ChapterID = Integer.parseInt(request.getParameter("thisChapterID"));
@@ -96,9 +98,11 @@ public class UploadMaterial extends HttpServlet {
             }
 
             if (!valid) {
-                request.setAttribute("errorMessage", "Loại file không khớp với lựa chọn ");
+                session.setAttribute("errorMessage", "Loại file không khớp với lựa chọn ");
                 response.sendRedirect("uploadMaterial?CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
                 return;
+            } else {
+                session.removeAttribute("errorMessage");
             }
             if (filePart == null) {
                 request.setAttribute("errorMessage", "không được để trống");
