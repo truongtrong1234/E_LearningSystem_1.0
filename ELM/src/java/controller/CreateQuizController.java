@@ -16,13 +16,36 @@ public class CreateQuizController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
+        String chapterIDStr = request.getParameter("ChapterID");
+        int chapterID = 0; 
 
-        int chapterID = Integer.parseInt(request.getParameter("ChapterID"));
+        if (chapterIDStr != null && !chapterIDStr.isEmpty()) {
+            try {
+                chapterID = Integer.parseInt(chapterIDStr);
+            } catch (NumberFormatException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID Chương không hợp lệ.");
+                return;
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu ID Chương (ChapterID) bắt buộc.");
+            return;
+        }
+
         QuizDAO quizDao = new QuizDAO();
-        List<Quiz> quizList = quizDao.getQuizzesByChapter(chapterID);
+        List<Quiz> quizList = null;
+
+        try {
+            quizList = quizDao.getQuizzesByChapter(chapterID);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi hệ thống khi tải danh sách Quiz.");
+            return;
+        }
+
         request.setAttribute("ChapterID", chapterID);
         request.setAttribute("QuizList", quizList);
+        request.setAttribute("source", "create");
+
         request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
     }
 

@@ -65,7 +65,7 @@
                                                     <i class="fas fa-eye"></i> Xem
                                                 </a>
                                                 <button type="button" class="btn btn-delete btn-sm btn-outline-danger" 
-                                                        onclick="confirmDelete(${m.materialID})">
+                                                        onclick="confirmDeleteMaterial(${m.materialID})">
                                                         <i class="fas fa-trash-alt"></i> Xoá
                                                 </button>
                                             </td>
@@ -77,7 +77,9 @@
                     </c:when>
                     <c:otherwise>
                         <div class="alert alert-info text-center" role="alert">
-                            Chưa có tài liệu nào. Hãy tạo khoá học mới trước để bắt đầu!
+                            Chưa có tài liệu nào. Hãy ấn
+                            <a href="createCourse" style="text-decoration: none; font-weight: bold">"Tạo khoá học mới"</a>
+                            để bắt đầu!
                         </div>
                     </c:otherwise>
                 </c:choose>

@@ -8,7 +8,7 @@
     }
 %>
 
-    <div id="courses-content" class="tab-content-block ${activeTab == 'course-content' || activeTab == 'material-content' ? 'd-none' : ''}">
+    <div id="courses-content" class="tab-content-block ${activeTab == 'course-content' || activeTab == 'quiz-content' ? 'd-none' : '' || activeTab == 'material-content' ? 'd-none' : ''}">
         <!-- Create Course Box -->
         <div class="create-cqm-box p-4 rounded shadow-sm border mb-4 d-flex justify-content-between align-items-center">
             <span class="fs-5 text-muted">Ấn tạo khoá học mới ở bên phải</span>
@@ -51,7 +51,8 @@
                     <div class="col-12">
                         <div class="alert alert-info text-center" role="alert">
                             Chưa có khoá học nào được tạo. Hãy ấn
-                            <a href="createCourse" style="text-decoration: none">"Tạo khoá học mới"</a> để bắt đầu!
+                            <a href="createCourse" style="text-decoration: none; font-weight: bold">"Tạo khoá học mới"</a> 
+                            để bắt đầu!
                         </div>
                     </div>
                 </c:otherwise>
