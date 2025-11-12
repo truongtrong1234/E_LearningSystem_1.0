@@ -21,17 +21,17 @@
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
                     <a href="${pageContext.request.contextPath}/instructor/dashboard" class="nav-link text-white sidebar-link">
-                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard 
+                        <i class="fas fa-tachometer-alt me-2"></i> Tổng quan 
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link active">
-                        <i class="fas fa-chart-bar me-2"></i> Analytics
+                        <i class="fas fa-chart-bar me-2"></i> Phân tích
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/instructor/sendReport" class="nav-link text-white sidebar-link">
-                        <i class="fas fa-question-circle me-2"></i> Helps
+                        <i class="fas fa-question-circle me-2"></i> Hỗ trợ
                     </a>
                 </li>
             </ul>
