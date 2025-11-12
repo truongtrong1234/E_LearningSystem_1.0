@@ -6,92 +6,140 @@
 
 
 <style>
+/* ===== Notification Wrapper ===== */
 .notification-wrapper {
-  position: relative;
+    position: relative;
+    display: inline-block;
 }
 
 .icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    font-size: 18px;
+    color: #495057;
 }
 
 .notif-badge {
-  position: absolute;
-  top: -5px;
-  right: -2px;
-  background: red;
-  color: white;
-  border-radius: 50%;
-  font-size: 10px;
-  padding: 2px 5px;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ff6600;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 50%;
 }
 
+/* ===== Notification Dropdown ===== */
 .notif-dropdown {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 35px;
-  width: 320px;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  z-index: 1000;
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 100;
 }
 
 .notif-dropdown.show {
-  display: block;
+    display: block;
 }
 
 .notif-header {
-  font-weight: bold;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    background-color: #f9f9f9;
 }
 
 .notif-list {
-  max-height: 250px;
-  overflow-y: auto;
+    max-height: 280px;
+    overflow-y: auto;
 }
 
 .notif-item {
-  padding: 10px;
-  border-bottom: 1px solid #f2f2f2;
-  cursor: pointer;
-}
-
-.notif-item.unread {
-  background-color: #f8f9fa;
+    display: block;
+    padding: 10px 16px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.2s ease;
 }
 
 .notif-item:hover {
-  background-color: #f1f1f1;
+    background-color: #fff4eb;
 }
 
+/* Chưa đọc */
+.notif-item.unread {
+    background-color: #fff9f3;
+    border-left: 4px solid #ff6600;
+    font-weight: 600;
+}
+
+/* Đã đọc */
+.notif-item.read {
+    background-color: #f8f8f8;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+/* ===== Footer: View all + Mark all ===== */
 .notif-footer {
-  padding: 10px;
-  text-align: center;
-  border-top: 1px solid #eee;
+    padding: 10px 16px;
+    border-top: 1px solid #eee;
+    background-color: #f9f9f9;
 }
 
-.mark-read {
-  background: none;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-  margin-right: 10px;
+.notif-footer .view-all-link,
+.notif-footer .mark-all-link {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
-.view-all {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
+.notif-footer .view-all-link:hover,
+.notif-footer .mark-all-link:hover {
+    color: #e85500;
 }
+
+/* ===== Scrollbar (tùy chọn) ===== */
+.notif-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notif-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.notif-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.notif-list::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .notif-dropdown {
+        width: 280px;
+        right: -10px;
+    }
+}
+
 </style>
 
 <header class="main-header">
@@ -116,11 +164,14 @@
 
     <div class="header-icons">
       
+        
            <!-- ===== Notification Button ===== -->
       <div class="notification-wrapper">
         <button class="icon-btn" id="notif-btn">
           <i class="bi bi-bell"></i>
-          <span class="notif-badge">${fn:length(notifications)}</span>
+              <c:if test="${unreadCount > 0}">
+        <span class="notif-badge">${unreadCount}</span>
+    </c:if>
 
         </button>
 
@@ -128,18 +179,18 @@
         <div class="notif-dropdown" id="notif-dropdown">
           <div class="notif-header">
             <span>Notifications</span>
-            <span class="notif-badge">${fn:length(notifications)}</span>
-          </div>
+             </div>
 
-         <div class="notif-list">
+<div class="notif-list">
   <c:forEach var="n" items="${notifications}">
-    <div class="notif-item ${n.read ? 'read' : 'unread'}">
+    <a href="${pageContext.request.contextPath}/notiDetail?id=${n.notificationID}"
+       class="notif-item ${n.read ? 'read' : 'unread'}">
       <p><strong>${n.title}</strong></p>
       <p>${n.message}</p>
       <small>
         <fmt:formatDate value="${n.createdAt}" pattern="dd/MM/yyyy HH:mm" />
       </small>
-    </div>
+    </a>
   </c:forEach>
 
   <c:if test="${empty notifications}">
@@ -149,12 +200,18 @@
   </c:if>
 </div>
 
-          </div>
-
-          <div class="notif-footer">
-            <button class="mark-read">Mark all as read</button>
-            <a href="${pageContext.request.contextPath}/notifications" class="view-all">View all </a>
-          </div>
+<!--  Nút xem tất cả -->
+<div class="notif-footer text-center">
+  <a href="${pageContext.request.contextPath}/viewNotifications" class="view-all-link">
+    Xem tất cả 
+  </a>
+      <a href="${pageContext.request.contextPath}/markAllRead" 
+     class="mark-all-link" style="margin-left: 15px; color: #ff6600; text-decoration: none;">
+     Đánh dấu tất cả đã đọc
+  </a>
+</div>
+  </div>
+   
         </div>
       </div>
 

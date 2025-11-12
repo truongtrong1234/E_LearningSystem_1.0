@@ -2,7 +2,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
-import dao.NotificationDAO;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ import java.util.List;
 import model.Account;
 import model.Category;
 import model.Course;
-import model.Notification;
+
 
 public class HomeLearnerCourse extends HttpServlet {
 
@@ -36,11 +36,11 @@ public class HomeLearnerCourse extends HttpServlet {
         List<Course> listCourses = courseDAO.getTop5MostEnrolledCourses();
         request.setAttribute("listCourse", listCourses);
         
-        //noti
-              NotificationDAO notifDAO = new NotificationDAO();
-        List<Notification> notifications = notifDAO.getNotificationByAccountID(acc.getAccountId());
-
-        request.setAttribute("notifications", notifications);
+//        //noti
+//              NotificationDAO notifDAO = new NotificationDAO();
+//        List<Notification> notifications = notifDAO.getNotificationByAccountID(acc.getAccountId());
+//
+//        request.setAttribute("notifications", notifications);
 
         // Forward tới JSP
         request.getRequestDispatcher("/Learner/home_learner.jsp").forward(request, response);

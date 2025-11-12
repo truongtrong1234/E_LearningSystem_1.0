@@ -86,6 +86,29 @@ public class NotificationDAO extends DBContext {
             ex.printStackTrace();
         }
     }
+    
+    public void markAllAsRead(int accountId) {
+    String sql = "UPDATE Notifications SET IsRead = 1 WHERE AccountID = ?";
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setInt(1, accountId);
+        stm.executeUpdate();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+
+    public int countUnread(int accountId) {
+    String sql = "SELECT COUNT(*) FROM Notifications WHERE AccountID = ? AND IsRead = 0";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, accountId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) return rs.getInt(1);
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
+}
+
 
     // UPDATE - full update
     public void updateNotification(Notification n) {
