@@ -45,8 +45,16 @@
         <servlet-class>controller.UploadMaterial</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>MaterialListController</servlet-name>
+        <servlet-class>controller.MaterialListController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateQuizController</servlet-name>
         <servlet-class>controller.CreateQuizController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizListController</servlet-name>
+        <servlet-class>controller.QuizListController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddQuestionController</servlet-name>
@@ -111,10 +119,6 @@
     <servlet>
         <servlet-name>SearchCourseController</servlet-name>
         <servlet-class>controller.SearchCourseController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MaterialListController</servlet-name>
-        <servlet-class>controller.MaterialListController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewMaterialController</servlet-name>
@@ -229,8 +233,16 @@
         <url-pattern>/instructor/uploadMaterial</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>MaterialListController</servlet-name>
+        <url-pattern>/instructor/MaterialListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CreateQuizController</servlet-name>
         <url-pattern>/instructor/createQuiz</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizListController</servlet-name>
+        <url-pattern>/instructor/quizList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddQuestionController</servlet-name>
@@ -287,10 +299,6 @@
     <servlet-mapping>
         <servlet-name>SearchCourseController</servlet-name>
         <url-pattern>/searchCourse</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MaterialListController</servlet-name>
-        <url-pattern>/instructor/MaterialListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageReport</servlet-name>
