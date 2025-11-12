@@ -7,18 +7,7 @@
         return;
     }
 %>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang tổng quan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/instructor.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/materialList.css">
-</head>
-<body>
+
     <div id="material-content" class="tab-content-block ${activeTab != 'material-content' ? 'd-none' : ''}">
         <!-- Material List -->
         <div class="row mt-4">
@@ -94,6 +83,4 @@
                 </c:choose>
             </div>
         </div>
-    </div>                                                        
-</body>
-</htlm> 
+    </div>      
