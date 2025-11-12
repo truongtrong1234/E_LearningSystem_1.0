@@ -58,7 +58,8 @@ public class MyContentLearningController extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-
+        int count = 0;
+        BigDecimal totalScore = BigDecimal.ZERO;
         int courseID = Integer.parseInt(request.getParameter("CourseID"));
         int lessonID = 0;
 
@@ -86,27 +87,39 @@ public class MyContentLearningController extends HttpServlet {
         Map<String, BigDecimal> QuizMap = new LinkedHashMap<>();
         for (Quiz quiz : quizList) {
             QuizProgress progress = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), quiz.getQuizID());
-            BigDecimal totalscore = (progress != null) ? progress.getTotalScore() : null; 
-            QuizMap.put(quiz.getTitle(),totalscore );
-            
+            if (progress != null && progress.getTotalScore() != null) {
+                QuizMap.put(quiz.getTitle(), progress.getTotalScore());
+                totalScore = totalScore.add(progress.getTotalScore());
+                count++;
+            } else {
+                QuizMap.put(quiz.getTitle(), null); // Chưa làm
+            }
         }
-        // 🟢 Lấy map tiến độ của lesson
+        BigDecimal averangeScore = BigDecimal.ZERO;
+        if (count > 0) {
+            averangeScore = totalScore.divide(BigDecimal.valueOf(count));
+        }
+        String result = "Fail";
+        request.setAttribute("averangeScore", averangeScore);
+        if (averangeScore.compareTo(BigDecimal.valueOf(5)) >= 0) {
+            result = "Pass";
+        } else {
+            result = "Fail";
+        }
+        request.setAttribute("result", result);
         LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
         Map<Integer, Boolean> lessonCompletedMap = lessonProgressDAO.getLessonCompletionMap(account.getAccountId(), courseID);
-
-        // 🟢 Chọn lesson hiển thị
         if (lessonID == 0) {
             outerLoop:
             for (Chapter ch : chapterList) {
                 List<Lesson> lessons = chapterLessonMap.get(ch.getChapterID());
                 for (Lesson l : lessons) {
                     if (!lessonCompletedMap.getOrDefault(l.getLessonID(), false)) {
-                        lessonID = l.getLessonID(); // lesson chưa học đầu tiên
+                        lessonID = l.getLessonID();
                         break outerLoop;
                     }
                 }
             }
-            // Nếu tất cả lesson đã học → chọn lesson cuối cùng
             if (lessonID == 0) {
                 if (chapterList != null && !chapterList.isEmpty()) {
                     Chapter lastChapter = chapterList.get(chapterList.size() - 1);
@@ -123,10 +136,8 @@ public class MyContentLearningController extends HttpServlet {
             }
         }
 
-        //  Lấy materials của lesson được chọn
         List<Material> materials = materialDAO.getByLessonID(lessonID);
 
-        // Gửi dữ liệu sang JSP
         request.setAttribute("account", account);
         request.setAttribute("chapterLessonMap", chapterLessonMap);
         request.setAttribute("chapterQuizMap", chapterQuizMap);
@@ -138,12 +149,10 @@ public class MyContentLearningController extends HttpServlet {
         request.setAttribute("chapterList", chapterList);
         request.setAttribute("QuizMap", QuizMap);
 
-        // Nếu có chapterCompletedMap bạn vẫn có thể gửi sang JSP
         ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
         Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
         request.setAttribute("chapterCompletedMap", chapterCompletedMap);
 
-        //hoi dap
         QnADAO qnaDAO = new QnADAO();
         List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
         System.out.println("qnalist: " + qnaList.size());

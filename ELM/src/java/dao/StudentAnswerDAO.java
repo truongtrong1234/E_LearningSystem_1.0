@@ -149,6 +149,5 @@ public class StudentAnswerDAO extends DBContext {
     // Test main
     public static void main(String[] args) {
         StudentAnswerDAO dao = new StudentAnswerDAO();
-       
     }
 }

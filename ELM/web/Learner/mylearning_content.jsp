@@ -59,27 +59,50 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             <c:choose>
                                 <c:when test="${not empty QuizMap}">
-                                    <c:forEach var="entry" items="${QuizMap}">
+                                <table class="table table-hover table-bordered align-middle mt-3">
+                                    <thead class="table-warning">
                                         <tr>
-                                            <td>${entry.key}</td>
-                                            <td class="text-end">
-                                                <c:choose>
-                                                    <c:when test="${entry.value != null}">
-                                                        <span class="fw-bold text-dark">${entry.value}</span>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <span class="text-muted fst-italic">Chưa làm</span>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                            <th class="ps-3" style="width:65%;">Tên bài kiểm tra</th>
+                                            <th class="text-end pe-3" style="width:35%;">Kết quả</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="entry" items="${QuizMap}">
+                                            <tr>
+                                                <td class="ps-3">${entry.key}</td>
+                                                <td class="text-end pe-3">
+                                                    <c:choose>
+                                                        <c:when test="${entry.value != null}">
+                                                            <span class="fw-bold text-dark">${entry.value}</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="fst-italic text-muted">Chưa làm</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+
+                                        <!-- Dòng trung bình cộng -->
+                                        <tr class="table-success fw-bold">
+                                            <td class="ps-3">Tổng điểm trung bình</td>
+                                            <td class="text-end pe-3">
+                                                ${averangeScore} 
                                             </td>
                                         </tr>
-                                    </c:forEach> 
-                                </c:when>
-                                <c:otherwise>
-                                <span class="text-muted fst-italic">Không có bài kiểm tra nào</span>
+                                    </tbody>
+                                </table>
+
+                                <!-- Dòng tổng hợp Pass/Fail dưới table -->
+                                <div class="mt-2 p-2 text-center fw-bold
+                                     ${result == 'Pass' ? 'text-success bg-light' : 'text-danger bg-light'} border rounded">
+                                    <span class="fw-bold text-dark">Kết quả cuối cùng: ${result}</span>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="fst-italic text-muted mt-3">Không có bài kiểm tra nào</div>
                             </c:otherwise>
                         </c:choose>
 
