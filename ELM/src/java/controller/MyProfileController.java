@@ -1,11 +1,14 @@
 package controller;
 
 import dao.AccountDAO;
+import dao.CourseDAO;
+import dao.EnrollmentDAO;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 import java.io.IOException;
+import java.util.List;
 import model.Account;
+import model.Course;
 
 public class MyProfileController extends HttpServlet {
 
@@ -21,16 +24,22 @@ public class MyProfileController extends HttpServlet {
             return;
         }
 
-        // Gọi DAO
+        // Lấy lại thông tin chi tiết
         AccountDAO dao = new AccountDAO();
         Account acc = dao.getAccountById(sessionAccount.getAccountId());
 
-        if (acc != null) {
-            request.setAttribute("name", acc.getName());
-            request.setAttribute("email", acc.getEmail());
-            request.setAttribute("avatarUrl", acc.getPicture());
-            request.setAttribute("course", "Web Development. tạm hardcode "); // tạm hardcode
-        }
+        // 1️⃣ Khóa học đã tạo (Instructor)
+        CourseDAO courseDAO = new CourseDAO();
+        List<Course> createdCourses = courseDAO.getCourseByInstructorID(acc.getAccountId());
+
+        // 2️⃣ Khóa học đang học (Enrollments)
+        EnrollmentDAO enrollDAO = new EnrollmentDAO();
+        List<Course> enrolledCourses = enrollDAO.getCoursesByAccountId(acc.getAccountId());
+
+        // Gửi dữ liệu sang JSP
+        request.setAttribute("account", acc);
+        request.setAttribute("createdCourses", createdCourses);
+        request.setAttribute("enrolledCourses", enrolledCourses);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("myProfile.jsp");
         dispatcher.forward(request, response);
