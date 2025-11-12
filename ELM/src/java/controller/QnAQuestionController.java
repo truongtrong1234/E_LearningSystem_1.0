@@ -7,7 +7,6 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import model.Account;
 
-//@WebServlet("/qnaQuestion")
 public class QnAQuestionController extends HttpServlet {
     private QnADAO dao = new QnADAO();
 
@@ -23,8 +22,15 @@ public class QnAQuestionController extends HttpServlet {
 
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         String question = request.getParameter("question");
+        String redirectURL = request.getParameter("redirectURL");
 
         dao.addQuestion(courseID, acc.getAccountId(), question);
-        response.sendRedirect("myContent?CourseID=" + courseID);
+
+        // Nếu không có redirectURL, quay về trang học mặc định
+        if (redirectURL == null || redirectURL.isEmpty()) {
+            redirectURL = "myContent?CourseID=" + courseID;
+        }
+
+        response.sendRedirect(redirectURL);
     }
 }

@@ -8,7 +8,64 @@ import java.util.List;
 import model.GoogleAccount;
 
 public class AccountDAO extends DBContext {
+    
+public List<Account> searchAccounts(String keyword) {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT * FROM Accounts WHERE name LIKE ? OR email LIKE ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                a.setWorkplace(rs.getString("workplace"));
+                a.setPhone(rs.getString("phone"));
+                a.setDateOfBirth(rs.getString("dateOfBirth"));
+                a.setGender(rs.getString("gender"));
+                a.setAddress(rs.getString("address"));
+                list.add(a);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
+    // Tìm kiếm theo role + keyword
+    public List<Account> searchAccountsByRoleAndKeyword(String role, String keyword) {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT * FROM Accounts WHERE role = ? AND (name LIKE ? OR email LIKE ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, role);
+            ps.setString(2, "%" + keyword + "%");
+            ps.setString(3, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                a.setWorkplace(rs.getString("workplace"));
+                a.setPhone(rs.getString("phone"));
+                a.setDateOfBirth(rs.getString("dateOfBirth"));
+                a.setGender(rs.getString("gender"));
+                a.setAddress(rs.getString("address"));
+                list.add(a);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
    // Lấy tài khoản theo ID
 public Account getAccountById(int accountId) {
     String sql = "SELECT * FROM Accounts WHERE AccountID = ?";

@@ -101,6 +101,10 @@
         <servlet-class>controller.ReportDetail</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>QuizDetailAdmin</servlet-name>
+        <servlet-class>controller.QuizDetailAdmin</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditProfileController</servlet-name>
         <servlet-class>controller.EditProfileController</servlet-class>
     </servlet>
@@ -195,6 +199,10 @@
     <servlet>
         <servlet-name>MarkAllReadController</servlet-name>
         <servlet-class>controller.MarkAllReadController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminAccountServlet</servlet-name>
+        <servlet-class>controller.AdminAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -309,6 +317,10 @@
         <url-pattern>/admin/reportDetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>QuizDetailAdmin</servlet-name>
+        <url-pattern>/admin/quizDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewMaterialController</servlet-name>
         <url-pattern>/viewMaterial</url-pattern>
     </servlet-mapping>
@@ -383,6 +395,10 @@
     <servlet-mapping>
         <servlet-name>MarkAllReadController</servlet-name>
         <url-pattern>/markAllRead</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminAccountServlet</servlet-name>
+        <url-pattern>/admin/adminAccountServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

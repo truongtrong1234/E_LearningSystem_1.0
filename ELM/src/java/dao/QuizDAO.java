@@ -54,19 +54,23 @@ public class QuizDAO {
         return list;
     }
 
-    // Lấy quiz theo ID
+        // Lấy quiz theo ID
     public Quiz getQuizById(int id) {
-        String sql = "SELECT QuizID, ChapterID, Title FROM Quizzes WHERE QuizID = ?";
-        try (Connection con = new DBContext().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        String sql = "SELECT q.QuizID, c.ChapterID, q.Title, c.CourseID "
+           + "FROM Quizzes q "
+           + "JOIN Chapters c ON c.ChapterID = q.ChapterID "
+           + "WHERE q.QuizID = ?";
+
+        try (Connection con = new DBContext().getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Quiz q = new Quiz();
-                    q.setQuizID(rs.getInt("QuizID"));
-                    q.setChapterID(rs.getInt("ChapterID"));
-                    q.setTitle(rs.getString("Title"));
+                    q.setQuizID(rs.getInt("quizID"));
+                    q.setTitle(rs.getString("title"));
+                    q.setChapterID(rs.getInt("chapterID"));
+                    q.setCourseID(rs.getInt("courseID")); // ✅ nhớ thêm dòng này
                     return q;
                 }
             }
@@ -76,6 +80,7 @@ public class QuizDAO {
         }
         return null;
     }
+    
 
     // Lấy quiz theo Course
     public List<Quiz> getQuizzesByCourseID(int courseID) {
