@@ -3,10 +3,7 @@
 -- E-LEARNING DATABASE (Udemy-style, FIXED)
 -- Report Report replies addon
 -- ====================================
-create database ElearningDB13;
-go
-USE ElearningDB13;
-GO
+
 
 
 -- =========================

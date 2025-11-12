@@ -3,11 +3,6 @@
 -- E-LEARNING DATABASE (Udemy-style, FIXED)
 -- Report Report replies addon
 -- ====================================
-create database ElearningDB14;
-go
-USE ElearningDB14;
-GO
-
 
 -- =========================
 -- ACCOUNTS

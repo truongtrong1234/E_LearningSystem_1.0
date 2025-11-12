@@ -11,18 +11,27 @@ import java.math.BigDecimal;
 public class PaymentDAO extends DBContext {
 
     // CREATE
-    public void insertPayment(Payment p) {
+    public int insertPayment(Payment p) {
         String sql = "INSERT INTO Payments (EnrollmentID, Amount, Status, TransactionID) VALUES (?, ?, ?, ?)";
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, p.getEnrollmentID());
             stm.setBigDecimal(2, p.getAmount());
             stm.setString(3, p.getStatus());
             stm.setString(4, p.getTransactionID());
-            stm.executeUpdate();
+            int affected = stm.executeUpdate();
+            if (affected > 0) {
+                try (ResultSet rs = stm.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); 
+                    }
+                }
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return -1;
+
     }
 
     // READ - Get all payments
@@ -131,16 +140,12 @@ public class PaymentDAO extends DBContext {
     // Test main
     public static void main(String[] args) {
         PaymentDAO dao = new PaymentDAO();
-        List<Payment> list = dao.getAllPayment();
-        for (Payment p : list) {
-            System.out.println(
-                "PaymentID: " + p.getPaymentID() +
-                " | EnrollmentID: " + p.getEnrollmentID() +
-                " | Amount: " + p.getAmount() +
-                " | Status: " + p.getStatus() +
-                " | TransactionID: " + p.getTransactionID() +
-                " | PaidAt: " + p.getPaidAt()
-            );
-        }
+        Payment payment = new Payment();
+        payment.setEnrollmentID(28);
+        payment.setAmount(BigDecimal.TEN);
+        payment.setTransactionID("3232323");
+        payment.setStatus("Success");
+        int m = dao.insertPayment(payment); 
+        System.out.println(m);
     }
 }

@@ -8,9 +8,11 @@ import dao.EnrollmentDAO;
 import dao.PaymentDAO;
 import dao.CourseProgressDAO;
 import dao.ChapterProgressDAO;
+import dao.CourseDAO;
 import dao.LessonProgressDAO;
 import java.math.BigDecimal;
 import model.Account;
+import model.Course;
 import model.Payment;
 
 public class PaymentReturnController extends HttpServlet {
@@ -30,7 +32,6 @@ public class PaymentReturnController extends HttpServlet {
 
         Integer accountID = account.getAccountId();
         EnrollmentDAO enrollment = new EnrollmentDAO();
-
         // ===== Xử lý VNPAY như cũ =====
         String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
@@ -44,7 +45,7 @@ public class PaymentReturnController extends HttpServlet {
         String vnp_SecureHash = request.getParameter("vnp_SecureHash");
 
         if ("00".equals(vnp_ResponseCode) && courseID != null && accountID != null) {
-            enrollment.insertEnrollment(accountID, courseID);
+            int enrollID = enrollment.insertEnrollment(accountID, courseID);
             try {
                 CourseProgressDAO courseProgressDAO = new CourseProgressDAO();
                 ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
@@ -54,19 +55,26 @@ public class PaymentReturnController extends HttpServlet {
                 chapterProgressDAO.insertChapterProgressForCourse(accountID, courseID);
                 lessonProgressDAO.insertLessonProgressForCourse(accountID, courseID);
 
-                System.out.println("✅ Đã khởi tạo progress cho AccountID " + accountID + " - CourseID " + courseID);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            long amount = Long.parseLong(vnp_Amount) / 100;
+            long amount = Long.parseLong(vnp_Amount) / 10000;
             PaymentDAO paymentDAO = new PaymentDAO();
             Payment p = new Payment();
             BigDecimal CourseAmount = new BigDecimal(vnp_Amount);
+            p.setEnrollmentID(enrollID);
             p.setAmount(CourseAmount);
             p.setTransactionID(vnp_TransactionNo);
             p.setStatus("Success");
-            paymentDAO.insertPayment(p);
+            int paymentID = paymentDAO.insertPayment(p);
+            Payment involce = paymentDAO.getPaymentByID(paymentID);
+            Course course = new Course();
+            CourseDAO cdao = new CourseDAO();
+            cdao.getCourseById(courseID);
+            request.setAttribute("course", course);
             request.setAttribute("status", "success");
+            request.setAttribute("payment", involce);
+
         } else {
             PaymentDAO paymentDAO = new PaymentDAO();
             Payment p = new Payment();
