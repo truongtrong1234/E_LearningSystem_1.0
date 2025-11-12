@@ -108,17 +108,18 @@ public class QuizProgressDAO extends DBContext {
         }
     }
 
-    // Xóa tiến độ quiz
-    public boolean deleteQuizProgress(int progressID) {
-        String sql = "DELETE FROM QuizProgress WHERE ProgressID = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, progressID);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+  public boolean deleteQuizProgress(int accountID, int quizID) {
+    String sql = "DELETE FROM QuizProgress WHERE AccountID = ? AND QuizID = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, accountID);
+        ps.setInt(2, quizID);
+        return ps.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
+
     public int countCorrectAnswers(int accountID, int quizID) {
         int correctCount = 0;
         String sql = "SELECT COUNT(*) FROM StudentAnswers sa " +

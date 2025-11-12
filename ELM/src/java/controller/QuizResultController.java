@@ -27,6 +27,7 @@ public class QuizResultController extends HttpServlet {
         Account acc = (Account) session.getAttribute("account");
         int accountID =acc.getAccountId(); 
         QuizProgressDAO dao = new QuizProgressDAO();
+        dao.deleteQuizProgress(accountID, quizID); 
         int correctCount = dao.countCorrectAnswers(accountID, quizID);
         int totalQuestions = dao.totalQuestions(quizID);
         double totalScore = (double) correctCount / totalQuestions * 10;

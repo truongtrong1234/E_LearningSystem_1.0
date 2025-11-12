@@ -73,7 +73,6 @@ public class DoQuizController extends HttpServlet {
             if (selected != null) {
                 boolean isCorrect = selected.equalsIgnoreCase(q.getCorrectAnswer());
                 myAnswer.saveAnswer(acc.getAccountId(), q.getQuestionID(), selected.charAt(0), isCorrect);
-                
             }
         }
         response.sendRedirect("/ELM/Learner/quizResult?QuizID=" + quizID+"");
