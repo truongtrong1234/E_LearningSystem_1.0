@@ -62,13 +62,13 @@ public class MaterialListController extends HttpServlet {
             }
         }
         
-        // XỬ LÝ HÀNH ĐỘNG VIEW 
+        // Xử lí hành động View
         if ("view".equals(action) && materialID > 0) {
             handleView(request, response, materialID);
             return; 
         }
         
-        //XỬ LÝ HIỂN THỊ DANH SÁCH 
+        // Xử lí hiển thị danh sách
         handleList(request, response, instructorID, courseID);
     }
     
