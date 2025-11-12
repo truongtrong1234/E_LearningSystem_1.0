@@ -9,16 +9,36 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
     </head>
     <body>
-     <jsp:include page="/components/panelAdmin.jsp"/>
+        <jsp:include page="/components/panelAdmin.jsp"/>
 
         <div class="main-content">
             <h1>User Reports</h1>
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <form class="d-flex w-100" action="manageReport" method="get">
+                            <!-- Search box -->
+                            <input type="text" name="searchEmail" value="${param.searchEmail}" 
+                                   class="form-control flex-grow-1 me-2" 
+                                   placeholder=" Search by sender email...">
 
+                            <!-- Status filter -->
+                            <select name="statusFilter" class="form-select me-2" style="width: 180px;">
+                                <option value="">All Status</option>
+                                <option value="Pending"  ${param.statusFilter == 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="Reviewed" ${param.statusFilter == 'Reviewed' ? 'selected' : ''}>Reviewed</option>
+                                <option value="Resolved" ${param.statusFilter == 'Resolved' ? 'selected' : ''}>Resolved</option>
+                            </select>
+
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </form>
+
+                    </div>
             <c:choose>
                 <c:when test="${empty listReports}">
                     <div class="alert alert-warning">No reports found.</div>
                 </c:when>
                 <c:otherwise>
+                    
+
                     <table class="table table-striped align-middle">
                         <thead>
                             <tr>

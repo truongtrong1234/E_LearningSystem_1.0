@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import model.Account;
 import model.Chapter;
 import model.Question;
 
@@ -26,64 +27,48 @@ public class ViewCourseDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String id_raw = request.getParameter("id");
-        if (id_raw == null || id_raw.isEmpty()) {
-            response.sendRedirect("manageCourse");
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
+
+        // Kiểm tra quyền admin
+        if (acc == null || !"admin".equals(acc.getRole())) {
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        int courseID = Integer.parseInt(id_raw);
+        int courseID = Integer.parseInt(request.getParameter("CourseID"));
 
-        CourseDAO courseDAO = new CourseDAO();
-        LessonDAO lessonDAO = new LessonDAO();
-        QuizDAO quizDAO = new QuizDAO();
-        ChapterDAO chapterDAO = new ChapterDAO();
-        QuestionDAO questionDAO = new QuestionDAO();
-        InstructorDAO instructorDAO = new InstructorDAO();
-        
-//
-//        // Lấy thông tin khóa học
-//        Course course = courseDAO.getCourseById(courseID);
-//
-//        // Lấy danh sách bài học
-//        List<Lesson> lessons = lessonDAO.getByCourseID(courseID);
-//
-//        // Lấy danh sách quiz & đáp án
-//        List<Quiz> quizzes = quizDAO.getQuizzesByCourseID(courseID);
-//
-//        request.setAttribute("course", course);
-//        request.setAttribute("lessons", lessons);
-//        request.setAttribute("quizzes", quizzes);
-//
-//        request.getRequestDispatcher("/admin/ViewCourseDetail.jsp").forward(request, response);
-// 1. Lấy course
-Course course = courseDAO.getCourseById(courseID);
+        CourseDAO courseDao = new CourseDAO();
+        ChapterDAO chapterDao = new ChapterDAO();
+        LessonDAO lessonDao = new LessonDAO();
+        QuizDAO quizDao = new QuizDAO();
 
-Instructor instructor = instructorDAO.getInstructorByCourseID(courseID);
+        // Lấy thông tin khóa học
+        Course course = courseDao.getCourseById(courseID);
 
-// 2. Lấy chapters
-List<Chapter> chapters = chapterDAO.getChaptersByCourseId(courseID);
-course.setChapters(chapters);
+        // Lấy danh sách chương
+        List<Chapter> chapterList = chapterDao.getChaptersByCourseId(courseID);
 
-// 3. Lấy quizzes & questions
-Map<Integer, List<Quiz>> quizzesMap = new HashMap<>();
-Map<Integer, List<Question>> questionsMap = new HashMap<>();
+        // Map chương → danh sách bài học
+        Map<Integer, List<Lesson>> chapterLessonMap = new HashMap<>();
 
-for (Chapter ch : chapters) {
-    List<Quiz> quizzes = quizDAO.getQuizzesByChapter(ch.getChapterID());
-    quizzesMap.put(ch.getChapterID(), quizzes);
+        // Map chương → danh sách quiz
+        Map<Integer, List<Quiz>> chapterQuizMap = new HashMap<>();
 
-    for (Quiz qz : quizzes) {
-        List<Question> questions = questionDAO.getQuestionsByQuizID(qz.getQuizID());
-        questionsMap.put(qz.getQuizID(), questions);
-    }
-}
-request.setAttribute("instructor", course);
-request.setAttribute("course", course);
-request.setAttribute("quizzesMap", quizzesMap);
-request.setAttribute("questionsMap", questionsMap);
+        for (Chapter c : chapterList) {
+            List<Lesson> lessons = lessonDao.getByChapterID(c.getChapterID());
+            chapterLessonMap.put(c.getChapterID(), lessons);
 
-request.getRequestDispatcher("/admin/ViewCourseDetail.jsp").forward(request, response);
+            List<Quiz> quizzes = quizDao.getQuizzesByChapter(c.getChapterID());
+            chapterQuizMap.put(c.getChapterID(), quizzes);
+        }
 
+        // Set attribute cho JSP
+        request.setAttribute("course", course);
+        request.setAttribute("chapterList", chapterList);
+        request.setAttribute("chapterLessonMap", chapterLessonMap);
+        request.setAttribute("chapterQuizMap", chapterQuizMap);
+
+        request.getRequestDispatcher("/admin/viewCourseDetail.jsp").forward(request, response);
     }
 }

@@ -34,7 +34,7 @@
     </head>
     <body>
         <!-- Sidebar -->
-     <jsp:include page="/components/panelAdmin.jsp"/>
+        <jsp:include page="/components/panelAdmin.jsp"/>
 
         <!-- Main Content -->
         <div class="main-content">
@@ -48,7 +48,18 @@
                         <p><strong>Title:</strong> ${report.title}</p>
                         <p><strong>Message:</strong></p>
                         <div class="border p-2 rounded">${report.message}</div>
-                        <p class="mt-3"><strong>Status:</strong> ${report.status}</p>
+                        <form action="reportDetail" method="post" class="mt-3 d-flex align-items-center">
+                            <input type="hidden" name="action" value="updateStatus">
+                            <input type="hidden" name="reportId" value="${report.reportId}">
+                            <label for="status" class="me-2"><strong>Status:</strong></label>
+                            <select name="status" id="status" class="form-select w-auto me-2">
+                                <option value="Pending"  ${report.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="Reviewed" ${report.status == 'Reviewed' ? 'selected' : ''}>Reviewed</option>
+                                <option value="Resolved" ${report.status == 'Resolved' ? 'selected' : ''}>Resolved</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-success">Update</button>
+                        </form>
+                            <p></p>    
                         <p><strong>Created At:</strong> ${report.createdAt}</p>
                     </div>
 
@@ -61,14 +72,14 @@
                                     <p><strong>Admin ${rep.adminId}</strong> at ${rep.repliedAt}</p>
                                     <p>${rep.replyMessage}</p>
                                     <form action="reportDetail" method="post" style="display:inline;">
-                            <input type="hidden" name="action" value="deleteReply">
-                            <input type="hidden" name="replyId" value="${rep.replyId}">
-                            <input type="hidden" name="reportId" value="${report.reportId}">
-                            <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this reply?');">
-                                Delete
-                            </button>
-                        </form>
+                                        <input type="hidden" name="action" value="deleteReply">
+                                        <input type="hidden" name="replyId" value="${rep.replyId}">
+                                        <input type="hidden" name="reportId" value="${report.reportId}">
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this reply?');">
+                                            Delete
+                                        </button>
+                                    </form>
 
                                 </div>
                             </c:forEach>

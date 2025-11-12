@@ -70,8 +70,6 @@ public class ViewReport extends HttpServlet {
             ReportDAO reportDAO = new ReportDAO();
             ReportReplyDAO replyDAO = new ReportReplyDAO();
 
-            // ✅ Đánh dấu report là đã đọc (nếu cần)
-            reportDAO.markAsRead(id);
 
             // ✅ Lấy thông tin report + danh sách replies
             Report report = reportDAO.getReportById(id);

@@ -32,7 +32,7 @@
         </style>
     </head>
     <body>
-       <jsp:include page="/components/panelAdmin.jsp"/>
+        <jsp:include page="/components/panelAdmin.jsp"/>
 
         <!-- Main Content -->
         <div class="main-content">
@@ -123,7 +123,9 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="viewCourseDetail?id=${c.courseID}" class="btn btn-info btn-sm">View</a>
+                                <a href="${pageContext.request.contextPath}/admin/viewCourseDetail?id=${c.courseID}" 
+                                   class="btn btn-info btn-sm">View</a>
+
                                 <a href="deleteCourse?id=${c.courseID}" class="btn btn-danger btn-sm"
                                    onclick="return confirm('Delete this course?')">Delete</a>
                             </td>
