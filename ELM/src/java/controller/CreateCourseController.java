@@ -39,21 +39,10 @@ public class CreateCourseController extends HttpServlet {
             throws ServletException, IOException {
 
     }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        CategoryDAO cdao = new CategoryDAO();
-        List<Category> categoryList = cdao.getAllCat();
-        request.setAttribute("categoryList", categoryList);
-        request.getRequestDispatcher("/instructor/createCourse.jsp").forward(request, response);
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
         try {
             String title = request.getParameter("courseTitle");
             String description = request.getParameter("description");
@@ -73,7 +62,7 @@ public class CreateCourseController extends HttpServlet {
             Course c = new Course(title, description, instructorID, price, theClass, categoryID, url);
             CourseDAO cdao = new CourseDAO(); 
             int newCourseID =  cdao.insertCourseAndReturnID(c);
-            response.sendRedirect("createChapter?courseID="+newCourseID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createChapter&courseID="+newCourseID);
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Failed to create course. Please check inputs.");

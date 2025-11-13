@@ -19,29 +19,6 @@
     <body>
         <div class="container my-5">
             <div class="card shadow-sm p-4">
-                <!-- STEP HEADER -->
-                <div class="step-header mb-4">
-                    <div class="text-center">
-                        <div class="circle">1</div>
-                        <div class="label">Cơ bản</div>
-                    </div>
-                    <div class="step-indicator"></div>
-                    <div class="text-center">
-                        <div class="circle active">2</div>
-                        <div class="label">Chương</div>
-                    </div>
-                    <div class="step-indicator"></div>
-                    <div class="text-center">
-                        <div class="circle">3</div>
-                        <div class="label">Bài giảng</div>
-                    </div>
-                    <div class="step-indicator"></div>
-                    <div class="text-center">
-                        <div class="circle">4</div>
-                        <div class="label">Kiểm tra</div>
-                    </div>
-                </div>
-                <!-- Add Chapter -->
                 <form action="createChapter" method="post" class="d-flex mb-4">
                     <input type="hidden" name="thisCourseID" value="${thisCourseID}">
                     <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Nhập tiêu đề chương..." required>

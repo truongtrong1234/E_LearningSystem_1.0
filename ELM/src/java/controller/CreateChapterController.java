@@ -33,20 +33,7 @@ public class CreateChapterController extends HttpServlet {
             out.println("</html>");
         }
     }
-
  
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int courseID = Integer.parseInt(request.getParameter("courseID"));
-        ChapterDAO dao = new ChapterDAO();
-        List<Chapter> chapters = dao.getChaptersByCourseId(courseID);
-        
-        request.setAttribute("chapters", chapters);
-        request.setAttribute("thisCourseID", courseID);
-        request.getRequestDispatcher("/instructor/createChapter.jsp").forward(request, response);
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -61,14 +48,14 @@ public class CreateChapterController extends HttpServlet {
         if ("delete".equalsIgnoreCase(action)) {
             int chapterID = Integer.parseInt(request.getParameter("chapterID"));
             dao.deleteChap(chapterID);
-            response.sendRedirect("createChapter?courseID=" + courseID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createChapter&courseID=" + courseID);
         }else if ("edit".equalsIgnoreCase(action)) {
             int chapterID = Integer.parseInt(request.getParameter("chapterID"));
             String EditedTitle = request.getParameter("title");
             dao.updateChapterTitle(chapterID,EditedTitle);
-            response.sendRedirect("createChapter?courseID=" + courseID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createChapter&courseID=" + courseID);
         }
-        else{response.sendRedirect("createChapter?courseID=" + courseID);}
+        else{response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createChapter&courseID=" + courseID);}
         
     }
 

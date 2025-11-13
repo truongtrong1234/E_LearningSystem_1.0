@@ -29,37 +29,21 @@ import util.CloudinaryUtil;
 )
 public class UploadMaterial extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UploadMaterial</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UploadMaterial at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int courseID = Integer.parseInt(request.getParameter("CourseID"));
-        request.setAttribute("CourseID", courseID);
-        int chapterID = Integer.parseInt(request.getParameter("ChapterID"));
-        request.setAttribute("ChapterID", chapterID);
-        int LessonID = Integer.parseInt(request.getParameter("LessonID"));
-        MaterialDAO mateDAO = new MaterialDAO();
-        List<Material> material = mateDAO.getByLessonID(LessonID);
-        request.setAttribute("material", material);
-        request.setAttribute("thisLessonID", LessonID);
-        request.getRequestDispatcher("/instructor/uploadMaterial.jsp").forward(request, response);
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        int courseID = Integer.parseInt(request.getParameter("CourseID"));
+//        request.setAttribute("CourseID", courseID);
+//        int chapterID = Integer.parseInt(request.getParameter("ChapterID"));
+//        request.setAttribute("ChapterID", chapterID);
+//        int LessonID = Integer.parseInt(request.getParameter("LessonID"));
+//        MaterialDAO mateDAO = new MaterialDAO();
+//        List<Material> material = mateDAO.getByLessonID(LessonID);
+//        request.setAttribute("material", material);
+//        request.setAttribute("thisLessonID", LessonID);
+//        request.getRequestDispatcher("/instructor/uploadMaterial.jsp").forward(request, response);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +57,6 @@ public class UploadMaterial extends HttpServlet {
         String contentType = filePart.getContentType();
         boolean valid = false;
         try {
-
             String title = request.getParameter("title");
             String type = request.getParameter("type");
             String urlType;
@@ -99,7 +82,7 @@ public class UploadMaterial extends HttpServlet {
 
             if (!valid) {
                 session.setAttribute("errorMessage", "Loại file không khớp với lựa chọn ");
-                response.sendRedirect("uploadMaterial?CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
+                response.sendRedirect("/ELM/instructor/dashboard?actionCourse=uploadMaterial&CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
                 return;
             } else {
                 session.removeAttribute("errorMessage");
@@ -123,9 +106,9 @@ public class UploadMaterial extends HttpServlet {
         if ("delete".equalsIgnoreCase(action)) {
             int materialID = Integer.parseInt(request.getParameter("materialID"));
             mdao.delete(materialID);
-            response.sendRedirect("uploadMaterial?CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=uploadMaterial&CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
         } else {
-            response.sendRedirect("uploadMaterial?CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=uploadMaterial&CourseID=" + courseID + "&ChapterID=" + ChapterID + "&LessonID=" + LessonID);
         }
     }
 

@@ -27,7 +27,7 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="editCourse?id=${course.courseID}"><i class="fas fa-edit me-2"></i> Sửa khoá học </a></li>
+                                        <li><a class="dropdown-item" href="/ELM/instructor/dashboard?actionCourse=editCourse&id=${course.courseID}"><i class="fas fa-edit me-2"></i> Sửa khoá học </a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
                                             <form action="/ELM/instructor/dashboard" method="post">

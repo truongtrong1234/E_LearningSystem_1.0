@@ -31,18 +31,18 @@ public class CreateLessonController extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int courseID = Integer.parseInt(request.getParameter("courseID"));
-        request.setAttribute("courseID", courseID);
-        int ChapterID = Integer.parseInt(request.getParameter("ChapterID"));
-        LessonDAO lessonDao = new LessonDAO();
-        List<Lesson> Lessons = lessonDao.getByChapterID(ChapterID);
-        request.setAttribute("Lessons", Lessons);
-        request.setAttribute("thischapterID", ChapterID);
-        request.getRequestDispatcher("/instructor/createLesson.jsp").forward(request, response);
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        int courseID = Integer.parseInt(request.getParameter("courseID"));
+//        request.setAttribute("courseID", courseID);
+//        int ChapterID = Integer.parseInt(request.getParameter("ChapterID"));
+//        LessonDAO lessonDao = new LessonDAO();
+//        List<Lesson> Lessons = lessonDao.getByChapterID(ChapterID);
+//        request.setAttribute("Lessons", Lessons);
+//        request.setAttribute("thischapterID", ChapterID);
+//        request.getRequestDispatcher("/instructor/createLesson.jsp").forward(request, response);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -59,14 +59,14 @@ public class CreateLessonController extends HttpServlet {
         if ("delete".equalsIgnoreCase(action)) {
             int lessonID = Integer.parseInt(request.getParameter("lessonID"));
             lessonDAO.delete(lessonID);
-            response.sendRedirect("createLesson?courseID="+ courseID +"&ChapterID=" + ChapterID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createLesson&courseID="+ courseID +"&ChapterID=" + ChapterID);
         } else if ("edit".equalsIgnoreCase(action)) {
             int lessonID = Integer.parseInt(request.getParameter("lessonID"));
             String EditedTitle = request.getParameter("title");
             lessonDAO.updateLesson(lessonID, EditedTitle);
-            response.sendRedirect("createLesson?courseID="+ courseID +"&ChapterID=" + ChapterID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createLesson&courseID="+ courseID +"&ChapterID=" + ChapterID);
         } else {
-            response.sendRedirect("createLesson?courseID="+ courseID +"&ChapterID=" + ChapterID);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createLesson&courseID="+ courseID +"&ChapterID=" + ChapterID);
         }
 
     }
