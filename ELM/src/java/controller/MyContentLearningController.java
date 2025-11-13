@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -137,7 +138,25 @@ public class MyContentLearningController extends HttpServlet {
         }
 
         List<Material> materials = materialDAO.getByLessonID(lessonID);
+        List<String> contentURL = materialDAO.getContentURLsByLessonID(lessonID);
+        List<String> materialsHTML = new ArrayList<>();
+        for (String url : contentURL) {
+            if (url != null && !url.trim().isEmpty()) {
+                if (url.contains("/video/") || url.endsWith(".mp4")) {
+                    materialsHTML.add("<video controls preload='metadata' class='w-100 rounded'><source src='"
+                            + url
+                            + "' type='video/mp4'>Trình duyệt của bạn không hỗ trợ video.</video>");
+                } else {
+                    materialsHTML.add("<iframe src='https://docs.google.com/gview?url="
+                            + url
+                            + "&embedded=true' width='100%' height='600px' frameborder='0'></iframe>");
+                }
+            }
+        }
+        request.setAttribute("materialsHTML", materialsHTML);
 
+        String materialsURLHTML = materialsHTML.toString();
+        request.setAttribute("materialsHTML", materialsURLHTML);
         request.setAttribute("account", account);
         request.setAttribute("chapterLessonMap", chapterLessonMap);
         request.setAttribute("chapterQuizMap", chapterQuizMap);
@@ -148,10 +167,10 @@ public class MyContentLearningController extends HttpServlet {
         request.setAttribute("course", course);
         request.setAttribute("chapterList", chapterList);
         request.setAttribute("QuizMap", QuizMap);
-        
+
         QuizProgressDAO quizDAO = new QuizProgressDAO();
-Map<Integer, Boolean> quizCompletedMap = quizDAO.getQuizCompletionMap(account.getAccountId());
-request.setAttribute("quizCompletedMap", quizCompletedMap);
+        Map<Integer, Boolean> quizCompletedMap = quizDAO.getQuizCompletionMap(account.getAccountId());
+        request.setAttribute("quizCompletedMap", quizCompletedMap);
 
         ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
         Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
