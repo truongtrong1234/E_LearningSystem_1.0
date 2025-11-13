@@ -140,7 +140,6 @@
                         <h3>Thông tin cá nhân</h3>
                         <div class="info-item"><span class="label">Họ tên:</span> <span class="muted">${account.name}</span></div>
                         <div class="info-item"><span class="label">Email:</span> <span class="muted">${account.email}</span></div>
-                        <div class="info-item"><span class="label">Vai trò:</span> <span class="muted">${account.role}</span></div>
                         <div class="info-item">
                             <span class="label">Vai trò hiện tại:</span> 
                             <span class="muted">${account.role}</span>
