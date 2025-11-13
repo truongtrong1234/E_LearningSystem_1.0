@@ -172,7 +172,7 @@
                                     <div class="qna-question">${q.question}</div>
 
                                     <!-- Form trả lời (chỉ hiển thị cho giảng viên) -->
-                                    <c:if test="${account.role eq 'instructor' && account.accountId == course.instructorID}">
+                                   
                                         <a href="javascript:void(0)" onclick="toggleReplyForm(${q.qnaID})"
                                            class="btn btn-sm btn-outline-primary">Trả lời</a>
 
@@ -183,18 +183,19 @@
                                                 <textarea name="replyMessage" placeholder="Nhập câu trả lời..." required></textarea>
                                                 <div class="qna-actions">
                                                     <button type="submit" class="btn btn-success btn-sm">Gửi</button>
+                                                    <input type="hidden" name="redirectURL" value="/ELM/admin/viewCourseDetail?CourseID=${course.courseID}">
                                                     <button type="button" class="btn btn-light btn-sm"
                                                             onclick="toggleReplyForm(${q.qnaID})">Hủy</button>
                                                 </div>
                                             </form>
                                         </div>
-                                    </c:if>
+                                   
 
                                     <!-- Các câu trả lời -->
                                     <c:forEach var="r" items="${replyMap[q.qnaID]}">
                                         <div class="qna-reply">
                                             <div class="reply-meta">
-                                                <strong>${r.repliedByName}</strong> (Giảng viên)
+                                                <strong>${r.repliedByName}</strong>
                                             </div>
                                             <div class="reply-content">${r.replyMessage}</div>
                                             <div class="reply-time">
@@ -215,7 +216,7 @@
             <!-- Form đặt câu hỏi -->
             <form action="${pageContext.request.contextPath}/qnaQuestion" method="post" class="ask-form">
                 <input type="hidden" name="courseID" value="${course.courseID}">
-                <input type="hidden" name="redirectURL" value="${pageContext.request.requestURI}?CourseID=${course.courseID}">
+                <input type="hidden" name="redirectURL" value="/ELM/admin/viewCourseDetail?CourseID=${course.courseID}">
 
 
                 <div class="ask-input-container">

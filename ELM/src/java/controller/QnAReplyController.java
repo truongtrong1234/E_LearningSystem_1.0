@@ -24,8 +24,13 @@ public class QnAReplyController extends HttpServlet {
         int qnaID = Integer.parseInt(request.getParameter("qnaID"));
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         String replyMessage = request.getParameter("replyMessage");
+        String redirectURL = request.getParameter("redirectURL");
 
         dao.addReply(qnaID, acc.getAccountId(), replyMessage);
-        response.sendRedirect("myContent?CourseID=" + courseID);
+        // Nếu không có redirectURL, quay về trang học mặc định
+        if (redirectURL == null || redirectURL.isEmpty()) {
+            redirectURL = "myContent?CourseID=" + courseID;
+        }
+        response.sendRedirect(redirectURL);
     }
 }
