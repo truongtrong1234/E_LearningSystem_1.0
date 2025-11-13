@@ -81,6 +81,26 @@ public class MaterialDAO extends DBContext {
         }
         return list;
     }
+    public List<String> getContentURLsByLessonID(int lessonID) {
+    List<String> urls = new ArrayList<>();
+    String sql = "SELECT ContentURL FROM Materials WHERE LessonID = ?";
+
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setInt(1, lessonID);
+        ResultSet rs = stm.executeQuery();
+
+        while (rs.next()) {
+            String url = rs.getString("ContentURL");
+            if (url != null && !url.trim().isEmpty()) {
+                urls.add(url);
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+
+    return urls;
+}
 
     // UPDATE
     public void update(Material m) {
