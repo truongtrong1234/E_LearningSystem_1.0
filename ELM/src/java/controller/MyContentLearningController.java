@@ -148,6 +148,10 @@ public class MyContentLearningController extends HttpServlet {
         request.setAttribute("course", course);
         request.setAttribute("chapterList", chapterList);
         request.setAttribute("QuizMap", QuizMap);
+        
+        QuizProgressDAO quizDAO = new QuizProgressDAO();
+Map<Integer, Boolean> quizCompletedMap = quizDAO.getQuizCompletionMap(account.getAccountId());
+request.setAttribute("quizCompletedMap", quizCompletedMap);
 
         ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
         Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);

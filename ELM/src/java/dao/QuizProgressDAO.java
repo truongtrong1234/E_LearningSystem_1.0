@@ -86,6 +86,22 @@ public class QuizProgressDAO extends DBContext {
         }
     }
 
+public Map<Integer, Boolean> getQuizCompletionMap(int accountID) {
+    Map<Integer, Boolean> quizCompletedMap = new HashMap<>();
+    String sql = "SELECT QuizID FROM QuizProgress WHERE AccountID = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, accountID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            quizCompletedMap.put(rs.getInt("QuizID"), true);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return quizCompletedMap;
+}
+
+
     // Cập nhật tiến độ quiz
     public boolean updateQuizProgress(QuizProgress qp) {
         String sql = """

@@ -1,176 +1,144 @@
-/* ===== BODY & TIÊU ĐỀ ===== */
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f6f8;
-    color: #333;
+/* ===== Reset cơ bản ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-h1 {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #e0f0ff;
-    margin: 0 0 20px 0;
-    font-size: 28px;
-    color: #0d3b66;
-    font-weight: 600;
+body, html {
+  height: 100%;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
 }
 
-/* ===== WRAPPER 2 CỘT ===== */
+/* ===== Header cố định ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
+}
+
+/* ===== Vùng bao toàn trang học ===== */
 .content-wrapper {
-    display: flex;
-    gap: 20px;
-    padding: 0 20px 20px 20px;
-    flex-wrap: wrap; /* cho responsive */
+  display: flex;
+  margin-top: 64px; /* tránh đè header */
+  height: calc(100vh - 64px);
+  overflow: hidden;
 }
 
-/* ===== CỘT TRÁI: MATERIALS ===== */
+/* ===== CỘT TRÁI: Nội dung bài học ===== */
 .materials-pane {
-    flex: 2.0; /* tăng chiếm nhiều hơn */
-    min-width: 280px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    max-height: 80vh;
-    min-height: 600px;
-    overflow-y: auto;
-    transition: transform 0.2s;
-}
-
-.materials-pane:hover {
-    transform: translateY(-2px);
+  flex: 1; /* chiếm phần còn lại */
+  background-color: #fff;
+  padding: 24px;
+  overflow-y: auto;
+  border-right: 1px solid #eee;
 }
 
 .materials-pane h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #0d3b66;
-    font-size: 20px;
-    border-bottom: 2px solid #cce6ff;
-    padding-bottom: 5px;
+  margin-bottom: 16px;
+  color: #222;
+  font-size: 20px;
 }
 
 .materials-pane ul {
-    list-style: none;
-    padding-left: 0;
+  list-style: none;
+  margin-left: 16px;
 }
 
 .materials-pane li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .materials-pane a {
-    text-decoration: none;
-    color: #05668d;
-    transition: color 0.2s, transform 0.2s;
+  text-decoration: none;
+  color: #0073e6;
 }
 
 .materials-pane a:hover {
-    color: #028090;
-    transform: translateX(3px);
+  text-decoration: underline;
 }
 
-/* ===== CỘT PHẢI: LESSONS ===== */
+/* ===== CỘT PHẢI: Sidebar chương & bài học ===== */
 .lessons-pane {
-    flex: 1; /* nhỏ lại */
-    min-width: 250px;
-    background-color: #fff;
-    padding: 15px; /* giảm padding */
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    max-height: 80vh;
-    overflow-y: auto;
-    transition: transform 0.2s;
+  width: 360px;
+  background: #fdfdfd;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+  position: fixed;
+  right: 0;
+  top: 64px; /* ngay dưới header */
+  height: calc(100vh - 64px);
+  padding: 20px;
 }
 
-.lessons-pane:hover {
-    transform: translateY(-2px);
+.lessons-pane h4 {
+  font-size: 15px;
+  margin: 12px 0;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .chapter-block {
-    margin-bottom: 18px;
+  margin-bottom: 16px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  padding: 10px 14px;
 }
 
-.chapter-block h4 {
-    font-size: 18px; /* nhỏ hơn một chút */
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #05668d;
-}
-
-.chapter-block input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #4169E1; /* ✅ checkbox xanh lá khi tích */
-}
-
-/* LESSON ITEMS */
+/* ===== Danh sách bài học / quiz ===== */
 .chapter-block ul {
-    list-style: none;
-    padding-left: 25px;
+  list-style: none;
+  padding-left: 20px;
+  margin-top: 6px;
 }
 
 .chapter-block li {
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.lesson-check {
-    width: 16px;
-    height: 16px;
-    accent-color: #4169E1; /* ✅ checkbox xanh lá khi tích */
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
 }
 
 .chapter-block a {
-    text-decoration: none;
-    color: #333;
-    padding: 3px 6px; /* nhỏ gọn hơn */
-    border-radius: 6px;
-    transition: background-color 0.2s, color 0.2s;
-    font-size: 14px;
-}
-
-.chapter-block a:hover {
-    background-color: #d0ebff;
-    color: #05668d;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
 }
 
 .chapter-block a.active {
-    background-color: #4169E1;
-    color: #fff;
-    font-weight: 500;
+  font-weight: 600;
+  color: #007bff;
 }
 
-/* SCROLLBAR HIỆN ĐẸP */
-.materials-pane::-webkit-scrollbar,
-.lessons-pane::-webkit-scrollbar {
-    width: 8px;
+.lesson-check, .quiz-check {
+  margin-right: 8px;
 }
 
-.materials-pane::-webkit-scrollbar-thumb,
-.lessons-pane::-webkit-scrollbar-thumb {
-    background-color: rgba(5,102,141,0.3);
-    border-radius: 4px;
+/* ===== Thanh cuộn tùy chỉnh ===== */
+.lessons-pane::-webkit-scrollbar,
+.materials-pane::-webkit-scrollbar {
+  width: 6px;
+}
+.lessons-pane::-webkit-scrollbar-thumb,
+.materials-pane::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
 }
 
-.materials-pane::-webkit-scrollbar-track,
-.lessons-pane::-webkit-scrollbar-track {
-    background-color: #f0f0f0;
-    border-radius: 4px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-    .content-wrapper {
-        flex-direction: column;
-    }
-    .materials-pane, .lessons-pane {
-        max-height: none;
-    }
+/* ===== Footer trong materials-pane ===== */
+.footer {
+  margin-top: 40px;
+  padding: 16px;
+  background: #fafafa;
+  border-top: 1px solid #eee;
 }
