@@ -79,7 +79,7 @@
                         <ul>
                             <c:forEach var="m" items="${materials}">
                                 <li>
-                                    <a href="viewMaterial?url=${m.contentURL}" target="_blank">
+                                    <a href="${pageContext.request.contextPath}/viewMaterial?url=${m.contentURL}" target="_blank">
                                         ${m.title} (${m.materialType})
                                     </a>
                                 </li>
@@ -104,6 +104,21 @@
                                 </h4>
                             </c:if>
                         </c:forEach>
+                        <ul>
+                            <c:forEach var="lesson" items="${entry.value}">
+                                <li>
+                                    <input type="checkbox" class="lesson-check"
+                                           data-lessonid="${lesson.lessonID}"
+                                           data-courseid="${CourseID}"
+                                           <c:if test="${lessonCompletedMap[lesson.lessonID]}">checked</c:if> />
+                                    <a href="${pageContext.request.contextPath}/admin/viewCourseDetail?CourseID=${CourseID}&LessonID=${lesson.lessonID}"
+                                       class="${lesson.lessonID == selectedLessonID ? 'active' : ''}">
+                                        ${lesson.title}
+                                    </a>
+
+                                </li>
+                            </c:forEach>
+                        </ul>
 
                         <ul>
                             <c:forEach var="quiz" items="${chapterQuizMap[entry.key]}">

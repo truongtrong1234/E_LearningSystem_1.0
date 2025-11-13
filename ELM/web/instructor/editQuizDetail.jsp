@@ -33,7 +33,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Question Text *</label>
-                                    <input type="text" name="questionText" class="form-control" required>
+                                    <textarea id="questionText" name="questionText" class="form-control" rows="6" placeholder="" required></textarea>
                                 </div>
 
                                 <div class="mb-3">

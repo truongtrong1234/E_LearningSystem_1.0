@@ -32,6 +32,7 @@
                     <option value="admin" ${selectedRole == 'admin' ? 'selected' : ''}>Admin</option>
                     <option value="instructor" ${selectedRole == 'instructor' ? 'selected' : ''}>Instructor</option>
                     <option value="learner" ${selectedRole == 'learner' ? 'selected' : ''}>Learner</option>
+                    <option value="banned" ${selectedRole == 'banned' ? 'selected' : ''}>Banned</option>
                 </select>
                 <input type="text" name="keyword" class="form-control form-control-sm"
                        placeholder="Search by name or email"

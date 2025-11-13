@@ -75,66 +75,75 @@ public class ViewCourseDetail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        Account acc = (Account) session.getAttribute("account");
+    HttpSession session = request.getSession();
+    Account acc = (Account) session.getAttribute("account");
 
-        if (acc == null || !"admin".equals(acc.getRole())) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
-
-        int courseID = Integer.parseInt(request.getParameter("CourseID"));
-
-        CourseDAO courseDao = new CourseDAO();
-        ChapterDAO chDao = new ChapterDAO();
-        QuizDAO quizDao = new QuizDAO();
-        QuestionDAO questionDao = new QuestionDAO();
-
-        Course course = courseDao.getCourseById(courseID);
-        List<Chapter> chapterList = chDao.getChaptersByCourseId(courseID);
-
-        Map<Integer, List<Quiz>> chapterQuizMap = new HashMap<>();
-        Map<Integer, List<Question>> quizQuestionMap = new HashMap<>();
-
-        LessonDAO lessonDao = new LessonDAO();
-        Map<Integer, List<Lesson>> chapterLessonMap = new HashMap<>();
-
-        for (Chapter c : chapterList) {
-            // Lấy danh sách bài học cho chương
-            List<Lesson> lessons = lessonDao.getByChapterID(c.getChapterID());
-            chapterLessonMap.put(c.getChapterID(), lessons);
-
-            // Lấy danh sách quiz và câu hỏi
-            List<Quiz> quizzes = quizDao.getQuizzesByChapter(c.getChapterID());
-            chapterQuizMap.put(c.getChapterID(), quizzes);
-        }
-        QnADAO qnaDAO = new QnADAO();
-        List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
-        Map<Integer, List<QnAReply>> replyMap = new HashMap<>();
-
-        for (QnAQuestion q : qnaList) {
-            List<QnAReply> replies = qnaDAO.getRepliesByQnAID(q.getQnaID());
-            replyMap.put(q.getQnaID(), replies);
-        }
-
-// Đưa vào request
-        request.setAttribute("qnaList", qnaList);
-        request.setAttribute("replyMap", replyMap);
-
-// Thêm vào request
-        request.setAttribute("chapterLessonMap", chapterLessonMap);
-
-        request.setAttribute("course", course);
-        request.setAttribute("chapterList", chapterList);
-        request.setAttribute("chapterQuizMap", chapterQuizMap);
-        request.setAttribute("quizQuestionMap", quizQuestionMap);
-
-        // forward tới cùng file JSP
-        request.getRequestDispatcher("/admin/ViewCourseDetail.jsp").forward(request, response);
+    if (acc == null || !"admin".equals(acc.getRole())) {
+        response.sendRedirect(request.getContextPath() + "/login");
+        return;
     }
+
+    int courseID = Integer.parseInt(request.getParameter("CourseID"));
+    int lessonID = 0;
+
+    if (request.getParameter("LessonID") != null) {
+        lessonID = Integer.parseInt(request.getParameter("LessonID"));
+    }
+
+    CourseDAO courseDao = new CourseDAO();
+    ChapterDAO chDao = new ChapterDAO();
+    QuizDAO quizDao = new QuizDAO();
+    QuestionDAO questionDao = new QuestionDAO();
+    LessonDAO lessonDao = new LessonDAO();
+    MaterialDAO materialDao = new MaterialDAO(); // 🟠 thêm dòng này
+
+    Course course = courseDao.getCourseById(courseID);
+    List<Chapter> chapterList = chDao.getChaptersByCourseId(courseID);
+
+    Map<Integer, List<Lesson>> chapterLessonMap = new HashMap<>();
+    for (Chapter c : chapterList) {
+        List<Lesson> lessons = lessonDao.getByChapterID(c.getChapterID());
+        chapterLessonMap.put(c.getChapterID(), lessons);
+    }
+
+    Map<Integer, List<Quiz>> chapterQuizMap = new HashMap<>();
+    for (Chapter c : chapterList) {
+        List<Quiz> quizzes = quizDao.getQuizzesByChapter(c.getChapterID());
+        chapterQuizMap.put(c.getChapterID(), quizzes);
+    }
+
+    // 🟢 Lấy tài liệu của bài học được chọn
+    List<model.Material> materials = null;
+    if (lessonID != 0) {
+        materials = materialDao.getByLessonID(lessonID);
+    }
+
+    // Q&A
+    QnADAO qnaDAO = new QnADAO();
+    List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
+    Map<Integer, List<QnAReply>> replyMap = new HashMap<>();
+    for (QnAQuestion q : qnaList) {
+        List<QnAReply> replies = qnaDAO.getRepliesByQnAID(q.getQnaID());
+        replyMap.put(q.getQnaID(), replies);
+    }
+
+    // Gửi dữ liệu sang JSP
+    request.setAttribute("materials", materials);
+    request.setAttribute("selectedLessonID", lessonID);
+    request.setAttribute("course", course);
+    request.setAttribute("chapterList", chapterList);
+    request.setAttribute("chapterLessonMap", chapterLessonMap);
+    request.setAttribute("chapterQuizMap", chapterQuizMap);
+    request.setAttribute("qnaList", qnaList);
+    request.setAttribute("replyMap", replyMap);
+    request.setAttribute("CourseID", courseID);
+
+    request.getRequestDispatcher("/admin/ViewCourseDetail.jsp").forward(request, response);
+}
+
 
     /**
      * Handles the HTTP <code>POST</code> method.

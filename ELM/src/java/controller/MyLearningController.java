@@ -37,10 +37,10 @@ public class MyLearningController extends HttpServlet {
         ChapterDAO chDao = new ChapterDAO();
         CourseProgressDAO cpDao = new CourseProgressDAO();
 
-        // 1️⃣ Lấy danh sách course user đã đăng ký
+        // 
         List<Course> myLearningCourse = edao.getCoursesByAccountId(accountID);
 
-        // 2️⃣ Tạo map CourseID → progress (int)
+        // 
         Map<Integer, Integer> courseProgressMap = new HashMap<>();
 
         for (Course c : myLearningCourse) {

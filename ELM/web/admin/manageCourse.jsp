@@ -35,7 +35,7 @@
         <jsp:include page="/components/panelAdmin.jsp"/>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="admin-container">
             <h1>Manage Courses</h1>
 
             <!--             Category Header 
@@ -94,7 +94,7 @@
 
 
 
-            <table class="table table-bordered align-middle">
+            <table class="request-table">
                 <thead class="table-light">
                     <tr>
                         <th>Image</th>
@@ -123,12 +123,8 @@
                                 </a>
                             </td>
                             <td>
-                                   <a href="${pageContext.request.contextPath}/admin/viewCourseDetail?CourseID=${c.courseID}" 
-   class="btn btn-info btn-sm">View</a>
-
-
-                                <a href="deleteCourse?id=${c.courseID}" class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Delete this course?')">Delete</a>
+                                <a href="${pageContext.request.contextPath}/admin/viewCourseDetail?CourseID=${c.courseID}" 
+                                   class="btn edit">View</a>
                             </td>
                         </tr>
                     </c:forEach>

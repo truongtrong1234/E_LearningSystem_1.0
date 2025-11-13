@@ -11,7 +11,7 @@
     <body>
         <jsp:include page="/components/panelAdmin.jsp"/>
 
-        <div class="main-content">
+        <div class="admin-container">
             <h1>User Reports</h1>
             <div class="mb-3 d-flex justify-content-between align-items-center">
                         <form class="d-flex w-100" action="manageReport" method="get">
@@ -39,7 +39,7 @@
                 <c:otherwise>
                     
 
-                    <table class="table table-striped align-middle">
+                    <table class="request-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -61,7 +61,7 @@
                                     <td>${r.status}</td>
                                     <td>${r.createdAt}</td>
                                     <td>
-                                        <a href="reportDetail?id=${r.reportId}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="reportDetail?id=${r.reportId}" class="btn edit">View</a>
                                         <a href="manageReport?action=delete&id=${r.reportId}" 
                                            class="btn btn-danger btn-sm"
                                            onclick="return confirm('Delete this report?')">Delete</a>

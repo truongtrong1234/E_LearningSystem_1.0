@@ -15,7 +15,7 @@
     <jsp:include page="/components/panelAdmin.jsp"/>
 
 <div class="admin-container">
-    <h2>Danh sách yêu cầu trở thành Instructor</h2>
+    <h1>Danh sách yêu cầu trở thành Instructor</h1>
 
     <table class="request-table">
         <thead>

@@ -437,33 +437,48 @@ body {
     background-color: #b52a35;
 }
 
-/* ===== CV Link ===== */
-.request-table a {
-    color: var(--main-orange);
-    font-weight: 600;
-    text-decoration: none;
+/* =========================
+   FIX TABLE WIDTH & ACTION BUTTONS LAYOUT
+========================= */
+
+/* Cho bảng chiếm toàn bộ chiều ngang */
+.request-table {
+    width: 100%;
+    table-layout: auto; /* cho cột co giãn linh hoạt */
 }
 
-.request-table a:hover {
-    text-decoration: underline;
+/* Tăng khoảng cách giữa các cột */
+.request-table th, 
+.request-table td {
+    padding: 16px 18px;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 1000px) {
-    .admin-container {
-        margin: 15px;
-        padding: 25px;
-    }
+/* Làm cho cột Actions rộng hơn để 2 nút nằm ngang */
+.request-table td:last-child {
+    white-space: nowrap;       /* không xuống dòng */
+    width: 160px;              /* tùy chỉnh độ rộng theo nhu cầu */
+}
 
-    .request-table th, 
-    .request-table td {
-        font-size: 13px;
-        padding: 10px;
-    }
+/* Căn đều 2 nút View và Delete */
+.request-table td:last-child .btn {
+    display: inline-block;
+    margin-right: 8px;
+    min-width: 70px;
+    text-align: center;
+}
 
-    .btn-approve,
-    .btn-reject {
-        width: 100%;
-        margin-bottom: 6px;
+/* Nếu vẫn muốn bảng rộng toàn trang */
+.admin-container {
+    max-width: 100%;
+}
+
+/* Cải thiện responsive cho màn nhỏ */
+@media (max-width: 768px) {
+    .request-table td:last-child {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
     }
 }
+
