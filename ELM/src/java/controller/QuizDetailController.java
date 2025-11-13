@@ -86,7 +86,7 @@ public class QuizDetailController extends HttpServlet {
         }
 
         List<Question> questions = questionDAO.getQuestionsByQuizID(quizID);
-
+        
         request.setAttribute("thisChapterID", chapterID); 
         request.setAttribute("thisquizID", quizID);      
         request.setAttribute("quiz", quiz);

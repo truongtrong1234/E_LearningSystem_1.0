@@ -131,19 +131,25 @@ public class QuestionDAO {
      * @param id QuestionID
      * @return true nếu xóa thành công, false nếu thất bại
      */
-    public boolean deleteQuestion(int id) {
-        String sql = "DELETE FROM Questions WHERE QuestionID = ?";
-        try (Connection con = new DBContext().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+   public boolean deleteQuestion(int id) {
+    String sql = "{CALL deleteQuestion(?)}"; // gọi stored procedure
+    
+    try (Connection con = new DBContext().getConnection();
+         CallableStatement cs = con.prepareCall(sql)) {
+        
+        cs.setInt(1, id);
+        cs.execute();
+        return true;
 
-            ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+    } catch (SQLException e) {
+        String msg = e.getMessage();
+        if (msg != null && msg.contains("FOREIGN KEY")) {
+            throw new RuntimeException("Không thể xóa câu hỏi ID " + id + 
+                ". Còn tồn tại dữ liệu StudentAnswers liên quan.");
         }
+        throw new RuntimeException("Lỗi SQL khi xóa câu hỏi: " + msg, e);
     }
+}
     public static void main(String[] args) {
         QuestionDAO dao  = new QuestionDAO(); 
         dao.deleteQuestion(21); 

@@ -273,8 +273,7 @@ public class QuizDAO {
         }
     }
 
-    // Xóa quiz
-    public void deleteQuiz(int quizID) {
+   public void deleteQuiz(int quizID) {
         String sql = "DELETE FROM Quizzes WHERE QuizID = ?";
         
         try (Connection con = new DBContext().getConnection();
