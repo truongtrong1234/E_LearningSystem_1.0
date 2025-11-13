@@ -1,11 +1,13 @@
 package filter;
 
+import dao.AccountDAO;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import model.Account;
 
 // Áp dụng filter cho cả /admin/* và /Learner/*
 @WebFilter({"/admin/*", "/Learner/*"})
@@ -27,6 +29,18 @@ public class AuthFilter implements Filter {
         // 🚫 Nếu chưa đăng nhập, chuyển hướng về login.jsp
         if (session == null || session.getAttribute("account") == null) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+        Account acc = (Account) session.getAttribute("account");
+
+        // 🧠 Tải lại role từ DB để kiểm tra trạng thái mới nhất
+        AccountDAO dao = new AccountDAO();
+        String latestRole = dao.getRoleById(acc.getAccountId());
+
+        // 🚨 Nếu bị banned → xóa session + chuyển về login với thông báo
+        if ("banned".equalsIgnoreCase(latestRole)) {
+            session.invalidate();
+            response.sendRedirect(request.getContextPath() + "/login.jsp?error=banned");
             return;
         }
 

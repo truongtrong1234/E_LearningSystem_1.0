@@ -8,8 +8,8 @@ import java.util.List;
 import model.GoogleAccount;
 
 public class AccountDAO extends DBContext {
-    
-public List<Account> searchAccounts(String keyword) {
+
+    public List<Account> searchAccounts(String keyword) {
         List<Account> list = new ArrayList<>();
         String sql = "SELECT * FROM Accounts WHERE name LIKE ? OR email LIKE ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -66,90 +66,104 @@ public List<Account> searchAccounts(String keyword) {
         }
         return list;
     }
-   // Lấy tài khoản theo ID
-public Account getAccountById(int accountId) {
-    String sql = "SELECT * FROM Accounts WHERE AccountID = ?";
-    try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, accountId);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            Account a = new Account();
-            a.setAccountId(rs.getInt("AccountID"));
-            a.setEmail(rs.getString("email"));
-            a.setPassword(rs.getString("password"));
-            a.setName(rs.getString("name"));
-            a.setPicture(rs.getString("picture"));
-            a.setRole(rs.getString("role"));
-            a.setWorkplace(rs.getString("workplace"));
-            a.setPhone(rs.getString("phone"));
-            a.setDateOfBirth(rs.getString("dateOfBirth"));
-            a.setGender(rs.getString("gender"));
-            a.setAddress(rs.getString("address"));
-            return a;
+    // Lấy tài khoản theo ID
+
+    public Account getAccountById(int accountId) {
+        String sql = "SELECT * FROM Accounts WHERE AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, accountId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                a.setWorkplace(rs.getString("workplace"));
+                a.setPhone(rs.getString("phone"));
+                a.setDateOfBirth(rs.getString("dateOfBirth"));
+                a.setGender(rs.getString("gender"));
+                a.setAddress(rs.getString("address"));
+                return a;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}
 
 // Lấy danh sách tài khoản theo role
-public List<Account> getAccountsByRole(String role) {
-    List<Account> list = new ArrayList<>();
-    String sql = "SELECT * FROM Accounts WHERE role = ?";
-    try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, role);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Account a = new Account();
-            a.setAccountId(rs.getInt("AccountID"));
-            a.setEmail(rs.getString("email"));
-            a.setPassword(rs.getString("password"));
-            a.setName(rs.getString("name"));
-            a.setPicture(rs.getString("picture"));
-            a.setRole(rs.getString("role"));
-            a.setWorkplace(rs.getString("workplace"));
-            a.setPhone(rs.getString("phone"));
-            a.setDateOfBirth(rs.getString("dateOfBirth"));
-            a.setGender(rs.getString("gender"));
-            a.setAddress(rs.getString("address"));
-            list.add(a);
+    public List<Account> getAccountsByRole(String role) {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT * FROM Accounts WHERE role = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, role);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                a.setWorkplace(rs.getString("workplace"));
+                a.setPhone(rs.getString("phone"));
+                a.setDateOfBirth(rs.getString("dateOfBirth"));
+                a.setGender(rs.getString("gender"));
+                a.setAddress(rs.getString("address"));
+                list.add(a);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
+    public String getRoleById(int accountId) {
+        String sql = "SELECT role FROM Accounts WHERE AccountID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accountId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("role");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 // Lấy toàn bộ danh sách tài khoản
-public List<Account> getAllAccounts() {
-    List<Account> list = new ArrayList<>();
-    String sql = "SELECT * FROM Accounts";
-    try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Account a = new Account();
-            a.setAccountId(rs.getInt("AccountID"));
-            a.setEmail(rs.getString("email"));
-            a.setPassword(rs.getString("password"));
-            a.setName(rs.getString("name"));
-            a.setPicture(rs.getString("picture"));
-            a.setRole(rs.getString("role"));
-            a.setWorkplace(rs.getString("workplace"));
-            a.setPhone(rs.getString("phone"));
-            a.setDateOfBirth(rs.getString("dateOfBirth"));
-            a.setGender(rs.getString("gender"));
-            a.setAddress(rs.getString("address"));
-            list.add(a);
+    public List<Account> getAllAccounts() {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT * FROM Accounts";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                a.setWorkplace(rs.getString("workplace"));
+                a.setPhone(rs.getString("phone"));
+                a.setDateOfBirth(rs.getString("dateOfBirth"));
+                a.setGender(rs.getString("gender"));
+                a.setAddress(rs.getString("address"));
+                list.add(a);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
 
     public Account findByEmail(String email) {
         String sql = "SELECT * FROM Accounts WHERE email = ?";
@@ -234,34 +248,47 @@ public List<Account> getAllAccounts() {
         return false;
     }
 
-  // Đăng nhập
-public Account login(String email, String password) {
-    String sql = "SELECT * FROM Accounts WHERE email=? AND password=?";
-    try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, email);
-        ps.setString(2, password);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            Account a = new Account();
-            a.setAccountId(rs.getInt("AccountID"));
-            a.setEmail(rs.getString("email"));
-            a.setPassword(rs.getString("password"));
-            a.setName(rs.getString("name"));
-            a.setPicture(rs.getString("picture"));
-            a.setRole(rs.getString("role"));
-            a.setWorkplace(rs.getString("workplace"));
-            a.setPhone(rs.getString("phone"));
-            a.setDateOfBirth(rs.getString("dateOfBirth"));
-            a.setGender(rs.getString("gender"));
-            a.setAddress(rs.getString("address"));
-            return a;
+    public boolean updateRole(int accountId, String newRole) {
+        String sql = "UPDATE Accounts SET role = ? WHERE AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, newRole);
+            ps.setInt(2, accountId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return false;
     }
-    return null;
-}
+
+    // Đăng nhập
+    public Account login(String email, String password) {
+        String sql = "SELECT * FROM Accounts WHERE email=? AND password=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Account a = new Account();
+                a.setAccountId(rs.getInt("AccountID"));
+                a.setEmail(rs.getString("email"));
+                a.setPassword(rs.getString("password"));
+                a.setName(rs.getString("name"));
+                a.setPicture(rs.getString("picture"));
+                a.setRole(rs.getString("role"));
+                a.setWorkplace(rs.getString("workplace"));
+                a.setPhone(rs.getString("phone"));
+                a.setDateOfBirth(rs.getString("dateOfBirth"));
+                a.setGender(rs.getString("gender"));
+                a.setAddress(rs.getString("address"));
+                return a;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public Account insertOrUpdateFromGoogle(GoogleAccount googleUser) {
         if (googleUser == null || googleUser.getEmail() == null) {
@@ -341,9 +368,9 @@ public Account login(String email, String password) {
 
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
-         Account newAcc = new Account();
+        Account newAcc = new Account();
         newAcc.setEmail("testuser@gmail.com");
-        newAcc.setPassword("123456"); 
+        newAcc.setPassword("123456");
         newAcc.setName("Nguyen Van Test");
         newAcc.setPicture("default.png");
         newAcc.setRole("learner");
@@ -357,13 +384,11 @@ public Account login(String email, String password) {
         boolean result = dao.insert(newAcc);
 
         // Kiểm tra kết quả
-        if(result) {
+        if (result) {
             System.out.println("Insert thành công! AccountID: " + newAcc.getAccountId());
         } else {
             System.out.println("Insert thất bại!");
         }
-    
-        
 
     }
 }

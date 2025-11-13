@@ -41,6 +41,11 @@ public class LoginController extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
+        if ("banned".equalsIgnoreCase(account.getRole())) {
+            request.setAttribute("error", "Tài khoản của bạn đã bị khóa, vui lòng liên hệ quản trị viên!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
 
         if (account.getPassword() == null) {
             // Tài khoản Google (password NULL)

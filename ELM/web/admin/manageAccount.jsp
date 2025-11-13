@@ -59,9 +59,9 @@
                         <td>${acc.role}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/admin/adminAccountServlet?action=detail&id=${acc.accountId}" class="btn edit">View</a>
-                            <a href="${pageContext.request.contextPath}/admin/adminAccountServlet?action=delete&id=${acc.accountId}"
+<!--                            <a href="${pageContext.request.contextPath}/admin/adminAccountServlet?action=delete&id=${acc.accountId}"
                                class="btn delete"
-                               onclick="return confirm('Delete this account?');">Delete</a>
+                               onclick="return confirm('Delete this account?');">Delete</a>-->
                         </td>
                     </tr>
                 </c:forEach>

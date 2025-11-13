@@ -100,10 +100,25 @@ public class AdminAccountServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String action = request.getParameter("action");
+    AccountDAO dao = new AccountDAO();
+
+    if ("updateRole".equalsIgnoreCase(action)) {
+        int accountId = Integer.parseInt(request.getParameter("accountId"));
+        String newRole = request.getParameter("role");
+
+        dao.updateRole(accountId, newRole);
+
+        // Quay lại trang chi tiết (có thể thêm thông báo nếu muốn)
+        response.sendRedirect(request.getContextPath() + "/admin/adminAccountServlet?action=detail&id=" + accountId);
+        return;
     }
+
+    processRequest(request, response);
+}
+
 
     /**
      * Returns a short description of the servlet.

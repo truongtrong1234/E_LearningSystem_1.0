@@ -27,6 +27,11 @@ public class LoginGoogleController extends HttpServlet {
         GoogleAccount access = gg.getUserInfo(token);
         AccountDAO adao = new AccountDAO(); 
         Account account = adao.insertOrUpdateFromGoogle(access); 
+        if (account != null && "banned".equalsIgnoreCase(account.getRole())) {
+            request.setAttribute("error", "Tài khoản của bạn đã bị khóa, vui lòng liên hệ quản trị viên!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
         HttpSession session = request.getSession();
         session.setAttribute("account", account);
         request.getRequestDispatcher("loginSuccess.jsp").forward(request, response);
