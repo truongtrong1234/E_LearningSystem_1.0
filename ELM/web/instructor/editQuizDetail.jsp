@@ -63,27 +63,22 @@
                                         <option value="D">D</option>
                                     </select>
                                 </div>
-
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-warning text-white fw-bold">Add Question</button>
-
                                 </div>
-                            </form> 
+                            </form>
                             <div class="d-flex justify-content-center">
                                 <c:set var="returnURL" value="#" /> 
                                 <c:set var="chapterID" value="${param.ChapterID}" />
                                 <c:set var="source" value="${param.source}" />
                                 <c:choose>
                                     <c:when test="${source eq 'list'}">
-                                        <%-- TRƯỜNG HỢP 1: Quay về Danh sách Quiz --%>
                                         <c:set var="returnURL" value="${pageContext.request.contextPath}/instructor/quizList?activeTab=quiz-content" />
                                     </c:when>
                                     <c:when test="${source eq 'create'}">
-                                        <%-- TRƯỜNG HỢP 2: Quay về Trang tạo/quản lý Quiz (từ CreateQuizController) --%>
                                         <c:set var="returnURL" value="${pageContext.request.contextPath}/instructor/createQuiz?ChapterID=${chapterID}" />
                                     </c:when>
                                     <c:otherwise>
-                                        <%-- MẶC ĐỊNH: Nếu không tìm thấy nguồn (ví dụ: gõ URL trực tiếp) --%>
                                         <c:set var="returnURL" value="${pageContext.request.contextPath}/instructor/dashboard" /> 
                                     </c:otherwise>
                                 </c:choose>
@@ -115,8 +110,6 @@
                                     <button type="submit" class="btn btn-outline-warning">Update Title </button>
                                 </div>
                             </form>
-
-                            <!-- Existing Questions -->
                             <c:if test="${empty questions}">
                                 <div class="text-center text-muted py-3">No questions yet.</div>
                             </c:if>
