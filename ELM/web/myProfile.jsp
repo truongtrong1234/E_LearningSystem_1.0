@@ -16,8 +16,10 @@
     %>
 
     <head>
-        <title>My Profile | SecretCoder</title>
+        <title>My Profile </title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/myProfile.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css?v3">
         <style>
             /* --- Tổng thể --- */
             body {
@@ -160,14 +162,8 @@
     </head>
 
     <body>
-        <div class="navbar">
-            <a class="logo" href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">
-                <span class="s">Secret</span><span class="c">Coder</span>
-            </a>
-            <div>
-                <a href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">Home</a>
-            </div>
-        </div>
+        <!-- HEADER -->
+        <jsp:include page="/components/headerLearner.jsp" />
 
         <div class="sheet-wrap">
             <div class="sheet">

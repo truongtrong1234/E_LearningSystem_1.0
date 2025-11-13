@@ -146,7 +146,7 @@
   <div class="header-container">
 
     <a class="logo" href="${pageContext.request.contextPath}/Learner/homeLearnerCourse">
-      <span class="s">Secret</span><span class="c">Coder</span>
+      <span class="s">ELearn</span><span class="c">EZ</span>
     </a>
 
     <div class="search-bar">

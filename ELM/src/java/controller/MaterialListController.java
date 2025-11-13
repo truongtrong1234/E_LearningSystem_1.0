@@ -35,14 +35,12 @@ public class MaterialListController extends HttpServlet {
         }
         int instructorID = acc.getAccountId();
         
-        // Lấy tham số courseID cho chức năng lọc
         int courseID = 0;
         String courseIDParam = request.getParameter("courseID");
         if (courseIDParam != null && !courseIDParam.isEmpty()) {
             try {
                 courseID = Integer.parseInt(courseIDParam);
             } catch (NumberFormatException e) {
-                // Xử lý nếu courseID không phải là số
                 Logger.getLogger(MaterialListController.class.getName()).log(Level.WARNING, "Invalid courseID parameter: " + courseIDParam);
             }
         }
@@ -86,7 +84,7 @@ public class MaterialListController extends HttpServlet {
         String action = request.getParameter("action");
         String materialIDStr = request.getParameter("materialID");
 
-        // XỬ LÝ HÀNH ĐỘNG DELETE
+        // Xử lí hành động Delete
         if ("delete".equals(action) && materialIDStr != null) {
             try {
                 int materialID = Integer.parseInt(materialIDStr);

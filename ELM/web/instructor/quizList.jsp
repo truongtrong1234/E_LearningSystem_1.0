@@ -7,62 +7,76 @@
         return;
     }
 %>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang tổng quan</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/instructor.css">
-</head>
-<body>
-    <div id="quiz-content" class="tab-content-block ${activeTab != 'quiz-content' ? 'd-none' : ''}">
-        <!-- Quiz List -->
-        <div class="row mt-4 quiz-list">
+
+<%-- Quiz Tab Content --%>
+<div id="quiz-content" class="tab-content-block ${activeTab != 'quiz-content' ? 'd-none' : ''}">
+    <div class="row mt-4">
+        <div class="col-12">
+            <form action="${pageContext.request.contextPath}/instructor/quizList" method="get" id="quizFilterForm" class="mb-3">
+                <input type="hidden" name="activeTab" value="quiz-content">
+                <div class="d-flex align-items-center">
+                    <label for="CourseFilter" class="form-label me-3 mb-0 fw-bold">Lọc theo Khóa học:</label>
+                    <select class="form-select w-auto" id="quizCourseFilter" name="courseID" 
+                            onchange="document.getElementById('quizFilterForm').submit()">
+                        <option value="0">Tất cả Khóa học</option>
+                        <c:forEach var="course" items="${courseList}">
+                            <option value="${course.courseID}" 
+                                    ${param.courseID == course.courseID || selectedCourseID == course.courseID ? 'selected' : ''}>
+                                ${course.title}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </form>
             <c:choose>
                 <c:when test="${not empty quizList}">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Questions</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="quiz" items="${quizList}" varStatus="loop">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
                                 <tr>
-                                    <td>${loop.index + 1}</td>
-                                    <td>${quiz.title}</td>
-                                    <td>
-                                        <c:set var="questionCount" value="0"/>
-                                        <c:forEach var="q" items="${quiz.questions}">
-                                            <c:set var="questionCount" value="${questionCount + 1}"/>
-                                        </c:forEach>
-                                        ${questionCount}
-                                    </td>
-                                    <td>
-                                        <a href="viewQuiz?id=${quiz.quizID}" class="btn btn-info btn-sm">Xem</a>
-                                        <a href="editQuiz?id=${quiz.quizID}" class="btn btn-warning btn-sm">Sửa</a>
-                                    </td>
+                                    <th>STT</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Khóa học</th>
+                                    <th>Chương</th>
+                                    <th class="text-center">Hành động</th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="q" items="${quizList}" varStatus="loop">
+                                    <tr>
+                                        <td>${loop.index + 1}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/instructor/quizList?action=edit&quizID=${q.quizID}" 
+                                                class="text-decoration-none fw-semibold text-dark">
+                                                ${q.title}
+                                            </a>
+                                        </td>
+                                        <td>${q.courseName}</td>
+                                        <td>${q.chapterName}</td>
+                                        <td class="text-center">
+                                            <a href="${pageContext.request.contextPath}/instructor/editQuizDetail?ChapterID=${q.chapterID}&quizID=${q.quizID}" 
+                                                class="btn btn-view btn-sm btn-outline-warning me-2">
+                                                <i class="fas fa-edit"></i> Sửa
+                                            </a>
+                                            <button type="button" class="btn btn-delete btn-sm btn-outline-danger" 
+                                                    onclick="confirmDeleteQuiz(${q.quizID})">
+                                                <i class="fas fa-trash-alt"></i> Xoá
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </c:when>
                 <c:otherwise>
-                     <div class="col-12">
-                        <div class="alert alert-info text-center" role="alert">
-                            Chưa có tài liệu nào. Hãy tạo khoá học mới trước để bắt đầu!
-                        </div>
+                    <div class="alert alert-info text-center" role="alert">
+                        Chưa có bài kiểm tra nào được tạo. Hãy ấn
+                        <a href="createCourse" style="text-decoration: none; font-weight: bold">"Tạo khoá học mới"</a>
+                        để bắt đầu!
                     </div>
                 </c:otherwise>
             </c:choose>
         </div>
     </div>
-</body>
-</html>
+</div>

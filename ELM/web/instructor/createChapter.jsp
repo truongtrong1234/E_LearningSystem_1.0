@@ -61,8 +61,14 @@
                                 <span><strong>${ch.title}</strong></span>
 
                                 <div>
-                                    <a href="createLesson?courseID=${thisCourseID}&ChapterID=${ch.chapterID}" class="btn btn-outline-success btn-sm me-2">Tạo bài giảng</a>
-                                    <a href="createQuiz?ChapterID=${ch.chapterID}" class="btn btn-outline-warning btn-sm me-2">Tạo bài kiểm tra</a>
+                                    <a href="${pageContext.request.contextPath}/instructor/createLesson?courseID=${thisCourseID}&ChapterID=${ch.chapterID}" 
+                                       class="btn btn-outline-success btn-sm me-2">
+                                        Tạo bài giảng
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/instructor/createQuiz?ChapterID=${ch.chapterID}" 
+                                       class="btn btn-outline-warning btn-sm me-2">
+                                        Tạo bài kiểm tra
+                                    </a>
 
                                     <form action="createChapter" method="post" style="display:inline;">
                                         <input type="hidden" name="action" value="delete">

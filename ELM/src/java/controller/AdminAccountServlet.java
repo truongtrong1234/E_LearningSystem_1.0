@@ -5,21 +5,23 @@
 package controller;
 
 import dao.AccountDAO;
+import dao.CourseDAO;
+import dao.EnrollmentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Account;
+import model.Course;
 
 /**
  *
  * @author ADMIN
  */
-public class manageAccount extends HttpServlet {
+public class AdminAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +40,10 @@ public class manageAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminAccount</title>");
+            out.println("<title>Servlet AdminAccountServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminAccount at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminAccountServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,35 +61,34 @@ public class manageAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String action = request.getParameter("action");
         AccountDAO dao = new AccountDAO();
 
-        String role = request.getParameter("role");
-        String keyword = request.getParameter("keyword");
+        if ("detail".equalsIgnoreCase(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Account acc = dao.getAccountById(id);
 
-        List<Account> accounts;
+            if (acc == null) {
+                response.sendRedirect("manageAccount?error=notfound");
+                return;
+            }
+// 1️⃣ Khóa học đã tạo (Instructor)
+            CourseDAO courseDAO = new CourseDAO();
+            List<Course> createdCourses = courseDAO.getCourseByInstructorID(acc.getAccountId());
 
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            // Nếu có keyword → tìm theo tên hoặc email (và có thể kết hợp role)
-            if (role != null && !role.equalsIgnoreCase("all")) {
-                accounts = dao.searchAccountsByRoleAndKeyword(role, keyword);
-            } else {
-                accounts = dao.searchAccounts(keyword);
-            }
-        } else {
-            // Không có keyword → chỉ lọc theo role
-            if (role != null && !role.equalsIgnoreCase("all")) {
-                accounts = dao.getAccountsByRole(role);
-            } else {
-                accounts = dao.getAllAccounts();
-            }
+            // 2️⃣ Khóa học đang học (Enrollments)
+            EnrollmentDAO enrollDAO = new EnrollmentDAO();
+            List<Course> enrolledCourses = enrollDAO.getCoursesByAccountId(acc.getAccountId());
+
+            request.setAttribute("account", acc);
+            request.setAttribute("createdCourses", createdCourses);
+            request.setAttribute("enrolledCourses", enrolledCourses);
+
+            request.getRequestDispatcher("/admin/accountDetail.jsp").forward(request, response);
+            return;
         }
 
-        request.setAttribute("accounts", accounts);
-        request.setAttribute("selectedRole", role);
-        request.setAttribute("keyword", keyword);
-
-        request.getRequestDispatcher("/admin/manageAccount.jsp").forward(request, response);
+        // Các action khác như delete, removeRole, v.v...
     }
 
     /**

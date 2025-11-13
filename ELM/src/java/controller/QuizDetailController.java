@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import dao.QuestionDAO;
@@ -41,21 +37,64 @@ public class QuizDetailController extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int chapterID = Integer.parseInt(request.getParameter("ChapterID"));
-        int quizID = Integer.parseInt(request.getParameter("quizID"));
+        throws ServletException, IOException {
+        
+        String chapterIDStr = request.getParameter("ChapterID");
+        String quizIDStr = request.getParameter("quizID");
+
+        int chapterID = 0;
+        int quizID = 0;
+        String error = null;
+
+        if (chapterIDStr == null || chapterIDStr.isEmpty()) {
+            error = "Thiếu Chapter ID.";
+        } else {
+            try {
+                chapterID = Integer.parseInt(chapterIDStr);
+            } catch (NumberFormatException e) {
+                error = "Chapter ID không hợp lệ.";
+            }
+        }
+
+        if (quizIDStr == null || quizIDStr.isEmpty()) {
+            if (error == null) {
+                 error = "Thiếu Quiz ID.";
+            }
+        } else {
+            try {
+                quizID = Integer.parseInt(quizIDStr);
+            } catch (NumberFormatException e) {
+                if (error == null) {
+                     error = "Quiz ID không hợp lệ.";
+                }
+            }
+        }
+
+        if (error != null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, error);
+            return;
+        }
+
         QuizDAO quizDAO = new QuizDAO();
         QuestionDAO questionDAO = new QuestionDAO();
 
         Quiz quiz = quizDAO.getQuizById(quizID);
+
+        if (quiz == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Không tìm thấy Quiz có ID: " + quizID);
+            return;
+        }
+
         List<Question> questions = questionDAO.getQuestionsByQuizID(quizID);
-        request.setAttribute("thisChapterID", chapterID);
-        request.setAttribute("thisquizID", quizID);
+
+        request.setAttribute("currentChapterId", chapterID); // Lưu để lấy ChapterID back về createCourse
+        request.setAttribute("chapterID", chapterID); 
+        request.setAttribute("quizID", quizID);      
         request.setAttribute("quiz", quiz);
         request.setAttribute("questions", questions);
+
         request.getRequestDispatcher("/instructor/editQuizDetail.jsp").forward(request, response);
     }
-
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

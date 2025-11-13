@@ -118,13 +118,14 @@
                             <td>${c.courseclass}</td>
                             <td>$${c.price}</td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/instructorDetail?id=${c.instructorID}">
+                                <a href="${pageContext.request.contextPath}/admin/adminAccountServlet?action=detail&id=${c.instructorID}">
                                     ${c.instructorName}
                                 </a>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/admin/viewCourseDetail?id=${c.courseID}" 
-                                   class="btn btn-info btn-sm">View</a>
+                                   <a href="${pageContext.request.contextPath}/admin/viewCourseDetail?CourseID=${c.courseID}" 
+   class="btn btn-info btn-sm">View</a>
+
 
                                 <a href="deleteCourse?id=${c.courseID}" class="btn btn-danger btn-sm"
                                    onclick="return confirm('Delete this course?')">Delete</a>

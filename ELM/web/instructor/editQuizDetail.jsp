@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
     if (session.getAttribute("account") == null) {
         response.sendRedirect("../login.jsp");
@@ -69,7 +70,24 @@
                                 </div>
                             </form> 
                             <div class="d-flex justify-content-center">
-                                <a href="createQuiz?ChapterID=${thisChapterID}" class="btn btn-secondary fw-bold">
+                                <c:set var="returnURL" value="#" /> 
+                                <c:set var="chapterID" value="${param.ChapterID}" />
+                                <c:set var="source" value="${param.source}" />
+                                <c:choose>
+                                    <c:when test="${source eq 'list'}">
+                                        <%-- TRƯỜNG HỢP 1: Quay về Danh sách Quiz --%>
+                                        <c:set var="returnURL" value="${pageContext.request.contextPath}/instructor/quizList?activeTab=quiz-content" />
+                                    </c:when>
+                                    <c:when test="${source eq 'create'}">
+                                        <%-- TRƯỜNG HỢP 2: Quay về Trang tạo/quản lý Quiz (từ CreateQuizController) --%>
+                                        <c:set var="returnURL" value="${pageContext.request.contextPath}/instructor/createQuiz?ChapterID=${chapterID}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <%-- MẶC ĐỊNH: Nếu không tìm thấy nguồn (ví dụ: gõ URL trực tiếp) --%>
+                                        <c:set var="returnURL" value="${pageContext.request.contextPath}/instructor/dashboard" /> 
+                                    </c:otherwise>
+                                </c:choose>
+                                <a href="${returnURL}" class="btn btn-secondary fw-bold">
                                     Go Back
                                 </a>
                             </div>

@@ -252,5 +252,8 @@ html,body{
         padding: 12px;
         gap: 12px;
     }
-
+    .search-bar {
+        order: 3;
+        width: 100%;
+    }
 }

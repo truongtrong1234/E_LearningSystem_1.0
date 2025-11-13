@@ -7,7 +7,7 @@
 <html lang="vi">
     <head>
         <meta charset="UTF-8" />
-        <title>Đăng nhập | SecretCoder</title>
+        <title>Đăng nhập </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>
             :root{
@@ -202,7 +202,7 @@
         <!-- Header -->
         <div class="topbar">
             <a class="logo" href="<%= ctx %>/home_Guest">
-                <span class="s">Secret</span><span class="c">Coder</span>
+                <span class="s">ELearn</span><span class="c">EZ</span>
             </a>
             <div>
                 <a href="<%=ctx%>/login.jsp">Log in</a>

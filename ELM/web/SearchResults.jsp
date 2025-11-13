@@ -6,7 +6,7 @@
 <html lang="vi">
  <head>
      <meta charset="UTF-8">
-        <title>SecretCoder | Learner</title>
+        <title>Learner</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home_learner.css?v3">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerGuest.css?v=3">

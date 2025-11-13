@@ -12,7 +12,7 @@
            <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerGuest.css?v=3">
               <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
 
-        <title>SecretCoder | Guest</title>
+        <title> Guest</title>
 
         
         
@@ -37,7 +37,7 @@
         <section class="hero">
             <div class="hero-left">
                 <div class="hero-card">
-                    <h2>Welcome to SecretCoder</h2>
+                    <h2>Welcome to ELearnEZ</h2>
                     <p>Learn coding, AI, and more with expert-led online courses. Join our learning community today!</p>
                     <div>
                         <a href="<%=ctx%>/login.jsp" class="btn-primary">Get started for free</a>

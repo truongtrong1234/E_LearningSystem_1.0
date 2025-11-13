@@ -35,7 +35,6 @@ public class Quiz {
     public void setQuizID(int quizID) {
         this.quizID = quizID;
     }
-
     public int getChapterID() {
         return chapterID;
     }
@@ -44,11 +43,11 @@ public class Quiz {
         this.chapterID = chapterID;
     }
 
-    public int getCourseID() { // Getter mới
+    public int getCourseID() {
         return courseID;
     }
 
-    public void setCourseID(int courseID) { // Setter mới
+    public void setCourseID(int courseID) { 
         this.courseID = courseID;
     }
     

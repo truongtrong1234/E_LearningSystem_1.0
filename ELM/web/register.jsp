@@ -1,4 +1,4 @@
-<%-- Sign up (Udemy-like) for SecretCoder --%>
+<%-- Sign up (Udemy-like) --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
@@ -8,11 +8,11 @@
 <html lang="vi">
     <head>
         <meta charset="UTF-8" />
-        <title>Sign up | SecretCoder</title>
+        <title>Sign up </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>
             :root{
-                --brand:#ff6600;           /* cam SecretCoder */
+                --brand:#ff6600;           /* cam  */
                 --brand-hover:#e55b00;
                 --ink:#1c1d1f;
                 --muted:#6a6f73;
@@ -207,7 +207,7 @@ padding:0 12px;
         <!-- Top nav -->
         <div class="topbar">
             <a class="logo" href="<%= ctx %>/home_Guest">
-<span class="s">Secret</span><span class="c">Coder</span>
+<span class="s">ELearn</span><span class="c">EZ</span>
             </a>
             <div>
                 <a href="<%=ctx%>/login.jsp">Log in</a>
@@ -224,7 +224,7 @@ padding:0 12px;
 
             <!-- Form -->
             <div class="panel">
-                <h1>Create your SecretCoder account</h1>
+                <h1>Create your account</h1>
 
                 <form action="<%=ctx%>/register" method="post" onsubmit="return validateForm();">
                     <label for="email">Email</label>

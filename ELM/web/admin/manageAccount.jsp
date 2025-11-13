@@ -1,6 +1,8 @@
 <%@page import="java.util.List"%>
 <%@page import="model.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -26,11 +28,16 @@
                 </label>
                 <select name="role" id="role" class="form-select form-select-sm" style="width: 160px;"
                         onchange="this.form.submit()">
-                    <option value="all" <%= "all".equalsIgnoreCase((String)request.getAttribute("selectedRole")) || request.getAttribute("selectedRole")==null ? "selected" : "" %>>All</option>
-                    <option value="admin" <%= "admin".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Admin</option>
-                    <option value="instructor" <%= "instructor".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Instructor</option>
-                    <option value="learner" <%= "learner".equalsIgnoreCase((String)request.getAttribute("selectedRole")) ? "selected" : "" %>>Learner</option>
+                    <option value="all" ${selectedRole == 'all' || selectedRole == null ? 'selected' : ''}>All</option>
+                    <option value="admin" ${selectedRole == 'admin' ? 'selected' : ''}>Admin</option>
+                    <option value="instructor" ${selectedRole == 'instructor' ? 'selected' : ''}>Instructor</option>
+                    <option value="learner" ${selectedRole == 'learner' ? 'selected' : ''}>Learner</option>
                 </select>
+                <input type="text" name="keyword" class="form-control form-control-sm"
+                       placeholder="Search by name or email"
+                       value="${keyword != null ? keyword : ''}" style="width: 220px;"/>
+
+                <button type="submit" class="btn btn-sm btn-primary">Search</button>
             </form>
         </form>
         <table class="table data-table table-bordered align-middle">
@@ -44,27 +51,22 @@
                 </tr>
             </thead>
             <tbody>
-                <%
-                    List<Account> accounts = (List<Account>) request.getAttribute("accounts");
-                    if (accounts != null) {
-                        for (Account acc : accounts) {
-                %>
-                <tr>
-                    <td><%= acc.getAccountId() %></td>
-                    <td><%= acc.getEmail() %></td>
-                    <td><%= acc.getName() %></td>
-                    <td><%= acc.getRole() %></td>
-                    <td>
-                        <a href="editAccount.jsp?id=<%= acc.getAccountId() %>" class="btn edit">Edit</a>
-                        <a href="AdminAccountServlet?action=delete&id=<%= acc.getAccountId() %>" class="btn delete" onclick="return confirm('Delete this account?');">Delete</a>
-                        <a href="AdminAccountServlet?action=removeRole&id=<%= acc.getAccountId() %>" class="btn role" onclick="return confirm('Remove role for this account?');">Remove Role</a>
-                    </td>
-                </tr>
-                <%
-                        }
-                    }
-                %>
+                <c:forEach var="acc" items="${accounts}">
+                    <tr>
+                        <td>${acc.accountId}</td>
+                        <td>${acc.email}</td>
+                        <td>${acc.name}</td>
+                        <td>${acc.role}</td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/admin/adminAccountServlet?action=detail&id=${acc.accountId}" class="btn edit">View</a>
+                            <a href="${pageContext.request.contextPath}/admin/adminAccountServlet?action=delete&id=${acc.accountId}"
+                               class="btn delete"
+                               onclick="return confirm('Delete this account?');">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
             </tbody>
+
         </table>
     </div>
 

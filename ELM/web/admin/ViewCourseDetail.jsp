@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/comments.css">
+
 
 <%
     if (session.getAttribute("account") == null) {
@@ -7,72 +10,220 @@
         return;
     }
 %>
+<style>
+    .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #007bff; /* xanh biển đậm */
+        color: white;
+        padding: 15px 20px;
+        position: relative;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
+    /* đảm bảo không bị nền khác đè */
+    .page-header h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+        color: white;
+        background: none !important;
+        border: none !important;
+    }
+
+    /* nút quay lại */
+    .back-button {
+        position: absolute;
+        left: 20px;
+        color: white;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+        font-weight: 500;
+    }
+
+    .back-button:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+
+</style>
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Chi tiết khóa học - ${course.title}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+    <head>
+        <meta charset="UTF-8">
+        <title>Nội dung học</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mylearningcontent.css?v=3">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css?v=3">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css?v=3">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/comments.css">
 
-    <div class="container mt-4 mb-5">
-        <h1 class="text-center text-primary fw-bold mb-4">Nội dung khóa học: ${course.title}</h1>
 
-        <c:forEach var="chapter" items="${chapterList}">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header bg-primary text-white fw-bold">
-                    Chương ${chapter.chapterID}: ${chapter.title}
-                </div>
-                <div class="card-body">
-                    <!-- Danh sách bài học -->
-                    <h5 class="text-success">Bài học</h5>
-                    <c:choose>
-                        <c:when test="${not empty chapterLessonMap[chapter.chapterID]}">
-                            <ul class="list-group mb-3">
-                                <c:forEach var="lesson" items="${chapterLessonMap[chapter.chapterID]}">
-                                    <li class="list-group-item">
-                                        <i class="bi bi-play-circle"></i> ${lesson.title}
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </c:when>
-                        <c:otherwise>
-                            <p class="text-muted">Chưa có bài học nào trong chương này.</p>
-                        </c:otherwise>
-                    </c:choose>
 
-                    <!-- Danh sách Quiz -->
-                    <h5 class="text-warning mt-3">Bài kiểm tra</h5>
-                    <c:choose>
-                        <c:when test="${not empty chapterQuizMap[chapter.chapterID]}">
-                            <ul class="list-group">
-                                <c:forEach var="quiz" items="${chapterQuizMap[chapter.chapterID]}">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>${quiz.title}</span>
-                                        <a href="${pageContext.request.contextPath}/admin/quizDetail?QuizID=${quiz.quizID}" 
-                                           class="btn btn-outline-primary btn-sm">
-                                           Xem chi tiết Quiz
-                                        </a>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </c:when>
-                        <c:otherwise>
-                            <p class="text-muted">Chưa có bài kiểm tra nào trong chương này.</p>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-        </c:forEach>
-
-        <div class="text-center mt-5">
-            <a href="${pageContext.request.contextPath}/admin/courseList" class="btn btn-secondary">
-                ← Quay lại danh sách khóa học
-            </a>
+    </head>
+    <body>
+        <div class="page-header">
+            <a href="${pageContext.request.contextPath}/admin/manageCourse"class="back-button">← Quay lại</a>
+            <h1>${course.title}</h1>
         </div>
+
+
+        <div class="content-wrapper">
+            <!-- CỘT TRÁI: TÀI LIỆU -->
+            <div class="materials-pane" >
+                <h3>Tài liệu bài học</h3>
+                <c:choose>
+                    <c:when test="${not empty materials}">
+                        <ul>
+                            <c:forEach var="m" items="${materials}">
+                                <li>
+                                    <a href="viewMaterial?url=${m.contentURL}" target="_blank">
+                                        ${m.title} (${m.materialType})
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </c:when>
+                    <c:otherwise>
+                        <p> Hãy chọn một bài học ở bên phải để xem tài liệu.</p>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <!-- CỘT PHẢI: DANH SÁCH CHƯƠNG/BÀI -->
+            <div class="lessons-pane">
+                <c:forEach var="entry" items="${chapterLessonMap}">
+                    <div class="chapter-block">
+                        <c:forEach var="chapter" items="${chapterList}">
+                            <c:if test="${chapter.chapterID == entry.key}">
+                                <h4>
+                                    <input type="checkbox" disabled
+                                           <c:if test="${chapterCompletedMap[chapter.chapterID]}">checked</c:if> />
+                                    ${chapter.title}
+                                </h4>
+                            </c:if>
+                        </c:forEach>
+
+                        <ul>
+                            <c:forEach var="quiz" items="${chapterQuizMap[entry.key]}">
+                                <li style="margin-bottom:15px;">
+                                    <a  href="${pageContext.request.contextPath}/admin/quizDetail?QuizID=${quiz.quizID}"
+                                        class="btn btn-primary btn-sm">
+                                        <i class="bi bi-question-circle me-1"></i> ${quiz.title}
+                                    </a>
+                                </li>
+                            </c:forEach>
+
+                        </ul>
+                        <p>Bài kiểm tra</p>
+                        <ul>
+
+                            <c:forEach var="quiz" items="${chapterQuizMap[entry.key]}">
+                                <li>
+                                    <a  href="${pageContext.request.contextPath}/admin/quizDetail?QuizID=${quiz.quizID}"
+                                        class="btn btn-primary btn-sm">
+                                        <i class="bi bi-question-circle me-1"></i> ${quiz.title}
+                                    </a>
+                                </li>
+                            </c:forEach>
+
+                        </ul>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+
+
+        <!-- Q&A -->
+        <section class="qna-section" id="qna">
+            <h3>Hỏi & Đáp khóa học</h3>
+
+            <div class="qna-list">
+                <c:choose>
+                    <c:when test="${not empty qnaList}">
+                        <c:forEach var="q" items="${qnaList}">
+                            <div class="qna-item">
+                                <img src="${q.askedByAvatar}" class="avatar-img" alt="avatar"
+                                     onerror="this.src='https://i.imgur.com/6VBx3io.png'">
+
+                                <div class="qna-body">
+                                    <div class="qna-meta">
+                                        <strong>${q.askedByName}</strong> •
+                                        <fmt:formatDate value="${q.askedAt}" pattern="dd/MM/yyyy HH:mm"/>
+                                    </div>
+
+                                    <div class="qna-question">${q.question}</div>
+
+                                    <!-- Form trả lời (chỉ hiển thị cho giảng viên) -->
+                                    <c:if test="${account.role eq 'instructor' && account.accountId == course.instructorID}">
+                                        <a href="javascript:void(0)" onclick="toggleReplyForm(${q.qnaID})"
+                                           class="btn btn-sm btn-outline-primary">Trả lời</a>
+
+                                        <div class="reply-form" id="reply-form-${q.qnaID}" style="display:none; margin-top:8px;">
+                                            <form action="${pageContext.request.contextPath}/qnaReply" method="post">
+                                                <input type="hidden" name="qnaID" value="${q.qnaID}">
+                                                <input type="hidden" name="courseID" value="${course.courseID}">
+                                                <textarea name="replyMessage" placeholder="Nhập câu trả lời..." required></textarea>
+                                                <div class="qna-actions">
+                                                    <button type="submit" class="btn btn-success btn-sm">Gửi</button>
+                                                    <button type="button" class="btn btn-light btn-sm"
+                                                            onclick="toggleReplyForm(${q.qnaID})">Hủy</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </c:if>
+
+                                    <!-- Các câu trả lời -->
+                                    <c:forEach var="r" items="${replyMap[q.qnaID]}">
+                                        <div class="qna-reply">
+                                            <div class="reply-meta">
+                                                <strong>${r.repliedByName}</strong> (Giảng viên)
+                                            </div>
+                                            <div class="reply-content">${r.replyMessage}</div>
+                                            <div class="reply-time">
+                                                <fmt:formatDate value="${r.repliedAt}" pattern="dd/MM/yyyy HH:mm"/>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="no-qna">Chưa có câu hỏi nào. Hãy là người đầu tiên đặt câu hỏi!</div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
+            <!-- Form đặt câu hỏi -->
+            <form action="${pageContext.request.contextPath}/qnaQuestion" method="post" class="ask-form">
+                <input type="hidden" name="courseID" value="${course.courseID}">
+                <input type="hidden" name="redirectURL" value="${pageContext.request.requestURI}?CourseID=${course.courseID}">
+
+
+                <div class="ask-input-container">
+                    <img src="${sessionScope.account.picture}" alt="avatar" class="avatar-img"
+                         onerror="this.src='https://i.imgur.com/6VBx3io.png'">
+
+                    <div class="ask-right">
+                        <div><strong>${sessionScope.account.name}</strong></div>
+                        <textarea name="question" placeholder="Nhập câu hỏi của bạn..." maxlength="2000" required></textarea>
+                        <button type="submit" class="btn btn-primary mt-2">Gửi câu hỏi</button>
+                    </div>
+                </div>
+            </form>
+        </section>
     </div>
 
+    <footer>© 2025 E-Learning System</footer>
+
+    <script>
+        function toggleReplyForm(id) {
+            const f = document.getElementById('reply-form-' + id);
+            f.style.display = f.style.display === 'none' || f.style.display === '' ? 'block' : 'none';
+        }
+    </script>
 </body>
 </html>
