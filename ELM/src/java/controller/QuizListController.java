@@ -1,7 +1,9 @@
 package controller;
 
+import dao.ChapterDAO;
 import dao.QuizDAO;
 import dao.CourseDAO;
+import dao.QuestionDAO;
 import model.Account;
 import model.Quiz;
 import model.Course;
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Chapter;
+import model.Question;
 
 public class QuizListController extends HttpServlet {
     private final QuizDAO quizDAO = new QuizDAO();
@@ -24,7 +28,9 @@ public class QuizListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException { 
+        String actionQuiz = request.getParameter("actionQuiz"); 
+        request.setAttribute("actionQuizs", actionQuiz);
         Account acc = (Account) request.getSession().getAttribute("account");
         if (acc == null) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
@@ -41,9 +47,9 @@ public class QuizListController extends HttpServlet {
                 Logger.getLogger(QuizListController.class.getName()).log(Level.WARNING, "Invalid courseID parameter: " + courseIDParam);
             }
         }
-        
+           
         String action = request.getParameter("action");
-
+        
         if ("edit".equals(action)) {
             String quizIDStr = request.getParameter("quizID");
 
@@ -76,7 +82,39 @@ public class QuizListController extends HttpServlet {
                 return;
             }
         }
+        String chapterIDStr = request.getParameter("ChapterID");
+        int chapterID = 0; 
+        if (chapterIDStr==null) {
+            chapterIDStr=""+0; 
+        }
+        chapterID = Integer.parseInt(chapterIDStr); 
+        QuizDAO quizDao = new QuizDAO();
+        List<Quiz> quizList = null;
+
+        try {
+            quizList = quizDao.getQuizzesByChapter(chapterID);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi hệ thống khi tải danh sách Quiz.");
+            return;
+        }
+        request.setAttribute("thisChapterID", chapterID);
+        request.setAttribute("QuizList", quizList);
+        request.setAttribute("source", "create");
         
+        String quizIDStr = request.getParameter("quizID");
+        if (quizIDStr==null) {
+            quizIDStr=""+0; 
+        }
+        int quizID = Integer.parseInt(quizIDStr);
+        String error = null;
+        QuizDAO quizDAO = new QuizDAO();
+        QuestionDAO questionDAO = new QuestionDAO();
+        Quiz quiz = quizDAO.getQuizById(quizID);
+        List<Question> questions = questionDAO.getQuestionsByQuizID(quizID);
+        request.setAttribute("thisquizID", quizID);      
+        request.setAttribute("quiz", quiz);
+        request.setAttribute("questions", questions);
+
         handleList(request, response, instructorID, courseID);
     }
 
@@ -106,12 +144,17 @@ public class QuizListController extends HttpServlet {
             throws ServletException, IOException {
         List<Quiz> quizList;
         List<Course> courseList;
-
+        String courseIDStr = request.getParameter("courseID"); 
+        if (courseIDStr==null) {
+            courseIDStr=""+0; 
+        }
+        int myCourseID = Integer.parseInt(courseIDStr); 
+        ChapterDAO chapterDAO = new ChapterDAO(); 
+        List<Chapter> chapterList= chapterDAO.getChaptersByCourseId(myCourseID);
+        request.setAttribute("chapterList", chapterList);
         try {
             courseList = courseDAO.getCourseByInstructorID(instructorID);
             request.setAttribute("courseList", courseList);
-
-            // Tải danh sách Quiz đã được lọc
             if (courseID > 0) {
                 quizList = quizDAO.getByCourseAndInstructor(courseID, instructorID);
                 request.setAttribute("selectedCourseID", courseID);
@@ -120,11 +163,10 @@ public class QuizListController extends HttpServlet {
             }
         } catch (Exception e) {
             Logger.getLogger(QuizListController.class.getName()).log(Level.SEVERE, "Lỗi tải danh sách Quiz", e);
-            // Quay về danh sách mặc định nếu có lỗi SQL trong logic lọc
             quizList = quizDAO.getQuizzesByInstructorID(instructorID); 
             request.setAttribute("error", "Có lỗi xảy ra trong quá trình tải dữ liệu.");
         }
-
+        
         request.setAttribute("quizList", quizList);
         request.setAttribute("activeTab", QUIZ_TAB);
 

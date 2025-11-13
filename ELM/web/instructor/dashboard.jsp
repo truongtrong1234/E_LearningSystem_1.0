@@ -169,11 +169,10 @@
                                                            class="btn btn-outline-success btn-sm me-2">
                                                             Tạo bài giảng
                                                         </a>
-                                                        <a href="${pageContext.request.contextPath}/instructor/createQuiz?ChapterID=${ch.chapterID}" 
+                                                        <a href="/ELM/instructor/quizList?actionQuiz=createQuiz&ChapterID=${ch.chapterID}" 
                                                            class="btn btn-outline-warning btn-sm me-2">
                                                             Tạo bài kiểm tra
                                                         </a>
-
                                                         <form action="createChapter" method="post" style="display:inline;">
                                                             <input type="hidden" name="action" value="delete">
                                                             <input type="hidden" name="chapterID" value="${ch.chapterID}">
@@ -335,8 +334,8 @@
                                                             Xem tài liệu
                                                         </a><br>
                                                         <form action="uploadMaterial" method="post" enctype="multipart/form-data">
-                                                            <input type="hidden" name="thisCourseID" value="${CourseID}">
-                                                            <input type="hidden" name="thisChapterID" value="${ChapterID}">
+                                                            <input type="hidden" name="thisCourseID" value="${thisCourseID}">
+                                                            <input type="hidden" name="thisChapterID" value="${thischapterID}">
                                                             <input type="hidden" name="thisLessonID" value="${thisLessonID}">
                                                             <input type="hidden" name="action" value="delete">
                                                             <input type="hidden" name="materialID" value="${m.materialID}">

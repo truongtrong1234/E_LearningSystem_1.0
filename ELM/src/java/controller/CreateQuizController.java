@@ -14,37 +14,37 @@ import java.util.List;
 
 public class CreateQuizController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        String chapterIDStr = request.getParameter("ChapterID");
-        int chapterID = 0; 
-        if (chapterIDStr != null && !chapterIDStr.isEmpty()) {
-            try {
-                chapterID = Integer.parseInt(chapterIDStr);
-            } catch (NumberFormatException e) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID Chương không hợp lệ.");
-                return;
-            }
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu ID Chương (ChapterID) bắt buộc.");
-            return;
-        }
-        QuizDAO quizDao = new QuizDAO();
-        List<Quiz> quizList = null;
-
-        try {
-            quizList = quizDao.getQuizzesByChapter(chapterID);
-        } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi hệ thống khi tải danh sách Quiz.");
-            return;
-        }
-        request.setAttribute("ChapterID", chapterID);
-        request.setAttribute("QuizList", quizList);
-        request.setAttribute("source", "create");
-
-        request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//        throws ServletException, IOException {
+//        String chapterIDStr = request.getParameter("ChapterID");
+//        int chapterID = 0; 
+//        if (chapterIDStr != null && !chapterIDStr.isEmpty()) {
+//            try {
+//                chapterID = Integer.parseInt(chapterIDStr);
+//            } catch (NumberFormatException e) {
+//                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID Chương không hợp lệ.");
+//                return;
+//            }
+//        } else {
+//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu ID Chương (ChapterID) bắt buộc.");
+//            return;
+//        }
+//        QuizDAO quizDao = new QuizDAO();
+//        List<Quiz> quizList = null;
+//
+//        try {
+//            quizList = quizDao.getQuizzesByChapter(chapterID);
+//        } catch (Exception e) {
+//            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi hệ thống khi tải danh sách Quiz.");
+//            return;
+//        }
+//        request.setAttribute("thisChapterID", chapterID);
+//        request.setAttribute("QuizList", quizList);
+//        request.setAttribute("source", "create");
+//
+//        request.getRequestDispatcher("/instructor/createQuiz.jsp").forward(request, response);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -67,9 +67,9 @@ public class CreateQuizController extends HttpServlet {
         }
         if ("delete".equalsIgnoreCase(action)) {
             qdao.deleteQuiz(quizID);
-            response.sendRedirect("createQuiz?ChapterID=" + chapterID);
+            response.sendRedirect("/ELM/instructor/quizList?actionQuiz=createQuiz&ChapterID=" + chapterID);
         } else {
-            response.sendRedirect("createQuiz?ChapterID=" + chapterID);
+            response.sendRedirect("/ELM/instructor/quizList?actionQuiz=createQuiz&ChapterID=" + chapterID);
         }
     }
 }

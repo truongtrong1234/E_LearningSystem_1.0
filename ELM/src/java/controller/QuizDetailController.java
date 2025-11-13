@@ -162,7 +162,7 @@ public class QuizDetailController extends HttpServlet {
         }
 
         // Sau khi xử lý, load lại trang
-        response.sendRedirect("editQuizDetail?ChapterID="+chapterID+"&quizID=" + quizID);
+        response.sendRedirect("/ELM/instructor/quizList?actionQuiz=editDetail&ChapterID="+chapterID+"&quizID=" + quizID);
     }
     
 }

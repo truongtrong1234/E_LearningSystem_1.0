@@ -6,6 +6,7 @@ package controller;
 
 import dao.QuestionDAO;
 import dao.QuizDAO;
+import dao.QuizProgressDAO;
 import dao.StudentAnswerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,6 +47,8 @@ public class DoQuizController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String myQuiz = request.getParameter("myQuiz"); 
+        request.setAttribute("myQuizs", myQuiz);
         int quizID = Integer.parseInt(request.getParameter("QuizID"));
         QuizDAO quizDAO = new QuizDAO();
         Quiz quiz = quizDAO.getQuizById(quizID);
@@ -54,13 +57,25 @@ public class DoQuizController extends HttpServlet {
         request.setAttribute("quiz", quiz);
         request.setAttribute("quizID", quizID);
         request.setAttribute("questions", questions);
-
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
+        int accountID =acc.getAccountId(); 
+        QuizProgressDAO dao = new QuizProgressDAO();
+        dao.deleteQuizProgress(accountID, quizID); 
+        int correctCount = dao.countCorrectAnswers(accountID, quizID);
+        int totalQuestions = dao.totalQuestions(quizID);
+        double totalScore = (double) correctCount / totalQuestions * 10;
+        dao.saveProgress(accountID, quizID, correctCount, totalScore);
+        request.setAttribute("correctCount", correctCount);
+        request.setAttribute("totalQuestions", totalQuestions);
+        request.setAttribute("totalScore", totalScore);
         request.getRequestDispatcher("/Learner/doQuiz.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         int quizID = Integer.parseInt(request.getParameter("quizID"));
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("account");
@@ -75,7 +90,7 @@ public class DoQuizController extends HttpServlet {
                 myAnswer.saveAnswer(acc.getAccountId(), q.getQuestionID(), selected.charAt(0), isCorrect);
             }
         }
-        response.sendRedirect("/ELM/Learner/quizResult?QuizID=" + quizID+"");
+        response.sendRedirect("/ELM/Learner/doQuiz?myQuiz=quizResult&QuizID=" + quizID);
     }
 
 }
