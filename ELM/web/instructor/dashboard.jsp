@@ -79,6 +79,9 @@
                         </li>
                     </ul>
                     <c:choose>
+                        <c:when test="${empty actionCourse}">
+                            <jsp:include page="manageCourse.jsp"/>
+                        </c:when>
                         <c:when test="${actionCourse eq 'createCourse'}">
                             <div class="card shadow-sm p-4 mt-4">
                                 <form id="courseForm" action="createCourse" method="post" enctype="multipart/form-data">
@@ -135,7 +138,7 @@
                                         <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-dark">
                                             <i class="fas fa-home"></i>
                                         </a>
-                                        <button type="submit" class="btn btn-orange">Tiếp theo</button>
+                                        <button type="submit" class="btn create-cqm-btn">Tiếp theo</button>
                                     </div>
                                 </form>
                             </div>
@@ -146,7 +149,7 @@
                                     <form action="createChapter" method="post" class="d-flex mb-4">
                                         <input type="hidden" name="thisCourseID" value="${thisCourseID}">
                                         <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Nhập tiêu đề chương..." required>
-                                        <button type="submit" class="btn btn-primary">+ Thêm chương </button>                  
+                                        <button type="submit" class="btn create-cqm-btn">+ Thêm chương </button>                  
                                     </form>
                                     <!-- Danh sách chương -->
                                     <div id="chapterList">
@@ -208,7 +211,7 @@
                                     <input type="hidden" name="thisCourseID" value="${courseID}">
                                     <input type="hidden" name="thischapterID" value="${thischapterID}">
                                     <input type="text" name="chapterTitle" class="form-control me-2" placeholder="Nhập tiêu đề bài giảng..." required>
-                                    <button type="submit" class="btn btn-primary">+ Thêm bài giảng</button>
+                                    <button type="submit" class="btn create-cqm-btn">+ Thêm bài giảng</button>
                                 </form>
 
                                 <div id="lessonList">
@@ -296,7 +299,7 @@
                                             <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-dark">
                                                 <i class="fas fa-home"></i>
                                             </a>
-                                            <button type="submit" class="btn btn-primary">Upload</button>
+                                            <button type="submit" class="btn create-cqm-btn">Upload</button>
                                         </div>
                                     </form>
                                     <c:if test="${not empty sessionScope.errorMessage}">
@@ -403,7 +406,7 @@
                                         </div>
                                     </div>
                                     <div class="text-end mt-4">
-                                        <a href="/ELM/instructor/dashboard?actionCourse=createChapter&courseID=${course.courseID}" class="btn btn-sm btn-orange me-2">
+                                        <a href="/ELM/instructor/dashboard?actionCourse=createChapter&courseID=${course.courseID}" class="btn btn-sm create-cqm-btn me-2">
                                             Chỉnh sửa thêm
                                         </a>
                                         <a href="dashboard" class="btn btn-sm btn-dark me-2">
@@ -425,10 +428,9 @@
                         <jsp:include page="quizList.jsp"/>
                     </c:when>
                     <c:when test="${actionQuiz eq 'createQuiz'}">
-
                     </c:when>
                 </c:choose>
-                <jsp:include page="manageCourse.jsp"/>
+                
                 <jsp:include page="materialList.jsp"/>
             </div>
         </div>
