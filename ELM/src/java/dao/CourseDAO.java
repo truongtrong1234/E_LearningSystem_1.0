@@ -244,7 +244,7 @@ public class CourseDAO extends DBContext {
             ps.setString(2, course.getDescription());
             ps.setInt(3, course.getInstructorID());
             ps.setBigDecimal(4, course.getPrice());
-            ps.setInt(5, course.getCourseclass());  // ✅ Đổi ở đây
+            ps.setInt(5, course.getCourseclass());  
             ps.setInt(6, course.getCategoryID());
             ps.setString(7, course.getThumbnail());
             return ps.executeUpdate() > 0;
