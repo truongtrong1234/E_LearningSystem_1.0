@@ -14,7 +14,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Trang tổng quan</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/instructor.css">
@@ -79,8 +78,10 @@
                             </a>
                         </li>
                     </ul>
-                               <jsp:include page="manageCourse.jsp"/>
                     <c:choose>
+                        <c:when test="${empty actionCourse}">
+                            <jsp:include page="manageCourse.jsp"/>
+                        </c:when>
                         <c:when test="${not empty actionCourse}">
                             <div class="card shadow-sm p-4 mt-4">
                                 <form id="courseForm" action="createCourse" method="post" enctype="multipart/form-data">
@@ -137,13 +138,12 @@
                                         <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-dark">
                                             <i class="fas fa-home"></i>
                                         </a>
-                                        <button type="submit" class="btn btn-primary">Tiếp theo</button>
+                                        <button type="submit" class="btn btn-orange">Tiếp theo</button>
                                     </div>
                                 </form>
                             </div>
                         </c:when>
                     </c:choose>
-                                
 
                     <jsp:include page="quizList.jsp"/>
 
