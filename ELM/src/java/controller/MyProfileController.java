@@ -24,19 +24,15 @@ public class MyProfileController extends HttpServlet {
             return;
         }
 
-        // Lấy lại thông tin chi tiết
         AccountDAO dao = new AccountDAO();
         Account acc = dao.getAccountById(sessionAccount.getAccountId());
         
-        // Khóa học đã tạo (Instructor)
         CourseDAO courseDAO = new CourseDAO();
         List<Course> createdCourses = courseDAO.getCourseByInstructorID(acc.getAccountId());
 
-        // Khóa học đang học (Enrollments) 
         EnrollmentDAO enrollDAO = new EnrollmentDAO();
         List<Course> enrolledCourses = enrollDAO.getCoursesByAccountId(acc.getAccountId());
 
-        // Gửi dữ liệu sang JSP
         request.setAttribute("account", acc);
         request.setAttribute("createdCourses", createdCourses);
         request.setAttribute("enrolledCourses", enrolledCourses);

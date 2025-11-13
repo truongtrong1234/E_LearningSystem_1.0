@@ -7,10 +7,6 @@ import java.util.List;
 import model.Question;
 
 public class QuestionDAO {
-    /**
-     * Thêm mới câu hỏi vào cơ sở dữ liệu
-     * @param q Question object
-     */
     public void insertQuestion(Question q) {
         String sql = "INSERT INTO Questions " +
                      "(QuizID, QuestionText, OptionA, OptionB, OptionC, OptionD, CorrectAnswer) " +
@@ -32,11 +28,7 @@ public class QuestionDAO {
         }
     }
 
-    /**
-     * Lấy danh sách tất cả câu hỏi theo QuizID
-     * @param quizID ID của quiz
-     * @return List<Question>
-     */
+  
     public List<Question> getQuestionsByQuizID(int quizID) {
         List<Question> list = new ArrayList<>();
         String sql = "SELECT * FROM Questions WHERE QuizID = ?";
@@ -66,11 +58,7 @@ public class QuestionDAO {
         return list;
     }
 
-    /**
-     * Lấy chi tiết một câu hỏi theo ID
-     * @param id QuestionID
-     * @return Question object hoặc null nếu không tồn tại
-     */
+    
     public Question getQuestionById(int id) {
         String sql = "SELECT * FROM Questions WHERE QuestionID = ?";
         try (Connection con = new DBContext().getConnection();
@@ -98,11 +86,7 @@ public class QuestionDAO {
         return null;
     }
 
-    /**
-     * Cập nhật thông tin câu hỏi
-     * @param q Question object
-     * @return true nếu update thành công, false nếu thất bại
-     */
+   
     public boolean updateQuestion(Question q) {
         String sql = "UPDATE Questions SET " +
                      "QuestionText=?, OptionA=?, OptionB=?, OptionC=?, OptionD=?, CorrectAnswer=? " +
@@ -126,13 +110,9 @@ public class QuestionDAO {
         }
     }
 
-    /**
-     * Xóa câu hỏi theo QuestionID
-     * @param id QuestionID
-     * @return true nếu xóa thành công, false nếu thất bại
-     */
+   
    public boolean deleteQuestion(int id) {
-    String sql = "{CALL deleteQuestion(?)}"; // gọi stored procedure
+    String sql = "{CALL deleteQuestion(?)}"; 
     
     try (Connection con = new DBContext().getConnection();
          CallableStatement cs = con.prepareCall(sql)) {

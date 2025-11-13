@@ -19,7 +19,6 @@ public class CreateQuizController extends HttpServlet {
         throws ServletException, IOException {
         String chapterIDStr = request.getParameter("ChapterID");
         int chapterID = 0; 
-
         if (chapterIDStr != null && !chapterIDStr.isEmpty()) {
             try {
                 chapterID = Integer.parseInt(chapterIDStr);
@@ -31,7 +30,6 @@ public class CreateQuizController extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu ID Chương (ChapterID) bắt buộc.");
             return;
         }
-
         QuizDAO quizDao = new QuizDAO();
         List<Quiz> quizList = null;
 
@@ -41,7 +39,6 @@ public class CreateQuizController extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi hệ thống khi tải danh sách Quiz.");
             return;
         }
-
         request.setAttribute("ChapterID", chapterID);
         request.setAttribute("QuizList", quizList);
         request.setAttribute("source", "create");

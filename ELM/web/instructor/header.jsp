@@ -64,7 +64,7 @@
       </div>
 
       <!-- Nút Profile -->
-      <a href="${pageContext.request.contextPath}/myProfile.jsp" class="btn btn-light">
+      <a href="/ELM/myProfile.jsp" class="btn btn-light">
         <i class="fa-solid fa-user-circle fa-2x text-secondary"></i>
       </a>
     </div>
