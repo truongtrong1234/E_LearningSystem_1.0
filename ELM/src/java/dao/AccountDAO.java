@@ -208,7 +208,6 @@ public List<Account> getAllAccounts() {
         return false;
     }
 
-    // Cập nhật thông tin
     // Cập nhật thông tin tài khoản
     public boolean update(Account a) {
         String sql = "UPDATE Accounts SET "
@@ -253,7 +252,7 @@ public Account login(String email, String password) {
             a.setRole(rs.getString("role"));
             a.setWorkplace(rs.getString("workplace"));
             a.setPhone(rs.getString("phone"));
-            a.setDateOfBirth(rs.getString("dateOfBirth")); // NVARCHAR yyyy-MM-dd
+            a.setDateOfBirth(rs.getString("dateOfBirth"));
             a.setGender(rs.getString("gender"));
             a.setAddress(rs.getString("address"));
             return a;
@@ -305,7 +304,7 @@ public Account login(String email, String password) {
                         googleUser.setAccountId(rs.getInt(1));
                     }
                 }
-                System.out.println("✅ Đã tạo tài khoản mới từ Google: " + googleUser.getEmail());
+                System.out.println("Đã tạo tài khoản mới từ Google: " + googleUser.getEmail());
 
             } else {
                 // Nếu đã có → cập nhật lại thông tin từ Google
@@ -328,7 +327,7 @@ public Account login(String email, String password) {
                 ps.setString(8, googleUser.getEmail());
 
                 ps.executeUpdate();
-                System.out.println("🔄 Cập nhật thông tin tài khoản Google: " + googleUser.getEmail());
+                System.out.println("Cập nhật thông tin tài khoản Google: " + googleUser.getEmail());
             }
 
             // Sau khi insert hoặc update, trả về bản ghi mới nhất từ DB
@@ -344,7 +343,7 @@ public Account login(String email, String password) {
         AccountDAO dao = new AccountDAO();
          Account newAcc = new Account();
         newAcc.setEmail("testuser@gmail.com");
-        newAcc.setPassword("123456"); // đăng nhập bằng Google hoặc set mật khẩu bình thường
+        newAcc.setPassword("123456"); 
         newAcc.setName("Nguyen Van Test");
         newAcc.setPicture("default.png");
         newAcc.setRole("learner");
@@ -359,9 +358,9 @@ public Account login(String email, String password) {
 
         // Kiểm tra kết quả
         if(result) {
-            System.out.println("✅ Insert thành công! AccountID: " + newAcc.getAccountId());
+            System.out.println("Insert thành công! AccountID: " + newAcc.getAccountId());
         } else {
-            System.out.println("❌ Insert thất bại!");
+            System.out.println("Insert thất bại!");
         }
     
         

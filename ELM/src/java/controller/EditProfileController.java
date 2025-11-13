@@ -13,14 +13,13 @@ import util.CloudinaryUtil;
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 100 // 100MB
 )
-// @WebServlet("/editProfile")  // mapping đã được cấu hình trong web.xml
+
 public class EditProfileController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
@@ -76,7 +75,7 @@ public class EditProfileController extends HttpServlet {
                 account.setPicture(avatarUrl);
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("❌ Lỗi upload ảnh lên Cloudinary: " + e.getMessage());
+                System.out.println("Lỗi upload ảnh lên Cloudinary: " + e.getMessage());
             }
         }
 
@@ -86,7 +85,7 @@ public class EditProfileController extends HttpServlet {
             session.setAttribute("account", account); // Cập nhật lại session
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("❌ Lỗi update thông tin Account vào DB: " + e.getMessage());
+            System.out.println("Lỗi update thông tin Account vào DB: " + e.getMessage());
         }
 
         // ======= CHUYỂN HƯỚNG VỀ TRANG PROFILE =======

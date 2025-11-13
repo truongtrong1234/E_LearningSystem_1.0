@@ -27,12 +27,12 @@ public class MyProfileController extends HttpServlet {
         // Lấy lại thông tin chi tiết
         AccountDAO dao = new AccountDAO();
         Account acc = dao.getAccountById(sessionAccount.getAccountId());
-
-        // 1️⃣ Khóa học đã tạo (Instructor)
+        
+        // Khóa học đã tạo (Instructor)
         CourseDAO courseDAO = new CourseDAO();
         List<Course> createdCourses = courseDAO.getCourseByInstructorID(acc.getAccountId());
 
-        // 2️⃣ Khóa học đang học (Enrollments)
+        // Khóa học đang học (Enrollments) 
         EnrollmentDAO enrollDAO = new EnrollmentDAO();
         List<Course> enrolledCourses = enrollDAO.getCoursesByAccountId(acc.getAccountId());
 
