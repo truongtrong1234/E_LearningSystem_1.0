@@ -17,8 +17,10 @@
         <title>Nội dung học</title>
 
         <!-- Bootstrap -->
+        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
         <!-- CSS cũ -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerLearner.css?v=3">
@@ -35,6 +37,15 @@
 
             h1 {
                 margin: 30px;
+            }
+            h3{
+                font-size: 22px;
+                font-weight: 500;
+            }
+            h4{
+                font-size: 16px;
+                color:#0d6efd;
+                
             }
 
             .content-wrapper {
@@ -75,7 +86,8 @@
             .lessons-pane h3 {
                 padding-left: 20px;
                 padding-top: 15px;
-                font-size: 20px;
+                font-size: 19px;
+                font-weight: 600;
             }
             .lessons-pane h4 {
                 font-weight: 600;
@@ -92,9 +104,16 @@
                 margin-bottom: 6px;
             }
 
+            .lessons-pane span{
+                font-weight: 600;
+            }
             .lessons-pane a.active {
                 color: #0d6efd;
-                font-weight: 600;
+                font-weight: 500;
+            }
+            .lessons-pane a{
+                text-decoration: none;
+                color: black;
             }
 
             /* Q&A */
@@ -133,6 +152,16 @@
                 border-left: 2px solid #e0e0e0;
             }
 
+             textarea {
+    width: 100%;
+    height: 80px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    resize: none;
+    font-size: 15px;
+    color: #333;
+}
             /* Responsive */
             @media (max-width: 992px) {
                 .lessons-pane {
@@ -154,7 +183,8 @@
         <!-- HEADER -->
         <jsp:include page="/components/headerLearner.jsp"/>
 
-        <h3>${course.title}</h3>
+        <h3 style="padding:20px 0 0 20px">${course.title}</h3>
+        
 
         <div class="content-wrapper">
             <!-- CỘT TRÁI: Toàn bộ nội dung -->
@@ -183,12 +213,39 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
+                
+                    <!--  Mô tả tổng quan -->
+    <div class="bg-white p-4 rounded shadow-sm mb-4">
+        
+
+        <div class="mb-3">
+            <h6 class="fw-bold"></h6>
+            <p>${course.description}</p>
+        </div>
+
+       
+    </div>
                 <!-- ====== Hỏi & Đáp ====== -->
                 <section class="qna-section" id="qna">
                     <div class="qna-header">
                         <h3>Hỏi & Đáp khóa học</h3>
                     </div>
 
+                                        <!-- Form hỏi mới -->
+                                        <form action="${pageContext.request.contextPath}/qnaQuestion" method="post" class="ask-form mt-4" style="margin-bottom: 50px">
+                        <input type="hidden" name="courseID" value="${CourseID}">
+                        <div class="ask-input-container d-flex gap-3">
+                            <img src="${sessionScope.account.picture}" class="avatar-img"
+                                 onerror="this.src='https://i.imgur.com/6VBx3io.png'">
+                            <div class="flex-grow-1">
+                                <div class="ask-username"><strong>${sessionScope.account.name}</strong></div>
+                                <textarea name="question" placeholder="Nhập câu hỏi của bạn..." maxlength="2000" required></textarea>
+                                <div class="qna-actions mt-2">
+                                    <button type="submit" class="btn btn-primary">Gửi câu hỏi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <!-- Danh sách câu hỏi -->
                     <div class="qna-list">
                         <c:choose>
@@ -264,21 +321,7 @@
                         </c:choose>
                     </div>
 
-                    <!-- Form hỏi mới -->
-                    <form action="${pageContext.request.contextPath}/qnaQuestion" method="post" class="ask-form mt-4">
-                        <input type="hidden" name="courseID" value="${CourseID}">
-                        <div class="ask-input-container d-flex gap-3">
-                            <img src="${sessionScope.account.picture}" class="avatar-img"
-                                 onerror="this.src='https://i.imgur.com/6VBx3io.png'">
-                            <div class="flex-grow-1">
-                                <div class="ask-username"><strong>${sessionScope.account.name}</strong></div>
-                                <textarea name="question" placeholder="Nhập câu hỏi của bạn..." maxlength="2000" required></textarea>
-                                <div class="qna-actions mt-2">
-                                    <button type="submit" class="btn btn-primary">Gửi câu hỏi</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+
                 </section>
 
                 <!-- FOOTER -->
@@ -304,7 +347,7 @@
                                                 aria-controls="collapse${loop.index}">
                                             <input type="checkbox" disabled
                                                    <c:if test="${chapterCompletedMap[chapter.chapterID]}">checked</c:if> />
-                                            <span>${chapter.title}</span>
+                                            <span style="font-size: 19px">${chapter.title}</span>
                                         </button>
                                     </h2>
                                 </c:if>
@@ -322,7 +365,7 @@
                                                        data-courseid="${CourseID}"
                                                        <c:if test="${lessonCompletedMap[lesson.lessonID]}">checked</c:if> />
                                                 <a href="myContent?CourseID=${CourseID}&LessonID=${lesson.lessonID}"
-                                                   class="${lesson.lessonID == selectedLessonID ? 'fw-bold text-primary' : ''}">
+                                                   class="${lesson.lessonID == selectedLessonID ? 'fw-bold text-primary' : ''}" style="font-size:16px">
                                                     ${lesson.title}
                                                 </a>
                                             </li>
@@ -338,7 +381,7 @@
                                                        data-courseid="${CourseID}"
                                                        <c:if test="${quizCompletedMap[quiz.quizID]}">checked</c:if> />
                                                 <a href="Learner/doQuiz?CourseID=${CourseID}&ChapterID=${entry.key}&QuizID=${quiz.quizID}"
-                                                   class=" ${quiz.quizID == selectedQuizID ? 'active' : ''}">
+                                                   class=" ${quiz.quizID == selectedQuizID ? 'active' : ''}" style="font-size:16px">
                                                     <i class="bi bi-question-circle me-1"></i> ${quiz.title}
                                                 </a>
                                             </li>
