@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CategoryDAO;
 import dao.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Account;
+import model.Category;
 import model.Course;
 
 public class CourseController extends HttpServlet {
@@ -23,11 +25,16 @@ public class CourseController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         HttpSession session = request.getSession(); 
+        String actionCourse = request.getParameter("actionCourse"); 
         Account account = (Account) session.getAttribute("account"); 
         int accountID = account.getAccountId();
         CourseDAO cdao = new  CourseDAO(); 
         List<Course> courseList = cdao.getCourseByInstructorID(accountID); 
+        request.setAttribute("actionCourse", actionCourse);
         request.setAttribute("courseList", courseList);
+        CategoryDAO catedao = new CategoryDAO();
+        List<Category> categoryList = catedao.getAllCat();
+        request.setAttribute("categoryList", categoryList);
         request.getRequestDispatcher("/instructor/dashboard.jsp").forward(request, response);
     }
 
@@ -38,6 +45,7 @@ public class CourseController extends HttpServlet {
         CourseDAO cdao = new  CourseDAO();
         cdao.deleteCourse(action); 
         response.sendRedirect("/ELM/instructor/dashboard");
+        
     }
 
     @Override
