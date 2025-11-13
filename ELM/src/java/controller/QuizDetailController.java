@@ -87,9 +87,8 @@ public class QuizDetailController extends HttpServlet {
 
         List<Question> questions = questionDAO.getQuestionsByQuizID(quizID);
 
-        request.setAttribute("currentChapterId", chapterID); // Lưu để lấy ChapterID back về createCourse
-        request.setAttribute("chapterID", chapterID); 
-        request.setAttribute("quizID", quizID);      
+        request.setAttribute("thisChapterID", chapterID); 
+        request.setAttribute("thisquizID", quizID);      
         request.setAttribute("quiz", quiz);
         request.setAttribute("questions", questions);
 
