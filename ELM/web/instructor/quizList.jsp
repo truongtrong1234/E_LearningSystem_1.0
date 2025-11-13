@@ -10,6 +10,11 @@
 
 <%-- Quiz Tab Content --%>
 <div id="quiz-content" class="tab-content-block ${activeTab != 'quiz-content' ? 'd-none' : ''}">
+    <!-- Create Quiz Box -->
+        <div class="create-cqm-box p-4 rounded shadow-sm border mb-4 d-flex justify-content-between align-items-center">
+            <span class="fs-5 text-muted">Ấn tạo khoá học mới ở bên phải</span>
+            <button class="btn create-cqm-btn py-2 px-4" onclick="window.location.href='createQuiz'">Tạo bài kiểm tra mới</button>
+        </div>
     <div class="row mt-4">
         <div class="col-12">
             <form action="${pageContext.request.contextPath}/instructor/quizList" method="get" id="quizFilterForm" class="mb-3">
