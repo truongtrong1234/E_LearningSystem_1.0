@@ -25,43 +25,64 @@
             </span>
 
             <!-- ===== Notification Dropdown ===== -->
-            <div class="dropdown me-3">
-                <button class="btn btn-light position-relative" id="notif-btn" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-bell fs-5"></i>
-                    <c:if test="${unreadCount>0}">
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            ${unreadCount}
-                        </span>
-                    </c:if>
-                </button>
+        <!-- ===== Notification Dropdown ===== -->
+<div class="dropdown me-3">
+    <button class="btn btn-light position-relative" id="notif-btn" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-bell fs-5"></i>
+        <c:if test="${unreadCount > 0}">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                ${unreadCount}
+            </span>
+        </c:if>
+    </button>
 
-                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notif-btn" style="width: 300px;">
-                    <li class="dropdown-header d-flex justify-content-between align-items-center">
-                        <span><strong>Thông báo</strong></span>
-                        <a href="${pageContext.request.contextPath}/viewNotifications" class="text-primary small">Xem tất cả</a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notif-btn"
+        style="width: 320px; max-height: 400px; overflow-y: auto;">
 
-                    <c:forEach var="n" items="${notifications}">
-                        <li>
-                            <a href="${pageContext.request.contextPath}/notiDetail?id=${n.notificationID}"
-                               class="dropdown-item ${n.read ? 'text-muted' : 'fw-bold'}">
-                                <div>${n.title}</div>
-                                <small class="text-secondary d-block text-truncate" style="max-width: 250px;">
-                                    ${n.message}
-                                </small>
-                                <small class="text-muted">
-                                    <fmt:formatDate value="${n.createdAt}" pattern="dd/MM/yyyy HH:mm" />
-                                </small>
-                            </a>
-                        </li>
-                    </c:forEach>
+        <!-- Header with "View All" & "Mark All as Read" -->
+        <li class="dropdown-header d-flex justify-content-between align-items-center px-3">
+            <strong>Thông báo</strong>
+            <div class="d-flex gap-2">
 
-                    <c:if test="${empty notifications}">
-                        <li><p class="dropdown-item text-center text-muted mb-0">Không có thông báo mới</p></li>
-                        </c:if>
-                </ul>
+                <!-- Mark all read -->
+                <a href="${pageContext.request.contextPath}/markAllRead"
+                   class="text-success small fw-semibold">Đánh dấu tất cả</a>
+
+                <!-- View all -->
+                <a href="${pageContext.request.contextPath}/viewNotifications"
+                   class="text-primary small">Xem tất cả</a>
             </div>
+        </li>
+
+        <li><hr class="dropdown-divider"></li>
+
+        <!-- Notifications List -->
+        <c:forEach var="n" items="${notifications}">
+            <li>
+                <a href="${pageContext.request.contextPath}/notiDetail?id=${n.notificationID}"
+                   class="dropdown-item ${n.read ? 'text-muted' : 'fw-bold'}">
+                    <div>${n.title}</div>
+                    <small class="text-secondary d-block text-truncate" style="max-width: 260px;">
+                        ${n.message}
+                    </small>
+                    <small class="text-muted">
+                        <fmt:formatDate value="${n.createdAt}" pattern="dd/MM/yyyy HH:mm" />
+                    </small>
+                </a>
+            </li>
+        </c:forEach>
+
+        <!-- Empty State -->
+        <c:if test="${empty notifications}">
+            <li>
+                <p class="dropdown-item text-center text-muted mb-0">
+                    Không có thông báo mới
+                </p>
+            </li>
+        </c:if>
+    </ul>
+</div>
+
 
             <!-- Nút Profile -->
             <a href="/ELM/viewInstructorInfo.jsp" class="btn btn-light">
