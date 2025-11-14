@@ -104,7 +104,7 @@
                 height:48px;
                 border:1px solid #d1d7dc;
                 border-radius:4px;
-padding:0 12px;
+                padding:0 12px;
                 font-size:16px;
                 outline:none;
                 background:#fff;
@@ -207,7 +207,7 @@ padding:0 12px;
         <!-- Top nav -->
         <div class="topbar">
             <a class="logo" href="<%= ctx %>/home_Guest">
-<span class="s">ELearn</span><span class="c">EZ</span>
+                <span class="s">ELearn</span><span class="c">EZ</span>
             </a>
             <div>
                 <a href="<%=ctx%>/login.jsp">Log in</a>
@@ -276,7 +276,7 @@ padding:0 12px;
                     <input id="confirm" name="confirm" type="password" class="ud-input" required />
 
                     <!-- JSTL error -->
-<c:if test="${not empty errorMessage}">
+                    <c:if test="${not empty errorMessage}">
                         <div class="error">${errorMessage}</div>
                     </c:if>
 

@@ -46,7 +46,7 @@ public class RegisterController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        // 🔹 Lấy dữ liệu từ form đăng ký
+        // Lấy dữ liệu từ form đăng ký
         String email = request.getParameter("email");
         String fullName = request.getParameter("fullname");
         String password = request.getParameter("password");
@@ -57,7 +57,7 @@ public class RegisterController extends HttpServlet {
         String gender = request.getParameter("gender");
         String address = request.getParameter("address");
 
-        // 🔹 Kiểm tra xác nhận mật khẩu
+        // Kiểm tra xác nhận mật khẩu
         if (confirm == null || !password.equals(confirm)) {
             request.setAttribute("errorMessage", "Mật khẩu xác nhận không khớp!");
             request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -66,7 +66,7 @@ public class RegisterController extends HttpServlet {
 
         AccountDAO dao = new AccountDAO();
 
-        // 🔹 Kiểm tra email đã tồn tại hay chưa
+        // Kiểm tra email đã tồn tại hay chưa
         Account existing = dao.findByEmail(email);
         if (existing != null) {
             request.setAttribute("errorMessage", "Email này đã được sử dụng!");
@@ -74,7 +74,7 @@ public class RegisterController extends HttpServlet {
             return;
         }
 
-        // 🔹 Tạo đối tượng Account và gán đầy đủ dữ liệu
+        // Tạo đối tượng Account và gán đầy đủ dữ liệu
         Account account = new Account();
         account.setEmail(email);
         account.setPassword(password);
@@ -87,7 +87,7 @@ public class RegisterController extends HttpServlet {
         account.setGender(gender);
         account.setAddress(address);
 
-        // 🔹 Thêm tài khoản mới vào DB
+        // Thêm tài khoản mới vào DB
         boolean success = dao.insert(account);
 
         if (success) {
@@ -104,6 +104,6 @@ public class RegisterController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

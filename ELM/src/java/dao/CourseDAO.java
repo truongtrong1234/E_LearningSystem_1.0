@@ -1,4 +1,4 @@
-package dao;
+    package dao;
 
 import java.sql.*;
 import java.util.*;
@@ -79,72 +79,95 @@ public class CourseDAO extends DBContext {
     return list;
 }
 
-    // Lấy tất cả khóa học
-    public List<Course> getAllCourses() {
-        List<Course> list = new ArrayList<>();
-        String sql = "SELECT * FROM Courses";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Course course = new Course(
-                        rs.getInt("CourseID"),
-                        rs.getString("Title"),
-                        rs.getString("Description"),
-                        rs.getInt("InstructorID"),
-                        rs.getBigDecimal("Price"),
-                        rs.getInt("Class"), // Đổi ở đây
-                        rs.getInt("CategoryID"),
-                        rs.getString("Thumbnail")
-                );
-                list.add(course);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+      // Lấy tất cả khóa học
+public List<Course> getAllCourses() {
+    List<Course> list = new ArrayList<>();
+    String sql = """
+        SELECT 
+            c.CourseID,
+            c.Title,
+            c.Description,
+            c.InstructorID,
+            a.name AS InstructorName,
+            c.Price,
+            c.Class,
+            c.CategoryID,
+            c.Thumbnail
+        FROM Courses c
+        LEFT JOIN Accounts a ON c.InstructorID = a.AccountID
+    """;
+
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Course course = new Course(
+                rs.getInt("CourseID"),
+                rs.getString("Title"),
+                rs.getString("Description"),
+                rs.getInt("InstructorID"),
+                rs.getBigDecimal("Price"),
+                rs.getInt("Class"),
+                rs.getInt("CategoryID"),
+                rs.getString("Thumbnail")
+            );
+
+            // Thêm tên giảng viên
+            course.setInstructorName(rs.getString("InstructorName"));
+
+            list.add(course);
         }
-        return list;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-    
-    public List<Course> getTop5MostEnrolledCourses() {
-        List<Course> list = new ArrayList<>();
-        String sql = """
-            SELECT TOP 5 
-                        c.CourseID,
-                        c.Title,
-                        c.Description,
-                        c.InstructorID,
-                        c.Price,
-                        c.Class,
-                        c.CategoryID,
-                        c.Thumbnail,
-                        COUNT(e.EnrollmentID) AS TotalEnroll
-                    FROM Courses c
-                    JOIN Enrollments e ON c.CourseID = e.CourseID
-                    GROUP BY c.CourseID, c.Title, c.Description, c.InstructorID, c.Price, c.Class, c.CategoryID, c.Thumbnail
-                    ORDER BY COUNT(e.EnrollmentID) DESC
-        """;
+    return list;
+}
 
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
+public List<Course> getTop5MostEnrolledCourses() {
+    List<Course> list = new ArrayList<>();
+    String sql = """
+        SELECT TOP 5 
+            c.CourseID,
+            c.Title,
+            c.Description,
+            c.InstructorID,
+            a.name AS InstructorName,
+            c.Price,
+            c.Class,
+            c.CategoryID,
+            c.Thumbnail,
+            COUNT(e.EnrollmentID) AS TotalEnroll
+        FROM Courses c
+        JOIN Enrollments e ON c.CourseID = e.CourseID
+        JOIN Accounts a ON c.InstructorID = a.AccountID
+        GROUP BY 
+            c.CourseID, c.Title, c.Description, c.InstructorID, 
+            c.Price, c.Class, c.CategoryID, c.Thumbnail, a.name
+        ORDER BY COUNT(e.EnrollmentID) DESC
+    """;
 
-            while (rs.next()) {
-                Course c = new Course();
-                c.setCourseID(rs.getInt("CourseID"));
-                c.setTitle(rs.getString("Title"));
-                c.setDescription(rs.getString("Description"));
-                c.setCategoryID(rs.getInt("CategoryID"));
-                c.setPrice(rs.getBigDecimal("Price"));
-                c.setInstructorID(rs.getInt("InstructorID"));
-                c.setTotalEnroll(rs.getInt("TotalEnroll"));
-                list.add(c);
-            }
+    try {
+        PreparedStatement stm = connection.prepareStatement(sql);
+        ResultSet rs = stm.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (rs.next()) {
+            Course c = new Course();
+            c.setCourseID(rs.getInt("CourseID"));
+            c.setTitle(rs.getString("Title"));
+            c.setDescription(rs.getString("Description"));
+            c.setCategoryID(rs.getInt("CategoryID"));
+            c.setPrice(rs.getBigDecimal("Price"));
+            c.setInstructorID(rs.getInt("InstructorID"));
+            c.setInstructorName(rs.getString("InstructorName"));
+            c.setTotalEnroll(rs.getInt("TotalEnroll"));
+            list.add(c);
         }
 
-        return list;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return list;
+}
       
     // Lấy khoá học theo ID
     public Course getCourseById(int courseID) {

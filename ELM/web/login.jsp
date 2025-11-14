@@ -44,11 +44,8 @@
                 font-weight:800;
                 font-size:24px;
             }
-            .logo span{
-                color:orange !important
-            }
             .logo .s{
-                color:orange
+                color:var(--brand)
             }
             .logo .c{
                 color:#000
@@ -235,7 +232,7 @@
                            placeholder="Enter your password" required autocomplete="new-password">
 
                     <div style="margin:10px 0 5px; text-align:right;">
-                        
+
                     </div>
 
                     <c:if test="${not empty error}">
@@ -260,6 +257,6 @@
                 </div>
             </div>
         </div>
-                
+
     </body>
 </html>
