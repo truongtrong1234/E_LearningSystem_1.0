@@ -26,6 +26,7 @@ public class HomeLearnerCourse extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
+        
         // Load Categories
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategories = categoryDAO.getAllCat();

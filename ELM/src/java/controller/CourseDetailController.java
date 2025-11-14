@@ -14,7 +14,7 @@ public class CourseDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1️⃣ Lấy courseID từ URL
+        // id from url
         String idParam = request.getParameter("id");
         if (idParam == null) {
             response.sendRedirect("home");
@@ -29,7 +29,7 @@ public class CourseDetailController extends HttpServlet {
             return;
         }
 
-        // 2️⃣ Gọi DAO
+        // 
         CourseDAO cDao = new CourseDAO();
         ChapterDAO chDao = new ChapterDAO();
         LessonDAO lDao = new LessonDAO();
@@ -43,10 +43,12 @@ public class CourseDetailController extends HttpServlet {
             return;
         }
 
+        //AccountDAO aDao = new AccountDAO();
         Account instructor = aDao.getAccountById(course.getInstructorID());
+        //request.setAttribute("instructor", instructor);
         Category category = catDao.getCategoryById(course.getCategoryID());
 
-        // 3️⃣ Lấy danh sách chương và bài học
+        // 
         List<Chapter> chapters = chDao.getAllChap();
         chapters.removeIf(ch -> ch.getCourseID() != courseID);
 
@@ -58,7 +60,7 @@ public class CourseDetailController extends HttpServlet {
             lessonsMap.put(ch.getChapterID(), lessons);
         }
 
-        // 4️⃣ Kiểm tra đăng ký
+        // 
         HttpSession session = request.getSession(false);
         String homePage;
         boolean isEnrolled = false;
@@ -77,7 +79,7 @@ public class CourseDetailController extends HttpServlet {
             homePage = "home_Guest";
         }
 
-        // 5️⃣ Gửi dữ liệu sang JSP
+        // 
                 request.setAttribute("count", count);
 
         request.setAttribute("course", course);
@@ -88,7 +90,7 @@ public class CourseDetailController extends HttpServlet {
         request.setAttribute("isEnrolled", isEnrolled);
         request.setAttribute("instructor", instructor);
 
-        // 6️⃣ Forward sang JSP
+        // 
         request.getRequestDispatcher("courseDetail.jsp").forward(request, response);
     }
 }

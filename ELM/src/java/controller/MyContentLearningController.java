@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AccountDAO;
 import dao.ChapterDAO;
 import dao.ChapterProgressDAO;
 import dao.CourseDAO;
@@ -11,7 +12,7 @@ import dao.QnADAO;
 import dao.QuizDAO;
 import dao.QuizProgressDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,6 +42,7 @@ import model.QuizProgress;
 ///@WebServlet(name="MyLearningContentServlet", value="/Learner/myLearningContent")
 public class MyContentLearningController extends HttpServlet {
 
+    AccountDAO aDao = new AccountDAO();
     private CourseDAO courseDAO = new CourseDAO();
     private EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
     private ChapterDAO chapterDAO = new ChapterDAO();
@@ -65,11 +67,12 @@ public class MyContentLearningController extends HttpServlet {
         int lessonID = 0;
 
         Course course = courseDAO.getCourseById(courseID);
+        Account instructor = aDao.getAccountById(course.getInstructorID());
         if (request.getParameter("LessonID") != null) {
             lessonID = Integer.parseInt(request.getParameter("LessonID"));
         }
 
-        // 🟢 Lấy Enrollment
+        // Lấy Enrollment
         int enrollmentID = enrollmentDAO.getEnrollmentID(account.getAccountId(), courseID);
         request.setAttribute("enrollmentID", enrollmentID);
 
@@ -101,6 +104,7 @@ public class MyContentLearningController extends HttpServlet {
             averangeScore = totalScore.divide(BigDecimal.valueOf(count));
         }
         String result = "Fail";
+        request.setAttribute("count", count);
         request.setAttribute("averangeScore", averangeScore);
         if (averangeScore.compareTo(BigDecimal.valueOf(5)) >= 0) {
             result = "Pass";
@@ -108,6 +112,32 @@ public class MyContentLearningController extends HttpServlet {
             result = "Fail";
         }
         request.setAttribute("result", result);
+//List<Quiz> quizList = quizDAO.getQuizzesByCourseID(courseID);
+
+Map<Integer, QuizProgress> quizProgressMap = new HashMap<>();
+for (Quiz q : quizList) {
+    QuizProgress qp = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), q.getQuizID());
+    quizProgressMap.put(q.getQuizID(), qp);
+}
+
+String type = request.getParameter("type");
+if (type == null) type = "lesson";
+request.setAttribute("viewType", type);
+
+// Nếu xem quiz
+if ("quiz".equals(type)) {
+    int quizID = Integer.parseInt(request.getParameter("QuizID"));
+    Quiz selectedQuiz = quizDAO.getQuizById(quizID);
+    QuizProgress progress = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), quizID);
+
+    request.setAttribute("quiz", selectedQuiz);
+    request.setAttribute("quizProgress", progress);
+    request.setAttribute("selectedQuizID", quizID);
+}
+
+
+
+
         LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
         Map<Integer, Boolean> lessonCompletedMap = lessonProgressDAO.getLessonCompletionMap(account.getAccountId(), courseID);
         if (lessonID == 0) {
@@ -155,6 +185,8 @@ public class MyContentLearningController extends HttpServlet {
         }
         request.setAttribute("materialsHTML", materialsHTML);
 
+        request.setAttribute("quizList", quizList);
+request.setAttribute("quizProgressMap", quizProgressMap);
         String materialsURLHTML = materialsHTML.toString();
         request.setAttribute("materialsHTML", materialsURLHTML);
         request.setAttribute("account", account);
@@ -167,6 +199,7 @@ public class MyContentLearningController extends HttpServlet {
         request.setAttribute("course", course);
         request.setAttribute("chapterList", chapterList);
         request.setAttribute("QuizMap", QuizMap);
+        request.setAttribute("instructor", instructor);
 
         QuizProgressDAO quizDAO = new QuizProgressDAO();
         Map<Integer, Boolean> quizCompletedMap = quizDAO.getQuizCompletionMap(account.getAccountId());

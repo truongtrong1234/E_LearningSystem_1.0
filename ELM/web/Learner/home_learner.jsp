@@ -62,7 +62,7 @@
                         </div>
                         <div class="body">
                             <div class="title">${c.title} ${count}</div>
-                            <div class="meta">Instructor ID: ${c.instructorID}</div>
+                            <div class="meta">Instructor Name: ${c.instructorName}</div>
                             <div class="price">
                                 <c:choose>
                                     <c:when test="${c.price == 0}">
