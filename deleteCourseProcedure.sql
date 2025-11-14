@@ -120,3 +120,113 @@ BEGIN
     END CATCH
 END;
 GO
+
+CREATE PROCEDURE deleteChapter
+    @ChapterID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- 1️⃣ Xóa Quizzes và các bảng con
+        DELETE SA
+        FROM StudentAnswers SA
+        INNER JOIN Questions Q ON SA.QuestionID = Q.QuestionID
+        INNER JOIN Quizzes Qu ON Q.QuizID = Qu.QuizID
+        WHERE Qu.ChapterID = @ChapterID;
+
+        DELETE FROM Questions
+        WHERE QuizID IN (SELECT QuizID FROM Quizzes WHERE ChapterID = @ChapterID);
+
+        DELETE FROM Quizzes
+        WHERE ChapterID = @ChapterID;
+
+        -- 2️⃣ Xóa Lessons và Materials
+        DELETE MP
+        FROM MaterialProgress MP
+        INNER JOIN Materials M ON MP.MaterialID = M.MaterialID
+        INNER JOIN Lessons L ON M.LessonID = L.LessonID
+        WHERE L.ChapterID = @ChapterID;
+
+        DELETE FROM LessonProgress
+        WHERE LessonID IN (SELECT LessonID FROM Lessons WHERE ChapterID = @ChapterID);
+
+        DELETE FROM Materials
+        WHERE LessonID IN (SELECT LessonID FROM Lessons WHERE ChapterID = @ChapterID);
+
+        DELETE FROM Lessons
+        WHERE ChapterID = @ChapterID;
+
+        -- 3️⃣ Cuối cùng xóa Chapter
+        DELETE FROM Chapters
+        WHERE ChapterID = @ChapterID;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+
+
+CREATE PROCEDURE deleteQuiz
+    @QuizID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- 1️⃣ Xóa StudentAnswers của Quiz này
+        DELETE SA
+        FROM StudentAnswers SA
+        INNER JOIN Questions Q ON SA.QuestionID = Q.QuestionID
+        WHERE Q.QuizID = @QuizID;
+
+        -- 2️⃣ Xóa Questions
+        DELETE FROM Questions
+        WHERE QuizID = @QuizID;
+
+        -- 3️⃣ Cuối cùng xóa Quiz
+        DELETE FROM Quizzes
+        WHERE QuizID = @QuizID;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE PROCEDURE deleteQuestion  
+    @QuestionID INT  
+AS  
+BEGIN  
+    SET NOCOUNT ON;  
+  
+    BEGIN TRY  
+        BEGIN TRANSACTION;  
+  
+        -- 1️⃣ Xóa StudentAnswers  
+        DELETE FROM StudentAnswers  
+        WHERE QuestionID = @QuestionID;  
+  
+        -- 2️⃣ Xóa Question  
+        DELETE FROM Questions  
+        WHERE QuestionID = @QuestionID;  
+  
+        COMMIT TRANSACTION;  
+    END TRY  
+    BEGIN CATCH  
+        ROLLBACK TRANSACTION;  
+        THROW;  
+    END CATCH  
+END;  

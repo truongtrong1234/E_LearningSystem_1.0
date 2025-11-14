@@ -75,7 +75,7 @@
                 <c:when test="${actionQuizs eq 'selectCourse'}">
                     <select class="form-select form-select-lg w-auto" id="quizCourseFilter" name="courseID"
                             onchange="window.location.href = '/ELM/instructor/quizList?actionQuiz=selectChapter&courseID=' + this.value">
-                        <option value="0">Tất cả Khóa học</option>
+                        <option value="0">Tất cả khóa học</option>
                         <c:forEach var="course" items="${courseList}">
                             <option value="${course.courseID}">
                                 ${course.title}
@@ -86,7 +86,7 @@
                 <c:when test="${actionQuizs eq 'selectChapter'}">
                     <select class="form-select form-select-lg w-auto" id="quizCourseFilter" name="courseID"
                             onchange="window.location.href = '/ELM/instructor/quizList?actionQuiz=createQuiz&ChapterID=' + this.value">
-                        <option value="0">Tất cả Khóa học</option>
+                        <option value="0">Tất cả chương thuộc khóa học</option>
                         <c:forEach var="ch" items="${chapterList}">
                             <option value="${ch.chapterID}">
                                 ${ch.title}
