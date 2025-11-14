@@ -110,6 +110,23 @@ public class LessonDAO extends DBContext {
         return list;
     }
 
+    public Integer getChapterOfLesson(int lessonID) {
+    String sql = "SELECT ChapterID FROM Lessons WHERE LessonID = ?";
+    try (
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+
+        ps.setInt(1, lessonID);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt("ChapterID");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
     public void updateLesson(int lessonID, String newTitle) {
         String sql = "UPDATE Lessons SET Title = ? WHERE LessonID = ?";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {

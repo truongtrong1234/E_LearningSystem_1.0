@@ -114,29 +114,28 @@ public class MyContentLearningController extends HttpServlet {
         request.setAttribute("result", result);
 //List<Quiz> quizList = quizDAO.getQuizzesByCourseID(courseID);
 
-Map<Integer, QuizProgress> quizProgressMap = new HashMap<>();
-for (Quiz q : quizList) {
-    QuizProgress qp = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), q.getQuizID());
-    quizProgressMap.put(q.getQuizID(), qp);
-}
+        Map<Integer, QuizProgress> quizProgressMap = new HashMap<>();
+        for (Quiz q : quizList) {
+            QuizProgress qp = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), q.getQuizID());
+            quizProgressMap.put(q.getQuizID(), qp);
+        }
 
-String type = request.getParameter("type");
-if (type == null) type = "lesson";
-request.setAttribute("viewType", type);
+        String type = request.getParameter("type");
+        if (type == null) {
+            type = "lesson";
+        }
+        request.setAttribute("viewType", type);
 
 // Nếu xem quiz
-if ("quiz".equals(type)) {
-    int quizID = Integer.parseInt(request.getParameter("QuizID"));
-    Quiz selectedQuiz = quizDAO.getQuizById(quizID);
-    QuizProgress progress = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), quizID);
+        if ("quiz".equals(type)) {
+            int quizID = Integer.parseInt(request.getParameter("QuizID"));
+            Quiz selectedQuiz = quizDAO.getQuizById(quizID);
+            QuizProgress progress = quizProgressDAO.getQuizProgressByAccountAndQuiz(account.getAccountId(), quizID);
 
-    request.setAttribute("quiz", selectedQuiz);
-    request.setAttribute("quizProgress", progress);
-    request.setAttribute("selectedQuizID", quizID);
-}
-
-
-
+            request.setAttribute("quiz", selectedQuiz);
+            request.setAttribute("quizProgress", progress);
+            request.setAttribute("selectedQuizID", quizID);
+        }
 
         LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
         Map<Integer, Boolean> lessonCompletedMap = lessonProgressDAO.getLessonCompletionMap(account.getAccountId(), courseID);
@@ -186,7 +185,7 @@ if ("quiz".equals(type)) {
         request.setAttribute("materialsHTML", materialsHTML);
 
         request.setAttribute("quizList", quizList);
-request.setAttribute("quizProgressMap", quizProgressMap);
+        request.setAttribute("quizProgressMap", quizProgressMap);
         String materialsURLHTML = materialsHTML.toString();
         request.setAttribute("materialsHTML", materialsURLHTML);
         request.setAttribute("account", account);
@@ -201,6 +200,7 @@ request.setAttribute("quizProgressMap", quizProgressMap);
         request.setAttribute("QuizMap", QuizMap);
         request.setAttribute("instructor", instructor);
 
+        QuizDAO quizdao=new QuizDAO();
         QuizProgressDAO quizDAO = new QuizProgressDAO();
         Map<Integer, Boolean> quizCompletedMap = quizDAO.getQuizCompletionMap(account.getAccountId());
         request.setAttribute("quizCompletedMap", quizCompletedMap);
@@ -209,6 +209,7 @@ request.setAttribute("quizProgressMap", quizProgressMap);
         Map<Integer, Boolean> chapterCompletedMap = chapterProgressDAO.getChapterCompletionMap(account.getAccountId(), courseID);
         request.setAttribute("chapterCompletedMap", chapterCompletedMap);
 
+        /////QnA 
         QnADAO qnaDAO = new QnADAO();
         List<QnAQuestion> qnaList = qnaDAO.getQuestionsByCourse(courseID);
         System.out.println("qnalist: " + qnaList.size());
@@ -224,6 +225,14 @@ request.setAttribute("quizProgressMap", quizProgressMap);
 
         request.setAttribute("qnaList", qnaList);
         request.setAttribute("replyMap", replyMap);
+        
+        ///open
+        Integer openedChapterID = lessonDAO.getChapterOfLesson(lessonID);
+      Integer  openedChapterID2 = quizdao.getChapterOfQuiz(1);
+
+request.setAttribute("openedChapterID", openedChapterID);
+request.setAttribute("openedChapterID", openedChapterID);
+
 
         request.getRequestDispatcher("/Learner/mylearning_content.jsp").forward(request, response);
     }
