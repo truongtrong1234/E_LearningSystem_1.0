@@ -96,15 +96,15 @@ public class EditCourseController extends HttpServlet {
             boolean isUpdated = cdao.updateCourse(c);
 
             if (isUpdated) {
-                response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createLesson&id=" + courseId);
+                response.sendRedirect("/ELM/instructor/dashboard?actionCourse=editCourse&id=" + courseId);
             } else {
                 request.setAttribute("errorMessage", "Update failed!");
-                response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createLesson&id=" + courseId);
+                response.sendRedirect("/ELM/instructor/dashboard?actionCourse=editCourse&id=" + courseId);
             }
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Failed to update course. Please check your inputs.");
-            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=createLesson&id=" + courseId);
+            response.sendRedirect("/ELM/instructor/dashboard?actionCourse=editCourse&id=" + courseId);
         }
 
     }
