@@ -158,6 +158,7 @@ public List<Course> getTop5MostEnrolledCourses() {
             c.setInstructorID(rs.getInt("InstructorID"));
             c.setInstructorName(rs.getString("InstructorName"));
             c.setTotalEnroll(rs.getInt("TotalEnroll"));
+            c.setThumbnail(rs.getString("Thumbnail"));
             list.add(c);
         }
 
