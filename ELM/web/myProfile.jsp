@@ -48,14 +48,21 @@
                 justify-content: center;
                 position: relative;
                 margin-bottom: 16px;
+
+            }
+            .avatar {
+                width: 50px;          /* Tăng kích thước avatar */
+                height: 50px;
+                border-radius: 50%;    /* Bo tròn */
+                overflow: hidden;      /* Giúp ảnh không bị méo */
+                border: 3px solid #ffc107; /* Viền vàng nhẹ */
+                box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Shadow nhẹ */
             }
 
             .avatar img {
-                width: 110px;
-                height: 110px;
-                border-radius: 50%;
-                border: 4px solid #fff;
-                box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+                width: 100%;
+                height: 100%;
+                object-fit: cover;     /* Giữ ảnh đúng tỷ lệ, không méo */
             }
 
             .hello {
@@ -164,7 +171,6 @@
     <body>
         <!-- HEADER -->
         <jsp:include page="/components/headerLearner.jsp" />
-
         <div class="sheet-wrap">
             <div class="sheet">
 
@@ -180,9 +186,6 @@
                         </c:choose>
                     </div>
                 </div>
-
-                <div class="hello">Chào ${fn:split(account.name,' ')[fn:length(fn:split(account.name,' '))-1]},</div>
-
                 <div class="actions">
                     <a href="${pageContext.request.contextPath}/edit_profile.jsp" class="btn">Quản lý hồ sơ</a>
                     <a href="${pageContext.request.contextPath}/logout" class="btn primary">Đăng xuất</a>

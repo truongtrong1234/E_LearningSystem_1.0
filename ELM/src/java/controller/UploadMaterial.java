@@ -69,8 +69,8 @@ public class UploadMaterial extends HttpServlet {
                     valid = contentType.equals("application/pdf");
                     urlType = "raw";
                     break;
-                case "Doc":
-                    valid = contentType.equals("application/msword")
+                case "Other":
+                    valid = contentType.equals("application/docx")
                             || contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
                     urlType = "raw";
                     break;

@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import model.Course;
+import model.StudentProgress;
 
 public class EnrollmentDAO extends DBContext {
 
@@ -164,6 +165,59 @@ public class EnrollmentDAO extends DBContext {
         return list;
     }
     
+    public int getTotalLearners(int instructorID) {
+        String sql = """
+            SELECT COUNT(DISTINCT e.AccountID)
+            FROM Enrollments e
+            JOIN Courses c ON e.CourseID = c.CourseID
+            WHERE c.InstructorID = ?
+        """;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, instructorID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public List<StudentProgress> getStudentProgress(int instructorID) {
+        List<StudentProgress> list = new ArrayList<>();
+
+        String sql = """
+            SELECT 
+                c.CourseID,
+                c.Title AS CourseName,
+                a.AccountID,
+                a.name AS StudentName,
+                cp.CompletedPercent
+            FROM Enrollments e
+            JOIN Accounts a ON e.AccountID = a.AccountID
+            JOIN Courses c ON e.CourseID = c.CourseID
+            LEFT JOIN CourseProgress cp 
+                ON cp.EnrollmentID = e.EnrollmentID
+            WHERE c.InstructorID = ?
+            ORDER BY c.CourseID, a.AccountID
+        """;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, instructorID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                StudentProgress sp = new StudentProgress();
+                sp.setCourseID(rs.getInt("CourseID"));
+                sp.setCourseName(rs.getString("CourseName"));
+                sp.setAccountID(rs.getInt("AccountID"));
+                sp.setStudentName(rs.getString("StudentName"));
+                sp.setCompletedPercent(rs.getBigDecimal("CompletedPercent"));
+                list.add(sp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     // UPDATE
     public void updateEnrollment(Enrollment e) {
         String sql = "UPDATE Enrollments SET AccountID = ?, CourseID = ? WHERE EnrollmentID = ?";

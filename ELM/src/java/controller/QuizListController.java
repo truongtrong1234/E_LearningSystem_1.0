@@ -4,6 +4,7 @@ import dao.ChapterDAO;
 import dao.QuizDAO;
 import dao.CourseDAO;
 import dao.QuestionDAO;
+import dao.QuizProgressDAO;
 import model.Account;
 import model.Quiz;
 import model.Course;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Chapter;
 import model.Question;
+import model.QuizProgress;
 
 public class QuizListController extends HttpServlet {
     private final QuizDAO quizDAO = new QuizDAO();
@@ -114,10 +116,14 @@ public class QuizListController extends HttpServlet {
         request.setAttribute("thisquizID", quizID);      
         request.setAttribute("quiz", quiz);
         request.setAttribute("questions", questions);
-
+        
+        QuizProgressDAO quizProDAO = new QuizProgressDAO(); 
+        List<QuizProgress> listProgress = quizProDAO.getQuizProgressByQuizID(quizID); 
+        request.setAttribute("listProgress", listProgress);
         handleList(request, response, instructorID, courseID);
     }
-
+    
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -131,11 +137,10 @@ public class QuizListController extends HttpServlet {
 
         if ("delete".equals(action)) {
             handleDelete(request, response, ((Account) request.getSession().getAttribute("account")).getAccountId());
-        } else if ("update".equals(action)) { // Xử lí Update
+        } else if ("update".equals(action)) { 
             handleUpdate(request, response, ((Account) request.getSession().getAttribute("account")).getAccountId());
         }
         
-        // Chuyển hướng về trang danh sách sau action
         response.sendRedirect(request.getContextPath() + QUIZ_LIST_URL + "?activeTab=" + QUIZ_TAB);
     }
     
@@ -187,8 +192,6 @@ public class QuizListController extends HttpServlet {
             Logger.getLogger(QuizListController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    // Cập nhật xử lí dữ liệu từ form EDIT
     private void handleUpdate(HttpServletRequest request, HttpServletResponse response, int instructorID)
             throws IOException {
         try {

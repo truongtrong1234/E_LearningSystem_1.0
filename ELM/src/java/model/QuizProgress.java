@@ -4,17 +4,28 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class QuizProgress {
+
     private int progressID;
     private int accountID;
     private int quizID;
     private Integer correctCount;
     private BigDecimal totalScore;
     private Date takenDate;
+    private String accountName;
+    private String QuizName;
+    public QuizProgress() {
+    }
 
-    public QuizProgress() {}
+    public String getQuizName() {
+        return QuizName;
+    }
 
+    public void setQuizName(String QuizName) {
+        this.QuizName = QuizName;
+    }
+    
     public QuizProgress(int progressID, int accountID, int quizID, Integer correctCount,
-                        BigDecimal totalScore, Date takenDate) {
+            BigDecimal totalScore, Date takenDate) {
         this.progressID = progressID;
         this.accountID = accountID;
         this.quizID = quizID;
@@ -23,21 +34,66 @@ public class QuizProgress {
         this.takenDate = takenDate;
     }
 
-    public int getProgressID() { return progressID; }
-    public void setProgressID(int progressID) { this.progressID = progressID; }
+    @Override
+    public String toString() {
+        return "QuizProgress{" + "progressID=" + progressID + ", accountID=" + accountID + ", quizID=" + quizID + ", correctCount=" + correctCount + ", totalScore=" + totalScore + ", takenDate=" + takenDate + ", accountName=" + accountName + ", QuizName=" + QuizName + '}';
+    }
 
-    public int getAccountID() { return accountID; }
-    public void setAccountID(int accountID) { this.accountID = accountID; }
+   
+    
+    public String getAccountName() {
+        return accountName;
+    }
 
-    public int getQuizID() { return quizID; }
-    public void setQuizID(int quizID) { this.quizID = quizID; }
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
 
-    public Integer getCorrectCount() { return correctCount; }
-    public void setCorrectCount(Integer correctCount) { this.correctCount = correctCount; }
+    public int getProgressID() {
+        return progressID;
+    }
 
-    public BigDecimal getTotalScore() { return totalScore; }
-    public void setTotalScore(BigDecimal totalScore) { this.totalScore = totalScore; }
+    public void setProgressID(int progressID) {
+        this.progressID = progressID;
+    }
 
-    public Date getTakenDate() { return takenDate; }
-    public void setTakenDate(Date takenDate) { this.takenDate = takenDate; }
+    public int getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
+    }
+
+    public int getQuizID() {
+        return quizID;
+    }
+
+    public void setQuizID(int quizID) {
+        this.quizID = quizID;
+    }
+
+    public Integer getCorrectCount() {
+        return correctCount;
+    }
+
+    public void setCorrectCount(Integer correctCount) {
+        this.correctCount = correctCount;
+    }
+
+    public BigDecimal getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(BigDecimal totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public Date getTakenDate() {
+        return takenDate;
+    }
+
+    public void setTakenDate(Date takenDate) {
+        this.takenDate = takenDate;
+    }
 }

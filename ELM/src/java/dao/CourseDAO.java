@@ -144,7 +144,6 @@ public List<Course> getTop5MostEnrolledCourses() {
             c.Price, c.Class, c.CategoryID, c.Thumbnail, a.name
         ORDER BY COUNT(e.EnrollmentID) DESC
     """;
-
     try {
         PreparedStatement stm = connection.prepareStatement(sql);
         ResultSet rs = stm.executeQuery();
@@ -169,7 +168,6 @@ public List<Course> getTop5MostEnrolledCourses() {
     return list;
 }
       
-    // Lấy khoá học theo ID
     public Course getCourseById(int courseID) {
         String sql = """
         SELECT c.CourseID, c.Title, c.Description, c.InstructorID, 
@@ -201,7 +199,6 @@ public List<Course> getTop5MostEnrolledCourses() {
         return null;
     }
 
-    // Lấy khóa học theo instructorID
     public List<Course> getCourseByInstructorID(int instructorID) {
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM Courses WHERE InstructorID=?"; 
@@ -231,10 +228,9 @@ public List<Course> getTop5MostEnrolledCourses() {
         return list;
     }
 
-    //Lấy khoá học theo Category
     public List<Course> getCoursesByCategory(int categoryID){
         List<Course> list = new ArrayList<>();
-        String sql = "SELECT * FROM Courses WHERE categoryID = ?";
+        String sql = "SELECT * FROM Courses c join Accounts a on c.InstructorID = a.AccountID where categoryID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, categoryID);
             ResultSet rs = ps.executeQuery();
@@ -248,8 +244,7 @@ public List<Course> getTop5MostEnrolledCourses() {
                 c.setPrice(rs.getBigDecimal("Price"));
                 c.setCourseclass(rs.getInt("Class"));
                 c.setThumbnail(rs.getString("Thumbnail"));
-
-                // add các field khác nếu cần
+                c.setInstructorName(rs.getString("name"));
                 list.add(c);
             }
         }catch (SQLException e) {
@@ -258,7 +253,6 @@ public List<Course> getTop5MostEnrolledCourses() {
         return list;
     }
 
-    // Thêm khóa học mới
     public boolean insertCourse(Course course) {
         String sql = "INSERT INTO Courses (Title, Description, InstructorID, Price, Class, CategoryID, Thumbnail) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -286,7 +280,7 @@ public List<Course> getTop5MostEnrolledCourses() {
             ps.setString(2, course.getDescription());
             ps.setInt(3, course.getInstructorID());
             ps.setBigDecimal(4, course.getPrice());
-            ps.setInt(5, course.getCourseclass()); // ✅ field trong Course là courseclass
+            ps.setInt(5, course.getCourseclass()); 
             ps.setInt(6, course.getCategoryID());
             ps.setString(7, course.getThumbnail());
 
@@ -295,7 +289,7 @@ public List<Course> getTop5MostEnrolledCourses() {
             if (affected > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        return rs.getInt(1); // ✅ Trả về CourseID vừa tạo
+                        return rs.getInt(1); 
                     }
                 }
             }
@@ -387,7 +381,7 @@ public List<Course> getTop5MostEnrolledCourses() {
 
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
-        List<Course> course = dao.getTop5MostEnrolledCourses(); 
+        List<Course> course = dao.getCoursesByCategory(1); 
         for (Course course1 : course) {
             System.out.println(course1);
         }

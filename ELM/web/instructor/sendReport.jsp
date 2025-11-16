@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
+                        <a href="${pageContext.request.contextPath}/instructor/analytics" class="nav-link text-white sidebar-link">
                             <i class="fas fa-chart-bar me-2"></i> Phân tích 
                         </a>
                     </li>
@@ -66,19 +66,6 @@
                             <label class="form-label fw-semibold">Mô tả</label>
                             <textarea name="description" class="form-control" rows="7" placeholder="Mô tả vấn đề một cách chi tiết..." required></textarea>
                         </div>
-
-                        <!-- Type bug 
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">Type</label>
-                            <select name="category" class="form-select">
-                                <option value="System Bug">System Bug</option>
-                                <option value="UI Problem">UI Problem</option>
-                                <option value="Course Issue">Course Issue</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        -->
-
                         <div class="text-end">
                             <button type="submit" class="btn send-report-btn px-5 py-2">Gửi</button>
                         </div>

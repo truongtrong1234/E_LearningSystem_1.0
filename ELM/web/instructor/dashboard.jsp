@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
     if (session.getAttribute("account") == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("login");
         return;
     }
 %>
@@ -38,7 +38,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor/analytics.jsp" class="nav-link text-white sidebar-link">
+                        <a href="${pageContext.request.contextPath}/instructor/analytics" class="nav-link text-white sidebar-link">
                             <i class="fas fa-chart-bar me-2"></i> Phân tích
                         </a>
                     </li>
@@ -294,7 +294,7 @@
                                         </div>
 
                                         <div class="d-flex justify-content-between">
-                                            <a href="${pageContext.request.contextPath}/instructor/dashboard?actionCourse=uploadMaterial&courseID=${CourseID}&ChapterID=${ChapterID}" class="btn btn-secondary">Back</a>
+                                            <a href="${pageContext.request.contextPath}/instructor/dashboard?actionCourse=createLesson&courseID=${thisCourseID}&ChapterID=${thischapterID}" class="btn btn-secondary">Back</a>
                                             <a href="${pageContext.request.contextPath}/instructor/dashboard" class="btn btn-dark">
                                                 <i class="fas fa-home"></i>
                                             </a>

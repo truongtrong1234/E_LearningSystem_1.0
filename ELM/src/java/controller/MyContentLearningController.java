@@ -183,7 +183,6 @@ public class MyContentLearningController extends HttpServlet {
             }
         }
         request.setAttribute("materialsHTML", materialsHTML);
-
         request.setAttribute("quizList", quizList);
         request.setAttribute("quizProgressMap", quizProgressMap);
         String materialsURLHTML = materialsHTML.toString();
