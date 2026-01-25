@@ -3,6 +3,7 @@ package controller;
 import dao.ChapterDAO;
 import dao.CourseProgressDAO;
 import dao.EnrollmentDAO;
+import dao.QuizProgressDAO;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import model.Account;
 import model.Course;
 import model.CourseProgress;
+import model.QuizProgress;
 
 public class MyLearningController extends HttpServlet {
 
@@ -32,15 +34,11 @@ public class MyLearningController extends HttpServlet {
         }
 
         int accountID = acc.getAccountId();
-
+        String myResult = request.getParameter("myResult");
         EnrollmentDAO edao = new EnrollmentDAO();
         ChapterDAO chDao = new ChapterDAO();
         CourseProgressDAO cpDao = new CourseProgressDAO();
-
-        // 
         List<Course> myLearningCourse = edao.getCoursesByAccountId(accountID);
-
-        // 
         Map<Integer, Integer> courseProgressMap = new HashMap<>();
 
         for (Course c : myLearningCourse) {
@@ -48,40 +46,31 @@ public class MyLearningController extends HttpServlet {
 
             if (enrollmentID != -1) {
 
-                // Kiểm tra CourseProgress đã có chưa
                 CourseProgress cp = cpDao.getByEnrollmentID(enrollmentID);
                 if (cp == null) {
-                    // Chưa có → insert mới với 0%
                     cpDao.insertCourseProgress(enrollmentID, 0);
-cp = new CourseProgress(0, enrollmentID, BigDecimal.ZERO);
+                    cp = new CourseProgress(0, enrollmentID, BigDecimal.ZERO);
                 }
-
-                // Tính progress dựa trên lesson
                 int totalLessons = chDao.countLessonsByCourse(c.getCourseID());
                 int completedLessons = chDao.countCompletedLessons(accountID, c.getCourseID());
                 int progress = 0;
                 if (totalLessons > 0) {
                     progress = (int) ((completedLessons * 100.0) / totalLessons);
-                    
                 }
-
-                // In ra console để debug
-System.out.println("CourseID: " + c.getCourseID() 
-    + ", TotalLessons: " + totalLessons 
-    + ", CompletedLessons: " + completedLessons 
-    + ", Progress: " + progress);
-                // Cập nhật vào DB
+                System.out.println("CourseID: " + c.getCourseID()
+                        + ", TotalLessons: " + totalLessons
+                        + ", CompletedLessons: " + completedLessons
+                        + ", Progress: " + progress);
                 cpDao.updateCourseProgress(enrollmentID, progress);
-
-                // Lưu vào map để JSP hiển thị
                 courseProgressMap.put(c.getCourseID(), progress);
             }
         }
-
-        // 3️⃣ Gửi dữ liệu sang JSP
         request.setAttribute("myLearningCourse", myLearningCourse);
         request.setAttribute("courseProgressMap", courseProgressMap);
-
+        QuizProgressDAO quizproDAO = new QuizProgressDAO(); 
+        List<QuizProgress> listResult = quizproDAO.getQuizProgressByAccount(accountID); 
+        request.setAttribute("myResults", myResult);
+        request.setAttribute("listResult", listResult);
         request.getRequestDispatcher("Learner/mylearning.jsp").forward(request, response);
     }
 

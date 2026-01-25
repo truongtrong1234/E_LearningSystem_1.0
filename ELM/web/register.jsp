@@ -9,6 +9,9 @@
     <head>
         <meta charset="UTF-8" />
         <title>Sign up </title>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/headerGuest.css?v3">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>
             :root{
@@ -204,15 +207,8 @@
     </head>
     <body>
 
-        <!-- Top nav -->
-        <div class="topbar">
-            <a class="logo" href="<%= ctx %>/home_Guest">
-                <span class="s">ELearn</span><span class="c">EZ</span>
-            </a>
-            <div>
-                <a href="<%=ctx%>/login.jsp">Log in</a>
-            </div>
-        </div>
+       <!-- HEADER -->
+        <jsp:include page="/components/headerGuest.jsp" />
 
         <!-- Main -->
         <div class="wrap">

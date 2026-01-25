@@ -215,6 +215,23 @@ public class QuizDAO {
         return list;
     }
     
+    public Integer getChapterOfQuiz(int quizID) {
+    String sql = "SELECT ChapterID FROM Quizzes WHERE QuizID = ?";
+    try (Connection con = new DBContext().getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, quizID);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt("ChapterID");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
     // Thêm quiz 
     public boolean insertQuiz(Quiz q) {
         String sql = "INSERT INTO Quizzes (ChapterID, Title) VALUES (?, ?)";

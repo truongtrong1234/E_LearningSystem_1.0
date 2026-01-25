@@ -70,10 +70,23 @@ public class CourseDetailController extends HttpServlet {
             Course thisCourse = cDao.getCourseById(courseID); 
             
             Account acc = (Account) session.getAttribute("account");
+            Integer accountID = acc.getAccountId();
             isEnrolled = eDao.existsEnrollment(acc.getAccountId(), courseID);
             if (acc.getAccountId()==thisCourse.getInstructorID()) {
                 isEnrolled = true; 
                 eDao.insertEnrollment(acc.getAccountId(), courseID); 
+                  try {
+                CourseProgressDAO courseProgressDAO = new CourseProgressDAO();
+                ChapterProgressDAO chapterProgressDAO = new ChapterProgressDAO();
+                LessonProgressDAO lessonProgressDAO = new LessonProgressDAO();
+
+                courseProgressDAO.insertCourseProgress(accountID, courseID);
+                chapterProgressDAO.insertChapterProgressForCourse(accountID, courseID);
+                lessonProgressDAO.insertLessonProgressForCourse(accountID, courseID);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             }
         } else {
             homePage = "home_Guest";

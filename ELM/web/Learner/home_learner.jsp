@@ -58,7 +58,7 @@
                 <c:forEach var="c" items="${listCourse}">
                     <a class="course-card" href="${pageContext.request.contextPath}/courseDetail?id=${c.courseID}">
                         <div class="thumb">
-                            <img src="${c.thumbnail}" alt="${c.title}">
+                            <img src="${c.thumbnail}">
                         </div>
                         <div class="body">
                             <div class="title">${c.title} ${count}</div>
