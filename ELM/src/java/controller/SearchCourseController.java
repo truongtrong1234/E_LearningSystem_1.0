@@ -24,18 +24,13 @@ public class SearchCourseController extends HttpServlet {
         String categoryIdParam = request.getParameter("cats");
 
         CourseDAO dao = new CourseDAO();
-        List<Course> listCourse = null; // ✅ Đổi tên để khớp với JSP
+        List<Course> listCourse = null; 
         if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
-            // 🔹 Lọc theo category
             int categoryId = Integer.parseInt(categoryIdParam);
             listCourse = dao.getCoursesByCategory(categoryId);
-            
         } else if (keyword != null && !keyword.trim().isEmpty()) {
-            // 🔹 Tìm theo keyword
             listCourse = dao.searchCourses(keyword.trim());
-            
         } else {
-            // 🔹 Không có điều kiện => lấy tất cả
             listCourse = dao.getAllCourses();
         }
 

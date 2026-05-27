@@ -14,8 +14,6 @@
 
         <title> Guest</title>
 
-        
-        
     </head>
     <body>
 

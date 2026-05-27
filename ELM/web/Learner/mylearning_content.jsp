@@ -343,11 +343,9 @@
 
 
                     <div class="mb-3">
-                        <h6 class="fw-bold"></h6>
+                        <h6 class="fw-bold">Mô tả khóa học</h6>
                         <p>${course.description}</p>
                     </div>
-
-
                 </div>
                 <!-- ====== Hỏi & Đáp ====== -->
                 <section class="qna-section" id="qna">

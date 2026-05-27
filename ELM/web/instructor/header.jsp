@@ -85,7 +85,7 @@
 
 
             <!-- Nút Profile -->
-            <a href="/ELM/viewInstructorInfo.jsp" class="btn btn-light">
+            <a href="/ELM/myProfile" class="btn btn-light">
                 <i class="fa-solid fa-user-circle fa-2x text-secondary"></i>
             </a>
         </div>

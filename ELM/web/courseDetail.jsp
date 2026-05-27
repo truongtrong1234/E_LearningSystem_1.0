@@ -68,9 +68,7 @@
             <h2>${course.title}</h2>
           <p class="mb-1">
     Giảng viên:
-    <a href="instructorDetail?id=${course.instructorID}" class="text-decoration-none fw-semibold text-primary">
        ${instructor.name}
-    </a>
 </p>
 
            

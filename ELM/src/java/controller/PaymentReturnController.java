@@ -58,10 +58,10 @@ public class PaymentReturnController extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            long amount = Long.parseLong(vnp_Amount) / 10000;
+            long amount = Long.parseLong(vnp_Amount) / 100;
             PaymentDAO paymentDAO = new PaymentDAO();
             Payment p = new Payment();
-            BigDecimal CourseAmount = new BigDecimal(vnp_Amount);
+            BigDecimal CourseAmount = new BigDecimal(amount);
             p.setEnrollmentID(enrollID);
             p.setAmount(CourseAmount);
             p.setTransactionID(vnp_TransactionNo);
